@@ -6,7 +6,6 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowUpRight } from 'lucide-react';
-import LikeButton from './like-button';
 import { cn } from '@/lib/utils';
 
 type ProjectCardProps = {
@@ -54,7 +53,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </Button>
             )}
         </div>
-        <LikeButton projectId={project.id} />
       </CardFooter>
     </Card>
   );
