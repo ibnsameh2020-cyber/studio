@@ -13,7 +13,6 @@ const navItems = [
 ];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [theme, setTheme] = useState('dark');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,8 +38,6 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-      
       const sections = navItems.map(item => {
         const href = item.href;
         if (typeof window === 'undefined') return null;
@@ -77,88 +74,80 @@ export default function Header() {
   };
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-lg' : 'bg-transparent'
-      )}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
-          <Code className="w-6 h-6 text-primary" />
-          <span>Prismfolio</span>
-        </Link>
-        
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-2">
-          <nav className="flex items-center space-x-1 bg-background/50 p-1 rounded-full border border-border/20">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-full',
-                  activeSection === item.href.substring(1) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <Button
-            onClick={toggleTheme}
-            variant="ghost"
-            size="icon"
-            className="w-10 h-10 rounded-full bg-background/50 border border-border/20 hover:bg-background/50 focus-visible:ring-0 focus-visible:ring-offset-0"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
-          </Button>
+    <>
+      <header
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 transition-all duration-300'
+        )}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between bg-background/80 backdrop-blur-lg border border-border/50 shadow-lg rounded-full">
+          <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
+            <Code className="w-6 h-6 text-primary" />
+            <span>Prismfolio</span>
+          </Link>
+          
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center space-x-2">
+            <nav className="flex items-center space-x-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-full',
+                    activeSection === item.href.substring(1) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <Button
+              onClick={toggleTheme}
+              variant="ghost"
+              size="icon"
+              className="w-10 h-10 rounded-full hover:bg-background/50 focus-visible:ring-0 focus-visible:ring-offset-0"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+            </Button>
+          </div>
+          
+          {/* Mobile Nav */}
+          <div className="md:hidden flex items-center">
+            <Button
+              onClick={toggleTheme}
+              variant="ghost"
+              size="icon"
+              className="mr-2 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+            </Button>
+            <Button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              variant="ghost"
+              size="icon"
+              aria-label="Open menu"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </Button>
+          </div>
         </div>
-        
-        {/* Mobile Nav */}
-        <div className="md:hidden flex items-center">
-          <Button
-            onClick={toggleTheme}
-            variant="ghost"
-            size="icon"
-            className="mr-2 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
-          </Button>
-          <Button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            variant="ghost"
-            size="icon"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </Button>
-        </div>
-      </div>
+      </header>
 
       {/* Mobile Menu Panel */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-0 left-0 w-full h-screen bg-background z-50 flex flex-col p-4">
-            <div className="flex justify-between items-center mb-8">
-                <Link href="/" onClick={handleMenuLinkClick} className="flex items-center gap-2 text-lg font-headline font-bold">
-                    <Code className="w-6 h-6 text-primary" />
-                    <span>Prismfolio</span>
-                </Link>
-                <Button onClick={() => setIsMenuOpen(false)} variant="ghost" size="icon">
-                    <X className="w-6 h-6" />
-                </Button>
-            </div>
-          <nav className="flex flex-col items-center justify-center flex-grow gap-y-6">
+        <div className="md:hidden fixed top-24 left-4 right-4 z-40 bg-background/90 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl p-6 animate-in fade-in-20 slide-in-from-top-4">
+          <nav className="flex flex-col items-center justify-center flex-grow gap-y-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={handleMenuLinkClick}
                 className={cn(
-                  'text-2xl font-medium transition-colors hover:text-primary',
-                  activeSection === item.href.substring(1) ? 'text-primary' : 'text-foreground'
+                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
+                  activeSection === item.href.substring(1) ? 'text-primary bg-primary/10' : 'text-foreground'
                 )}
               >
                 {item.label}
@@ -167,6 +156,6 @@ export default function Header() {
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }
