@@ -12,14 +12,21 @@ const heroTexts = ["Creative Developer", "UI/UX Enthusiast", "Problem Solver"];
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
   const avatarImage = PlaceHolderImages.find(img => img.id === 'hero-avatar');
+  const bgImage = PlaceHolderImages.find(img => img.id === 'background-geometric');
 
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden">
-      <div className="absolute inset-0 bg-background/50 backdrop-blur-sm z-10"></div>
-      <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent"></div>
-      </div>
+      {bgImage && (
+        <Image
+          src={bgImage.imageUrl}
+          alt={bgImage.description}
+          fill
+          data-ai-hint={bgImage.imageHint}
+          className="object-cover"
+          priority
+        />
+      )}
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10"></div>
       
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
         {avatarImage && (
