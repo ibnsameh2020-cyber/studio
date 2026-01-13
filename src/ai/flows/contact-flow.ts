@@ -11,17 +11,35 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { z } from 'zod';
+import { initializeApp, getApps, getApp, FirebaseOptions } from 'firebase/app';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
+// --- Client-side Type and Schema ---
 const ContactRequestSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   message: z.string(),
 });
-
 export type ContactRequest = z.infer<typeof ContactRequestSchema>;
+
+
+// --- Server-side Firebase Initialization ---
+const firebaseConfig: FirebaseOptions = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+
+// Initialize Firebase for the server-side flow environment
+const app = !getApps().length ? initializeApp(firebaseConfig, "genkit-firebase") : getApp("genkit-firebase");
+const db = getFirestore(app);
+
+
+// --- Exported Functions ---
 
 // Exported wrapper function to be called from the client.
 export async function processContactRequest(
@@ -38,6 +56,7 @@ const contactFlow = ai.defineFlow(
   },
   async (data) => {
     // Save the contact submission to Firestore.
+    // This now uses the correctly initialized 'db' instance for the server.
     await addDoc(collection(db, 'contacts'), {
       ...data,
       submittedAt: serverTimestamp(),
