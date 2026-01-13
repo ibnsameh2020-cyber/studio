@@ -17,7 +17,7 @@ export default function HeroSection() {
       
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold mb-4">
-          Sameh Moussa
+          Eng. Sameh Moussa
         </h1>
         <p className="text-xl sm:text-2xl md:text-4xl text-primary font-headline mb-8 h-10 md:h-12">
           A <span className="relative">
