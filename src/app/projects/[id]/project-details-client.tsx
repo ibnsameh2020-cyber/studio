@@ -36,23 +36,6 @@ export default function ProjectDetailsClient({ project }: { project: Project }) 
             </p>
         </div>
 
-
-        <div className="flex gap-4 mt-8">
-          {project.liveUrl && (
-            <Button asChild>
-              <Link href={project.liveUrl} target="_blank">
-                Live Demo <ArrowUpRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
-          )}
-          {project.githubUrl && (
-            <Button variant="outline" asChild>
-              <Link href={project.githubUrl} target="_blank">
-                 <Github className="w-4 h-4 mr-2" /> GitHub
-              </Link>
-            </Button>
-          )}
-        </div>
       </div>
     </div>
   );
