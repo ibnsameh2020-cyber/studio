@@ -109,7 +109,7 @@ export default function Header() {
             onClick={toggleTheme}
             variant="ghost"
             size="icon"
-            className="w-10 h-10 rounded-full bg-background/50 border border-border/20"
+            className="w-10 h-10 rounded-full bg-background/50 border border-border/20 hover:bg-background/50 focus-visible:ring-0 focus-visible:ring-offset-0"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
@@ -122,7 +122,7 @@ export default function Header() {
             onClick={toggleTheme}
             variant="ghost"
             size="icon"
-            className="mr-2"
+            className="mr-2 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
