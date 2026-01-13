@@ -1,9 +1,6 @@
-import Link from 'next/link';
 import type { Project } from '@/data/projects';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type ProjectCardProps = {
@@ -29,15 +26,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between items-center">
-        <div className="flex gap-2">
-            {project.liveUrl && (
-            <Button asChild variant="outline" size="sm">
-                <Link href={project.liveUrl}>
-                Live Demo <ArrowUpRight className="w-4 h-4 ml-2" />
-                </Link>
-            </Button>
-            )}
-        </div>
+        
       </CardFooter>
     </Card>
   );
