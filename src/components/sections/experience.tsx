@@ -1,6 +1,14 @@
 import { experience } from '@/data/experience';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function ExperienceSection() {
   return (
@@ -21,16 +29,31 @@ export default function ExperienceSection() {
               <>
                 {/* Content Side */}
                 <div className="w-full md:w-1/2 md:pr-8 md:text-right">
-                  <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10">
-                    <CardHeader>
-                      <p className="text-sm text-primary mb-1">{item.date}</p>
-                      <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
-                      <CardDescription>{item.company}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer">
+                        <CardHeader>
+                          <p className="text-sm text-primary mb-1">{item.date}</p>
+                          <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
+                          <CardDescription>{item.company}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                        </CardContent>
+                      </Card>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle className="font-headline text-2xl">{item.title}</DialogTitle>
+                        <DialogDescription>
+                          {item.company} | {item.date}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="py-4">
+                        <p className="text-sm text-foreground">{item.longDescription}</p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 {/* Spacer Side */}
                 <div className="hidden md:block w-1/2 pl-8"></div>
@@ -41,16 +64,31 @@ export default function ExperienceSection() {
                 <div className="hidden md:block w-1/2 pr-8"></div>
                 {/* Content Side */}
                 <div className="w-full md:w-1/2 md:pl-8">
-                  <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10">
-                    <CardHeader>
-                      <p className="text-sm text-primary mb-1">{item.date}</p>
-                      <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
-                      <CardDescription>{item.company}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer">
+                        <CardHeader>
+                          <p className="text-sm text-primary mb-1">{item.date}</p>
+                          <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
+                          <CardDescription>{item.company}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                        </CardContent>
+                      </Card>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle className="font-headline text-2xl">{item.title}</DialogTitle>
+                        <DialogDescription>
+                          {item.company} | {item.date}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="py-4">
+                        <p className="text-sm text-foreground">{item.longDescription}</p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </>
             )}
