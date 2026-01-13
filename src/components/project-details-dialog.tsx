@@ -4,15 +4,8 @@
 import type { Project } from '@/data/projects';
 import { Badge } from '@/components/ui/badge';
 import { DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { useTypingEffect } from '@/hooks/use-typing-effect';
 
 export default function ProjectDetailsDialog({ project }: { project: Project }) {
-  const typedDescription = useTypingEffect([project.description], {
-    loop: false,
-    typeSpeed: 2.5,
-    deleteSpeed: 0,
-  });
-
   return (
     <>
       <DialogHeader>
@@ -26,8 +19,8 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
         </DialogDescription>
       </DialogHeader>
       <div className="py-4">
-        <p className="text-base text-muted-foreground min-h-[100px]">
-            {typedDescription}
+        <p className="text-base text-muted-foreground min-h-[100px] animate-fade-in-up">
+            {project.description}
         </p>
       </div>
     </>
