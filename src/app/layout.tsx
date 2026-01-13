@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/shared/header';
+import Footer from '@/components/shared/footer';
 
 export const metadata: Metadata = {
   title: 'Prismfolio | A Modern Portfolio',
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={cn("font-body antialiased")}>
         <Header />
         <main>{children}</main>
+        <Footer />
         <Toaster />
       </body>
     </html>
