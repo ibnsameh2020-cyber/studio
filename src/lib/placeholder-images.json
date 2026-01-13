@@ -1,12 +1,6 @@
 {
   "placeholderImages": [
     {
-      "id": "hero-avatar",
-      "description": "A placeholder image for the hero section avatar.",
-      "imageUrl": "https://i.ibb.co/0p4GCQYn/dad3.jpg",
-      "imageHint": "professional photo"
-    },
-    {
       "id": "background-geometric",
       "description": "A background with symmetrical shapes.",
       "imageUrl": "https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80",

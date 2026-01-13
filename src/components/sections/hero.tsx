@@ -1,34 +1,21 @@
+
 "use client";
 
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
 import { useTypingEffect } from '@/hooks/use-typing-effect';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
 
 const heroTexts = ["Creative Developer", "UI/UX Enthusiast", "Problem Solver"];
 
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
-  const avatarImage = PlaceHolderImages.find(img => img.id === 'hero-avatar');
 
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-20">
       <div className="absolute inset-0 bg-transparent z-10"></div>
       
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
-        {avatarImage && (
-          <Image
-            src={avatarImage.imageUrl}
-            alt={avatarImage.description}
-            width={160}
-            height={160}
-            data-ai-hint={avatarImage.imageHint}
-            className="rounded-full mb-6 border-4 border-primary/50 shadow-lg"
-            priority
-          />
-        )}
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold mb-4">
           Sameh Moussa
         </h1>
