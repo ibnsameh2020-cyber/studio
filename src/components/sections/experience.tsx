@@ -1,6 +1,6 @@
 import { experience } from '@/data/experience';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Briefcase } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Briefcase, ArrowRight } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -31,7 +31,7 @@ export default function ExperienceSection() {
                 <div className="w-full md:w-1/2 md:pr-8 md:text-right">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer">
+                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group">
                         <CardHeader>
                           <p className="text-sm text-primary mb-1">{item.date}</p>
                           <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
@@ -40,6 +40,12 @@ export default function ExperienceSection() {
                         <CardContent>
                           <p className="text-sm text-muted-foreground">{item.description}</p>
                         </CardContent>
+                        <CardFooter className="flex justify-end">
+                            <div className="flex items-center text-sm text-primary group-hover:underline">
+                                Read more
+                                <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                            </div>
+                        </CardFooter>
                       </Card>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
@@ -66,7 +72,7 @@ export default function ExperienceSection() {
                 <div className="w-full md:w-1/2 md:pl-8">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer">
+                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group">
                         <CardHeader>
                           <p className="text-sm text-primary mb-1">{item.date}</p>
                           <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
@@ -75,6 +81,12 @@ export default function ExperienceSection() {
                         <CardContent>
                           <p className="text-sm text-muted-foreground">{item.description}</p>
                         </CardContent>
+                        <CardFooter>
+                            <div className="flex items-center text-sm text-primary group-hover:underline">
+                                Read more
+                                <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                            </div>
+                        </CardFooter>
                       </Card>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">

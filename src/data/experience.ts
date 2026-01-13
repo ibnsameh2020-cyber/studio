@@ -13,7 +13,7 @@ export const experience: ExperienceItem[] = [
     date: '2021 - Present',
     title: 'Senior Frontend Developer',
     company: 'Tech Solutions Inc.',
-    description: 'Leading the development of high-performance web applications.',
+    description: 'Leading the development of high-performance web applications using React and Next.js. Mentoring junior developers and driving architectural decisions.',
     longDescription: 'Leading the development of high-performance web applications using React and Next.js. Responsible for architectural decisions, code reviews, and mentoring a team of junior developers. Played a key role in improving application performance by 30% and reducing bundle size through code splitting and optimization techniques. Championed the adoption of TypeScript across the organization.',
   },
   {
