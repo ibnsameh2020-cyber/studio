@@ -22,10 +22,10 @@ export default function HeroSection() {
           <Image
             src={avatarImage.imageUrl}
             alt={avatarImage.description}
-            width={128}
-            height={128}
+            width={160}
+            height={160}
             data-ai-hint={avatarImage.imageHint}
-            className="rounded-full mb-6 border-4 border-primary/50 shadow-lg md:w-40 md:h-40"
+            className="rounded-full mb-6 border-4 border-primary/50 shadow-lg"
             priority
           />
         )}
