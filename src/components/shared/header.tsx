@@ -16,17 +16,20 @@ const navItems = [
 export default function Header() {
   const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // State to hold the current theme for rendering the toggle icon
   const [currentTheme, setCurrentTheme] = useState('dark');
 
-  // This effect runs once on mount to set the initial theme icon
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    setCurrentTheme(storedTheme);
-    if (storedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setCurrentTheme(storedTheme);
+      if (storedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     } else {
-      document.documentElement.classList.remove('dark');
+      // If no theme is stored, we respect the default from the layout (dark)
+      setCurrentTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     }
   }, []);
 
