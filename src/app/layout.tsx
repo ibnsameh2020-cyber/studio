@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export const metadata: Metadata = {
   title: 'Prismfolio | A Modern Portfolio',
@@ -15,6 +17,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const bgImage = PlaceHolderImages.find(img => img.id === 'background-geometric');
   return (
     <html lang="en" className="dark">
       <head>
@@ -24,7 +27,19 @@ export default function RootLayout({
       </head>
       <body className={cn("font-body antialiased")}>
         <Header />
-        <main>{children}</main>
+        <main className="relative">
+          {bgImage && (
+            <Image
+              src={bgImage.imageUrl}
+              alt={bgImage.description}
+              fill
+              data-ai-hint={bgImage.imageHint}
+              className="object-cover fixed inset-0 z-[-1]"
+            />
+          )}
+          <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
+          {children}
+        </main>
         <Footer />
         <Toaster />
       </body>
