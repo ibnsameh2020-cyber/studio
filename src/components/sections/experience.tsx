@@ -1,3 +1,4 @@
+
 import { experience } from '@/data/experience';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Briefcase, ArrowRight } from 'lucide-react';
@@ -107,7 +108,7 @@ const ExperienceCard = ({ item }: { item: typeof experience[0] }) => (
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
-          <p className="text-sm text-foreground">{item.longDescription}</p>
+          <p className="text-sm text-foreground animate-fade-in-up">{item.longDescription}</p>
         </div>
       </DialogContent>
     </Dialog>
