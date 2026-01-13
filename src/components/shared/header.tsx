@@ -51,7 +51,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300'
+        'fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-full max-w-2xl'
       )}
     >
       <div className={cn(
@@ -61,7 +61,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
             <Code className="w-6 h-6 text-primary" />
-            <span className={cn('transition-all', isScrolled ? 'opacity-100' : 'opacity-0 w-0')}>Prismfolio</span>
+            <span className={cn('transition-all')}>Prismfolio</span>
           </Link>
           <nav className="flex items-center space-x-2 bg-background/50 p-1 rounded-full border border-transparent">
             {navItems.map((item) => (
