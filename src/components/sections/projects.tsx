@@ -10,9 +10,9 @@ export default function ProjectsSection() {
           A selection of my work, from web apps to design systems.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {projects.map((project, index) => (
-          <div key={project.id} className={`${project.layout.colSpan} ${project.layout.rowSpan} animate-fade-in-up`} style={{ animationDelay: `${index * 100}ms` }}>
+          <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
             <ProjectCard project={project} />
           </div>
         ))}
