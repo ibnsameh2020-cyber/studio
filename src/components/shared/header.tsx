@@ -16,32 +16,23 @@ const navItems = [
 export default function Header() {
   const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState('dark');
-
+  
   const toggleTheme = useCallback(() => {
-    const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
+    if (document.documentElement.classList.contains('dark')) {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     }
-    localStorage.setItem('theme', newTheme);
-    setCurrentTheme(newTheme);
   }, []);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    // If no theme is stored, we respect the default 'dark' from the html tag
-    if (storedTheme) {
-      if (storedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-      setCurrentTheme(storedTheme);
+    if (storedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
     } else {
-      // Handles the case where the user has no preference and the default is dark
-      setCurrentTheme('dark');
+      document.documentElement.classList.add('dark');
     }
   }, []);
 
@@ -132,7 +123,8 @@ export default function Header() {
               className="w-10 h-10 rounded-full hover:bg-background/50 focus-visible:ring-0 focus-visible:ring-offset-0"
               aria-label="Toggle theme"
             >
-              {currentTheme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+              <Sun className="w-5 h-5 text-primary hidden dark:block" />
+              <Moon className="w-5 h-5 text-primary dark:hidden" />
             </Button>
           </div>
           
@@ -142,17 +134,18 @@ export default function Header() {
               onClick={toggleTheme}
               variant="ghost"
               size="icon"
-              className="mr-2 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="mr-2 hover:bg-transparent hover:text-primary focus-visible:ring-0 focus-visible:ring-offset-0"
               aria-label="Toggle theme"
             >
-              {currentTheme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+              <Sun className="w-5 h-5 text-primary hidden dark:block" />
+              <Moon className="w-5 h-5 text-primary dark:hidden" />
             </Button>
             <Button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               variant="ghost"
               size="icon"
               aria-label="Open menu"
-              className="hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="hover:bg-transparent hover:text-inherit focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
