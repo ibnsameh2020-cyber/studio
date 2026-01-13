@@ -1,3 +1,5 @@
+"use client";
+
 import { projects } from '@/data/projects';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
@@ -6,6 +8,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Github, ArrowUpRight } from 'lucide-react';
+import { useTypingEffect } from '@/hooks/use-typing-effect';
 
 export default function ProjectDetailsPage({ params }: { params: { id: string } }) {
   const project = projects.find((p) => p.id === params.id);
@@ -13,6 +16,12 @@ export default function ProjectDetailsPage({ params }: { params: { id: string } 
   if (!project) {
     notFound();
   }
+  
+  const typedDescription = useTypingEffect([project.description], {
+    loop: false,
+    typeSpeed: 20,
+    deleteSpeed: 0,
+  });
 
   const projectImage = PlaceHolderImages.find(img => img.id === project.imagePlaceholderId);
 
@@ -40,11 +49,15 @@ export default function ProjectDetailsPage({ params }: { params: { id: string } 
           ))}
         </div>
 
-        <p className="text-lg text-muted-foreground mb-8">
-          {project.description}
-        </p>
+        <div className="space-y-4">
+            <h2 className="text-2xl font-headline font-semibold">About This Project</h2>
+            <p className="text-lg text-muted-foreground min-h-[100px]">
+                {typedDescription}
+            </p>
+        </div>
 
-        <div className="flex gap-4">
+
+        <div className="flex gap-4 mt-8">
           {project.liveUrl && (
             <Button asChild>
               <Link href={project.liveUrl} target="_blank">
