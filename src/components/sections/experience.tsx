@@ -13,7 +13,7 @@ import {
 export default function ExperienceSection() {
   return (
     <section id="experience">
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 animate-fade-in-up">
         <h2 className="text-4xl md:text-5xl font-headline font-bold">Career Journey</h2>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           My professional growth and key milestones over the years.
@@ -23,7 +23,7 @@ export default function ExperienceSection() {
         <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
         
         {experience.map((item, index) => (
-          <div key={item.id} className="relative flex items-center justify-center mb-12">
+          <div key={item.id} className="relative flex items-center justify-center mb-12 animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
             {/* Logic to alternate sides */}
             {index % 2 === 0 ? (
               <>
@@ -31,7 +31,7 @@ export default function ExperienceSection() {
                 <div className="w-full md:w-1/2 md:pr-8 md:text-right">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group">
+                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group hover:-translate-y-1">
                         <CardHeader>
                           <p className="text-sm text-primary mb-1">{item.date}</p>
                           <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
@@ -72,7 +72,7 @@ export default function ExperienceSection() {
                 <div className="w-full md:w-1/2 md:pl-8">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group">
+                      <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group hover:-translate-y-1">
                         <CardHeader>
                           <p className="text-sm text-primary mb-1">{item.date}</p>
                           <CardTitle className="font-headline text-xl">{item.title}</CardTitle>

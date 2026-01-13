@@ -21,7 +21,7 @@ export default function HeroSection() {
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent"></div>
       </div>
       
-      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
         {avatarImage && (
           <Image
             src={avatarImage.imageUrl}
