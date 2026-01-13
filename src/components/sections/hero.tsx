@@ -30,7 +30,7 @@ export default function HeroSection() {
           />
         )}
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold mb-4">
-          John Doe
+          Sameh Moussa
         </h1>
         <p className="text-xl sm:text-2xl md:text-4xl text-primary font-headline mb-8 h-10 md:h-12">
           A <span className="relative">
