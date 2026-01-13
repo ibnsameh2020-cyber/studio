@@ -18,18 +18,6 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState('dark');
 
-  useEffect(() => {
-    // This part runs only on the client
-    const storedTheme = localStorage.getItem('theme');
-    const initialTheme = storedTheme || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    setCurrentTheme(initialTheme);
-    if (initialTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-
   const toggleTheme = useCallback(() => {
     const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
     if (newTheme === 'dark') {
@@ -39,6 +27,22 @@ export default function Header() {
     }
     localStorage.setItem('theme', newTheme);
     setCurrentTheme(newTheme);
+  }, []);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    // If no theme is stored, we respect the default 'dark' from the html tag
+    if (storedTheme) {
+      if (storedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      setCurrentTheme(storedTheme);
+    } else {
+      // Handles the case where the user has no preference and the default is dark
+      setCurrentTheme('dark');
+    }
   }, []);
 
 
@@ -148,7 +152,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               aria-label="Open menu"
-              className="hover:bg-transparent"
+              className="hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
