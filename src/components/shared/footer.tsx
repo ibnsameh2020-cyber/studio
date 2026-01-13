@@ -39,9 +39,9 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t border-border/30 mt-12">
+    <footer className="bg-background border-t border-border/30">
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-2">
               <Code className="w-6 h-6 text-primary" />
@@ -49,7 +49,7 @@ export default function Footer() {
                 Prismfolio by John Doe
               </p>
             </div>
-            <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary"/>
                     <a href="mailto:hello@johndoe.com" className="hover:text-primary transition-colors">hello@johndoe.com</a>

@@ -38,13 +38,18 @@ export default function ContactSection() {
 
   const onSubmit = (data: ContactFormValues) => {
     startTransition(() => {
-      if (!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+      // Make sure to add your EmailJS credentials to your .env.local file
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
         toast({
             title: 'Configuration Error',
             description: 'EmailJS is not configured. Please add credentials to your .env file.',
             variant: 'destructive',
         });
-        console.error("EmailJS credentials missing in .env file.");
+        console.error("EmailJS credentials missing in .env.local file. Make sure to use NEXT_PUBLIC_ prefix.");
         return;
       }
       
@@ -57,15 +62,9 @@ export default function ContactSection() {
         return;
       }
 
-      // In your EmailJS template, make sure your variables are named
-      // exactly like the keys in this object: {{name}}, {{email}}, {{message}}.
-      emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID, 
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, 
-        formRef.current, 
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      )
-        .then(() => {
+      emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+        .then((result) => {
+          console.log('Success:', result.text);
           toast({
             title: 'Success!',
             description: 'Thank you! Your message has been sent.',
@@ -86,8 +85,8 @@ export default function ContactSection() {
   return (
     <section id="contact">
       <div className="text-center mb-12 animate-fade-in-up">
-        <h2 className="text-4xl md:text-5xl font-headline font-bold">Get In Touch</h2>
-        <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
+        <h2 className="text-3xl md:text-5xl font-headline font-bold">Get In Touch</h2>
+        <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           Have a question or want to work together? Drop me a message.
         </p>
       </div>
@@ -134,7 +133,7 @@ export default function ContactSection() {
                 )}
             />
             <div className="text-right">
-                <Button type="submit" className="group" disabled={isPending}>
+                <Button type="submit" className="group w-full md:w-auto" disabled={isPending}>
                     {isPending ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

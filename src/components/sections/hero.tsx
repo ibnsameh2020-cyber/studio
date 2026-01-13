@@ -14,7 +14,7 @@ export default function HeroSection() {
   const avatarImage = PlaceHolderImages.find(img => img.id === 'hero-avatar');
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden">
+    <section id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-20">
       <div className="absolute inset-0 bg-transparent z-10"></div>
       
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
@@ -22,23 +22,23 @@ export default function HeroSection() {
           <Image
             src={avatarImage.imageUrl}
             alt={avatarImage.description}
-            width={160}
-            height={160}
+            width={128}
+            height={128}
             data-ai-hint={avatarImage.imageHint}
-            className="rounded-full mb-6 border-4 border-primary/50 shadow-lg"
+            className="rounded-full mb-6 border-4 border-primary/50 shadow-lg md:w-40 md:h-40"
             priority
           />
         )}
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold mb-4">
           John Doe
         </h1>
-        <p className="text-2xl sm:text-3xl md:text-4xl text-primary font-headline mb-8">
+        <p className="text-xl sm:text-2xl md:text-4xl text-primary font-headline mb-8 h-10 md:h-12">
           A <span className="relative">
               {typedText}
               <span className="animate-ping absolute top-1/2 -right-1 h-full w-1 bg-accent rounded-full"></span>
             </span>
         </p>
-        <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-10">
+        <p className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground mb-10">
           I design and build beautiful, high-performance web applications that provide exceptional user experiences.
         </p>
         <Link href="#projects">
