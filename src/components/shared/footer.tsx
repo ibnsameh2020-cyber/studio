@@ -46,7 +46,7 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-primary" />
               <p className="text-lg font-headline font-bold">
-                Sameh insights by Sameh Moussa
+                Sameh insights by Eng. Sameh Moussa
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
