@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -36,13 +37,16 @@ export default function ContactSection() {
 
   const onSubmit = (data: ContactFormValues) => {
     startTransition(() => {
-      // These values are from your EmailJS account.
+      // IMPORTANT: Get these values from your EmailJS account dashboard.
+      // 1. Service ID: In "Email Services", after adding a service (e.g., Gmail).
+      // 2. Template ID: In "Email Templates", after creating a template.
+      // 3. Public Key: In "Account" > "API Keys".
       const serviceID = 'YOUR_SERVICE_ID';
       const templateID = 'YOUR_TEMPLATE_ID';
       const publicKey = 'YOUR_PUBLIC_KEY';
 
-      // IMPORTANT: In your EmailJS template, make sure your variables are named
-      // exactly like the keys in this object (name, email, message).
+      // In your EmailJS template, make sure your variables are named
+      // exactly like the keys in this object: {{name}}, {{email}}, {{message}}.
       const templateParams = {
         name: data.name,
         email: data.email,
@@ -61,7 +65,7 @@ export default function ContactSection() {
           console.error('EmailJS error:', error);
           toast({
             title: 'Error',
-            description: 'An unexpected error occurred. Please try again later.',
+            description: 'Could not send message. Please ensure your EmailJS credentials are correct.',
             variant: 'destructive',
           });
         });
