@@ -17,7 +17,7 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
     <>
       <DialogHeader>
         <DialogTitle className="font-headline text-2xl">{project.title}</DialogTitle>
-        <DialogDescription>
+        <DialogDescription asChild>
             <div className="flex flex-wrap gap-2 mt-2">
                 {project.techStack.map((tech) => (
                     <Badge key={tech} variant="secondary">{tech}</Badge>
