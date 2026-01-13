@@ -1,3 +1,4 @@
+
 import type { Project } from '@/data/projects';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -5,12 +6,16 @@ import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
 import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
 import ProjectDetailsDialog from './project-details-dialog';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type ProjectCardProps = {
   project: Project;
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const projectImage = PlaceHolderImages.find(img => img.id === project.imagePlaceholderId);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,11 +23,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           "h-full w-full flex flex-col group overflow-hidden cursor-pointer",
           "bg-card/50 backdrop-blur-lg border border-border/30 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1"
         )}>
+            {projectImage && (
+              <div className="relative aspect-video overflow-hidden">
+                <Image
+                  src={projectImage.imageUrl}
+                  alt={project.title}
+                  fill
+                  data-ai-hint={projectImage.imageHint}
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            )}
             <CardHeader>
               <CardTitle className="font-headline">{project.title}</CardTitle>
             </CardHeader>
             <CardContent className="flex-grow">
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{project.description}</p>
+              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map((tech) => (
                   <Badge key={tech} variant="secondary">{tech}</Badge>
@@ -37,7 +53,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-3xl">
         <ProjectDetailsDialog project={project} />
       </DialogContent>
     </Dialog>
