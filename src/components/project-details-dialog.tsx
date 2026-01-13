@@ -9,7 +9,7 @@ import { useTypingEffect } from '@/hooks/use-typing-effect';
 export default function ProjectDetailsDialog({ project }: { project: Project }) {
   const typedDescription = useTypingEffect([project.description], {
     loop: false,
-    typeSpeed: 5,
+    typeSpeed: 2.5,
     deleteSpeed: 0,
   });
 
