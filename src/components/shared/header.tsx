@@ -19,17 +19,14 @@ export default function Header() {
   const [currentTheme, setCurrentTheme] = useState('dark');
 
   useEffect(() => {
+    // This part runs only on the client
     const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setCurrentTheme(storedTheme);
-      if (storedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+    const initialTheme = storedTheme || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    setCurrentTheme(initialTheme);
+    if (initialTheme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      // If no theme is stored, we respect the default from the layout (dark)
-      setCurrentTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
@@ -47,32 +44,49 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => {
-        const href = item.href;
-        if (typeof window === 'undefined') return null;
-        return document.querySelector(href);
-      });
+        let currentSection = '';
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.body.scrollHeight;
+        const scrollBuffer = 150; // A taller buffer for better accuracy
 
-      let currentSection = '';
+        // Check if we are at the bottom of the page
+        if (scrollPosition + windowHeight >= documentHeight - 50) { // 50px tolerance
+            const contactSection = document.querySelector('#contact');
+            if (contactSection) {
+                currentSection = 'contact';
+            }
+        } else {
+            for (const item of navItems) {
+                const section = document.querySelector(item.href);
+                if (section) {
+                    const sectionTop = (section as HTMLElement).offsetTop;
+                    const sectionHeight = section.clientHeight;
 
-      sections.forEach(section => {
-        if (section) {
-          const sectionId = section.id;
-          const sectionTop = (section as HTMLElement).offsetTop;
-          if (window.scrollY >= sectionTop - 100) {
-            currentSection = sectionId;
-          }
+                    if (scrollPosition >= sectionTop - scrollBuffer && scrollPosition < sectionTop + sectionHeight - scrollBuffer) {
+                        currentSection = item.href.substring(1);
+                        break; 
+                    }
+                }
+            }
         }
-      });
 
-      if(currentSection !== activeSection) {
-        setActiveSection(currentSection);
-      }
+        if (currentSection && currentSection !== activeSection) {
+            setActiveSection(currentSection);
+        } else if (!currentSection && activeSection) {
+            // If no section is active (e.g., at the very top), clear it
+            const heroSection = document.querySelector('#hero');
+            if (heroSection && scrollPosition < (heroSection as HTMLElement).offsetHeight - scrollBuffer) {
+                 setActiveSection('');
+            }
+        }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Run on mount to set initial state
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
+}, [activeSection]);
   
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
