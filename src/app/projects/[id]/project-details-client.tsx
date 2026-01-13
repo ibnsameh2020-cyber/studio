@@ -21,19 +21,6 @@ export default function ProjectDetailsClient({ project }: { project: Project }) 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
       <div className="max-w-4xl mx-auto">
-        <div className="relative w-full h-96 rounded-lg overflow-hidden mb-8 shadow-lg">
-          {projectImage && (
-            <Image
-              src={projectImage.imageUrl}
-              alt={project.title}
-              fill
-              className="object-cover"
-              data-ai-hint={projectImage.imageHint}
-            />
-          )}
-           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-        </div>
-
         <h1 className="text-4xl md:text-5xl font-headline font-bold mb-4">{project.title}</h1>
         
         <div className="flex flex-wrap gap-2 mb-8">
