@@ -43,16 +43,11 @@ export default function Footer() {
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
-            <div className="flex flex-col items-center md:items-start gap-2">
-                <div className="flex items-center gap-2">
-                <Code className="w-6 h-6 text-primary" />
-                <p className="text-lg font-headline font-bold">
-                    Prismfolio by John Doe
-                </p>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                    &copy; {new Date().getFullYear()} All rights reserved.
-                </p>
+            <div className="flex items-center gap-2">
+              <Code className="w-6 h-6 text-primary" />
+              <p className="text-lg font-headline font-bold">
+                Prismfolio by John Doe
+              </p>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
@@ -66,7 +61,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="flex flex-col items-center md:items-end gap-4">
-             <div className="flex gap-4 mt-2">
+             <div className="flex gap-4">
                 <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <Linkedin className="w-6 h-6" />
                 </Link>
@@ -80,6 +75,9 @@ export default function Footer() {
                     <Facebook className="w-6 h-6" />
                 </Link>
             </div>
+            <p className="text-sm text-muted-foreground mt-2">
+                &copy; {new Date().getFullYear()} All rights reserved.
+            </p>
           </div>
         </div>
       </div>
