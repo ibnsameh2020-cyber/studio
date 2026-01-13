@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Lightbulb, Moon, Sun, Menu, X } from 'lucide-react';
@@ -15,27 +15,32 @@ const navItems = [
 
 export default function Header() {
   const [activeSection, setActiveSection] = useState('');
-  const [theme, setTheme] = useState('dark');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // State to hold the current theme for rendering the toggle icon
+  const [currentTheme, setCurrentTheme] = useState('dark');
 
+  // This effect runs once on mount to set the initial theme icon
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setTheme(storedTheme);
-    } else if (typeof window !== 'undefined') {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setTheme(prefersDark ? 'dark' : 'light');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (theme === 'dark') {
+    const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setCurrentTheme(storedTheme);
+    if (storedTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', newTheme);
+    setCurrentTheme(newTheme);
+  }, []);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,10 +70,6 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeSection]);
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
   
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
@@ -110,7 +111,7 @@ export default function Header() {
               className="w-10 h-10 rounded-full hover:bg-background/50 focus-visible:ring-0 focus-visible:ring-offset-0"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+              {currentTheme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
             </Button>
           </div>
           
@@ -123,7 +124,7 @@ export default function Header() {
               className="mr-2 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+              {currentTheme === 'dark' ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
             </Button>
             <Button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
