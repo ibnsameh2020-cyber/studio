@@ -42,19 +42,19 @@ export default function Footer() {
     <footer className="bg-background border-t border-border/30 mt-24">
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="flex items-center gap-2">
-              <Code className="w-6 h-6 text-primary" />
-              <p className="text-lg font-headline font-bold">
-                Prismfolio by John Doe
-              </p>
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <div className="flex flex-col items-center md:items-start gap-2">
+                <div className="flex items-center gap-2">
+                <Code className="w-6 h-6 text-primary" />
+                <p className="text-lg font-headline font-bold">
+                    Prismfolio by John Doe
+                </p>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                    &copy; {new Date().getFullYear()} All rights reserved.
+                </p>
             </div>
-            <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} All rights reserved.
-            </p>
-          </div>
-          <div className="flex flex-col items-center md:items-end gap-4">
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary"/>
                     <a href="mailto:hello@johndoe.com" className="hover:text-primary transition-colors">hello@johndoe.com</a>
@@ -64,6 +64,8 @@ export default function Footer() {
                     <a href="tel:+1234567890" className="hover:text-primary transition-colors">+1 (234) 567-890</a>
                 </div>
             </div>
+          </div>
+          <div className="flex flex-col items-center md:items-end gap-4">
              <div className="flex gap-4 mt-2">
                 <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <Linkedin className="w-6 h-6" />
