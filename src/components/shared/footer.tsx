@@ -34,6 +34,9 @@ export default function Footer() {
             <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
               <Linkedin className="w-5 h-5" />
             </Link>
+            <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <Twitter className="w-5 h-5" />
+            </Link>
             <Link href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
               <WhatsAppIcon className="w-5 h-5" />
             </Link>
