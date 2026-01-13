@@ -22,8 +22,11 @@ export function useTypingEffect(
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
+  const [isFinished, setIsFinished] = useState(false);
 
   const handleTyping = useCallback(() => {
+    if (isFinished) return;
+
     const currentText = texts[textIndex];
     
     if (isDeleting) {
@@ -32,28 +35,33 @@ export function useTypingEffect(
         setCharIndex(charIndex - 1);
       } else {
         setIsDeleting(false);
-        setTextIndex((prev) => (prev + 1) % texts.length);
-        if (textIndex === texts.length - 1 && !loop) {
-          return; 
+        const nextTextIndex = (textIndex + 1);
+        if (nextTextIndex >= texts.length && !loop) {
+          setIsFinished(true);
+          return;
         }
+        setTextIndex(nextTextIndex % texts.length);
       }
     } else {
       if (charIndex < currentText.length) {
         setDisplayedText(currentText.substring(0, charIndex + 1));
         setCharIndex(charIndex + 1);
       } else {
+        if (!loop && textIndex === texts.length - 1) {
+            setIsFinished(true);
+            return;
+        }
         setTimeout(() => setIsDeleting(true), delay);
       }
     }
-  }, [charIndex, isDeleting, textIndex, texts, delay, loop]);
+  }, [charIndex, isDeleting, textIndex, texts, delay, loop, isFinished]);
 
   useEffect(() => {
-    if (textIndex === texts.length && !loop) {
-        return; // Stop the effect if not looping and all texts have been typed
-    }
+    if (isFinished) return;
+
     const typingTimeout = setTimeout(handleTyping, isDeleting ? deleteSpeed : typeSpeed);
     return () => clearTimeout(typingTimeout);
-  }, [displayedText, handleTyping, isDeleting, typeSpeed, deleteSpeed, textIndex, loop, texts.length]);
+  }, [displayedText, handleTyping, isDeleting, typeSpeed, deleteSpeed, isFinished]);
 
   return displayedText;
 }
