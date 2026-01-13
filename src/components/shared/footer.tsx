@@ -1,4 +1,4 @@
-import { Code, Facebook, Linkedin, Mail, Phone } from 'lucide-react';
+import { Lightbulb, Facebook, Linkedin, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 
 // A simple SVG for WhatsApp as it's not in lucide-react
@@ -44,9 +44,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-2">
-              <Code className="w-6 h-6 text-primary" />
+              <Lightbulb className="w-6 h-6 text-primary" />
               <p className="text-lg font-headline font-bold">
-                Prismfolio by John Doe
+                Sameh insights by John Doe
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">

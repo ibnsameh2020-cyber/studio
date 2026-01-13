@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Code, Moon, Sun, Menu, X } from 'lucide-react';
+import { Lightbulb, Moon, Sun, Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
 
 const navItems = [
@@ -82,8 +82,8 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between bg-background/80 backdrop-blur-lg border border-border/50 shadow-lg rounded-full">
           <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
-            <Code className="w-6 h-6 text-primary" />
-            <span>Prismfolio</span>
+            <Lightbulb className="w-6 h-6 text-primary" />
+            <span>Sameh insights</span>
           </Link>
           
           {/* Desktop Nav */}

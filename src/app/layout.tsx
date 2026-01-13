@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export const metadata: Metadata = {
-  title: 'Prismfolio | A Modern Portfolio',
+  title: 'Sameh insights | A Modern Portfolio',
   description: 'A modern, high-performance personal portfolio website built with Next.js and Firebase.',
 };
 
