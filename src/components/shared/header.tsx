@@ -70,7 +70,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'fixed top-4 right-4 z-50 transition-all duration-300 w-full max-w-2xl'
+        'fixed top-4 right-8 z-50 transition-all duration-300 w-full max-w-2xl'
       )}
     >
       <div className={cn(
