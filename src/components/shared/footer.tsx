@@ -1,4 +1,4 @@
-import { Code, Facebook, Linkedin } from 'lucide-react';
+import { Code, Facebook, Linkedin, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 
 // A simple SVG for WhatsApp as it's not in lucide-react
@@ -39,32 +39,46 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t border-border/30 mt-16">
-      <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Code className="w-5 h-5 text-primary" />
-            <p className="text-sm text-muted-foreground font-semibold">
-              Prismfolio by John Doe
+    <footer className="bg-background border-t border-border/30 mt-24">
+      <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="flex items-center gap-2">
+              <Code className="w-6 h-6 text-primary" />
+              <p className="text-lg font-headline font-bold">
+                Prismfolio by John Doe
+              </p>
+            </div>
+            <p className="text-sm text-muted-foreground">
+                &copy; {new Date().getFullYear()} All rights reserved.
             </p>
           </div>
-          <div className="flex gap-4">
-            <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </Link>
-            <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <XIcon className="w-5 h-5" />
-            </Link>
-            <Link href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <WhatsAppIcon className="w-5 h-5" />
-            </Link>
-            <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <Facebook className="w-5 h-5" />
-            </Link>
+          <div className="flex flex-col items-center md:items-end gap-4">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-primary"/>
+                    <a href="mailto:hello@johndoe.com" className="hover:text-primary transition-colors">hello@johndoe.com</a>
+                </div>
+                 <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-primary"/>
+                    <a href="tel:+1234567890" className="hover:text-primary transition-colors">+1 (234) 567-890</a>
+                </div>
+            </div>
+             <div className="flex gap-4 mt-2">
+                <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                    <Linkedin className="w-6 h-6" />
+                </Link>
+                <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                    <XIcon className="w-6 h-6" />
+                </Link>
+                <Link href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                    <WhatsAppIcon className="w-6 h-6" />
+                </Link>
+                <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                    <Facebook className="w-6 h-6" />
+                </Link>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} All rights reserved.
-          </p>
         </div>
       </div>
     </footer>
