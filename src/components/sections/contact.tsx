@@ -3,9 +3,9 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useTransition, useEffect } from 'react';
+import { useTransition } from 'react';
+import { processContactRequest } from '@/ai/flows/contact-flow';
 
-import { submitContactForm } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,37 +36,20 @@ export default function ContactSection() {
   const { toast } = useToast();
 
   const onSubmit = (data: ContactFormValues) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
     startTransition(async () => {
-      const result = await submitContactForm(null, formData);
-      if (result.success) {
+      try {
+        await processContactRequest(data);
         toast({
           title: 'Success!',
-          description: result.message,
+          description: 'Thank you! Your message has been sent.',
         });
         form.reset();
-      } else {
+      } catch (e: any) {
         toast({
           title: 'Error',
-          description: result.message,
+          description: e.message || 'An unexpected error occurred. Please try again later.',
           variant: 'destructive',
         });
-        // Optionally, you can set form errors if the server returns them
-        if (result.errors) {
-            if (result.errors.name) {
-                form.setError('name', { message: result.errors.name[0] });
-            }
-            if (result.errors.email) {
-                form.setError('email', { message: result.errors.email[0] });
-            }
-            if (result.errors.message) {
-                form.setError('message', { message: result.errors.message[0] });
-            }
-        }
       }
     });
   };
