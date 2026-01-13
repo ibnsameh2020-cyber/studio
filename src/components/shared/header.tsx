@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -129,6 +130,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               aria-label="Open menu"
+              className="hover:bg-transparent"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
