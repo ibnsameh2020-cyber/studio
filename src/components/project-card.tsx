@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { Project } from '@/data/projects';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,25 +11,12 @@ type ProjectCardProps = {
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const projectImage = PlaceHolderImages.find(img => img.id === project.imagePlaceholderId);
 
   return (
     <Card className={cn(
       "h-full w-full flex flex-col group overflow-hidden",
       "bg-card/50 backdrop-blur-lg border border-border/30 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
     )}>
-      <div className="relative w-full h-48 overflow-hidden">
-        {projectImage && (
-          <Image
-            src={projectImage.imageUrl}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            data-ai-hint={projectImage.imageHint}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-card/20 to-transparent" />
-      </div>
       <CardHeader>
         <CardTitle className="font-headline">{project.title}</CardTitle>
       </CardHeader>
