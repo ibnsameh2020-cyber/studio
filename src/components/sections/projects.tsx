@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import ProjectCard from '@/components/project-card';
 import { projects } from '@/data/projects';
 
@@ -14,9 +13,7 @@ export default function ProjectsSection() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {projects.map((project) => (
           <div key={project.id} className={`${project.layout.colSpan} ${project.layout.rowSpan}`}>
-            <Link href={`/projects/${project.id}`} className="block h-full">
-              <ProjectCard project={project} />
-            </Link>
+            <ProjectCard project={project} />
           </div>
         ))}
       </div>
