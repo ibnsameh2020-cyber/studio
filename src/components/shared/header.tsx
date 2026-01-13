@@ -19,14 +19,22 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
-      const sections = navItems.map(item => document.querySelector(item.href));
+      const sections = navItems.map(item => {
+        const href = item.href;
+        // For server components, document is not available.
+        if (typeof window === 'undefined') return null;
+        return document.querySelector(href);
+      });
+
       let currentSection = '';
 
       sections.forEach(section => {
         if (section) {
-          const sectionTop = section.offsetTop;
+          // get the id from the section element
+          const sectionId = section.id;
+          const sectionTop = (section as HTMLElement).offsetTop;
           if (window.scrollY >= sectionTop - 100) {
-            currentSection = section.id;
+            currentSection = sectionId;
           }
         }
       });
@@ -43,24 +51,26 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border/50' : 'bg-transparent'
+        'fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300'
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2 text-xl font-headline font-bold">
+      <div className={cn(
+        "container mx-auto px-4 sm:px-6 lg:px-8 rounded-full transition-all duration-300",
+        isScrolled ? 'bg-background/80 backdrop-blur-lg border border-border/50 shadow-lg' : 'bg-transparent'
+      )}>
+        <div className="flex items-center justify-between h-14">
+          <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
             <Code className="w-6 h-6 text-primary" />
-            <span>Prismfolio</span>
+            <span className={cn('transition-all', isScrolled ? 'opacity-100' : 'opacity-0 w-0')}>Prismfolio</span>
           </Link>
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="flex items-center space-x-2 bg-background/50 p-1 rounded-full border border-transparent">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-sm font-medium transition-colors hover:text-primary',
-                  activeSection === item.href.substring(1) ? 'text-primary' : 'text-muted-foreground'
+                  'text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-full',
+                  activeSection === item.href.substring(1) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
                 )}
               >
                 {item.label}
