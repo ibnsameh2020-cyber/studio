@@ -3,7 +3,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useActionState, useEffect, startTransition } from 'react';
+import { useActionState, useEffect, useTransition } from 'react';
 
 import { submitContactForm } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Send } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -28,6 +28,9 @@ const initialState = {
 };
 
 export default function ContactSection() {
+  const [isPending, startTransition] = useTransition();
+  const [state, formAction] = useActionState(submitContactForm, initialState);
+  
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -37,9 +40,7 @@ export default function ContactSection() {
     },
   });
   
-  const [state, formAction] = useActionState(submitContactForm, initialState);
   const { toast } = useToast();
-  const { isSubmitting } = form.formState;
 
   useEffect(() => {
     if (state?.message && !state.success) {
@@ -119,9 +120,18 @@ export default function ContactSection() {
                 )}
             />
             <div className="text-right">
-                <Button type="submit" className="group" disabled={isSubmitting}>
-                    Send Message
-                    <Send className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                <Button type="submit" className="group" disabled={isPending}>
+                    {isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <Send className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
                 </Button>
             </div>
           </form>
