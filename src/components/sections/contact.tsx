@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTransition } from 'react';
-import { processContactRequest } from '@/ai/flows/contact-flow';
+import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,6 +23,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function ContactSection() {
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -32,25 +33,38 @@ export default function ContactSection() {
       message: '',
     },
   });
-  
-  const { toast } = useToast();
 
   const onSubmit = (data: ContactFormValues) => {
-    startTransition(async () => {
-      try {
-        await processContactRequest(data);
-        toast({
-          title: 'Success!',
-          description: 'Thank you! Your message has been sent.',
+    startTransition(() => {
+      // These values are from your EmailJS account.
+      const serviceID = 'YOUR_SERVICE_ID';
+      const templateID = 'YOUR_TEMPLATE_ID';
+      const publicKey = 'YOUR_PUBLIC_KEY';
+
+      // IMPORTANT: In your EmailJS template, make sure your variables are named
+      // exactly like the keys in this object (name, email, message).
+      const templateParams = {
+        name: data.name,
+        email: data.email,
+        message: data.message,
+      };
+
+      emailjs.send(serviceID, templateID, templateParams, publicKey)
+        .then(() => {
+          toast({
+            title: 'Success!',
+            description: 'Thank you! Your message has been sent.',
+          });
+          form.reset();
+        })
+        .catch((error) => {
+          console.error('EmailJS error:', error);
+          toast({
+            title: 'Error',
+            description: 'An unexpected error occurred. Please try again later.',
+            variant: 'destructive',
+          });
         });
-        form.reset();
-      } catch (e: any) {
-        toast({
-          title: 'Error',
-          description: e.message || 'An unexpected error occurred. Please try again later.',
-          variant: 'destructive',
-        });
-      }
     });
   };
 
