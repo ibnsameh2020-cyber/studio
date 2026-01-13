@@ -39,30 +39,24 @@ export default function ContactSection() {
   
   const [state, formAction] = useActionState(submitContactForm, initialState);
   const { toast } = useToast();
-  const { isSubmitting, isSubmitSuccessful } = form.formState;
+  const { isSubmitting } = form.formState;
 
   useEffect(() => {
-    if (state?.message) {
+    if (state?.message && !state.success) {
       toast({
-        title: state.success ? 'Success!' : 'Error',
+        title: 'Error',
         description: state.message,
-        variant: state.success ? 'default' : 'destructive',
+        variant: 'destructive',
       });
-      if (state.success) {
+    }
+    if (state?.message && state.success) {
+        toast({
+            title: 'Success!',
+            description: state.message,
+        });
         form.reset();
-      }
     }
   }, [state, toast, form]);
-
-
-  const onSubmit: SubmitHandler<ContactFormValues> = (data) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    formAction(formData);
-  };
-
 
   return (
     <section id="contact">
@@ -74,7 +68,7 @@ export default function ContactSection() {
       </div>
       <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form action={formAction} className="space-y-6">
              <FormField
                 control={form.control}
                 name="name"
