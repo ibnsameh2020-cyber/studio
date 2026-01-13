@@ -4,7 +4,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useTransition } from 'react';
+import { useTransition, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 export default function ContactSection() {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -37,23 +38,33 @@ export default function ContactSection() {
 
   const onSubmit = (data: ContactFormValues) => {
     startTransition(() => {
-      // IMPORTANT: Get these values from your EmailJS account dashboard.
-      // 1. Service ID: In "Email Services", after adding a service (e.g., Gmail).
-      // 2. Template ID: In "Email Templates", after creating a template.
-      // 3. Public Key: In "Account" > "API Keys".
-      const serviceID = 'YOUR_SERVICE_ID';
-      const templateID = 'YOUR_TEMPLATE_ID';
-      const publicKey = 'YOUR_PUBLIC_KEY';
+      if (!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+        toast({
+            title: 'Configuration Error',
+            description: 'EmailJS is not configured. Please add credentials to your .env file.',
+            variant: 'destructive',
+        });
+        console.error("EmailJS credentials missing in .env file.");
+        return;
+      }
+      
+      if (!formRef.current) {
+        toast({
+            title: 'Error',
+            description: 'Could not find the form element.',
+            variant: 'destructive',
+        });
+        return;
+      }
 
       // In your EmailJS template, make sure your variables are named
       // exactly like the keys in this object: {{name}}, {{email}}, {{message}}.
-      const templateParams = {
-        name: data.name,
-        email: data.email,
-        message: data.message,
-      };
-
-      emailjs.send(serviceID, templateID, templateParams, publicKey)
+      emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID, 
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, 
+        formRef.current, 
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      )
         .then(() => {
           toast({
             title: 'Success!',
@@ -62,10 +73,10 @@ export default function ContactSection() {
           form.reset();
         })
         .catch((error) => {
-          console.error('EmailJS error:', error);
+          console.error('EmailJS Full Error:', error);
           toast({
             title: 'Error',
-            description: 'Could not send message. Please ensure your EmailJS credentials are correct.',
+            description: `Could not send message. ${error.text || 'Please check the console for details.'}`,
             variant: 'destructive',
           });
         });
@@ -82,7 +93,7 @@ export default function ContactSection() {
       </div>
       <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
              <FormField
                 control={form.control}
                 name="name"
