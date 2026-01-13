@@ -1,9 +1,9 @@
 "use client";
 
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useActionState, useEffect, useTransition } from 'react';
+import { useTransition, useEffect } from 'react';
 
 import { submitContactForm } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -21,15 +21,8 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
-const initialState = {
-  message: '',
-  errors: {},
-  success: false,
-};
-
 export default function ContactSection() {
   const [isPending, startTransition] = useTransition();
-  const [state, formAction] = useActionState(submitContactForm, initialState);
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -42,30 +35,39 @@ export default function ContactSection() {
   
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (state?.message && !state.success) {
-      toast({
-        title: 'Error',
-        description: state.message,
-        variant: 'destructive',
-      });
-    }
-    if (state?.message && state.success) {
-        toast({
-            title: 'Success!',
-            description: state.message,
-        });
-        form.reset();
-    }
-  }, [state, toast, form]);
-
   const onSubmit = (data: ContactFormValues) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    startTransition(() => {
-        formAction(formData);
+
+    startTransition(async () => {
+      const result = await submitContactForm(null, formData);
+      if (result.success) {
+        toast({
+          title: 'Success!',
+          description: result.message,
+        });
+        form.reset();
+      } else {
+        toast({
+          title: 'Error',
+          description: result.message,
+          variant: 'destructive',
+        });
+        // Optionally, you can set form errors if the server returns them
+        if (result.errors) {
+            if (result.errors.name) {
+                form.setError('name', { message: result.errors.name[0] });
+            }
+            if (result.errors.email) {
+                form.setError('email', { message: result.errors.email[0] });
+            }
+            if (result.errors.message) {
+                form.setError('message', { message: result.errors.message[0] });
+            }
+        }
+      }
     });
   };
 
