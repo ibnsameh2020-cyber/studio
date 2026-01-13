@@ -3,7 +3,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, startTransition } from 'react';
 
 import { submitContactForm } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -58,6 +58,16 @@ export default function ContactSection() {
     }
   }, [state, toast, form]);
 
+  const onSubmit = (data: ContactFormValues) => {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    startTransition(() => {
+        formAction(formData);
+    });
+  };
+
   return (
     <section id="contact">
       <div className="text-center mb-12 animate-fade-in-up">
@@ -68,7 +78,7 @@ export default function ContactSection() {
       </div>
       <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
         <Form {...form}>
-          <form action={formAction} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
              <FormField
                 control={form.control}
                 name="name"
