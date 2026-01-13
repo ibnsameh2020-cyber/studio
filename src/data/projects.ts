@@ -25,7 +25,7 @@ export const projects: Project[] = [
     githubUrl: '#',
     imagePlaceholderId: 'project-1',
     layout: {
-      colSpan: 'sm:col-span-1',
+      colSpan: 'md:col-span-2',
       rowSpan: 'md:row-span-1',
     },
   },
@@ -38,8 +38,8 @@ export const projects: Project[] = [
     githubUrl: '#',
     imagePlaceholderId: 'project-2',
     layout: {
-      colSpan: 'sm:col-span-1',
-      rowSpan: 'md:row-span-1',
+      colSpan: 'md:col-span-1',
+      rowSpan: 'md:row-span-2',
     },
   },
   {
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     githubUrl: '#',
     imagePlaceholderId: 'project-3',
     layout: {
-      colSpan: 'sm:col-span-1',
+      colSpan: 'md:col-span-1',
       rowSpan: 'md:row-span-1',
     },
   },
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     githubUrl: '#',
     imagePlaceholderId: 'project-4',
     layout: {
-      colSpan: 'sm:col-span-1',
+      colSpan: 'md:col-span-1',
       rowSpan: 'md:row-span-1',
     },
   },
