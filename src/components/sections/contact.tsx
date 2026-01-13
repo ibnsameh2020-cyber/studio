@@ -84,13 +84,13 @@ export default function ContactSection() {
 
   return (
     <section id="contact">
-      <div className="text-center mb-12 animate-fade-in-up">
+      <div className="text-center mb-12">
         <h2 className="text-3xl md:text-5xl font-headline font-bold">Get In Touch</h2>
         <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           Have a question or want to work together? Drop me a message.
         </p>
       </div>
-      <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+      <div className="max-w-2xl mx-auto" style={{ animationDelay: '200ms' }}>
         <Form {...form}>
           <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
              <FormField

@@ -13,7 +13,7 @@ import {
 export default function ExperienceSection() {
   return (
     <section id="experience">
-      <div className="text-center mb-12 animate-fade-in-up">
+      <div className="text-center mb-12">
         <h2 className="text-3xl md:text-5xl font-headline font-bold">Career Journey</h2>
         <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           My professional growth and key milestones over the years.
@@ -23,7 +23,7 @@ export default function ExperienceSection() {
         <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-1/2"></div>
         
         {experience.map((item, index) => (
-          <div key={item.id} className="relative flex items-start md:items-center md:justify-center mb-12 animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+          <div key={item.id} className="relative flex items-start md:items-center md:justify-center mb-12" style={{ animationDelay: `${index * 100}ms` }}>
             {/* Mobile View: Icon on left, card on right */}
             <div className="md:hidden flex items-start w-full">
               <div className="absolute left-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
