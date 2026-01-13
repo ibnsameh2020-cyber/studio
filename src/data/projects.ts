@@ -24,8 +24,8 @@ export const projects: Project[] = [
     githubUrl: '#',
     imagePlaceholderId: 'project-1',
     layout: {
-      colSpan: 'md:col-span-2',
-      rowSpan: 'md:row-span-2',
+      colSpan: 'md:col-span-1',
+      rowSpan: 'md:row-span-1',
     },
   },
   {
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     githubUrl: '#',
     imagePlaceholderId: 'project-2',
     layout: {
-      colSpan: 'md:col-span-2',
+      colSpan: 'md:col-span-1',
       rowSpan: 'md:row-span-1',
     },
   },

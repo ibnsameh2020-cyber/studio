@@ -10,8 +10,8 @@ export default function ProjectsSection() {
           A selection of my work, from web apps to design systems.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[350px] gap-6">
-        {projects.map((project, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {projects.map((project) => (
           <div key={project.id} className={`${project.layout.colSpan} ${project.layout.rowSpan}`}>
             <ProjectCard project={project} />
           </div>
