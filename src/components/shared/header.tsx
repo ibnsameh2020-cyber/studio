@@ -39,33 +39,37 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      let currentSection = '';
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.body.offsetHeight;
+      const headerOffset = 80; // Height of the header
 
-      const sections = navItems.map(item => document.querySelector(item.href));
-      
-      const heroSection = document.getElementById('hero');
-      if (heroSection && scrollY < heroSection.offsetHeight / 2) {
-          currentSection = '';
-          setActiveSection(currentSection);
-          return;
-      }
-      
-      if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 50) {
-        currentSection = 'contact';
-        setActiveSection(currentSection);
+      // Check if user is at the bottom of the page
+      if (windowHeight + scrollPosition >= documentHeight - 50) {
+        setActiveSection('contact');
         return;
       }
 
-      sections.forEach((section, index) => {
+      // Check if user is at the top of the page
+      const heroSection = document.getElementById('hero');
+      if (heroSection && scrollPosition < heroSection.offsetHeight - headerOffset) {
+        setActiveSection('');
+        return;
+      }
+
+      let currentSection = '';
+      for (const item of navItems) {
+        const section = document.querySelector(item.href) as HTMLElement | null;
         if (section) {
-          const sectionTop = (section as HTMLElement).offsetTop - 80; // Header height offset
-          const sectionHeight = section.clientHeight;
-          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-            currentSection = navItems[index].href.substring(1);
+          const sectionTop = section.offsetTop - headerOffset;
+          const sectionBottom = sectionTop + section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            currentSection = item.href.substring(1);
+            break;
           }
         }
-      });
+      }
       
       setActiveSection(currentSection);
     };
