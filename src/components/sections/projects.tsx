@@ -1,3 +1,4 @@
+
 import ProjectCard from '@/components/project-card';
 import { projects } from '@/data/projects';
 import AnimatedSection from '../animated-section';
@@ -13,7 +14,7 @@ export default function ProjectsSection() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {projects.map((project, index) => (
-          <AnimatedSection key={project.id} style={{ animationDelay: `${index * 150}ms` }}>
+          <AnimatedSection key={project.id} style={{ animationDelay: `${index * 1000}ms` }}>
              <ProjectCard project={project} />
           </AnimatedSection>
         ))}
