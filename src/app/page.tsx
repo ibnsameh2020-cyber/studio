@@ -11,9 +11,7 @@ export default function Home() {
       <HeroSection />
       <div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32 pb-24 md:pb-32">
-          <AnimatedSection>
-            <ProjectsSection />
-          </AnimatedSection>
+          <ProjectsSection />
           <AnimatedSection>
             <ExperienceSection />
           </AnimatedSection>
