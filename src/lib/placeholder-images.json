@@ -3,7 +3,7 @@
     {
       "id": "project-1",
       "description": "A placeholder image for the first project.",
-      "imageUrl": "https://images.unsplash.com/photo-1614020661498-fef5b2293108?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0ZWNoJTIwYXBwbGljYXRpb258ZW58MHx8fHwxNzY4MzA2MjQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1762341119237-98df67c9c3c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx0ZWNoJTIwYXBwbGljYXRpb258ZW58MHx8fHwxNzY4MzA2MjQ1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "tech application"
     },
     {
@@ -15,13 +15,13 @@
     {
       "id": "project-3",
       "description": "A placeholder image for the third project.",
-      "imageUrl": "https://images.unsplash.com/photo-1514575110897-1253ff7b2ccb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtb2JpbGUlMjBhcHB8ZW58MHx8fHwxNzY4MjkzNTU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBhcHB8ZW58MHx8fHwxNzY4MjkzNTU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "mobile app"
     },
     {
       "id": "project-4",
       "description": "A placeholder image for the fourth project.",
-      "imageUrl": "https://images.unsplash.com/photo-1581456495146-65a71b2c8e52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaGF0JTIwYXBwfGVufDB8fHx8MTc2ODQxOTU2NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1519069060891-f8c50519bf39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2hhdCUyMGFwcHxlbnwwfHx8fDE3NjgzMjc5MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "chat app"
     },
     {
