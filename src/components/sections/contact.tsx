@@ -91,7 +91,7 @@ export default function ContactSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-                <h2 className="text-4xl md:text-6xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary">
+                <h2 className="text-4xl md:text-6xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary inline-block">
                     Let's Build Something Great Together
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground">
