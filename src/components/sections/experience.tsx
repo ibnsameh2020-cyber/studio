@@ -38,10 +38,10 @@ export default function ExperienceSection() {
         </p>
       </div>
       <div className="relative md:p-0 px-4">
-        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-1/2"></div>
+        <div className="absolute left-4 md:left-20 top-0 bottom-0 w-0.5 bg-border"></div>
         
         {experience.map((item, index) => (
-          <div key={item.id} className="relative flex items-start md:items-center md:justify-center mb-12" style={{ animationDelay: `${index * 100}ms` }}>
+          <div key={item.id} className="relative flex items-start md:items-center mb-12" style={{ animationDelay: `${index * 100}ms` }}>
             
             {/* Arrow Connectors for Mobile */}
             {index > 0 && index % 2 !== 0 && (
@@ -69,37 +69,18 @@ export default function ExperienceSection() {
             </div>
 
             {/* Desktop View */}
-            <div className="hidden md:flex md:w-full md:items-center">
-              {/* Logic to alternate sides */}
-              {index % 2 === 0 ? (
-                <>
-                  {/* Content Side */}
-                  <div className="w-full md:w-1/2 md:pr-8 md:text-right">
-                    <ExperienceCard item={item} />
+            <div className="hidden md:flex w-full items-center">
+              <div className="w-full flex justify-start">
+                  <div className="w-1/2"></div>
+                  <div className="w-1/2 pl-16">
+                      <ExperienceCard item={item} alignment="left" />
                   </div>
-                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
+              </div>
+              <div className="absolute left-20 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
                       <Briefcase className="w-4 h-4 text-primary-foreground" />
-                    </div>
                   </div>
-                  {/* Spacer Side */}
-                  <div className="hidden md:block w-1/2 pl-8"></div>
-                </>
-              ) : (
-                <>
-                  {/* Spacer Side */}
-                  <div className="hidden md:block w-1/2 pr-8"></div>
-                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
-                      <Briefcase className="w-4 h-4 text-primary-foreground" />
-                    </div>
-                  </div>
-                  {/* Content Side */}
-                  <div className="w-full md:w-1/2 md:pl-8">
-                    <ExperienceCard item={item} />
-                  </div>
-                </>
-              )}
+              </div>
             </div>
           </div>
         ))}
@@ -108,21 +89,21 @@ export default function ExperienceSection() {
   );
 }
 
-const ExperienceCard = ({ item }: { item: typeof experience[0] }) => (
+const ExperienceCard = ({ item, alignment = 'right' }: { item: typeof experience[0], alignment?: 'left' | 'right' }) => (
     <Dialog>
       <DialogTrigger asChild>
         <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer group hover:-translate-y-1">
-          <CardHeader className="md:items-end flex-row md:flex-col items-start gap-4">
+          <CardHeader className={`md:items-start flex-row md:flex-col items-start gap-4`}>
               <div>
-                  <CardTitle className="font-headline text-lg md:text-xl text-left md:text-inherit">{item.title}</CardTitle>
-                  <CardDescription className="text-left md:text-inherit">{item.company}</CardDescription>
+                  <CardTitle className={`font-headline text-lg md:text-xl text-left`}>{item.title}</CardTitle>
+                  <CardDescription className={`text-left`}>{item.company}</CardDescription>
               </div>
-              <p className="text-sm text-primary mb-1 text-right md:text-inherit flex-shrink-0">{item.date}</p>
+              <p className={`text-sm text-primary mb-1 text-right flex-shrink-0`}>{item.date}</p>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground text-left md:text-inherit">{item.description}</p>
+            <p className={`text-sm text-muted-foreground text-left`}>{item.description}</p>
           </CardContent>
-          <CardFooter className="flex md:justify-end">
+          <CardFooter className={`flex md:justify-start`}>
               <div className="flex items-center text-sm text-primary group-hover:underline">
                   Read more
                   <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
