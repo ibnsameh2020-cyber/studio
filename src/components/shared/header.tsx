@@ -39,37 +39,39 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const scrollY = window.scrollY;
       let currentSection = '';
 
-      for (const item of navItems) {
-          const section = document.querySelector(item.href);
-          if (section) {
-              const sectionTop = (section as HTMLElement).offsetTop;
-              const sectionHeight = section.clientHeight;
-              if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                  currentSection = item.href.substring(1);
-                  break;
-              }
-          }
+      const sections = navItems.map(item => document.querySelector(item.href));
+      
+      const heroSection = document.getElementById('hero');
+      if (heroSection && scrollY < heroSection.offsetHeight / 2) {
+          currentSection = '';
+          setActiveSection(currentSection);
+          return;
       }
       
-      // If no section is matched (e.g. top of the page), clear active section.
-      const heroSection = document.getElementById('hero');
-      if (heroSection && window.scrollY < heroSection.offsetHeight / 2) {
-          currentSection = '';
-      }
-
-      // If at the very bottom, force 'contact' to be active
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+      if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 50) {
         currentSection = 'contact';
+        setActiveSection(currentSection);
+        return;
       }
 
+      sections.forEach((section, index) => {
+        if (section) {
+          const sectionTop = (section as HTMLElement).offsetTop - 80; // Header height offset
+          const sectionHeight = section.clientHeight;
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            currentSection = navItems[index].href.substring(1);
+          }
+        }
+      });
+      
       setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
