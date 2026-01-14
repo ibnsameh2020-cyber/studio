@@ -15,14 +15,16 @@ export default function FloatingCvButton() {
         "hover:w-52"
       )}
     >
-      <Download className="w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:-translate-x-12" />
-      <span
-        className={cn(
-          "font-medium whitespace-nowrap transition-all duration-300 opacity-0 absolute group-hover:opacity-100 group-hover:translate-x-4"
-        )}
-      >
-        Download Resume
-      </span>
+      <div className="relative flex items-center justify-center w-full">
+        <Download className="absolute w-6 h-6 flex-shrink-0 transition-transform duration-300 ease-in-out group-hover:-translate-x-[4.5rem]" />
+        <span
+          className={cn(
+            "font-medium whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 group-hover:translate-x-4"
+          )}
+        >
+          Download Resume
+        </span>
+      </div>
     </a>
   );
 }
