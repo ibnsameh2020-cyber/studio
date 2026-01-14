@@ -39,49 +39,40 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-        let currentSection = '';
-        const scrollPosition = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.body.scrollHeight;
-        const scrollBuffer = 150; // A taller buffer for better accuracy
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      let currentSection = '';
 
-        // Check if we are at the bottom of the page
-        if (scrollPosition + windowHeight >= documentHeight - 50) { // 50px tolerance
-            const contactSection = document.querySelector('#contact');
-            if (contactSection) {
-                currentSection = 'contact';
-            }
-        } else {
-            for (const item of navItems) {
-                const section = document.querySelector(item.href);
-                if (section) {
-                    const sectionTop = (section as HTMLElement).offsetTop;
-                    const sectionHeight = section.clientHeight;
+      for (const item of navItems) {
+          const section = document.querySelector(item.href);
+          if (section) {
+              const sectionTop = (section as HTMLElement).offsetTop;
+              const sectionHeight = section.clientHeight;
+              if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                  currentSection = item.href.substring(1);
+                  break;
+              }
+          }
+      }
+      
+      // If no section is matched (e.g. top of the page), clear active section.
+      const heroSection = document.getElementById('hero');
+      if (heroSection && window.scrollY < heroSection.offsetHeight / 2) {
+          currentSection = '';
+      }
 
-                    if (scrollPosition >= sectionTop - scrollBuffer && scrollPosition < sectionTop + sectionHeight - scrollBuffer) {
-                        currentSection = item.href.substring(1);
-                        break; 
-                    }
-                }
-            }
-        }
+      // If at the very bottom, force 'contact' to be active
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+        currentSection = 'contact';
+      }
 
-        if (currentSection && currentSection !== activeSection) {
-            setActiveSection(currentSection);
-        } else if (!currentSection && activeSection) {
-            // If no section is active (e.g., at the very top), clear it
-            const heroSection = document.querySelector('#hero');
-            if (heroSection && scrollPosition < (heroSection as HTMLElement).offsetHeight - scrollBuffer) {
-                 setActiveSection('');
-            }
-        }
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Run on mount to set initial state
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-}, [activeSection]);
+  }, []);
   
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
