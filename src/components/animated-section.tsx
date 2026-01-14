@@ -12,7 +12,8 @@ export default function AnimatedSection({ children, style }: { children: React.R
       ref={ref}
       style={style}
       className={cn(
-        inView ? "animate-fade-in-up" : "opacity-0"
+        "opacity-0",
+        inView && "animate-fade-in-up"
       )}
     >
       {children}
