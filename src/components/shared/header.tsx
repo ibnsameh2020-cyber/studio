@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Lightbulb, Moon, Sun, Menu, X } from 'lucide-react';
@@ -16,7 +16,8 @@ const navItems = [
 export default function Header() {
   const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+  const observer = useRef<IntersectionObserver | null>(null);
+
   const toggleTheme = useCallback(() => {
     if (document.documentElement.classList.contains('dark')) {
       document.documentElement.classList.remove('dark');
@@ -38,7 +39,7 @@ export default function Header() {
 
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    observer.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -50,10 +51,18 @@ export default function Header() {
     );
 
     const sections = document.querySelectorAll('section[id]');
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach((section) => {
+        if (observer.current) {
+            observer.current.observe(section);
+        }
+    });
 
     return () => {
-      sections.forEach((section) => observer.unobserve(section));
+      sections.forEach((section) => {
+        if(observer.current) {
+            observer.current.unobserve(section)
+        }
+      });
     };
   }, []);
   
