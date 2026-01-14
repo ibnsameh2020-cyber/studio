@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2, Mail, Phone, ArrowRight } from 'lucide-react';
+import { Send, Loader2, Mail, Phone, ArrowRight, Copy } from 'lucide-react';
 import Link from 'next/link';
 
 const contactSchema = z.object({
@@ -83,6 +83,22 @@ export default function ContactSection() {
     });
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: 'Copied!',
+        description: 'Phone number copied to clipboard.',
+      });
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+      toast({
+        title: 'Error',
+        description: 'Failed to copy phone number.',
+        variant: 'destructive',
+      });
+    });
+  };
+
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0 h-full w-full bg-transparent bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
@@ -104,7 +120,10 @@ export default function ContactSection() {
                     </Link>
                     <div className="flex items-center gap-3 text-lg">
                         <Phone className="w-6 h-6 text-primary flex-shrink-0" />
-                        <span>+1 (234) 567-890</span>
+                        <button onClick={() => copyToClipboard('+1 (234) 567-890')} className="flex items-center gap-2 group">
+                            <span>+1 (234) 567-890</span>
+                            <Copy className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
                     </div>
                 </div>
                  <Link href="#hero">
