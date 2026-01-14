@@ -47,7 +47,7 @@ export default function Header() {
           }
         });
       },
-      { rootMargin: "-50% 0px -50% 0px" } // Fire when section is in the middle of the screen
+      { threshold: 0.5, rootMargin: "0px 0px -40% 0px" } // Fire when 50% of the section is visible
     );
 
     const sections = document.querySelectorAll('section[id]');
