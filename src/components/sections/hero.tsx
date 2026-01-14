@@ -35,12 +35,6 @@ export default function HeroSection() {
                 <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
               </Button>
             </Link>
-            <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf">
-                <Button size="lg" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90">
-                    Download CV
-                    <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
-                </Button>
-            </a>
         </div>
       </div>
     </section>
