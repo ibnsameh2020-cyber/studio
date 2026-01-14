@@ -11,7 +11,7 @@ export default function FloatingCvButton() {
   const handleDownload = () => {
     toast({
       title: "Downloading Resume",
-      description: "The download will start in a moment.",
+      description: "Your download has started.",
     });
   };
 
