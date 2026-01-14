@@ -99,12 +99,6 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
-            <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf">
-                <Button size="sm" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90">
-                    Download CV
-                    <Download className="w-4 h-4 ml-2 transition-transform group-hover:translate-y-1" />
-                </Button>
-            </a>
             <Button
               onClick={toggleTheme}
               variant="ghost"
@@ -159,12 +153,6 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-             <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf" className='w-full'>
-                <Button size="lg" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90 w-full text-xl">
-                    Download CV
-                    <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
-                </Button>
-            </a>
           </nav>
         </div>
       )}
