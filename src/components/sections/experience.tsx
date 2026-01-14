@@ -11,6 +11,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+const ArrowRightCurve = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="107" height="121" viewBox="0 0 107 121" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M105.5 1.49998C105.5 1.49998 42.5 10.5 14.5 52.5C-13.5 94.5 30.5 119.5 30.5 119.5" stroke="hsl(var(--border))" strokeWidth="2" strokeLinecap="round" strokeDasharray="6 6"/>
+      <path d="M30.5 119.5L25 113.5" stroke="hsl(var(--border))" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M30.5 119.5L37 114.5" stroke="hsl(var(--border))" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+);
+
+const ArrowLeftCurve = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="107" height="121" viewBox="0 0 107 121" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M1.5 1.49998C1.5 1.49998 64.5 10.5 92.5 52.5C120.5 94.5 76.5 119.5 76.5 119.5" stroke="hsl(var(--border))" strokeWidth="2" strokeLinecap="round" strokeDasharray="6 6"/>
+        <path d="M76.5 119.5L82 113.5" stroke="hsl(var(--border))" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M76.5 119.5L70 114.5" stroke="hsl(var(--border))" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+);
+
+
 export default function ExperienceSection() {
   return (
     <section id="experience">
@@ -25,6 +42,19 @@ export default function ExperienceSection() {
         
         {experience.map((item, index) => (
           <div key={item.id} className="relative flex items-start md:items-center md:justify-center mb-12" style={{ animationDelay: `${index * 100}ms` }}>
+            
+            {/* Arrow Connectors for Mobile */}
+            {index > 0 && index % 2 !== 0 && (
+                <div className="md:hidden absolute -top-16 left-1/2 -translate-x-1/2 z-0">
+                   <ArrowRightCurve />
+                </div>
+            )}
+            {index > 0 && index % 2 === 0 && (
+                <div className="md:hidden absolute -top-16 left-1/2 -translate-x-1/2 z-0">
+                    <ArrowLeftCurve />
+                </div>
+            )}
+
             {/* Mobile View: Icon on left, card on right */}
             <div className="md:hidden flex items-start w-full">
               <div className="absolute left-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
