@@ -118,7 +118,7 @@ export default function ContactSection() {
                     Let's Build Something Great Together
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground">
-                    Have a project in mind, a question, or just want to connect? I'm always open to discussing new ideas and opportunities. Reach out and let's start a conversation.
+                    Have a project in mind or just want to connect? I'm always open to discussing new ideas and opportunities.
                 </p>
                 <div className="space-y-4">
                     <Link href="mailto:hello@johndoe.com" className="inline-flex items-center gap-3 text-lg group">
