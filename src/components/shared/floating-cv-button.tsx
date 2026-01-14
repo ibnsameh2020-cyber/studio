@@ -24,8 +24,8 @@ export default function FloatingCvButton() {
       <Download className="w-6 h-6 flex-shrink-0" />
       <span
         className={cn(
-          "ml-2 font-medium whitespace-nowrap transition-opacity duration-300",
-          isHovered ? "opacity-100" : "opacity-0"
+          "font-medium whitespace-nowrap transition-opacity duration-300",
+          isHovered ? "opacity-100 ml-2" : "opacity-0"
         )}
       >
         Download CV
