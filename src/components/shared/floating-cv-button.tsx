@@ -22,14 +22,15 @@ export default function FloatingCvButton() {
       )}
     >
       <Download className="w-6 h-6 flex-shrink-0" />
-      <span
-        className={cn(
-          "font-medium whitespace-nowrap transition-opacity duration-300",
-          isHovered ? "opacity-100 ml-2" : "opacity-0"
-        )}
-      >
-        Download CV
-      </span>
+      {isHovered && (
+        <span
+          className={cn(
+            "font-medium whitespace-nowrap transition-opacity duration-300 ml-2"
+          )}
+        >
+          Download CV
+        </span>
+      )}
     </a>
   );
 }
