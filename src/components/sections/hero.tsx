@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Download } from 'lucide-react';
 import { useTypingEffect } from '@/hooks/use-typing-effect';
 import Link from 'next/link';
 
@@ -28,12 +28,20 @@ export default function HeroSection() {
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground mb-10">
           I design and build beautiful, high-performance web applications that provide exceptional user experiences.
         </p>
-        <Link href="#projects">
-          <Button size="lg" className="group">
-            View My Work
-            <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
-          </Button>
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+            <Link href="#projects">
+              <Button size="lg" className="group">
+                View My Work
+                <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
+              </Button>
+            </Link>
+            <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf">
+                <Button size="lg" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90">
+                    Download CV
+                    <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
+                </Button>
+            </a>
+        </div>
       </div>
     </section>
   );

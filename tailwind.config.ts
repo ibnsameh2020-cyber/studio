@@ -65,6 +65,8 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        'cv-teal': '#64FFDA',
+        'cv-pine': '#074F57',
       },
       borderRadius: {
         lg: 'var(--radius)',
