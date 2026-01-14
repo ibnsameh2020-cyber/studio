@@ -37,24 +37,6 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
                 />
             </div>
             )}
-            <div className="flex gap-2">
-                {project.githubUrl && (
-                    <Button asChild variant="secondary" className="flex-1">
-                        <Link href={project.githubUrl} target="_blank">
-                            <Github className="w-4 h-4 mr-2" />
-                            View Code
-                        </Link>
-                    </Button>
-                )}
-                {project.liveUrl && (
-                    <Button asChild className="flex-1">
-                        <Link href={project.liveUrl} target="_blank">
-                            <ArrowUpRight className="w-4 h-4 mr-2" />
-                           Live Demo
-                        </Link>
-                    </Button>
-                )}
-            </div>
         </div>
 
         <div className="space-y-4">
