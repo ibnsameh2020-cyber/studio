@@ -101,7 +101,14 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 z-0 h-full w-full bg-transparent bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div 
+          className="absolute inset-0 z-0 h-full w-full bg-transparent"
+          style={{
+            backgroundSize: '24px 24px',
+            backgroundImage:
+              'linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px)',
+          }}
+        ></div>
         <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_500px_at_50%_200px,#A78BFA33,transparent)]"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
