@@ -133,6 +133,16 @@ export default {
             '50%': { transform: 'translate(10%, -20%) scale(1)' },
             '75%': { transform: 'translate(-10%, 15%) scale(0.9)' },
         },
+        'blob-5': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(-25%, 15%) scale(1.1)' },
+          '66%': { transform: 'translate(20%, -15%) scale(0.9)' },
+        },
+        'blob-6': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(15%, 25%) scale(0.9)' },
+          '66%': { transform: 'translate(-15%, -20%) scale(1.1)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -144,6 +154,8 @@ export default {
         'blob-2': 'blob-2 10s infinite ease-in-out',
         'blob-3': 'blob-3 12s infinite ease-in-out',
         'blob-4': 'blob-4 14s infinite ease-in-out',
+        'blob-5': 'blob-5 9s infinite ease-in-out',
+        'blob-6': 'blob-6 11s infinite ease-in-out',
       },
     },
   },
