@@ -17,22 +17,19 @@ export default function TimelineItem({ children, align }: TimelineItemProps) {
 
   const animationClass = () => {
     if (!inView) {
-      if (align === 'left') {
-        return 'opacity-0 translate-x-12';
-      }
-      return 'opacity-0 -translate-x-12';
+      return 'opacity-0';
     }
     if (align === 'left') {
-      return 'opacity-100 translate-x-0 animate-slide-in-from-right';
+      return 'animate-slide-in-from-right';
     }
-    return 'opacity-100 translate-x-0 animate-slide-in-from-left';
+    return 'animate-slide-in-from-left';
   };
 
   return (
     <div
       ref={ref}
       className={cn(
-        "transition-all duration-500",
+        "transition-opacity duration-500",
         animationClass()
       )}
     >
