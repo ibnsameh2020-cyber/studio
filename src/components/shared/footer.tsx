@@ -1,6 +1,10 @@
 
-import { Lightbulb, Facebook, Linkedin, Mail, Phone } from 'lucide-react';
+"use client";
+
+import { Lightbulb, Facebook, Linkedin, Mail, Phone, Copy } from 'lucide-react';
 import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
+
 
 // A simple SVG for WhatsApp as it's not in lucide-react
 const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -34,6 +38,24 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function Footer() {
+  const { toast } = useToast();
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: 'Copied!',
+        description: 'Phone number copied to clipboard.',
+      });
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+      toast({
+        title: 'Error',
+        description: 'Failed to copy phone number.',
+        variant: 'destructive',
+      });
+    });
+  };
+
   return (
     <footer className="bg-background border-t border-border/30">
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -52,7 +74,10 @@ export default function Footer() {
                 </div>
                  <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-primary"/>
-                    <a href="tel:+1234567890" className="hover:text-primary transition-colors">+1 (234) 567-890</a>
+                    <button onClick={() => copyToClipboard('+1 (234) 567-890')} className="flex items-center gap-1 group">
+                        <span className="hover:text-primary transition-colors">+1 (234) 567-890</span>
+                        <Copy className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
                 </div>
             </div>
           </div>
