@@ -38,45 +38,23 @@ export default function Header() {
 
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.body.offsetHeight;
-      const headerOffset = 100; // Adjusted offset for more accuracy
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-50% 0px -50% 0px" } // Fire when section is in the middle of the screen
+    );
 
-      let currentSection = '';
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach((section) => observer.observe(section));
 
-      // Check if user is near the bottom of the page
-      if (scrollPosition + windowHeight >= documentHeight - 100) {
-        currentSection = 'contact';
-      } else {
-        for (const item of navItems) {
-            const section = document.querySelector(item.href) as HTMLElement | null;
-            if (section) {
-                const sectionTop = section.offsetTop - headerOffset;
-                const sectionHeight = section.offsetHeight;
-
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    currentSection = item.href.substring(1);
-                    break; 
-                }
-            }
-        }
-      }
-      
-      const heroSection = document.getElementById('hero');
-      if (heroSection && scrollPosition < heroSection.offsetHeight - headerOffset) {
-        currentSection = '';
-      }
-
-      setActiveSection(currentSection);
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
     };
-
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
-
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
   const handleMenuLinkClick = () => {
