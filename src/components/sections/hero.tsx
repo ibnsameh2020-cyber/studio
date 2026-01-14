@@ -37,7 +37,7 @@ export default function HeroSection() {
             </Link>
             <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf">
                 <Button size="lg" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90">
-                    Download CV
+                    Download Resume
                     <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
                 </Button>
             </a>

@@ -13,12 +13,12 @@ export default function FloatingCvButton() {
     <a
       href="/resume.pdf"
       download="Sameh-Moussa-Resume.pdf"
-      aria-label="Download CV"
+      aria-label="Download Resume"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "fixed bottom-6 right-6 flex items-center justify-center h-14 bg-primary text-primary-foreground shadow-lg z-50 rounded-full transition-all duration-300 ease-in-out",
-        isHovered ? "w-40" : "w-14"
+        isHovered ? "w-44" : "w-14"
       )}
     >
       <Download className="w-6 h-6 flex-shrink-0" />
@@ -28,7 +28,7 @@ export default function FloatingCvButton() {
             "font-medium whitespace-nowrap transition-opacity duration-300 ml-2"
           )}
         >
-          Download CV
+          Download Resume
         </span>
       )}
     </a>
