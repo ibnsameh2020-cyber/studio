@@ -134,7 +134,7 @@ export default function ContactSection() {
                     </div>
                 </div>
                  <Link href="#hero">
-                    <Button variant="ghost" className="group text-lg p-0 h-auto hover:bg-transparent">
+                    <Button variant="outline" className="group">
                         Back to Top
                         <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                     </Button>
