@@ -121,7 +121,7 @@ export default function ContactSection() {
                     <div className="flex items-center gap-3 text-lg">
                         <Phone className="w-6 h-6 text-primary flex-shrink-0" />
                         <button onClick={() => copyToClipboard('+1 (234) 567-890')} className="flex items-center gap-2 group">
-                            <span>+1 (234) 567-890</span>
+                            <span className="group-hover:text-primary transition-colors">+1 (234) 567-890</span>
                             <Copy className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                     </div>
