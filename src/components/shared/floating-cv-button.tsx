@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +17,7 @@ export default function FloatingCvButton() {
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "fixed bottom-6 right-6 flex items-center justify-center h-14 bg-primary text-primary-foreground shadow-lg z-50 rounded-full transition-all duration-300 ease-in-out",
-        isHovered ? "w-44" : "w-14"
+        isHovered ? "w-52" : "w-14"
       )}
     >
       <Download className="w-6 h-6 flex-shrink-0" />
