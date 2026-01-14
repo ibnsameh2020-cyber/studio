@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2 } from 'lucide-react';
+import { Send, Loader2, Mail, Phone } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
 
 const contactSchema = z.object({
@@ -85,76 +85,94 @@ export default function ContactSection() {
 
   return (
     <section id="contact">
-      <div className="max-w-3xl mx-auto">
-        <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl md:text-5xl font-headline font-bold">Get In Touch</CardTitle>
-            <CardDescription className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-              Have a question or want to work together? Drop me a message.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                 <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Your Name" {...field} className="bg-background/70"/>
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                            <Input placeholder="your.email@example.com" {...field} className="bg-background/70"/>
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Message</FormLabel>
-                        <FormControl>
-                            <Textarea placeholder="Your message..." rows={5} {...field} className="bg-background/70"/>
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <div className="text-right">
-                    <Button type="submit" className="group w-full md:w-auto" disabled={isPending}>
-                        {isPending ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Sending...
-                          </>
-                        ) : (
-                          <>
-                            Send Message
-                            <Send className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                          </>
-                        )}
-                    </Button>
+      <div className="max-w-6xl mx-auto">
+        <Card className="bg-card/50 backdrop-blur-lg border border-border/30 w-full transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 overflow-hidden">
+            <div className="grid md:grid-cols-2">
+                <div className="p-8 md:p-12 space-y-8 bg-black/10 relative">
+                    <div className="absolute inset-0 z-0 h-full w-full bg-transparent bg-[linear-gradient(to_right,#8080800c_1px,transparent_1px),linear-gradient(to_bottom,#8080800c_1px,transparent_1px)] bg-[size:18px_18px]"></div>
+                    <div className="relative z-10">
+                        <h2 className="text-3xl md:text-4xl font-headline font-bold">Let's Connect</h2>
+                        <p className="text-muted-foreground mt-4 text-lg">
+                            Have a project in mind, a question, or just want to say hello? I'd love to hear from you. Fill out the form, and I'll get back to you as soon as possible.
+                        </p>
+                        <div className="mt-8 space-y-4 text-lg">
+                            <a href="mailto:hello@johndoe.com" className="flex items-center gap-4 group">
+                                <Mail className="w-6 h-6 text-primary flex-shrink-0" />
+                                <span className="group-hover:text-primary transition-colors">hello@johndoe.com</span>
+                            </a>
+                            <a href="tel:+1234567890" className="flex items-center gap-4 group">
+                                <Phone className="w-6 h-6 text-primary flex-shrink-0" />
+                                <span className="group-hover:text-primary transition-colors">+1 (234) 567-890</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-              </form>
-            </Form>
-          </CardContent>
+
+                <div className="p-8 md:p-12">
+                    <Form {...form}>
+                    <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Your Name" {...field} className="bg-background/70"/>
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="your.email@example.com" {...field} className="bg-background/70"/>
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="message"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Message</FormLabel>
+                                <FormControl>
+                                    <Textarea placeholder="How can I help you?" rows={5} {...field} className="bg-background/70"/>
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="text-right">
+                            <Button type="submit" className="group w-full md:w-auto" disabled={isPending}>
+                                {isPending ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Sending...
+                                </>
+                                ) : (
+                                <>
+                                    Send Message
+                                    <Send className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                                </>
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+                    </Form>
+                </div>
+            </div>
         </Card>
       </div>
     </section>
   );
 }
+
+    
