@@ -47,7 +47,7 @@ export default function Header() {
           }
         });
       },
-      { threshold: 0.5, rootMargin: "0px 0px -40% 0px" } // Fire when 50% of the section is visible
+      { rootMargin: "-30% 0px -70% 0px" } // More reliable trigger point
     );
 
     const sections = document.querySelectorAll('section[id]');
@@ -117,7 +117,7 @@ export default function Header() {
               onClick={toggleTheme}
               variant="ghost"
               size="icon"
-              className="mr-2 hover:bg-transparent hover:text-primary focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="mr-2 hover:bg-transparent hover:text-inherit focus-visible:ring-0 focus-visible:ring-offset-0"
               aria-label="Toggle theme"
             >
               <Sun className="w-5 h-5 text-primary hidden dark:block" />
