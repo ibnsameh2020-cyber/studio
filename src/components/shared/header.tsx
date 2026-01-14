@@ -147,7 +147,7 @@ export default function Header() {
                 onClick={handleMenuLinkClick}
                 className={cn(
                   'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
-                  activeSection === item.href.substring(1) ? 'text-primary bg-primary/10' : 'text-foreground'
+                  activeSection === item.href.substring(1) ? 'bg-primary text-primary-foreground' : 'text-foreground'
                 )}
               >
                 {item.label}
