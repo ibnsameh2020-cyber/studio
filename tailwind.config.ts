@@ -127,6 +127,12 @@ export default {
             '50%': { transform: 'translate(-20%, -10%) scale(1)' },
             '75%': { transform: 'translate(15%, -25%) scale(0.9)' },
         },
+        'blob-4': {
+            '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+            '25%': { transform: 'translate(-15%, 10%) scale(1.1)' },
+            '50%': { transform: 'translate(10%, -20%) scale(1)' },
+            '75%': { transform: 'translate(-10%, 15%) scale(0.9)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -137,6 +143,7 @@ export default {
         'blob-1': 'blob-1 8s infinite ease-in-out',
         'blob-2': 'blob-2 10s infinite ease-in-out',
         'blob-3': 'blob-3 12s infinite ease-in-out',
+        'blob-4': 'blob-4 14s infinite ease-in-out',
       },
     },
   },
