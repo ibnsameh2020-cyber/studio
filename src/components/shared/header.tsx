@@ -77,7 +77,7 @@ export default function Header() {
           'fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 transition-all duration-300'
         )}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between bg-background/50 backdrop-blur-lg border border-border/50 shadow-lg rounded-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full">
           <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
             <Lightbulb className="w-6 h-6 text-primary" />
             <span>Sameh insights</span>
