@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
+import FloatingCvButton from '@/components/shared/floating-cv-button';
 
 export const metadata: Metadata = {
   title: 'Sameh insights | A Modern Portfolio',
@@ -28,6 +29,7 @@ export default function RootLayout({
           <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
           {children}
         </main>
+        <FloatingCvButton />
         <Footer />
         <Toaster />
       </body>
