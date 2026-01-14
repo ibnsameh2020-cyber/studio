@@ -133,8 +133,8 @@ export default function ContactSection() {
                         </button>
                     </div>
                 </div>
-                 <Link href="#hero">
-                    <Button variant="outline" className="group">
+                 <Link href="#hero" className="inline-block mt-8">
+                    <Button variant="outline" className="group bg-primary/10 border-primary/50 text-primary hover:bg-primary/20">
                         Back to Top
                         <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                     </Button>
