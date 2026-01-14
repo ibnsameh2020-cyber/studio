@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import TimelineItem from './timeline-item';
 
 export default function ExperienceSection() {
   return (
@@ -25,47 +26,53 @@ export default function ExperienceSection() {
         <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border md:hidden"></div>
         
         {experience.map((item, index) => (
-          <div key={item.id} className="relative flex md:items-center mb-12" style={{ animationDelay: `${index * 100}ms` }}>
-            
-            {/* Mobile View: Icon on left, card on right */}
-            <div className="md:hidden flex items-start w-full">
-              <div className="absolute left-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
-                  <Briefcase className="w-4 h-4 text-primary-foreground" />
+           <TimelineItem
+            key={item.id}
+            align={index % 2 === 0 ? 'left' : 'right'}
+            isFirst={index === 0}
+            isLast={index === experience.length - 1}
+          >
+            <div className="relative flex md:items-center mb-12">
+              
+              {/* Mobile View: Icon on left, card on right */}
+              <div className="md:hidden flex items-start w-full">
+                <div className="absolute left-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
+                    <Briefcase className="w-4 h-4 text-primary-foreground" />
+                  </div>
+                </div>
+                <div className="pl-12 w-full">
+                  <ExperienceCard item={item} />
                 </div>
               </div>
-              <div className="pl-12 w-full">
-                {/* Re-usable Card Component */}
-                <ExperienceCard item={item} />
-              </div>
-            </div>
 
-            {/* Desktop View */}
-            <div className="hidden md:flex w-full items-center">
-              {index % 2 === 0 ? (
-                // Left side card
-                <div className="w-full flex justify-end">
-                  <div className="w-1/2 pr-16">
-                    <ExperienceCard item={item} alignment="right" />
+              {/* Desktop View */}
+              <div className="hidden md:flex w-full items-center">
+                {index % 2 === 0 ? (
+                  // Left side card
+                  <div className="w-full flex justify-end">
+                    <div className="w-1/2 pr-16">
+                      <ExperienceCard item={item} alignment="right" />
+                    </div>
+                    <div className="w-1/2"></div>
                   </div>
-                  <div className="w-1/2"></div>
-                </div>
-              ) : (
-                // Right side card
-                <div className="w-full flex justify-start">
-                  <div className="w-1/2"></div>
-                  <div className="w-1/2 pl-16">
-                    <ExperienceCard item={item} alignment="left" />
+                ) : (
+                  // Right side card
+                  <div className="w-full flex justify-start">
+                    <div className="w-1/2"></div>
+                    <div className="w-1/2 pl-16">
+                      <ExperienceCard item={item} alignment="left" />
+                    </div>
                   </div>
-                </div>
-              )}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
-                  <Briefcase className="w-4 h-4 text-primary-foreground" />
+                )}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
+                    <Briefcase className="w-4 h-4 text-primary-foreground" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </TimelineItem>
         ))}
       </div>
     </section>
