@@ -5,11 +5,20 @@ import { Button } from '@/components/ui/button';
 import { ArrowDown, Download } from 'lucide-react';
 import { useTypingEffect } from '@/hooks/use-typing-effect';
 import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
 
 const heroTexts = ["Creative Developer", "UI/UX Enthusiast", "Problem Solver"];
 
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
+  const { toast } = useToast();
+
+  const handleDownload = () => {
+    toast({
+      title: "Downloading Resume",
+      description: "Your download will begin shortly.",
+    });
+  };
 
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-20">
@@ -33,7 +42,7 @@ export default function HeroSection() {
                 <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
               </Button>
             </Link>
-            <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf">
+            <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf" onClick={handleDownload}>
                 <Button size="lg" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90">
                     Download Resume
                     <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />

@@ -3,13 +3,24 @@
 
 import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 export default function FloatingCvButton() {
+  const { toast } = useToast();
+
+  const handleDownload = () => {
+    toast({
+      title: "Downloading Resume",
+      description: "Your download will begin shortly.",
+    });
+  };
+
   return (
     <a
       href="/resume.pdf"
       download="Sameh-Moussa-Resume.pdf"
       aria-label="Download Resume"
+      onClick={handleDownload}
       className={cn(
         "group fixed bottom-6 right-6 flex items-center justify-center h-14 w-14 bg-primary text-primary-foreground shadow-lg z-50 rounded-full transition-all duration-300 ease-in-out",
         "hover:w-52"
