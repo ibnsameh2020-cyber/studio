@@ -12,18 +12,16 @@ type IntersectionObserverOptions = {
 export function useInView(
   options: IntersectionObserverOptions = {}
 ): [React.RefObject<any>, boolean] {
-  const { threshold = 0.1, rootMargin = '0px', triggerOnce = true } = options;
+  const { threshold = 0.1, rootMargin = '0px', triggerOnce = false } = options;
   const [inView, setInView] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          if (triggerOnce && ref.current) {
-            observer.unobserve(ref.current);
-          }
+        setInView(entry.isIntersecting);
+        if (entry.isIntersecting && triggerOnce && ref.current) {
+          observer.unobserve(ref.current);
         }
       },
       { threshold, rootMargin }

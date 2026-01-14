@@ -13,23 +13,26 @@ type TimelineItemProps = {
 };
 
 export default function TimelineItem({ children, align }: TimelineItemProps) {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.5 });
 
   const animationClass = () => {
     if (!inView) {
-      return 'opacity-0';
+      if (align === 'left') {
+        return 'opacity-0 translate-x-12';
+      }
+      return 'opacity-0 -translate-x-12';
     }
     if (align === 'left') {
-      return 'animate-slide-in-from-right';
+      return 'opacity-100 translate-x-0 animate-slide-in-from-right';
     }
-    return 'animate-slide-in-from-left';
+    return 'opacity-100 translate-x-0 animate-slide-in-from-left';
   };
 
   return (
     <div
       ref={ref}
       className={cn(
-        "transition-opacity duration-500",
+        "transition-all duration-500",
         animationClass()
       )}
     >
