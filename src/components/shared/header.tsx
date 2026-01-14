@@ -42,37 +42,36 @@ export default function Header() {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.body.offsetHeight;
-      const headerOffset = 80; // Height of the header
-
-      // Check if user is at the bottom of the page
-      if (windowHeight + scrollPosition >= documentHeight - 50) {
-        setActiveSection('contact');
-        return;
-      }
-
-      // Check if user is at the top of the page
-      const heroSection = document.getElementById('hero');
-      if (heroSection && scrollPosition < heroSection.offsetHeight - headerOffset) {
-        setActiveSection('');
-        return;
-      }
+      const headerOffset = 100; // Adjusted offset for more accuracy
 
       let currentSection = '';
-      for (const item of navItems) {
-        const section = document.querySelector(item.href) as HTMLElement | null;
-        if (section) {
-          const sectionTop = section.offsetTop - headerOffset;
-          const sectionBottom = sectionTop + section.offsetHeight;
 
-          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-            currentSection = item.href.substring(1);
-            break;
-          }
+      // Check if user is near the bottom of the page
+      if (scrollPosition + windowHeight >= documentHeight - 100) {
+        currentSection = 'contact';
+      } else {
+        for (const item of navItems) {
+            const section = document.querySelector(item.href) as HTMLElement | null;
+            if (section) {
+                const sectionTop = section.offsetTop - headerOffset;
+                const sectionHeight = section.offsetHeight;
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    currentSection = item.href.substring(1);
+                    break; 
+                }
+            }
         }
       }
       
+      const heroSection = document.getElementById('hero');
+      if (heroSection && scrollPosition < heroSection.offsetHeight - headerOffset) {
+        currentSection = '';
+      }
+
       setActiveSection(currentSection);
     };
+
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial check
