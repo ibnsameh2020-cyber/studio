@@ -16,7 +16,7 @@ export default function HeroSection() {
   const handleDownload = () => {
     toast({
       title: "Downloading Resume",
-      description: "Your download will begin shortly.",
+      description: "The download will start in a moment.",
     });
   };
 
