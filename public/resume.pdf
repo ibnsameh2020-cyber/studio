@@ -1,1 +1,44 @@
-This is a placeholder PDF. Please replace this file with your actual resume.
+%PDF-1.4
+1 0 obj
+<< /Title (My Resume) /Creator (Studio) >>
+endobj
+2 0 obj
+<< /Type /Catalog /Pages 3 0 R >>
+endobj
+3 0 obj
+<< /Type /Pages /Kids [4 0 R] /Count 1 >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 3 0 R /Resources 5 0 R /Contents 6 0 R /MediaBox [0 0 612 792] >>
+endobj
+5 0 obj
+<< /Font << /F1 7 0 R >> >>
+endobj
+6 0 obj
+<< /Length 52 >>
+stream
+BT
+/F1 24 Tf
+100 700 Td
+(Please replace this with your actual resume.) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000010 00000 n 
+0000000078 00000 n 
+0000000129 00000 n 
+0000000181 00000 n 
+0000000293 00000 n 
+0000000355 00000 n 
+0000000456 00000 n 
+trailer
+<< /Size 8 /Root 2 0 R /Info 1 0 R >>
+startxref
+525
+%%EOF
