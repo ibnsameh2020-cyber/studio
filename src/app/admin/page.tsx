@@ -109,17 +109,23 @@ export default function AdminPage() {
       multiple: false,
       sources: ['local', 'url', 'camera'],
     }, (error: any, result: any) => {
-      if (result && result.event === "success") {
+      // Check for success
+      if (!error && result && result.event === "success") {
         form.setValue('imageUrl', result.info.secure_url);
         toast({
           title: 'Image Uploaded',
           description: 'Your image has been successfully uploaded.',
         });
-      } else if (error) {
-        // This is not a real error, just the user closing the widget.
-        if (result && result.event === 'close') {
-          return;
-        }
+        return;
+      }
+      
+      // Check for user closing the widget, which is not a real error.
+      if (result && result.event === 'close') {
+        return;
+      }
+
+      // Handle actual errors
+      if (error) {
         console.error('Cloudinary Upload Error: ', error, result);
         toast({
             title: 'Upload Error',
@@ -370,5 +376,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
