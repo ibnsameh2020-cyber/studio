@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ArrowRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { Timestamp } from 'firebase/firestore';
+import Image from 'next/image';
 
 type ArticleCardProps = {
   article: Article;
@@ -28,6 +29,16 @@ export default function ArticleCard({ article, isFeatured = false }: ArticleCard
           "bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300",
           "hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2"
         )}>
+            {article.imageUrl && (
+              <div className="relative aspect-video overflow-hidden">
+                <Image
+                  src={article.imageUrl}
+                  alt={article.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            )}
             <div className={cn("flex flex-col flex-grow p-6")}>
               <CardHeader className="p-0">
                 <CardTitle className="font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
