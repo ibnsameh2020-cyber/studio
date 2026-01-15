@@ -3,8 +3,8 @@
     {
       "id": "project-1",
       "description": "A placeholder image for the first project.",
-      "imageUrl": "https://images.unsplash.com/photo-1742308518213-c28192d056d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlLWNvbW1lcmNlfGVufDB8fHx8MTc2ODM5ODQ5OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "e-commerce"
+      "imageUrl": "https://images.unsplash.com/photo-1569918190173-6a5792908184?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkYW18ZW58MHx8fHwxNzY4NDg4NzM5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dam"
     },
     {
       "id": "project-2",
