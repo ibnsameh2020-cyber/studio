@@ -8,7 +8,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp } from 'firebase/firestore';
-import Image from 'next/image';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,7 +26,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Trash2, Edit, Upload, X } from "lucide-react";
+import { Loader2, Trash2, Edit } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
 import { useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
@@ -38,7 +37,6 @@ const articleSchema = z.object({
   description: z.string().min(10, "Short description must be at least 10 characters."),
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
-  imageUrl: z.string().optional(),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -52,12 +50,6 @@ const createSlug = (title: string) => {
       .replace(/-+/g, '-');
 };
 
-declare global {
-    interface Window {
-        cloudinary: any;
-    }
-}
-
 export default function AdminPage() {
   const { user, loading, isAdmin } = useUser();
   const router = useRouter();
@@ -67,7 +59,6 @@ export default function AdminPage() {
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const form = useForm<ArticleFormValues>({
     resolver: zodResolver(articleSchema),
@@ -76,7 +67,6 @@ export default function AdminPage() {
       description: "",
       content: "",
       tags: "",
-      imageUrl: "",
     },
   });
 
@@ -86,48 +76,6 @@ export default function AdminPage() {
     }
   }, [user, loading, isAdmin, router]);
 
-  const handleCloudinaryUpload = () => {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-
-    if (!cloudName || !uploadPreset) {
-        console.error("Cloudinary credentials are not set in .env file. Please ensure NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET are set.");
-        toast({
-            title: "Configuration Error",
-            description: "Cloudinary is not configured. Please check your environment variables and restart the server.",
-            variant: "destructive",
-        });
-        return;
-    }
-    
-    const myWidget = window.cloudinary.createUploadWidget({
-        cloudName: cloudName,
-        uploadPreset: uploadPreset,
-        sources: ['local', 'url', 'camera'],
-        multiple: false,
-        cropping: true,
-        croppingAspectRatio: 16/9,
-    }, (error: any, result: any) => { 
-        if (!error && result && result.event === "success") {
-            setImageUrl(result.info.secure_url);
-            form.setValue('imageUrl', result.info.secure_url);
-        } else if (error) {
-            console.error('Cloudinary Upload Error: ', error);
-            toast({
-                title: 'Upload Error',
-                description: `Something went wrong during upload. ${error.message || 'Please try again.'}`,
-                variant: 'destructive',
-            });
-        }
-    });
-
-    myWidget.open();
-  }
-
-  const handleRemoveImage = () => {
-    setImageUrl(null);
-    form.setValue('imageUrl', '');
-  };
 
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!firestore) {
@@ -142,7 +90,6 @@ export default function AdminPage() {
         await setDoc(articleRef, {
             id: slug,
             ...data,
-            imageUrl: imageUrl || data.imageUrl || null,
             author: user?.displayName || "Admin",
             date: serverTimestamp(),
             tags: data.tags.split(',').map(tag => tag.trim()),
@@ -154,7 +101,6 @@ export default function AdminPage() {
         });
         form.reset();
         setEditingArticleId(null);
-        setImageUrl(null);
     } catch (error: any) {
         toast({
             title: "Error",
@@ -171,9 +117,7 @@ export default function AdminPage() {
       description: article.description,
       content: article.content,
       tags: Array.isArray(article.tags) ? article.tags.join(', ') : '',
-      imageUrl: article.imageUrl,
     });
-    setImageUrl(article.imageUrl || null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
@@ -197,7 +141,6 @@ export default function AdminPage() {
   const cancelEdit = () => {
     setEditingArticleId(null);
     form.reset();
-    setImageUrl(null);
   }
   
   const formatDate = (date: any) => {
@@ -259,25 +202,6 @@ export default function AdminPage() {
                         </FormItem>
                     )}
                 />
-                 <FormItem>
-                    <FormLabel>Cover Image</FormLabel>
-                    <FormControl>
-                        <Button type="button" variant="outline" className="w-full" onClick={handleCloudinaryUpload}>
-                            <Upload className="w-4 h-4 mr-2" />
-                            Upload an Image
-                        </Button>
-                    </FormControl>
-                    {(imageUrl || form.getValues('imageUrl')) && (
-                        <div className="mt-4 relative group aspect-video w-full rounded-md overflow-hidden border">
-                            <Image src={imageUrl || form.getValues('imageUrl') || ''} alt="Uploaded preview" fill className="object-cover"/>
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <Button type="button" variant="destructive" size="icon" onClick={handleRemoveImage}>
-                                    <Trash2 className="w-5 h-5"/>
-                                </Button>
-                            </div>
-                        </div>
-                    )}
-                 </FormItem>
                 <FormField
                     control={form.control}
                     name="content"
@@ -372,5 +296,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    

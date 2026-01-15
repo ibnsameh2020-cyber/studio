@@ -33,12 +33,6 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
             </div>
         </div>
 
-        {article.imageUrl && (
-            <div className="relative aspect-video rounded-lg overflow-hidden my-8 border shadow-lg">
-                <Image src={article.imageUrl} alt={article.title} fill className="object-cover"/>
-            </div>
-        )}
-
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
           {article.content}
         </article>

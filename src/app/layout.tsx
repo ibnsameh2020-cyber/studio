@@ -6,7 +6,6 @@ import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
 import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
-import Script from 'next/script';
 import { ThemeProvider } from '@/components/shared/theme-provider';
 
 export const metadata: Metadata = {
@@ -44,7 +43,6 @@ export default function RootLayout({
             <Toaster />
           </FirebaseClientProvider>
         </ThemeProvider>
-        <Script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript" />
       </body>
     </html>
   );
