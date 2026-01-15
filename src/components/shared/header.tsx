@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
-import { ThemeToggle } from './theme-toggle';
 
 const navItems = [
   { href: '#projects', label: 'Projects' },
@@ -128,7 +127,6 @@ export default function Header() {
                   </Button>
                 </Link>
               )}
-              <ThemeToggle />
             {loading ? (
               <Skeleton className="h-10 w-10 rounded-full" />
             ) : user ? (
@@ -166,7 +164,6 @@ export default function Header() {
           
           {/* Mobile Nav */}
           <div className="md:hidden flex items-center">
-            <ThemeToggle />
             {loading ? (
               <Skeleton className="h-8 w-8 rounded-full" />
             ) : user ? (

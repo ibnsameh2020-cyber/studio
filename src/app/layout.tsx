@@ -8,6 +8,7 @@ import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/shared/theme-provider';
+import FloatingThemeToggle from '@/components/shared/floating-theme-toggle';
 
 export const metadata: Metadata = {
   title: 'Sameh insights | A Modern Portfolio',
@@ -39,6 +40,7 @@ export default function RootLayout({
               <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
               {children}
             </main>
+            <FloatingThemeToggle />
             <FloatingCvButton />
             <Footer />
             <Toaster />
