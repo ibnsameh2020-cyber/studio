@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck } from 'lucide-react';
+import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser } from '@/firebase';
 import {
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
+import { useTheme } from 'next-themes';
 
 const navItems = [
   { href: '#projects', label: 'Projects' },
@@ -32,6 +33,11 @@ export default function Header() {
 
   const { user, loading, isAdmin } = useUser();
   const { signOut } = useAuth();
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
 
   useEffect(() => {
@@ -94,7 +100,7 @@ export default function Header() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 transition-all duration-300'
+          'fixed top-0 left-0 right-0 z-50 flex items-start justify-center pt-4 transition-all duration-300'
         )}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full">
@@ -214,6 +220,20 @@ export default function Header() {
             </Button>
           </div>
         </div>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleTheme}
+          className={cn(
+            "group h-16 w-16 rounded-full transition-all duration-300 ease-in-out ml-4",
+            "bg-background/30 backdrop-blur-lg border-border/50 shadow-lg"
+          )}
+          aria-label="Toggle theme"
+        >
+          <Sun className="h-[1.8rem] w-[1.8rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.8rem] w-[1.8rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
       </header>
 
       {/* Mobile Menu Panel */}
