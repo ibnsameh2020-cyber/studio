@@ -109,15 +109,12 @@ export default function AdminPage() {
             setImageUrl(result.info.secure_url);
             form.setValue('imageUrl', result.info.secure_url);
         } else if (error) {
-            // This prevents an error from being logged when the user closes the widget.
-            if (!(error.message && error.message.includes("User closed the widget"))) {
-              console.error('Cloudinary Upload Error: ', error);
-              toast({
-                  title: 'Upload Error',
-                  description: `Something went wrong during upload. ${error.message || 'Please try again.'}`,
-                  variant: 'destructive'
-              });
-            }
+            console.error('Cloudinary Upload Error: ', error);
+            toast({
+                title: 'Upload Error',
+                description: `Something went wrong during upload. ${error.message}`,
+                variant: 'destructive'
+            });
         }
     });
     myWidget.open();
