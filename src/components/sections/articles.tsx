@@ -5,6 +5,8 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { Card } from '../ui/card';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function ArticlesSection() {
   const recentArticles = articles.slice(0, 3);
@@ -40,22 +42,36 @@ export default function ArticlesSection() {
                 </div>
                 
                 <div className="space-y-4">
-                    {recentArticles.map((article) => (
+                    {recentArticles.map((article) => {
+                      const articleImage = PlaceHolderImages.find(img => img.id === article.imagePlaceholderId);
+                      return (
                         <Link href={`/articles/${article.id}`} key={article.id}>
-                            <Card className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
-                                <div>
-                                    <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors">{article.title}</h3>
+                            <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
+                                {articleImage && (
+                                  <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-border/20 shadow-inner">
+                                    <Image
+                                      src={articleImage.imageUrl}
+                                      alt={article.title}
+                                      fill
+                                      data-ai-hint={articleImage.imageHint}
+                                      className="object-cover"
+                                    />
+                                  </div>
+                                )}
+                                <div className="flex-grow">
+                                    <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                                         <Calendar className="w-3 h-3" />
                                         <span>{new Date(article.date).toLocaleDateString()}</span>
                                     </div>
                                 </div>
-                                <div className="text-primary opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0">
+                                <div className="text-primary opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0 ml-auto">
                                     <ArrowRight className="w-5 h-5" />
                                 </div>
                             </Card>
                         </Link>
-                    ))}
+                      );
+                    })}
                 </div>
             </div>
         </div>
