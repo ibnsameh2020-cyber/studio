@@ -89,7 +89,7 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
             <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    <span>{article.author}</span>
+                    <span>Eng. Sameh Moussa</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />

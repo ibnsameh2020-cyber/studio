@@ -152,7 +152,7 @@ export default function AdminPage() {
         await setDoc(articleRef, {
             id: slug,
             ...data,
-            author: user?.displayName || "Admin",
+            author: "Eng. Sameh Moussa",
             date: serverTimestamp(),
             tags: data.tags.split(',').map(tag => tag.trim()),
         }, { merge: true });
