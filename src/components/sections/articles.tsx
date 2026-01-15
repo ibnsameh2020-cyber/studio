@@ -31,7 +31,7 @@ export default function ArticlesSection() {
                     <p className="text-base text-muted-foreground">
                         Explore my latest thoughts on web development, design, and more.
                     </p>
-                     <Link href="/articles">
+                     <Link href="/articles" className="inline-block mt-4">
                         <Button variant="outline" className="group">
                             View All Articles
                             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
