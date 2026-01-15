@@ -109,14 +109,18 @@ export default function AdminPage() {
       multiple: false,
       sources: ['local', 'url', 'camera'],
     }, (error: any, result: any) => {
-      if (!error && result && result.event === "success") {
+      if (result && result.event === "success") {
         form.setValue('imageUrl', result.info.secure_url);
         toast({
           title: 'Image Uploaded',
           description: 'Your image has been successfully uploaded.',
         });
       } else if (error) {
-        console.error('Cloudinary Upload Error: ', error);
+        // This is not a real error, just the user closing the widget.
+        if (result && result.event === 'close') {
+          return;
+        }
+        console.error('Cloudinary Upload Error: ', error, result);
         toast({
             title: 'Upload Error',
             description: `Something went wrong during upload. Please try again.`,
