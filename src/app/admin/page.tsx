@@ -43,11 +43,13 @@ const articleSchema = z.object({
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
+
 type UploadWidgetResult = {
     info?: {
         secure_url: string;
     }
 }
+
 const createSlug = (title: string) => {
     return title
       .toLowerCase()
@@ -193,6 +195,10 @@ export default function AdminPage() {
             <p>You do not have access to this page.</p>
         </div>
     );
+  }
+
+  if (!process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET) {
+    console.error('NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET is missing from .env file.');
   }
 
   return (
@@ -357,3 +363,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
