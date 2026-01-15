@@ -9,6 +9,8 @@ import { Card } from '../ui/card';
 import { useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 const formatDate = (date: any) => {
     if (!date) return '';
@@ -62,9 +64,19 @@ export default function ArticlesSection() {
                       return (
                         <Link href={`/articles/${article.id}`} key={article.id}>
                             <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
-                                <div className="flex-grow">
+                                {article.imageUrl && (
+                                  <div className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
+                                      <Image
+                                          src={article.imageUrl}
+                                          alt={article.title}
+                                          fill
+                                          className="object-cover"
+                                      />
+                                  </div>
+                                )}
+                                <div className={cn("flex-grow", article.language === 'rtl' && 'text-right')}>
                                     <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
-                                    <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                                    <div className={cn("flex items-center gap-2 text-xs text-muted-foreground mt-1", article.language === 'rtl' && 'justify-end')}>
                                         <Calendar className="w-3 h-3" />
                                         <span>{formatDate(article.date)}</span>
                                     </div>
