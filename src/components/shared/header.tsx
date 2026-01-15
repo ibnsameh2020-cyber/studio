@@ -31,7 +31,7 @@ export default function Header() {
   const observer = useRef<IntersectionObserver | null>(null);
 
   const { user, loading, isAdmin } = useUser();
-  const { signInWithGoogle, signOut } = useAuth();
+  const { signOut } = useAuth();
 
 
   useEffect(() => {
@@ -153,9 +153,11 @@ export default function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-               <Button onClick={signInWithGoogle} variant="ghost" size="icon" className="w-10 h-10 rounded-full">
-                <LogIn className="w-5 h-5 text-primary" />
-              </Button>
+                <Link href="/login">
+                    <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full">
+                        <LogIn className="w-5 h-5 text-primary" />
+                    </Button>
+                </Link>
             )}
           </div>
           
@@ -193,9 +195,11 @@ export default function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button onClick={signInWithGoogle} variant="ghost" size="icon" className="mr-2">
-                <LogIn className="w-5 h-5" />
-              </Button>
+              <Link href="/login">
+                <Button variant="ghost" size="icon" className="mr-2">
+                  <LogIn className="w-5 h-5" />
+                </Button>
+              </Link>
             )}
             <Button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -233,5 +237,3 @@ export default function Header() {
     </>
   );
 }
-
-
