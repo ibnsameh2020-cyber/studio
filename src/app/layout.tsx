@@ -6,6 +6,7 @@ import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
 import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Sameh insights | A Modern Portfolio',
@@ -35,6 +36,7 @@ export default function RootLayout({
           <Footer />
           <Toaster />
         </FirebaseClientProvider>
+        <Script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript" />
       </body>
     </html>
   );

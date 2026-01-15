@@ -5,6 +5,7 @@ import type { Article } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User } from 'lucide-react';
 import { Timestamp } from 'firebase/firestore';
+import Image from 'next/image';
 
 const formatDate = (date: any) => {
   if (!date) return '';
@@ -31,6 +32,12 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
                 </div>
             </div>
         </div>
+
+        {article.imageUrl && (
+            <div className="relative aspect-video rounded-lg overflow-hidden my-8 border shadow-lg">
+                <Image src={article.imageUrl} alt={article.title} fill className="object-cover"/>
+            </div>
+        )}
 
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
           {article.content}

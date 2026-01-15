@@ -28,4 +28,5 @@ export type Article = {
     author: string;
     date: Timestamp | Date | string;
     tags: string[];
+    imageUrl?: string;
 };
