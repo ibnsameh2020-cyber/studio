@@ -102,21 +102,25 @@ export default function AdminPage() {
     
     const myWidget = window.cloudinary.createUploadWidget({
         cloudName: cloudName,
-        uploadPreset: uploadPreset
+        uploadPreset: uploadPreset,
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        cropping: true,
+        croppingAspectRatio: 16/9,
     }, (error: any, result: any) => { 
-        if (result && result.event === "success") { 
-            console.log('Done! Here is the image info: ', result.info);
+        if (!error && result && result.event === "success") {
             setImageUrl(result.info.secure_url);
             form.setValue('imageUrl', result.info.secure_url);
         } else if (error) {
             console.error('Cloudinary Upload Error: ', error);
             toast({
                 title: 'Upload Error',
-                description: `Something went wrong during upload. ${error.message}`,
-                variant: 'destructive'
+                description: `Something went wrong during upload. ${error.message || 'Please try again.'}`,
+                variant: 'destructive',
             });
         }
     });
+
     myWidget.open();
   }
 
@@ -368,7 +372,5 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
 
     
