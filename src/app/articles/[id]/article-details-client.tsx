@@ -32,15 +32,15 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
             </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-8 justify-end">
+        <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
+          {article.content}
+        </article>
+
+        <div className="flex flex-wrap gap-2 justify-end">
           {article.tags.map((tag) => (
             <Badge key={tag} variant="secondary">{tag}</Badge>
           ))}
         </div>
-
-        <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90">
-          {article.content}
-        </article>
 
       </div>
     </div>
