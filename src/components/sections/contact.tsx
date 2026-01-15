@@ -109,7 +109,7 @@ export default function ContactSection() {
               'linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px)',
           }}
         ></div>
-        <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_500px_at_50%_200px,#A78BFA33,transparent)]"></div>
+        <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_500px_at_50%_200px,hsl(var(--primary)/0.15),transparent)]"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
