@@ -29,7 +29,7 @@ export default function ArticlesSection() {
                         From My Blog
                     </h2>
                     <p className="text-base text-muted-foreground">
-                        Dive into a world of insights, tutorials, and reflections on modern web development and design. Here are a few of my latest thoughts.
+                        Explore my latest thoughts on web development, design, and more.
                     </p>
                      <Link href="/articles">
                         <Button variant="outline" className="group">
