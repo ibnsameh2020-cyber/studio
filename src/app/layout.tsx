@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
 import FloatingCvButton from '@/components/shared/floating-cv-button';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
   title: 'Sameh insights | A Modern Portfolio',
@@ -24,14 +25,16 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased")}>
-        <Header />
-        <main className="relative">
-          <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
-          {children}
-        </main>
-        <FloatingCvButton />
-        <Footer />
-        <Toaster />
+        <FirebaseClientProvider>
+          <Header />
+          <main className="relative">
+            <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
+            {children}
+          </main>
+          <FloatingCvButton />
+          <Footer />
+          <Toaster />
+        </FirebaseClientProvider>
       </body>
     </html>
   );

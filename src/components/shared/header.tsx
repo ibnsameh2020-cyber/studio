@@ -4,8 +4,19 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Moon, Sun, Menu, X, Download } from 'lucide-react';
+import { Lightbulb, Menu, X, Download, LogIn } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useAuth, useUser } from '@/firebase';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Skeleton } from '../ui/skeleton';
 
 const navItems = [
   { href: '#projects', label: 'Projects' },
@@ -19,24 +30,8 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const toggleTheme = useCallback(() => {
-    if (document.documentElement.classList.contains('dark')) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme === 'light') {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
+  const { user, loading, isAdmin } = useUser();
+  const { signInWithGoogle, signOut } = useAuth();
 
 
   useEffect(() => {
@@ -84,6 +79,16 @@ export default function Header() {
     // For anchor links like #projects
     return activeSection === item.href.substring(1);
   };
+  
+  const getInitials = (name?: string | null) => {
+    if (!name) return 'U';
+    const names = name.split(' ');
+    if (names.length > 1) {
+      return names[0].charAt(0) + names[names.length - 1].charAt(0);
+    }
+    return name.charAt(0);
+  };
+
 
   return (
     <>
@@ -114,30 +119,82 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
-            <Button
-              onClick={toggleTheme}
-              variant="ghost"
-              size="icon"
-              className="w-10 h-10 rounded-full hover:bg-background/50 focus-visible:ring-0 focus-visible:ring-offset-0"
-              aria-label="Toggle theme"
-            >
-              <Sun className="w-5 h-5 text-primary hidden dark:block" />
-              <Moon className="w-5 h-5 text-primary dark:hidden" />
-            </Button>
+            {loading ? (
+              <Skeleton className="h-10 w-10 rounded-full" />
+            ) : user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                      <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin">Admin Panel</Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut}>
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+               <Button onClick={signInWithGoogle} variant="ghost" size="icon" className="w-10 h-10 rounded-full">
+                <LogIn className="w-5 h-5 text-primary" />
+              </Button>
+            )}
           </div>
           
           {/* Mobile Nav */}
           <div className="md:hidden flex items-center">
-            <Button
-              onClick={toggleTheme}
-              variant="ghost"
-              size="icon"
-              className="mr-2 hover:bg-transparent hover:text-inherit focus-visible:ring-0 focus-visible:ring-offset-0"
-              aria-label="Toggle theme"
-            >
-              <Sun className="w-5 h-5 text-primary hidden dark:block" />
-              <Moon className="w-5 h-5 text-primary dark:hidden" />
-            </Button>
+            {loading ? (
+              <Skeleton className="h-8 w-8 rounded-full" />
+            ) : user ? (
+               <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                      <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin">Admin Panel</Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut}>
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button onClick={signInWithGoogle} variant="ghost" size="icon" className="mr-2">
+                <LogIn className="w-5 h-5" />
+              </Button>
+            )}
             <Button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               variant="ghost"
@@ -174,3 +231,4 @@ export default function Header() {
     </>
   );
 }
+
