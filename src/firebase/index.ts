@@ -4,7 +4,7 @@ import { getApp, getApps, initializeApp, FirebaseApp } from "firebase/app";
 import { getAuth, Auth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut } from "firebase/auth";
 import { getFirestore, Firestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { firebaseConfig as importedConfig } from './config';
-import { useUser, useAdminStatus } from './auth/use-user';
+import { useUser } from './auth/use-user';
 import { useCollection } from './firestore/use-collection';
 import { useDoc } from './firestore/use-doc';
 import { useMemo } from 'react';
@@ -75,6 +75,6 @@ function useMemoFirebase<T>(factory: () => T, deps: any[]): T {
 }
 
 
-export { useUser, useAdminStatus, useCollection, useDoc, useMemoFirebase, useAuthActions as useAuth };
+export { useUser, useCollection, useDoc, useMemoFirebase, useAuthActions as useAuth };
 export { FirebaseProvider } from './provider';
 export { FirebaseClientProvider } from './client-provider';
