@@ -16,40 +16,46 @@ const formatDate = (date: any) => {
 };
 
 const formatContent = (content: string) => {
-    const lines = content.split('\n').filter(line => line.trim() !== '');
+  const lines = content.split('\n').filter(line => line.trim() !== '');
 
-    const isHeader = (line: string) => {
-        const trimmed = line.trim();
-        if (trimmed.length > 60 || trimmed.endsWith('.')) return false;
-        if (trimmed.endsWith('?')) return true;
-        const words = trimmed.split(' ');
-        if (words.length > 8) return false; // Headers are usually short
-        const capitalizedWords = words.filter(word => word.length > 0 && word[0] === word[0].toUpperCase());
-        if (capitalizedWords.length / words.length > 0.6) return true;
-        return false;
-    };
-    
-    const isListItem = (line: string) => {
-        return /^\d+\.\s/.test(line.trim());
-    };
+  const isHeader = (line: string) => {
+    const trimmed = line.trim();
+    // Main headers are like "1." or "1. Some Text"
+    return /^\d+\.\s/.test(trimmed) || /^\d+\.$/.test(trimmed);
+  };
 
-    return lines.map((line, index) => {
-        const trimmedLine = line.trim();
-        if (isHeader(trimmedLine)) {
+  const isSubHeader = (line: string) => {
+      const trimmed = line.trim();
+      // Sub-headers are like "2.1" or "2.1 Some Text"
+      return /^\d+\.\d+\s/.test(trimmed) || /^\d+\.\d+$/.test(trimmed);
+  };
+  
+  const isGenericHeader = (line: string) => {
+      const trimmed = line.trim();
+      if (trimmed.length > 80 || trimmed.endsWith('.')) return false;
+      if (trimmed.endsWith('?')) return true;
+      const words = trimmed.split(' ');
+      if (words.length > 10) return false;
+      const capitalizedWords = words.filter(word => word.length > 0 && word[0] === word[0].toUpperCase());
+      if (capitalizedWords.length / words.length > 0.5) return true;
+      return false;
+  };
+
+
+  return lines.map((line, index) => {
+      const trimmedLine = line.trim();
+      
+      if (isHeader(trimmedLine)) {
+          return <h2 key={index} className="text-3xl font-headline font-bold mt-10 mb-6">{trimmedLine}</h2>;
+      }
+      if (isSubHeader(trimmedLine)) {
+          return <h3 key={index} className="text-2xl font-headline font-semibold mt-8 mb-4">{trimmedLine}</h3>;
+      }
+       if (isGenericHeader(trimmedLine)) {
             return <h2 key={index} className="text-2xl font-headline font-bold mt-8 mb-4">{trimmedLine}</h2>;
         }
-        if (isListItem(trimmedLine)) {
-            const number = trimmedLine.substring(0, trimmedLine.indexOf('.') + 1);
-            const text = trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim();
-            return (
-              <div key={index} className="flex items-start gap-4 mb-4">
-                <span className="text-primary font-bold text-lg">{number}</span>
-                <p className="flex-1">{text}</p>
-              </div>
-            );
-        }
-        return <p key={index} className="mb-4">{trimmedLine}</p>;
-    });
+      return <p key={index} className="mb-4 leading-relaxed">{trimmedLine}</p>;
+  });
 };
 
 
