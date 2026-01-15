@@ -127,6 +127,14 @@ export default function AdminPage() {
     }
   }
 
+  const emptyFormValues = {
+    title: "",
+    description: "",
+    content: "",
+    tags: "",
+    imageUrl: "",
+    language: 'ltr' as 'ltr' | 'rtl',
+  };
 
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!firestore) {
@@ -150,7 +158,7 @@ export default function AdminPage() {
             title: `Article ${editingArticleId ? 'Updated' : 'Published'}!`,
             description: `Your article is now ${editingArticleId ? 'updated' : 'live'}.`,
         });
-        form.reset();
+        form.reset(emptyFormValues);
         setEditingArticleId(null);
     } catch (error: any) {
         toast({
@@ -193,7 +201,7 @@ export default function AdminPage() {
 
   const cancelEdit = () => {
     setEditingArticleId(null);
-    form.reset();
+    form.reset(emptyFormValues);
   }
   
   const formatDate = (date: any) => {
