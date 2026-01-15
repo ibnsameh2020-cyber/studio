@@ -27,7 +27,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Trash2, Edit, Upload } from "lucide-react";
+import { Loader2, Trash2, Edit, Upload, X } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
 import { useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
@@ -119,6 +119,11 @@ export default function AdminPage() {
     });
     myWidget.open();
   }
+
+  const handleRemoveImage = () => {
+    setImageUrl(null);
+    form.setValue('imageUrl', '');
+  };
 
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!firestore) {
@@ -259,8 +264,13 @@ export default function AdminPage() {
                         </Button>
                     </FormControl>
                     {(imageUrl || form.getValues('imageUrl')) && (
-                        <div className="mt-4 relative aspect-video w-full rounded-md overflow-hidden border">
+                        <div className="mt-4 relative group aspect-video w-full rounded-md overflow-hidden border">
                             <Image src={imageUrl || form.getValues('imageUrl') || ''} alt="Uploaded preview" fill className="object-cover"/>
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <Button type="button" variant="destructive" size="icon" onClick={handleRemoveImage}>
+                                    <Trash2 className="w-5 h-5"/>
+                                </Button>
+                            </div>
                         </div>
                     )}
                  </FormItem>
@@ -358,3 +368,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
