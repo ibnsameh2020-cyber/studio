@@ -7,7 +7,7 @@ import { useTypingEffect } from '@/hooks/use-typing-effect';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 
-const heroTexts = ["Strategic PMO Leader", "Digital Transformation Expert", "An AI Governance Advisor"];
+const heroTexts = ["A Strategic PMO Leader", "A Digital Transformation Expert", "An AI Governance Advisor"];
 
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
@@ -27,7 +27,7 @@ export default function HeroSection() {
           Eng. Sameh Moussa
         </h1>
         <p className="text-xl sm:text-2xl md:text-4xl text-primary font-headline mb-8 h-10 md:h-12">
-          A <span className="relative">
+          <span className="relative">
               {typedText}
               <span className="animate-ping absolute top-1/2 -right-1 h-full w-1 bg-accent rounded-full"></span>
             </span>
