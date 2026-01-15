@@ -7,7 +7,7 @@ import { useTypingEffect } from '@/hooks/use-typing-effect';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 
-const heroTexts = ["Strategic PMO Leader", "Digital Transformation Expert", "AI Governance Advisor"];
+const heroTexts = ["Strategic PMO Leader", "Digital Transformation Expert", "An AI Governance Advisor"];
 
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
@@ -32,7 +32,7 @@ export default function HeroSection() {
               <span className="animate-ping absolute top-1/2 -right-1 h-full w-1 bg-accent rounded-full"></span>
             </span>
         </p>
-        <p className="max-w-3xl mx-auto text-sm sm:text-base text-muted-foreground mb-10">
+        <p className="max-w-3xl mx-auto text-sm text-muted-foreground mb-10">
           I translate complex strategies into measurable reality. As a Strategic PMO Leader with over 20 years of experience, I partner with major government and private entities to manage $100M+ portfolios, ensuring digital initiatives deliver genuine ROI and operational excellence.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4">
