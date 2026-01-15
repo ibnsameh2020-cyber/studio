@@ -104,17 +104,20 @@ export default function AdminPage() {
         cloudName: cloudName,
         uploadPreset: uploadPreset
     }, (error: any, result: any) => { 
-        if (!error && result && result.event === "success") { 
+        if (result && result.event === "success") { 
             console.log('Done! Here is the image info: ', result.info);
             setImageUrl(result.info.secure_url);
             form.setValue('imageUrl', result.info.secure_url);
         } else if (error) {
-            console.error('Cloudinary Upload Error: ', error);
-            toast({
-                title: 'Upload Error',
-                description: `Something went wrong during upload. ${error.message}`,
-                variant: 'destructive'
-            });
+            // This prevents an error from being logged when the user closes the widget.
+            if (!(error.message && error.message.includes("User closed the widget"))) {
+              console.error('Cloudinary Upload Error: ', error);
+              toast({
+                  title: 'Upload Error',
+                  description: `Something went wrong during upload. ${error.message || 'Please try again.'}`,
+                  variant: 'destructive'
+              });
+            }
         }
     });
     myWidget.open();
@@ -368,5 +371,7 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
 
     
