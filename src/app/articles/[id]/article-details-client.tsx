@@ -19,11 +19,6 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
       <div className="max-w-4xl mx-auto">
         
         <div className="mb-8 text-center">
-            <div className="flex flex-wrap gap-2 mb-4 justify-center">
-              {article.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">{tag}</Badge>
-              ))}
-            </div>
             <h1 className="text-3xl md:text-5xl font-headline font-bold mb-4">{article.title}</h1>
             <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
@@ -35,6 +30,12 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
                     <span>Published on {formatDate(article.date)}</span>
                 </div>
             </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2 mb-8 justify-end">
+          {article.tags.map((tag) => (
+            <Badge key={tag} variant="secondary">{tag}</Badge>
+          ))}
         </div>
 
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90">
