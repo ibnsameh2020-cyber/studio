@@ -6,12 +6,44 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, User } from 'lucide-react';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
+import React from 'react';
 
 const formatDate = (date: any) => {
   if (!date) return '';
   const d = date instanceof Timestamp ? date.toDate() : new Date(date);
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 };
+
+const formatContent = (content: string) => {
+    const lines = content.split('\n').filter(line => line.trim() !== '');
+
+    const isHeader = (line: string) => {
+        // Simple heuristic: short lines that don't end with a period are likely headers.
+        const trimmed = line.trim();
+        if (trimmed.length > 60 || trimmed.endsWith('.')) {
+            return false;
+        }
+        // Ends with a question mark
+        if (trimmed.endsWith('?')) {
+            return true;
+        }
+        // Title Case check
+        const words = trimmed.split(' ');
+        const capitalizedWords = words.filter(word => word.length > 0 && word[0] === word[0].toUpperCase());
+        if (capitalizedWords.length / words.length > 0.6) {
+            return true;
+        }
+        return false;
+    };
+    
+    return lines.map((line, index) => {
+        if (isHeader(line)) {
+            return <h2 key={index} className="text-2xl font-headline font-bold mt-8 mb-4">{line}</h2>;
+        }
+        return <p key={index} className="mb-4">{line}</p>;
+    });
+};
+
 
 export default function ArticleDetailsClient({ article }: { article: Article }) {
 
@@ -46,11 +78,11 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
         </div>
 
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
-          {article.content}
+          {formatContent(article.content)}
         </article>
 
         <div className="flex flex-wrap gap-2 justify-end">
-          {article.tags.map((tag) => (
+          {Array.isArray(article.tags) && article.tags.map((tag) => (
             <Badge key={tag} variant="secondary">{tag}</Badge>
           ))}
         </div>
