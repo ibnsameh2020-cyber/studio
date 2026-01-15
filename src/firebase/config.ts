@@ -1,3 +1,3 @@
 // This file is intentionally left blank. 
 // The Firebase configuration will be populated by the backend.
-export const firebaseConfig = {"apiKey":"your-api-key","authDomain":"your-auth-domain","projectId":"your-project-id","storageBucket":"your-storage-bucket","messagingSenderId":"your-messaging-sender-id","appId":"your-app-id"};
+export const firebaseConfig = {"apiKey":"AIzaSyBQ0bJC1JDTqXlPTTZX45EESnQnhubZ5Hk","authDomain":"studio-682444090-a63bd.firebaseapp.com","projectId":"studio-682444090-a63bd","storageBucket":"studio-682444090-a63bd.firebasestorage.app","messagingSenderId":"890010531816","appId":"1:890010531816:web:d975d8825b1f955bcbd65d"};

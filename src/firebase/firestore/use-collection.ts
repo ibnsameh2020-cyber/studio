@@ -11,6 +11,10 @@ export function useCollection<T>(path: string, q?: Query) {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (!firestore || !path) {
+        setLoading(false);
+        return;
+    }
     const ref = q || collection(firestore, path);
     const unsubscribe = onSnapshot(ref, (snapshot) => {
       try {
