@@ -222,7 +222,14 @@ export default function AdminPage() {
         </p>
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16">
+            <form 
+              onSubmit={form.handleSubmit(onSubmit)} 
+              className={cn(
+                "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
+                language === 'rtl' && 'font-arabic'
+              )}
+              dir={language}
+            >
                 <FormField
                     control={form.control}
                     name="title"
@@ -250,7 +257,7 @@ export default function AdminPage() {
                     )}
                 />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <FormItem>
+                    <FormItem dir="ltr">
                       <FormLabel>Cover Image</FormLabel>
                       <div className="flex items-center gap-4">
                          <CldUploadWidget
@@ -286,7 +293,7 @@ export default function AdminPage() {
                       control={form.control}
                       name="language"
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem dir="ltr">
                           <FormLabel>Text Direction</FormLabel>
                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
@@ -315,8 +322,7 @@ export default function AdminPage() {
                               placeholder="Write the full article content here. You can use Markdown." 
                               rows={15} 
                               {...field}
-                              dir={language}
-                              className={cn(language === 'rtl' && 'font-arabic text-lg')}
+                              className={cn(language === 'rtl' && 'text-lg')}
                             />
                         </FormControl>
                         <FormMessage />
@@ -337,7 +343,7 @@ export default function AdminPage() {
                     )}
                 />
 
-                <div className="flex gap-4">
+                <div className="flex gap-4" dir="ltr">
                   {editingArticleId && (
                      <Button type="button" variant="outline" onClick={cancelEdit} className="w-full">
                         Cancel
