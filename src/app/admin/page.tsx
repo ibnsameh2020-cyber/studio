@@ -23,7 +23,6 @@ const articleSchema = z.object({
   description: z.string().min(10, "Short description must be at least 10 characters."),
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
-  imageKeywords: z.string().optional(),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -51,7 +50,6 @@ export default function AdminPage() {
       description: "",
       content: "",
       tags: "",
-      imageKeywords: ""
     },
   });
 
@@ -155,19 +153,6 @@ export default function AdminPage() {
                         <FormLabel>Tags (comma-separated)</FormLabel>
                         <FormControl>
                             <Input placeholder="e.g., React, Firebase, Web Dev" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="imageKeywords"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Image Keywords (comma-separated, optional)</FormLabel>
-                        <FormControl>
-                            <Input placeholder="e.g., technology, code, abstract" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>

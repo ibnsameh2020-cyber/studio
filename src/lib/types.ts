@@ -1,3 +1,4 @@
+
 import type { Timestamp } from "firebase/firestore";
 
 export type Project = {
@@ -26,6 +27,5 @@ export type Article = {
     content: string;
     author: string;
     date: Timestamp | Date | string;
-    imageKeywords?: string;
     tags: string[];
 };

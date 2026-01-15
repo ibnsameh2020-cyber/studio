@@ -1,3 +1,4 @@
+
 "use client";
 
 import AnimatedSection from '../animated-section';
@@ -5,8 +6,6 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { ArrowRight, Calendar, Loader2 } from 'lucide-react';
 import { Card } from '../ui/card';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
@@ -22,8 +21,6 @@ const formatDate = (date: any) => {
 export default function ArticlesSection() {
   const { data: articles, loading } = useCollection<Article>('articles');
   const recentArticles = articles ? articles.slice(0, 3) : [];
-  const defaultImage = PlaceHolderImages.find(img => img.id === 'article-1');
-
 
   return (
     <section id="articles" className="relative z-10 py-20 md:py-32">
@@ -62,23 +59,9 @@ export default function ArticlesSection() {
                         </div>
                     )}
                     {!loading && recentArticles.map((article) => {
-                      const imageUrl = (article.imageKeywords && article.imageKeywords.trim() !== '') 
-                        ? `https://source.unsplash.com/random/400x400/?${encodeURIComponent(article.imageKeywords)}`
-                        : defaultImage?.imageUrl || 'https://picsum.photos/seed/1/400/400';
-                      const imageHint = article.imageKeywords?.split(',')[0] || defaultImage?.imageHint || 'technology';
-                      
                       return (
                         <Link href={`/articles/${article.id}`} key={article.id}>
                             <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
-                                <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-border/20 shadow-inner">
-                                  <Image
-                                    src={imageUrl}
-                                    alt={article.title}
-                                    fill
-                                    data-ai-hint={imageHint}
-                                    className="object-cover"
-                                  />
-                                </div>
                                 <div className="flex-grow">
                                     <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
