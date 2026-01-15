@@ -67,7 +67,7 @@ export default function Footer() {
                 Sameh Insights
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+            <div className="flex flex-col items-center md:items-start gap-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary"/>
                     <a href="mailto:contact@samehinsights.com" className="hover:text-primary transition-colors">contact@samehinsights.com</a>
