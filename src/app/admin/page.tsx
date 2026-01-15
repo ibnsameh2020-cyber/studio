@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
+import { CldUploadWidget } from 'next-cloudinary';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,7 +43,11 @@ const articleSchema = z.object({
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
-
+type UploadWidgetResult = {
+    info?: {
+        secure_url: string;
+    }
+}
 const createSlug = (title: string) => {
     return title
       .toLowerCase()
@@ -52,11 +57,6 @@ const createSlug = (title: string) => {
       .replace(/-+/g, '-');
 };
 
-declare global {
-  interface Window {
-    cloudinary: any;
-  }
-}
 
 export default function AdminPage() {
   const { user, loading, isAdmin } = useUser();
@@ -88,55 +88,22 @@ export default function AdminPage() {
   }, [user, loading, isAdmin, router]);
 
 
-  const handleCloudinaryUpload = () => {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-
-    if (!cloudName || !uploadPreset) {
-      console.error('Cloudinary environment variables not set');
-      toast({
-        title: 'Configuration Error',
-        description: 'Cloudinary is not configured. Please check environment variables.',
-        variant: 'destructive'
-      });
-      return;
-    }
-    
-    const widget = window.cloudinary.createUploadWidget({
-      cloudName: cloudName,
-      uploadPreset: uploadPreset,
-      cropping: true,
-      multiple: false,
-      sources: ['local', 'url', 'camera'],
-    }, (error: any, result: any) => {
-      // Check for success
-      if (!error && result && result.event === "success") {
+  const handleUploadSuccess = (result: UploadWidgetResult) => {
+    if (result.info && typeof result.info.secure_url === 'string') {
         form.setValue('imageUrl', result.info.secure_url);
         toast({
-          title: 'Image Uploaded',
-          description: 'Your image has been successfully uploaded.',
+            title: 'Image Uploaded',
+            description: 'Your image has been successfully uploaded.',
         });
-        return;
-      }
-      
-      // Check for user closing the widget, which is not a real error.
-      if (result && result.event === 'close') {
-        return;
-      }
-
-      // Handle actual errors
-      if (error) {
-        console.error('Cloudinary Upload Error: ', error, result);
+    } else {
         toast({
-            title: 'Upload Error',
-            description: `Something went wrong during upload. Please try again.`,
-            variant: 'destructive',
+            title: 'Upload Failed',
+            description: 'The upload was successful but no URL was returned.',
+            variant: 'destructive'
         });
-      }
-    });
+    }
+  }
 
-    widget.open();
-  };
 
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!firestore) {
@@ -267,10 +234,24 @@ export default function AdminPage() {
                 <FormItem>
                   <FormLabel>Cover Image</FormLabel>
                   <div className="flex items-center gap-4">
-                    <Button type="button" variant="outline" onClick={handleCloudinaryUpload}>
-                      <Upload className="mr-2 h-4 w-4" />
-                      Upload an Image
-                    </Button>
+                     <CldUploadWidget
+                        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                        onSuccess={handleUploadSuccess}
+                        options={{
+                            sources: ['local', 'url', 'camera'],
+                            multiple: false,
+                        }}
+                    >
+                        {({ open }) => {
+                            return (
+                                <Button type="button" variant="outline" onClick={() => open()}>
+                                    <Upload className="mr-2 h-4 w-4" />
+                                    Upload an Image
+                                </Button>
+                            );
+                        }}
+                    </CldUploadWidget>
+
                     {imageUrl && (
                       <div className="relative w-32 h-20 rounded-md overflow-hidden">
                         <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
