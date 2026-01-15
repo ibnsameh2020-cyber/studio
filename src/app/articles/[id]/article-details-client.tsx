@@ -1,10 +1,17 @@
 "use client";
 
-import type { Article } from '@/data/articles';
+import type { Article } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Calendar, User } from 'lucide-react';
+import { Timestamp } from 'firebase/firestore';
+
+const formatDate = (date: any) => {
+  if (!date) return '';
+  const d = date instanceof Timestamp ? date.toDate() : new Date(date);
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
 
 export default function ArticleDetailsClient({ article }: { article: Article }) {
 
@@ -28,7 +35,7 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
                 </div>
                 <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    <span>Published on {new Date(article.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    <span>Published on {formatDate(article.date)}</span>
                 </div>
             </div>
         </div>
@@ -46,7 +53,7 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
         )}
 
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90">
-          <p>{article.content}</p>
+          {article.content}
         </article>
 
       </div>

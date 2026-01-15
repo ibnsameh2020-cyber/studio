@@ -1,15 +1,6 @@
+import type { Article } from '@/lib/types';
 
-export type Article = {
-  id: string;
-  title: string;
-  description: string;
-  content: string;
-  author: string;
-  date: string;
-  imagePlaceholderId: string;
-  tags: string[];
-};
-
+// This is now just a fallback and can be removed later.
 export const articles: Article[] = [
   {
     id: 'mastering-react-hooks',

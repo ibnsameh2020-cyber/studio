@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { serverTimestamp, collection, doc, setDoc } from 'firebase/firestore';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,16 +16,28 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
-import { collection, addDoc } from 'firebase/firestore';
+
 
 const articleSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters."),
   description: z.string().min(10, "Short description must be at least 10 characters."),
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
+  imagePlaceholderId: z.string().min(1, "Please provide an image placeholder ID"),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
+
+// Function to generate a URL-friendly slug
+const createSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+      .trim()
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+};
+
 
 export default function AdminPage() {
   const { user, loading, isAdmin } = useUser();
@@ -39,6 +52,7 @@ export default function AdminPage() {
       description: "",
       content: "",
       tags: "",
+      imagePlaceholderId: "article-1"
     },
   });
 
@@ -49,11 +63,20 @@ export default function AdminPage() {
   }, [user, loading, isAdmin, router]);
 
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
+    if (!firestore) {
+        toast({ title: "Error", description: "Firestore not available.", variant: "destructive" });
+        return;
+    }
+
+    const slug = createSlug(data.title);
+    const articleRef = doc(firestore, "articles", slug);
+
     try {
-        await addDoc(collection(firestore, "articles"), {
+        await setDoc(articleRef, {
+            id: slug,
             ...data,
             author: user?.displayName || "Admin",
-            date: new Date().toISOString(),
+            date: serverTimestamp(),
             tags: data.tags.split(',').map(tag => tag.trim()),
         });
 
@@ -133,6 +156,19 @@ export default function AdminPage() {
                         <FormLabel>Tags (comma-separated)</FormLabel>
                         <FormControl>
                             <Input placeholder="e.g., React, Firebase, Web Dev" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="imagePlaceholderId"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Image Placeholder ID</FormLabel>
+                        <FormControl>
+                            <Input placeholder="e.g., article-1, article-2" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>

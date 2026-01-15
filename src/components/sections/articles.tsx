@@ -1,15 +1,27 @@
+"use client";
 
-import { articles } from '@/data/articles';
 import AnimatedSection from '../animated-section';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, Loader2 } from 'lucide-react';
 import { Card } from '../ui/card';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useCollection } from '@/firebase';
+import type { Article } from '@/lib/types';
+import { Timestamp } from 'firebase/firestore';
+
+const formatDate = (date: any) => {
+    if (!date) return '';
+    if (date instanceof Timestamp) {
+        return date.toDate().toLocaleDateString('en-US');
+    }
+    return new Date(date).toLocaleDateString('en-US');
+};
 
 export default function ArticlesSection() {
-  const recentArticles = articles.slice(0, 3);
+  const { data: articles, loading } = useCollection<Article>('articles');
+  const recentArticles = articles ? articles.slice(0, 3) : [];
 
   return (
     <section id="articles" className="relative z-10 py-20 md:py-32">
@@ -42,7 +54,12 @@ export default function ArticlesSection() {
                 </div>
                 
                 <div className="space-y-4">
-                    {recentArticles.map((article) => {
+                    {loading && (
+                        <div className="flex justify-center items-center h-48">
+                            <Loader2 className="w-8 h-8 animate-spin" />
+                        </div>
+                    )}
+                    {!loading && recentArticles.map((article) => {
                       const articleImage = PlaceHolderImages.find(img => img.id === article.imagePlaceholderId);
                       return (
                         <Link href={`/articles/${article.id}`} key={article.id}>
@@ -62,7 +79,7 @@ export default function ArticlesSection() {
                                     <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                                         <Calendar className="w-3 h-3" />
-                                        <span>{new Date(article.date).toLocaleDateString()}</span>
+                                        <span>{formatDate(article.date)}</span>
                                     </div>
                                 </div>
                                 <div className="text-primary opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0 ml-auto">

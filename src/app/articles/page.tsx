@@ -1,8 +1,14 @@
+"use client";
+
 import AnimatedSection from '@/components/animated-section';
 import ArticleCard from '@/components/article-card';
-import { articles } from '@/data/articles';
+import { useCollection } from '@/firebase';
+import type { Article } from '@/lib/types';
+import { Loader2 } from 'lucide-react';
 
 export default function ArticlesPage() {
+  const { data: articles, loading } = useCollection<Article>('articles');
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
       <div className="text-center mb-12">
@@ -11,13 +17,22 @@ export default function ArticlesPage() {
           Thoughts, tutorials, and insights on web development and design.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {articles.map((article, index) => (
-          <AnimatedSection key={article.id} style={{ animationDelay: `${index * 150}ms` }}>
-            <ArticleCard article={article} />
-          </AnimatedSection>
-        ))}
-      </div>
+
+      {loading && (
+        <div className="flex justify-center items-center h-64">
+          <Loader2 className="w-12 h-12 animate-spin text-primary" />
+        </div>
+      )}
+
+      {!loading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {articles?.map((article, index) => (
+            <AnimatedSection key={article.id} style={{ animationDelay: `${index * 150}ms` }}>
+              <ArticleCard article={article} />
+            </AnimatedSection>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

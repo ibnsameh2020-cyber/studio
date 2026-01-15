@@ -1,19 +1,4 @@
-
-export type TechStack = 'React' | 'Next.js' | 'Tailwind CSS' | 'TypeScript' | 'Firebase' | 'Node.js';
-
-export type Project = {
-  id: string;
-  title: string;
-  description: string;
-  techStack: TechStack[];
-  liveUrl?: string;
-  githubUrl?: string;
-  imagePlaceholderId: string;
-  layout: {
-    colSpan: string;
-    rowSpan: string;
-  };
-};
+import type { Project } from '@/lib/types';
 
 export const projects: Project[] = [
   {
@@ -24,10 +9,6 @@ export const projects: Project[] = [
     liveUrl: '#',
     githubUrl: '#',
     imagePlaceholderId: 'project-1',
-    layout: {
-      colSpan: 'md:col-span-1',
-      rowSpan: 'md:row-span-1',
-    },
   },
   {
     id: 'project-2',
@@ -37,10 +18,6 @@ export const projects: Project[] = [
     liveUrl: '#',
     githubUrl: '#',
     imagePlaceholderId: 'project-2',
-    layout: {
-      colSpan: 'md:col-span-1',
-      rowSpan: 'md:row-span-1',
-    },
   },
   {
     id: 'project-3',
@@ -50,10 +27,6 @@ export const projects: Project[] = [
     liveUrl: '#',
     githubUrl: '#',
     imagePlaceholderId: 'project-3',
-    layout: {
-      colSpan: 'md:col-span-1',
-      rowSpan: 'md:row-span-1',
-    },
   },
     {
     id: 'project-4',
@@ -63,9 +36,5 @@ export const projects: Project[] = [
     liveUrl: '#',
     githubUrl: '#',
     imagePlaceholderId: 'project-4',
-    layout: {
-      colSpan: 'md:col-span-1',
-      rowSpan: 'md:row-span-1',
-    },
   },
 ];

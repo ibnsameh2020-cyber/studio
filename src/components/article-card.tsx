@@ -1,15 +1,23 @@
-import type { Article } from '@/data/articles';
+import type { Article } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { ArrowRight, Calendar, User } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
+import { Timestamp } from 'firebase/firestore';
 
 type ArticleCardProps = {
   article: Article;
   isFeatured?: boolean;
+};
+
+const formatDate = (date: any) => {
+    if (!date) return '';
+    if (date instanceof Timestamp) {
+      return date.toDate().toLocaleDateString('en-US');
+    }
+    return new Date(date).toLocaleDateString('en-US');
 };
 
 export default function ArticleCard({ article, isFeatured = false }: ArticleCardProps) {
@@ -50,7 +58,7 @@ export default function ArticleCard({ article, isFeatured = false }: ArticleCard
                   <div className="flex items-center gap-4">
                       <div className="flex items-center gap-1.5">
                           <Calendar className="w-3 h-3" />
-                          <span>{new Date(article.date).toLocaleDateString()}</span>
+                          <span>{formatDate(article.date)}</span>
                       </div>
                   </div>
                   <div className="flex items-center text-sm text-primary group-hover:underline">
