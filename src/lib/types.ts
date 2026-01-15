@@ -4,6 +4,7 @@ import type { Timestamp } from "firebase/firestore";
 export type Project = {
     id: string;
     title: string;
+    shortDescription: string;
     description: string;
     techStack: string[];
     liveUrl?: string;

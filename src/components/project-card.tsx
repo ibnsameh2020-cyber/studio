@@ -38,7 +38,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               <CardTitle className="font-headline">{project.title}</CardTitle>
             </CardHeader>
             <CardContent className="flex-grow">
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
+              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.shortDescription}</p>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map((tech) => (
                   <Badge key={tech} variant="secondary">{tech}</Badge>
