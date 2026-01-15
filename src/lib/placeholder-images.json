@@ -21,7 +21,7 @@
     {
       "id": "project-4",
       "description": "A placeholder image for the fourth project.",
-      "imageUrl": "https://images.unsplash.com/photo-1519069060891-f8c50519bf39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2hhdCUyMGFwcHxlbnwwfHx8fDE3NjgzMjc5MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1519069000891-f8c50519bf39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2hhdCUyMGFwcHxlbnwwfHx8fDE3NjgzMjc5MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "chat app"
     },
     {
@@ -35,6 +35,24 @@
       "description": "A placeholder image for the sixth project.",
       "imageUrl": "https://images.unsplash.com/photo-1588324524886-7b9475d2a7d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxlY29tbWVyY2UlMjBwbGF0Zm9ybXxlbnwwfHx8fDE3NjgyMTA1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "ecommerce platform"
+    },
+    {
+      "id": "article-1",
+      "description": "A placeholder image for the first article.",
+      "imageUrl": "https://images.unsplash.com/photo-1533543119973-d60296462573?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwYmxvZ3xlbnwwfHx8fDE3Njg0NjY1NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "technology blog"
+    },
+    {
+      "id": "article-2",
+      "description": "A placeholder image for the second article.",
+      "imageUrl": "https://images.unsplash.com/photo-1758900728025-3d70604871c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkZXNpZ24lMjB0cmVuZHN8ZW58MHx8fHwxNzY4NDY2NTQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "design trends"
+    },
+    {
+      "id": "article-3",
+      "description": "A placeholder image for the third article.",
+      "imageUrl": "https://images.unsplash.com/photo-1619410283995-43d9134e7656?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzb2Z0d2FyZSUyMGRldmVsb3BtZW50fGVufDB8fHx8MTc2ODQzMTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "software development"
     }
   ]
 }

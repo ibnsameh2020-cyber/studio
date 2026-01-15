@@ -10,6 +10,7 @@ import { Button } from '../ui/button';
 const navItems = [
   { href: '#projects', label: 'Projects' },
   { href: '#experience', label: 'Experience' },
+  { href: '/articles', label: 'Blog' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -70,6 +71,16 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  const isLinkActive = (item: typeof navItems[0]) => {
+    if (item.href.startsWith('/')) {
+        if (typeof window !== 'undefined') {
+            return window.location.pathname === item.href;
+        }
+        return false;
+    }
+    return activeSection === item.href.substring(1);
+  };
+
   return (
     <>
       <header
@@ -92,7 +103,7 @@ export default function Header() {
                   href={item.href}
                   className={cn(
                     'text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-full',
-                    activeSection === item.href.substring(1) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                    isLinkActive(item) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
                   )}
                 >
                   {item.label}
@@ -147,7 +158,7 @@ export default function Header() {
                 onClick={handleMenuLinkClick}
                 className={cn(
                   'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
-                  activeSection === item.href.substring(1) ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                  isLinkActive(item) ? 'bg-primary text-primary-foreground' : 'text-foreground'
                 )}
               >
                 {item.label}
