@@ -7,6 +7,7 @@ import Footer from '@/components/shared/footer';
 import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import Script from 'next/script';
+import { ThemeProvider } from '@/components/shared/theme-provider';
 
 export const metadata: Metadata = {
   title: 'Sameh insights | A Modern Portfolio',
@@ -19,23 +20,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased")}>
-        <FirebaseClientProvider>
-          <Header />
-          <main className="relative">
-            <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
-            {children}
-          </main>
-          <FloatingCvButton />
-          <Footer />
-          <Toaster />
-        </FirebaseClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <FirebaseClientProvider>
+            <Header />
+            <main className="relative">
+              <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
+              {children}
+            </main>
+            <FloatingCvButton />
+            <Footer />
+            <Toaster />
+          </FirebaseClientProvider>
+        </ThemeProvider>
         <Script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript" />
       </body>
     </html>
