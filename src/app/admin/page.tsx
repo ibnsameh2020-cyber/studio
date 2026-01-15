@@ -28,13 +28,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2, Edit, Upload } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
@@ -60,22 +53,23 @@ type UploadWidgetResult = {
 }
 
 const createSlug = (title: string): string => {
-  // First, try to generate a slug from the title
   const latinSlug = title
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // Remove non-latin characters, spaces, and hyphens
+    .replace(/[^a-z0-9\s-]/g, '')
     .trim()
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 
-  // If the title was in a non-latin script (like Arabic), latinSlug will be empty.
-  // In that case, generate a unique random ID.
   if (latinSlug) {
     return latinSlug;
   }
   
-  // Generate a short, random, URL-friendly ID
   return Math.random().toString(36).substring(2, 12);
+};
+
+const isRTL = (str: string) => {
+  const rtlChars = /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/;
+  return rtlChars.test(str);
 };
 
 
@@ -103,12 +97,21 @@ export default function AdminPage() {
 
   const imageUrl = form.watch("imageUrl");
   const language = form.watch("language");
+  const title = form.watch("title");
 
   useEffect(() => {
     if (!loading && !isAdmin) {
       router.push('/');
     }
   }, [user, loading, isAdmin, router]);
+
+  useEffect(() => {
+    if (isRTL(title)) {
+      form.setValue('language', 'rtl');
+    } else {
+      form.setValue('language', 'ltr');
+    }
+  }, [title, form]);
 
 
   const handleUploadSuccess = (result: UploadWidgetResult) => {
@@ -307,27 +310,6 @@ export default function AdminPage() {
                       </FormControl>
                        <FormMessage />
                     </FormItem>
-                    <FormField
-                      control={form.control}
-                      name="language"
-                      render={({ field }) => (
-                        <FormItem dir="ltr">
-                          <FormLabel>Text Direction</FormLabel>
-                           <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select text direction" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="ltr">LTR</SelectItem>
-                              <SelectItem value="rtl">RTL</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                 </div>
                 <FormField
                     control={form.control}
