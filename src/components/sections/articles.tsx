@@ -62,10 +62,10 @@ export default function ArticlesSection() {
                         </div>
                     )}
                     {!loading && recentArticles.map((article) => {
-                      const imageUrl = article.imageKeywords 
+                      const imageUrl = (article.imageKeywords && article.imageKeywords.trim() !== '') 
                         ? `https://source.unsplash.com/random/400x400/?${encodeURIComponent(article.imageKeywords)}`
                         : defaultImage?.imageUrl || 'https://picsum.photos/seed/1/400/400';
-                      const imageHint = article.imageKeywords?.split(',')[0] || 'technology';
+                      const imageHint = article.imageKeywords?.split(',')[0] || defaultImage?.imageHint || 'technology';
                       
                       return (
                         <Link href={`/articles/${article.id}`} key={article.id}>

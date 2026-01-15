@@ -165,7 +165,7 @@ export default function AdminPage() {
                     name="imageKeywords"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Image Keywords (comma-separated)</FormLabel>
+                        <FormLabel>Image Keywords (comma-separated, optional)</FormLabel>
                         <FormControl>
                             <Input placeholder="e.g., technology, code, abstract" {...field} />
                         </FormControl>

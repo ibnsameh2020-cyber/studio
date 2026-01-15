@@ -22,11 +22,11 @@ const formatDate = (date: any) => {
 
 export default function ArticleCard({ article, isFeatured = false }: ArticleCardProps) {
   const defaultImage = PlaceHolderImages.find(img => img.id === 'article-1');
-  const imageUrl = article.imageKeywords 
+  const imageUrl = (article.imageKeywords && article.imageKeywords.trim() !== '')
     ? `https://source.unsplash.com/random/800x600/?${encodeURIComponent(article.imageKeywords)}` 
     : defaultImage?.imageUrl || 'https://picsum.photos/seed/1/800/600';
   
-  const imageHint = article.imageKeywords?.split(',')[0] || 'technology';
+  const imageHint = article.imageKeywords?.split(',')[0] || defaultImage?.imageHint || 'technology';
 
   return (
     <Link href={`/articles/${article.id}`}>
