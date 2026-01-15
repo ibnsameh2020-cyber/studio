@@ -19,6 +19,18 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
       <div className="max-w-4xl mx-auto">
         
+        {article.imageUrl && (
+          <div className="relative aspect-video rounded-lg overflow-hidden mb-8 shadow-lg border border-border/20">
+            <Image 
+              src={article.imageUrl}
+              alt={article.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
+
         <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-5xl font-headline font-bold mb-4">{article.title}</h1>
             <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
@@ -47,3 +59,5 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
     </div>
   );
 }
+
+    

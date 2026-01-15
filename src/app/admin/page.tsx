@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import Image from 'next/image';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +27,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Trash2, Edit } from "lucide-react";
+import { Loader2, Trash2, Edit, Upload } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
 import { useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
@@ -37,6 +38,7 @@ const articleSchema = z.object({
   description: z.string().min(10, "Short description must be at least 10 characters."),
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
+  imageUrl: z.string().optional(),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -49,6 +51,12 @@ const createSlug = (title: string) => {
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
 };
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
 
 export default function AdminPage() {
   const { user, loading, isAdmin } = useUser();
@@ -67,8 +75,11 @@ export default function AdminPage() {
       description: "",
       content: "",
       tags: "",
+      imageUrl: "",
     },
   });
+
+  const imageUrl = form.watch("imageUrl");
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -76,6 +87,46 @@ export default function AdminPage() {
     }
   }, [user, loading, isAdmin, router]);
 
+
+  const handleCloudinaryUpload = () => {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+    if (!cloudName || !uploadPreset) {
+      console.error('Cloudinary environment variables not set');
+      toast({
+        title: 'Configuration Error',
+        description: 'Cloudinary is not configured. Please check environment variables.',
+        variant: 'destructive'
+      });
+      return;
+    }
+    
+    const widget = window.cloudinary.createUploadWidget({
+      cloudName: cloudName,
+      uploadPreset: uploadPreset,
+      cropping: true,
+      multiple: false,
+      sources: ['local', 'url', 'camera'],
+    }, (error: any, result: any) => {
+      if (!error && result && result.event === "success") {
+        form.setValue('imageUrl', result.info.secure_url);
+        toast({
+          title: 'Image Uploaded',
+          description: 'Your image has been successfully uploaded.',
+        });
+      } else if (error) {
+        console.error('Cloudinary Upload Error: ', error);
+        toast({
+            title: 'Upload Error',
+            description: `Something went wrong during upload. Please try again.`,
+            variant: 'destructive',
+        });
+      }
+    });
+
+    widget.open();
+  };
 
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!firestore) {
@@ -117,6 +168,7 @@ export default function AdminPage() {
       description: article.description,
       content: article.content,
       tags: Array.isArray(article.tags) ? article.tags.join(', ') : '',
+      imageUrl: article.imageUrl || '',
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -202,6 +254,24 @@ export default function AdminPage() {
                         </FormItem>
                     )}
                 />
+                <FormItem>
+                  <FormLabel>Cover Image</FormLabel>
+                  <div className="flex items-center gap-4">
+                    <Button type="button" variant="outline" onClick={handleCloudinaryUpload}>
+                      <Upload className="mr-2 h-4 w-4" />
+                      Upload an Image
+                    </Button>
+                    {imageUrl && (
+                      <div className="relative w-32 h-20 rounded-md overflow-hidden">
+                        <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
+                      </div>
+                    )}
+                  </div>
+                  <FormControl>
+                     <Input type="hidden" {...form.register("imageUrl")} />
+                  </FormControl>
+                   <FormMessage />
+                </FormItem>
                 <FormField
                     control={form.control}
                     name="content"
@@ -296,3 +366,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    

@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { cn } from "@/lib/utils";
@@ -7,6 +8,7 @@ import Footer from '@/components/shared/footer';
 import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/shared/theme-provider';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Sameh Insights | Strategic Digital PMO & Portfolio Governance',
@@ -24,6 +26,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+        <Script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript" />
       </head>
       <body className={cn("font-body antialiased")}>
         <ThemeProvider
@@ -47,3 +50,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+    
