@@ -91,10 +91,10 @@ export default function AdminPage() {
     const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
     if (!cloudName || !uploadPreset) {
-        console.error("Cloudinary credentials are not set in .env file.");
+        console.error("Cloudinary credentials are not set in .env file. Please ensure NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET are set.");
         toast({
             title: "Configuration Error",
-            description: "Cloudinary is not configured. Please check your environment variables.",
+            description: "Cloudinary is not configured. Please check your environment variables and restart the server.",
             variant: "destructive",
         });
         return;
@@ -108,6 +108,13 @@ export default function AdminPage() {
             console.log('Done! Here is the image info: ', result.info);
             setImageUrl(result.info.secure_url);
             form.setValue('imageUrl', result.info.secure_url);
+        } else if (error) {
+            console.error('Cloudinary Upload Error: ', error);
+            toast({
+                title: 'Upload Error',
+                description: `Something went wrong during upload. ${error.message}`,
+                variant: 'destructive'
+            });
         }
     });
     myWidget.open();
@@ -296,7 +303,7 @@ export default function AdminPage() {
                               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                               {editingArticleId ? 'Updating...' : 'Publishing...'}
                           </>
-                      ) : (editingArticleId ? 'Update Article' : 'Update Article')}
+                      ) : (editingArticleId ? 'Update Article' : 'Publish Article')}
                   </Button>
                 </div>
             </form>
