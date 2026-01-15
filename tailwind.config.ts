@@ -14,6 +14,7 @@ export default {
         body: ['Inter', 'sans-serif'],
         headline: ['Poppins', 'sans-serif'],
         code: ['monospace'],
+        arabic: ['Cairo', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',

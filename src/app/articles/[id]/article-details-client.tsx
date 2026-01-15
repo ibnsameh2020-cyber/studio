@@ -7,6 +7,7 @@ import { Calendar, User } from 'lucide-react';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 const formatDate = (date: any) => {
   if (!date) return '';
@@ -53,9 +54,16 @@ const formatContent = (content: string) => {
 
 
 export default function ArticleDetailsClient({ article }: { article: Article }) {
+  const isArabic = article.language === 'ar';
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
+    <div 
+      className={cn(
+        "container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32",
+        isArabic && "font-arabic"
+      )}
+      dir={isArabic ? 'rtl' : 'ltr'}
+    >
       <div className="max-w-4xl mx-auto">
         
         {article.imageUrl && (
@@ -88,7 +96,7 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
           {formatContent(article.content)}
         </article>
 
-        <div className="flex flex-wrap gap-2 justify-end">
+        <div className="flex flex-wrap gap-2" dir="ltr">
           {Array.isArray(article.tags) && article.tags.map((tag) => (
             <Badge key={tag} variant="secondary">{tag}</Badge>
           ))}

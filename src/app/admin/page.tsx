@@ -10,6 +10,7 @@ import { z } from "zod";
 import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
+import { cn } from '@/lib/utils';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +28,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2, Edit, Upload } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
@@ -40,6 +48,7 @@ const articleSchema = z.object({
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
   imageUrl: z.string().optional(),
+  language: z.enum(['en', 'ar']).default('en'),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -78,10 +87,12 @@ export default function AdminPage() {
       content: "",
       tags: "",
       imageUrl: "",
+      language: "en",
     },
   });
 
   const imageUrl = form.watch("imageUrl");
+  const language = form.watch("language");
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -148,6 +159,7 @@ export default function AdminPage() {
       content: article.content,
       tags: Array.isArray(article.tags) ? article.tags.join(', ') : '',
       imageUrl: article.imageUrl || '',
+      language: article.language || 'en',
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -237,38 +249,61 @@ export default function AdminPage() {
                         </FormItem>
                     )}
                 />
-                <FormItem>
-                  <FormLabel>Cover Image</FormLabel>
-                  <div className="flex items-center gap-4">
-                     <CldUploadWidget
-                        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-                        onSuccess={handleUploadSuccess}
-                        options={{
-                            sources: ['local', 'url', 'camera'],
-                            multiple: false,
-                        }}
-                    >
-                        {({ open }) => {
-                            return (
-                                <Button type="button" variant="outline" onClick={() => open()}>
-                                    <Upload className="mr-2 h-4 w-4" />
-                                    Upload an Image
-                                </Button>
-                            );
-                        }}
-                    </CldUploadWidget>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <FormItem>
+                      <FormLabel>Cover Image</FormLabel>
+                      <div className="flex items-center gap-4">
+                         <CldUploadWidget
+                            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                            onSuccess={handleUploadSuccess}
+                            options={{
+                                sources: ['local', 'url', 'camera'],
+                                multiple: false,
+                            }}
+                        >
+                            {({ open }) => {
+                                return (
+                                    <Button type="button" variant="outline" onClick={() => open()}>
+                                        <Upload className="mr-2 h-4 w-4" />
+                                        Upload
+                                    </Button>
+                                );
+                            }}
+                        </CldUploadWidget>
 
-                    {imageUrl && (
-                      <div className="relative w-32 h-20 rounded-md overflow-hidden">
-                        <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
+                        {imageUrl && (
+                          <div className="relative w-32 h-20 rounded-md overflow-hidden">
+                            <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <FormControl>
-                     <Input type="hidden" {...form.register("imageUrl")} />
-                  </FormControl>
-                   <FormMessage />
-                </FormItem>
+                      <FormControl>
+                         <Input type="hidden" {...form.register("imageUrl")} />
+                      </FormControl>
+                       <FormMessage />
+                    </FormItem>
+                    <FormField
+                      control={form.control}
+                      name="language"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Language</FormLabel>
+                           <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select article language" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="en">English</SelectItem>
+                              <SelectItem value="ar">Arabic</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                </div>
                 <FormField
                     control={form.control}
                     name="content"
@@ -276,7 +311,13 @@ export default function AdminPage() {
                         <FormItem>
                         <FormLabel>Full Content</FormLabel>
                         <FormControl>
-                            <Textarea placeholder="Write the full article content here. You can use Markdown." rows={15} {...field} />
+                            <Textarea 
+                              placeholder="Write the full article content here. You can use Markdown." 
+                              rows={15} 
+                              {...field}
+                              dir={language === 'ar' ? 'rtl' : 'ltr'}
+                              className={cn(language === 'ar' && 'font-arabic text-lg')}
+                            />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -363,5 +404,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
