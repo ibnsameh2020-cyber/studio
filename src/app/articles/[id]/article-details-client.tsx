@@ -18,29 +18,36 @@ const formatContent = (content: string) => {
     const lines = content.split('\n').filter(line => line.trim() !== '');
 
     const isHeader = (line: string) => {
-        // Simple heuristic: short lines that don't end with a period are likely headers.
         const trimmed = line.trim();
-        if (trimmed.length > 60 || trimmed.endsWith('.')) {
-            return false;
-        }
-        // Ends with a question mark
-        if (trimmed.endsWith('?')) {
-            return true;
-        }
-        // Title Case check
+        if (trimmed.length > 60 || trimmed.endsWith('.')) return false;
+        if (trimmed.endsWith('?')) return true;
         const words = trimmed.split(' ');
+        if (words.length > 8) return false; // Headers are usually short
         const capitalizedWords = words.filter(word => word.length > 0 && word[0] === word[0].toUpperCase());
-        if (capitalizedWords.length / words.length > 0.6) {
-            return true;
-        }
+        if (capitalizedWords.length / words.length > 0.6) return true;
         return false;
     };
     
+    const isListItem = (line: string) => {
+        return /^\d+\.\s/.test(line.trim());
+    };
+
     return lines.map((line, index) => {
-        if (isHeader(line)) {
-            return <h2 key={index} className="text-2xl font-headline font-bold mt-8 mb-4">{line}</h2>;
+        const trimmedLine = line.trim();
+        if (isHeader(trimmedLine)) {
+            return <h2 key={index} className="text-2xl font-headline font-bold mt-8 mb-4">{trimmedLine}</h2>;
         }
-        return <p key={index} className="mb-4">{line}</p>;
+        if (isListItem(trimmedLine)) {
+            const number = trimmedLine.substring(0, trimmedLine.indexOf('.') + 1);
+            const text = trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim();
+            return (
+              <div key={index} className="flex items-start gap-4 mb-4">
+                <span className="text-primary font-bold text-lg">{number}</span>
+                <p className="flex-1">{text}</p>
+              </div>
+            );
+        }
+        return <p key={index} className="mb-4">{trimmedLine}</p>;
     });
 };
 
@@ -91,5 +98,3 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
     </div>
   );
 }
-
-    
