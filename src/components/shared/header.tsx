@@ -83,10 +83,10 @@ export default function Header() {
   const getInitials = (name?: string | null) => {
     if (!name) return 'U';
     const names = name.split(' ');
-    if (names.length > 1) {
+    if (names.length > 1 && names[1]) {
       return names[0].charAt(0) + names[names.length - 1].charAt(0);
     }
-    return name.charAt(0);
+    return name.charAt(0).toUpperCase();
   };
 
 
@@ -154,8 +154,9 @@ export default function Header() {
               </DropdownMenu>
             ) : (
                 <Link href="/login">
-                    <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full">
-                        <LogIn className="w-5 h-5 text-primary" />
+                    <Button variant="ghost" size="sm">
+                        <LogIn className="w-4 h-4 mr-2" />
+                        Sign In
                     </Button>
                 </Link>
             )}
@@ -196,8 +197,9 @@ export default function Header() {
               </DropdownMenu>
             ) : (
               <Link href="/login">
-                <Button variant="ghost" size="icon" className="mr-2">
-                  <LogIn className="w-5 h-5" />
+                <Button variant="ghost" size="sm" className="mr-2">
+                  <LogIn className="w-5 h-5 mr-1" />
+                  Sign In
                 </Button>
               </Link>
             )}

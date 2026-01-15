@@ -1,7 +1,17 @@
 
 "use client";
 import { getApp, getApps, initializeApp, FirebaseApp } from "firebase/app";
-import { getAuth, Auth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut } from "firebase/auth";
+import { 
+    getAuth, 
+    Auth, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    signOut as firebaseSignOut,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
+    type UserCredential
+} from "firebase/auth";
 import { getFirestore, Firestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { firebaseConfig as importedConfig } from './config';
 import { useUser } from './auth/use-user';
@@ -34,26 +44,69 @@ function useAuthActions() {
     const auth = getAuth(app); 
     const firestore = getFirestore(app);
 
+    const storeUser = async (user: UserCredential["user"]) => {
+        const userRef = doc(firestore, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+        if (!userDoc.exists()) {
+            await setDoc(userRef, {
+                id: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL
+            });
+        }
+    }
+    
+    const getFirebaseErrorMessage = (errorCode: string) => {
+        switch (errorCode) {
+            case 'auth/invalid-email':
+                return 'Please enter a valid email address.';
+            case 'auth/user-disabled':
+                return 'This user account has been disabled.';
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+                return 'Invalid email or password.';
+            case 'auth/email-already-in-use':
+                return 'An account with this email already exists.';
+            case 'auth/weak-password':
+                return 'The password is too weak. Please use at least 6 characters.';
+            default:
+                return 'An unknown error occurred. Please try again.';
+        }
+    };
+
+
     const signInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            
-            // Create user profile in Firestore if it doesn't exist
-            const userRef = doc(firestore, "users", user.uid);
-            const userDoc = await getDoc(userRef);
-            
-            if (!userDoc.exists()) {
-                await setDoc(userRef, {
-                    id: user.uid,
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL
-                });
-            }
-        } catch (error) {
+            await storeUser(result.user);
+            return null;
+        } catch (error: any) {
             console.error("Error signing in with Google: ", error);
+            return getFirebaseErrorMessage(error.code);
+        }
+    };
+
+    const signInWithEmailPassword = async (email: string, password: string): Promise<string | null> => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            return null;
+        } catch (error: any) {
+            console.error("Error signing in: ", error);
+            return getFirebaseErrorMessage(error.code);
+        }
+    };
+    
+    const signUpWithEmailPassword = async (email: string, password: string, displayName: string): Promise<string | null> => {
+        try {
+            const result = await createUserWithEmailAndPassword(auth, email, password);
+            await updateProfile(result.user, { displayName });
+            await storeUser(result.user);
+            return null;
+        } catch (error: any) {
+            console.error("Error signing up: ", error);
+            return getFirebaseErrorMessage(error.code);
         }
     };
 
@@ -65,7 +118,7 @@ function useAuthActions() {
         }
     };
 
-    return { signInWithGoogle, signOut };
+    return { signInWithGoogle, signOut, signInWithEmailPassword, signUpWithEmailPassword };
 }
 
 // Custom hook to memoize Firebase queries
