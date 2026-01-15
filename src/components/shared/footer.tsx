@@ -96,9 +96,10 @@ export default function Footer() {
                     <Facebook className="w-6 h-6" />
                 </Link>
             </div>
-            <p className="text-sm text-muted-foreground mt-2">
-                &copy; {new Date().getFullYear()} All rights reserved.
-            </p>
+            <div className="text-sm text-muted-foreground mt-2 text-center md:text-right">
+                <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
+                <p>Powered by Abdulrahman Sameh Moussa</p>
+            </div>
           </div>
         </div>
       </div>

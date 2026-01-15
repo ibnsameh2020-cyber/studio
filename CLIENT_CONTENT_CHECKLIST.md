@@ -1,4 +1,4 @@
-# Content and Information To Be Provided by Client
+# Content and Information To Be Provided :
 
 Please replace the bracketed `[placeholder text]` with your final content.
 
@@ -34,17 +34,14 @@ Please replace the bracketed `[placeholder text]` with your final content.
     *   **Introductory Paragraph:** Currently "[Have a project in mind or just want to connect? I'm always open to discussing new ideas and opportunities.]"
 
 *   **Projects Section:**
-    *   You will need to provide details for **each project** you want to feature. The site currently has 4 placeholder projects. For each one, please provide:
+    *   You will need to provide details for **each project** you want to feature. The site currently has 4 (you can add more if you want) placeholder projects. For each one, please provide:
         *   **Title** (e.g., "E-commerce Platform")
         *   **Short Description** (for the card view)
         *   **Full Description** (for the detailed pop-up view)
-        *   **Technology Stack** (e.g., React, Next.js, Firebase)
-        *   **Live URL** (if available)
-        *   **GitHub/Source Code URL** (if available)
-        *   **Project Image** (I will replace the placeholder images)
+        *   **Project Image** (I will replace the placeholder images if other images are available if not i will find related stock images)
 
 *   **Experience Section:**
-    *   You will need to provide details for **each role** in your career journey. The site currently has 3 placeholder roles. For each one, please provide:
+    *   You will need to provide details for **each role** in your career journey. The site currently has 3 (you can add more if you want) placeholder roles. For each one, please provide:
         *   **Date Range** (e.g., "2021 - Present")
         *   **Job Title** (e.g., "Senior Frontend Developer")
         *   **Company Name** (e.g., "Tech Solutions Inc.")
