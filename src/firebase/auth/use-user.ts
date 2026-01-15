@@ -2,29 +2,37 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { useAuth, useFirestore } from '../provider';
+import { useAuth } from '../provider';
 
 export function useUser() {
   const auth = useAuth();
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { isAdmin, loading: adminLoading } = useAdminStatus(user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      
+      const ADMIN_EMAIL = "ibn.sameh.2020@gmail.com";
+      if (user && user.email === ADMIN_EMAIL) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+      
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, [auth]);
 
-  return { user, loading: loading || adminLoading, isAdmin };
+  return { user, loading, isAdmin };
 }
 
+// The separate useAdminStatus is no longer needed.
+// This simplifies the logic and removes the race condition.
 export function useAdminStatus(user: User | null) {
-  const firestore = useFirestore();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -35,13 +43,12 @@ export function useAdminStatus(user: User | null) {
       return;
     }
 
-    // This is the admin email you specified
     const ADMIN_EMAIL = "ibn.sameh.2020@gmail.com";
     const isAdminEmail = user.email === ADMIN_EMAIL;
     setIsAdmin(isAdminEmail);
     setLoading(false);
 
-  }, [user, firestore]);
+  }, [user]);
 
   return { isAdmin, loading };
 }
