@@ -59,13 +59,23 @@ type UploadWidgetResult = {
     }
 }
 
-const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
+const createSlug = (title: string): string => {
+  // First, try to generate a slug from the title
+  const latinSlug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove non-latin characters, spaces, and hyphens
+    .trim()
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+
+  // If the title was in a non-latin script (like Arabic), latinSlug will be empty.
+  // In that case, generate a unique random ID.
+  if (latinSlug) {
+    return latinSlug;
+  }
+  
+  // Generate a short, random, URL-friendly ID
+  return Math.random().toString(36).substring(2, 12);
 };
 
 
