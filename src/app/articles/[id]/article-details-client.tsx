@@ -54,15 +54,15 @@ const formatContent = (content: string) => {
 
 
 export default function ArticleDetailsClient({ article }: { article: Article }) {
-  const isArabic = article.language === 'ar';
+  const isRTL = article.language === 'rtl';
 
   return (
     <div 
       className={cn(
         "container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32",
-        isArabic && "font-arabic"
+        isRTL && "font-arabic"
       )}
-      dir={isArabic ? 'rtl' : 'ltr'}
+      dir={article.language || 'ltr'}
     >
       <div className="max-w-4xl mx-auto">
         

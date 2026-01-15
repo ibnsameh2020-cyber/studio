@@ -48,7 +48,7 @@ const articleSchema = z.object({
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
   imageUrl: z.string().optional(),
-  language: z.enum(['en', 'ar']).default('en'),
+  language: z.enum(['ltr', 'rtl']).default('ltr'),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -87,7 +87,7 @@ export default function AdminPage() {
       content: "",
       tags: "",
       imageUrl: "",
-      language: "en",
+      language: "ltr",
     },
   });
 
@@ -159,7 +159,7 @@ export default function AdminPage() {
       content: article.content,
       tags: Array.isArray(article.tags) ? article.tags.join(', ') : '',
       imageUrl: article.imageUrl || '',
-      language: article.language || 'en',
+      language: article.language || 'ltr',
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -287,16 +287,16 @@ export default function AdminPage() {
                       name="language"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Language</FormLabel>
+                          <FormLabel>Text Direction</FormLabel>
                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Select article language" />
+                                <SelectValue placeholder="Select text direction" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="en">English</SelectItem>
-                              <SelectItem value="ar">Arabic</SelectItem>
+                              <SelectItem value="ltr">LTR</SelectItem>
+                              <SelectItem value="rtl">RTL</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -315,8 +315,8 @@ export default function AdminPage() {
                               placeholder="Write the full article content here. You can use Markdown." 
                               rows={15} 
                               {...field}
-                              dir={language === 'ar' ? 'rtl' : 'ltr'}
-                              className={cn(language === 'ar' && 'font-arabic text-lg')}
+                              dir={language}
+                              className={cn(language === 'rtl' && 'font-arabic text-lg')}
                             />
                         </FormControl>
                         <FormMessage />

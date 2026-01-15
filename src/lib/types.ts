@@ -30,7 +30,7 @@ export type Article = {
     date: Timestamp | Date | string;
     tags: string[];
     imageUrl?: string;
-    language?: 'en' | 'ar';
+    language?: 'ltr' | 'rtl';
 };
 
     
