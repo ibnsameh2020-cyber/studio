@@ -9,28 +9,36 @@ export type ExperienceItem = {
 };
 
 export const experience: ExperienceItem[] = [
-  {
-    id: 3,
-    date: '2017 - 2019',
-    title: 'Junior Web Developer',
-    company: 'Digital Creations',
-    description: 'Built and styled websites for various clients.',
-    longDescription: 'Built and styled websites for a variety of clients using HTML, CSS, and JavaScript. Gained foundational experience in web development, version control with Git, and agile project management methodologies. Assisted senior developers in building interactive features and learned to translate design mockups into functional web pages.',
-  },
-  {
-    id: 2,
-    date: '2019 - 2021',
-    title: 'Mid-Level Software Engineer',
-    company: 'Innovate Co.',
-    description: 'Developed and maintained client-facing features for a SaaS platform.',
-    longDescription: 'Developed and maintained client-facing features for a large-scale SaaS platform. Collaborated with UI/UX designers to implement responsive and accessible interfaces using React and Tailwind CSS. Contributed to the development of a component library that increased development velocity and ensured design consistency across the product.',
-  },
-  {
-    id: 1,
-    date: '2021 - Present',
-    title: 'Senior Frontend Developer',
-    company: 'Tech Solutions Inc.',
-    description: 'Leading the development of high-performance web applications using React and Next.js. Mentoring junior developers and driving architectural decisions.',
-    longDescription: 'Leading the development of high-performance web applications using React and Next.js. Responsible for architectural decisions, code reviews, and mentoring a team of junior developers. Played a key role in improving application performance by 30% and reducing bundle size through code splitting and optimization techniques. Championed the adoption of TypeScript across the organization.',
-  },
+    {
+        id: 1,
+        date: 'Aug 2025 – Present',
+        title: 'Strategic Planning & Cost Efficiency Consultant (IT-PMO)',
+        company: 'Saudi Irrigation Organization (SIO)',
+        description: 'Leading strategic cost optimization and PMO maturity initiatives.',
+        longDescription: 'Advising leadership on strategic planning and spending efficiency across the organization. Establishing IT-PMO governance frameworks to improve project success rates. Aligning digital initiatives with national water security and efficiency goals.',
+    },
+    {
+        id: 2,
+        date: '[Year] – [Year]',
+        title: 'Digital Transformation Manager',
+        company: 'REPOTECH',
+        description: 'Drove digital adoption and process modernization.',
+        longDescription: 'Led the digital transformation roadmap, integrating modern tech stacks into legacy environments. Optimized business processes to support scalable growth and data-driven decision-making.',
+    },
+    {
+        id: 3,
+        date: '[Year] – [Year]',
+        title: 'Senior IT Projects Manager',
+        company: 'ROSMIMAN®',
+        description: 'Managed complex IT infrastructure and asset management projects.',
+        longDescription: 'Oversaw the implementation of advanced facility management software solutions. Coordinated cross-functional teams to deliver projects within strict timelines and budgets.',
+    },
+    {
+        id: 4,
+        date: '[Year] – [Year]',
+        title: 'Projects Director',
+        company: 'SALEHIYA HEALTHCARE',
+        description: 'Directed large-scale healthcare technology programs.',
+        longDescription: 'Managed a diverse portfolio of healthcare IT projects aimed at improving patient care services. Successfully steered budgets exceeding $100M, ensuring alignment with healthcare regulations.',
+    },
 ];

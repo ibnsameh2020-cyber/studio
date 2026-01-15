@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Lightbulb, Facebook, Linkedin, Mail, Phone, Copy } from 'lucide-react';
+import { Lightbulb, Linkedin, Mail, Phone, Copy } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 
@@ -64,18 +64,18 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-primary" />
               <p className="text-lg font-headline font-bold">
-                Sameh insights by Eng. Sameh Moussa
+                Sameh Insights
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary"/>
-                    <a href="mailto:hello@johndoe.com" className="hover:text-primary transition-colors">hello@johndoe.com</a>
+                    <a href="mailto:contact@samehinsights.com" className="hover:text-primary transition-colors">contact@samehinsights.com</a>
                 </div>
                  <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-primary"/>
-                    <button onClick={() => copyToClipboard('+1 (234) 567-890')} className="flex items-center gap-1 group">
-                        <span className="hover:text-primary transition-colors">+1 (234) 567-890</span>
+                    <button onClick={() => copyToClipboard('+966565579000')} className="flex items-center gap-1 group">
+                        <span className="hover:text-primary transition-colors">+966565579000</span>
                         <Copy className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                     </button>
                 </div>
@@ -83,22 +83,18 @@ export default function Footer() {
           </div>
           <div className="flex flex-col items-center md:items-end gap-4">
              <div className="flex gap-4">
-                <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link href="https://www.linkedin.com/in/samehmoussa" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <Linkedin className="w-6 h-6" />
                 </Link>
-                <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link href="https://twitter.com/SamehInsights" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <XIcon className="w-6 h-6" />
                 </Link>
-                <Link href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link href="https://wa.me/966565579000" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <WhatsAppIcon className="w-6 h-6" />
-                </Link>
-                <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                    <Facebook className="w-6 h-6" />
                 </Link>
             </div>
             <div className="text-sm text-muted-foreground mt-2 text-center md:text-right">
-                <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
-                <p>Powered by Abdulrahman Sameh Moussa</p>
+                <p>Sameh Insights © 2026 | Orchestrating Strategic Outcomes</p>
             </div>
           </div>
         </div>

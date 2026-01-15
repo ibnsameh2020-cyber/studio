@@ -7,7 +7,7 @@ import { useTypingEffect } from '@/hooks/use-typing-effect';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 
-const heroTexts = ["Creative Developer", "UI/UX Enthusiast", "Problem Solver"];
+const heroTexts = ["Strategic PMO Leader", "Digital Transformation Expert", "AI Governance Advisor"];
 
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
@@ -33,7 +33,7 @@ export default function HeroSection() {
             </span>
         </p>
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground mb-10">
-          I design and build beautiful, high-performance web applications that provide exceptional user experiences.
+          I translate complex strategies into measurable reality. As a Strategic PMO Leader with over 20 years of experience, I partner with major government and private entities to manage $100M+ portfolios, ensuring digital initiatives deliver genuine ROI and operational excellence.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="#projects">
@@ -42,7 +42,7 @@ export default function HeroSection() {
                 <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
               </Button>
             </Link>
-            <a href="/resume.pdf" download="Sameh-Moussa-Resume.pdf" onClick={handleDownload}>
+            <a href="/resume.pdf" download="Sameh-Moussa-Strategic-PMO-Leader.pdf" onClick={handleDownload}>
                 <Button size="lg" className="group bg-cv-teal text-cv-pine hover:bg-cv-teal/90">
                     Download Resume
                     <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />

@@ -10,8 +10,8 @@ import Script from 'next/script';
 import { ThemeProvider } from '@/components/shared/theme-provider';
 
 export const metadata: Metadata = {
-  title: 'Sameh insights | A Modern Portfolio',
-  description: 'A modern, high-performance personal portfolio website built with Next.js and Firebase.',
+  title: 'Sameh Insights | Strategic Digital PMO & Portfolio Governance',
+  description: 'The professional portfolio of Eng. Sameh Moussa. 20+ years of expertise in Private Sector & Government Sector digital transformation, driving $120M+ programs and establishing AI-driven PMOs.',
 };
 
 export default function RootLayout({

@@ -118,17 +118,17 @@ export default function ContactSection() {
                     Let's Build Something Great Together
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground">
-                    Have a project in mind or just want to connect? I'm always open to discussing new ideas and opportunities.
+                    Ready to transform your project portfolio into a strategic asset? Let's discuss how we can align your execution with your vision.
                 </p>
                 <div className="space-y-4">
-                    <Link href="mailto:hello@johndoe.com" className="inline-flex items-center gap-3 text-lg group">
+                    <Link href="mailto:contact@samehinsights.com" className="inline-flex items-center gap-3 text-lg group">
                         <Mail className="w-6 h-6 text-primary flex-shrink-0" />
-                        <span className="group-hover:text-primary transition-colors">hello@johndoe.com</span>
+                        <span className="group-hover:text-primary transition-colors">contact@samehinsights.com</span>
                     </Link>
                     <div className="flex items-center gap-3 text-lg">
                         <Phone className="w-6 h-6 text-primary flex-shrink-0" />
-                        <button onClick={() => copyToClipboard('+1 (234) 567-890')} className="flex items-center gap-2 group">
-                            <span className="group-hover:text-primary transition-colors">+1 (234) 567-890</span>
+                        <button onClick={() => copyToClipboard('+966565579000')} className="flex items-center gap-2 group">
+                            <span className="group-hover:text-primary transition-colors">+966565579000</span>
                             <Copy className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                     </div>
@@ -206,5 +206,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    

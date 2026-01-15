@@ -18,7 +18,7 @@ export default function FloatingCvButton() {
   return (
     <a
       href="/resume.pdf"
-      download="Sameh-Moussa-Resume.pdf"
+      download="Sameh-Moussa-Strategic-PMO-Leader.pdf"
       aria-label="Download Resume"
       onClick={handleDownload}
       className={cn(
