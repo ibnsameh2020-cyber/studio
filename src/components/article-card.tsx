@@ -3,9 +3,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { cn } from '@/lib/utils';
 import { ArrowRight, Calendar } from 'lucide-react';
 import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import { Timestamp } from 'firebase/firestore';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type ArticleCardProps = {
   article: Article;
@@ -21,7 +21,12 @@ const formatDate = (date: any) => {
 };
 
 export default function ArticleCard({ article, isFeatured = false }: ArticleCardProps) {
-  const articleImage = PlaceHolderImages.find(img => img.id === article.imagePlaceholderId);
+  const defaultImage = PlaceHolderImages.find(img => img.id === 'article-1');
+  const imageUrl = article.imageKeywords 
+    ? `https://source.unsplash.com/random/800x600/?${encodeURIComponent(article.imageKeywords)}` 
+    : defaultImage?.imageUrl || 'https://picsum.photos/seed/1/800/600';
+  
+  const imageHint = article.imageKeywords?.split(',')[0] || 'technology';
 
   return (
     <Link href={`/articles/${article.id}`}>
@@ -31,20 +36,18 @@ export default function ArticleCard({ article, isFeatured = false }: ArticleCard
           "hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2",
           isFeatured ? "md:flex-row" : "flex-col"
         )}>
-            {articleImage && (
-              <div className={cn(
-                "relative overflow-hidden",
-                isFeatured ? "md:w-1/2 aspect-video" : "w-full aspect-video"
-              )}>
-                <Image
-                  src={articleImage.imageUrl}
-                  alt={article.title}
-                  fill
-                  data-ai-hint={articleImage.imageHint}
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-            )}
+            <div className={cn(
+              "relative overflow-hidden",
+              isFeatured ? "md:w-1/2 aspect-video" : "w-full aspect-video"
+            )}>
+              <Image
+                src={imageUrl}
+                alt={article.title}
+                fill
+                data-ai-hint={imageHint}
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
             <div className={cn("flex flex-col flex-grow", isFeatured ? "md:w-1/2" : "w-full")}>
               <CardHeader>
                 <CardTitle className="font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">

@@ -26,6 +26,6 @@ export type Article = {
     content: string;
     author: string;
     date: Timestamp | Date | string;
-    imagePlaceholderId: string;
+    imageKeywords?: string;
     tags: string[];
 };

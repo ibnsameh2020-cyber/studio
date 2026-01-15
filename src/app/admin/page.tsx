@@ -8,17 +8,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
-import Image from 'next/image';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 
 const articleSchema = z.object({
@@ -26,7 +23,7 @@ const articleSchema = z.object({
   description: z.string().min(10, "Short description must be at least 10 characters."),
   content: z.string().min(50, "Full content must be at least 50 characters."),
   tags: z.string().min(3, "Please add at least one tag."),
-  imagePlaceholderId: z.string().min(1, "Please select an image."),
+  imageKeywords: z.string().optional(),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -41,9 +38,6 @@ const createSlug = (title: string) => {
       .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
 };
 
-const articleImages = PlaceHolderImages.filter(img => img.id.startsWith('article'));
-
-
 export default function AdminPage() {
   const { user, loading, isAdmin } = useUser();
   const router = useRouter();
@@ -57,7 +51,7 @@ export default function AdminPage() {
       description: "",
       content: "",
       tags: "",
-      imagePlaceholderId: "article-1"
+      imageKeywords: ""
     },
   });
 
@@ -168,43 +162,16 @@ export default function AdminPage() {
                 />
                 <FormField
                     control={form.control}
-                    name="imagePlaceholderId"
+                    name="imageKeywords"
                     render={({ field }) => (
-                        <FormItem className="space-y-3">
-                          <FormLabel>Select a Cover Image</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                              className="grid grid-cols-2 md:grid-cols-3 gap-4"
-                            >
-                              {articleImages.map((image) => (
-                                 <FormItem key={image.id} className="relative">
-                                    <FormControl>
-                                      <RadioGroupItem value={image.id} className="sr-only" />
-                                    </FormControl>
-                                    <FormLabel className="cursor-pointer">
-                                       <div className="relative aspect-video rounded-lg overflow-hidden border-2 border-transparent has-[:checked]:border-primary transition-all">
-                                          <Image
-                                            src={image.imageUrl}
-                                            alt={image.description}
-                                            fill
-                                            className="object-cover"
-                                          />
-                                          <div className="absolute inset-0 bg-black/30 opacity-0 has-[:checked]:opacity-100 transition-opacity flex items-center justify-center">
-                                             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </FormLabel>
-                                 </FormItem>
-                              ))}
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
+                        <FormItem>
+                        <FormLabel>Image Keywords (comma-separated)</FormLabel>
+                        <FormControl>
+                            <Input placeholder="e.g., technology, code, abstract" {...field} />
+                        </FormControl>
+                        <FormMessage />
                         </FormItem>
-                      )}
+                    )}
                 />
 
                 <Button type="submit" size="lg" className="w-full group" disabled={form.formState.isSubmitting}>
@@ -221,4 +188,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
