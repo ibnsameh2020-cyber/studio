@@ -28,7 +28,7 @@ export default function ArticlesSection() {
                     <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground inline-block">
                         From My Blog
                     </h2>
-                    <p className="text-lg md:text-xl text-muted-foreground">
+                    <p className="text-base text-muted-foreground">
                         Dive into a world of insights, tutorials, and reflections on modern web development and design. Here are a few of my latest thoughts.
                     </p>
                      <Link href="/articles">
