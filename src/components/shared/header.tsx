@@ -10,7 +10,7 @@ import { Button } from '../ui/button';
 const navItems = [
   { href: '#projects', label: 'Projects' },
   { href: '#experience', label: 'Experience' },
-  { href: '/articles', label: 'Blog' },
+  { href: '/articles', label: 'Blog', sectionId: 'articles' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -72,12 +72,16 @@ export default function Header() {
   };
 
   const isLinkActive = (item: typeof navItems[0]) => {
+    // For page links like /articles
     if (item.href.startsWith('/')) {
         if (typeof window !== 'undefined') {
-            return window.location.pathname === item.href;
+            const onBlogPage = window.location.pathname === item.href;
+            const onBlogSection = activeSection === item.sectionId;
+            return onBlogPage || onBlogSection;
         }
         return false;
     }
+    // For anchor links like #projects
     return activeSection === item.href.substring(1);
   };
 
@@ -100,7 +104,7 @@ export default function Header() {
               {navItems.map((item) => (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
                   className={cn(
                     'text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-full',
                     isLinkActive(item) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
@@ -154,7 +158,7 @@ export default function Header() {
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
                 onClick={handleMenuLinkClick}
                 className={cn(
                   'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
