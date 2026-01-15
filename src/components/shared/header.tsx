@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Download, LogIn } from 'lucide-react';
+import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser } from '@/firebase';
 import {
@@ -119,6 +119,14 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
+             {isAdmin && (
+                <Link href="/admin">
+                  <Button variant="outline" size="sm" className="group">
+                    <ShieldCheck className="w-4 h-4 mr-2" />
+                    Admin Panel
+                  </Button>
+                </Link>
+              )}
             {loading ? (
               <Skeleton className="h-10 w-10 rounded-full" />
             ) : user ? (
@@ -138,12 +146,6 @@ export default function Header() {
                       <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                     </div>
                   </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {isAdmin && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/admin">Admin Panel</Link>
-                    </DropdownMenuItem>
-                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={signOut}>
                     Log out
@@ -231,4 +233,5 @@ export default function Header() {
     </>
   );
 }
+
 
