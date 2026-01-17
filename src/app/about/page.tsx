@@ -116,7 +116,7 @@ export default function AboutPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     {values.map((value, index) => (
-                        <div key={index} className="text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 rounded-xl flex flex-col items-center">
+                        <div key={index} className="text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 rounded-xl flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
                            <div className="mb-6">{value.icon}</div>
                            <h3 className="text-xl font-headline font-semibold mb-2">{value.title}</h3>
                            <p className="text-base text-muted-foreground flex-grow">{value.description}</p>
