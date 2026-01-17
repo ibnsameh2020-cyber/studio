@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview An AI flow to automatically format article content for a richer presentation.
+ * @fileOverview An AI flow to automatically structure article content.
  *
- * - formatArticle - A function that takes raw text and applies stylistic markdown.
+ * - formatArticle - A function that takes raw text and converts it to a structured format.
  * - FormatArticleInput - The input type for the formatArticle function.
  * - FormatArticleOutput - The return type for the formatArticle function.
  */
@@ -15,8 +15,13 @@ const FormatArticleInputSchema = z.object({
 });
 export type FormatArticleInput = z.infer<typeof FormatArticleInputSchema>;
 
+const ContentBlockSchema = z.object({
+  type: z.enum(['h1', 'h2', 'p', 'blockquote', 'list']),
+  content: z.union([z.string(), z.array(z.string())]),
+});
+
 const FormatArticleOutputSchema = z.object({
-  formattedContent: z.string().describe('The content with special formatting markdown applied.'),
+  structuredContent: z.array(ContentBlockSchema).describe('The structured content of the article.'),
 });
 export type FormatArticleOutput = z.infer<typeof FormatArticleOutputSchema>;
 
@@ -28,27 +33,40 @@ const prompt = ai.definePrompt({
   name: 'formatArticlePrompt',
   input: {schema: FormatArticleInputSchema},
   output: {schema: FormatArticleOutputSchema},
-  prompt: `You are an expert web content stylist. Your task is to take raw text content for a blog post and apply special formatting to make it more visually appealing and "fancy".
+  prompt: `You are an expert web content stylist and structural analyst. Your task is to take raw text content for a blog post and convert it into a structured JSON format, while also applying inline styling.
 
-You must analyze the text and apply the following formatting rules where appropriate:
+You must analyze the text and break it down into an array of content blocks. Each block should have a 'type' and 'content'.
 
-1.  **Main Headers**: Identify titles or main section headers. Format them by starting the line with ".1 ", ".2 ", etc.
-    Example: ".1 A New Beginning"
+**Block Types & Rules:**
+- 'h1': For main section headers. These are major titles in the article.
+- 'h2': For sub-headers. These are secondary titles within a main section.
+- 'p': For a standard paragraph of text.
+- 'blockquote': For an impactful "pull quote" that should be emphasized. Use this sparingly.
+- 'list': For a numbered or bulleted list. The 'content' for this type **must** be an array of strings, with each string being a single list item.
+- **IMPORTANT**: Do NOT confuse a numbered list (e.g., "1. First item, 2. Second item") with a header. A header is a title for a section, not part of a sequence of items.
 
-2.  **Sub-headers**: Identify sub-sections within a main section. Format them using a "number.number" format.
-    Example: "1.1 The First Step"
+**Inline Styling Rules:**
+- For **bold** text to emphasize key terms, wrap the text in double asterisks. Example: "This is a **very important** point."
+- For *italic* text for subtle emphasis, wrap the text in single asterisks. Example: "The concept of *deja vu*."
 
-3.  **Blockquotes**: Find a sentence that is impactful or serves as a great summary or "pull quote". Format it by starting the line with "> ". Use this sparingly for emphasis.
-    Example: "> This is the core message of the section."
+**Output Format:**
+- Your final output must be a valid JSON object with a single key "structuredContent" containing the array of blocks.
+- For 'list' types, the \`content\` property is an array of strings. For all other types, it is a single string.
 
-4.  **Bold Text**: Identify key terms or phrases that deserve emphasis and wrap them in double asterisks.
-    Example: "This is a **very important** concept."
+**Example:**
+Raw Content:
+"Introduction to Gardening. A *rewarding* hobby. Getting Started. To start, you will need a few things: 1. Good soil. 2. Sunlight (which is **very important**). 3. Water."
 
-5.  **Italic Text**: Use italics for subtle emphasis, foreign words, or titles. Wrap the text in single asterisks.
-    Example: "The concept of *deja vu* is fascinating."
-
-Do NOT change the user's original text, only add the formatting syntax around it. Do not add any new content.
-The goal is to produce a well-structured and visually interesting article. Return only the formatted text in the 'formattedContent' field.
+Expected JSON Output:
+{
+  "structuredContent": [
+    { "type": "h1", "content": "Introduction to Gardening" },
+    { "type": "p", "content": "A *rewarding* hobby." },
+    { "type": "h2", "content": "Getting Started" },
+    { "type": "p", "content": "To start, you will need a few things:" },
+    { "type": "list", "content": ["Good soil.", "Sunlight (which is **very important**).", "Water."] }
+  ]
+}
 
 Here is the raw content:
 {{{content}}}
@@ -63,9 +81,9 @@ const formatArticleFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    if (!output) {
-      // If AI fails, return original content to avoid breaking the page.
-      return { formattedContent: input.content };
+    if (!output || !output.structuredContent || output.structuredContent.length === 0) {
+      // If AI fails, return original content as a single paragraph block.
+      return { structuredContent: [{ type: 'p', content: input.content }] };
     }
     return output;
   }

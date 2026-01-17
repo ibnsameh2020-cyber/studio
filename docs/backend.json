@@ -46,7 +46,11 @@
         "title": { "type": "string" },
         "description": { "type": "string" },
         "content": { "type": "string", "description": "Raw, unformatted content written by the user." },
-        "formattedContent": { "type": "string", "description": "AI-formatted content with special markdown." },
+        "formattedContent": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "AI-formatted content as an array of structured blocks."
+        },
         "author": { "type": "string" },
         "date": { "type": "string", "format": "date-time" },
         "tags": { "type": "array", "items": { "type": "string" } },

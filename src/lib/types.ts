@@ -21,17 +21,20 @@ export type ExperienceItem = {
     longDescription: string;
 };
 
+export type ContentBlock = {
+  type: 'h1' | 'h2' | 'p' | 'blockquote' | 'list';
+  content: string | string[];
+};
+
 export type Article = {
     id: string;
     title: string;
     description: string;
     content: string;
-    formattedContent?: string;
+    formattedContent?: ContentBlock[] | string;
     author: string;
     date: Timestamp | Date | string;
     tags: string[];
     imageUrl?: string;
     language?: 'ltr' | 'rtl';
 };
-
-    

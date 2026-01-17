@@ -1,7 +1,7 @@
 
 "use client";
 
-import type { Article } from '@/lib/types';
+import type { Article, ContentBlock } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User } from 'lucide-react';
 import { Timestamp } from 'firebase/firestore';
@@ -15,34 +15,69 @@ const formatDate = (date: any) => {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 };
 
-const formatContent = (content: string) => {
+// This function processes simple inline markdown like **bold** and *italic*.
+const processInlineMarkdown = (line: string): React.ReactNode => {
+  const parts = line.split(/(\*\*.*?\*\*|\*.*?\*)/g).filter(Boolean);
+
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith('*') && part.endsWith('*')) {
+      return <em key={i} className="italic">{part.slice(1, -1)}</em>;
+    }
+    return part;
+  });
+};
+
+// Renders content from the new structured format
+const renderStructuredContent = (blocks: ContentBlock[]) => {
+  return blocks.map((block, index) => {
+    switch (block.type) {
+      case 'h1':
+        return (
+          <h2 key={index} className="text-3xl font-headline font-bold mt-10 mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
+            {processInlineMarkdown(block.content as string)}
+          </h2>
+        );
+      case 'h2':
+        return (
+          <h3 key={index} className="text-2xl font-headline font-semibold mt-8 mb-4 text-primary">
+            {processInlineMarkdown(block.content as string)}
+          </h3>
+        );
+      case 'blockquote':
+        return (
+          <blockquote key={index} className="border-l-4 border-primary pl-4 py-2 my-6 bg-card/30">
+            <p className="text-lg italic text-foreground/90">{processInlineMarkdown(block.content as string)}</p>
+          </blockquote>
+        );
+      case 'list':
+        return (
+          <ul key={index} className="list-disc list-inside mb-4 space-y-2 pl-4">
+            {(block.content as string[]).map((item, i) => <li key={i}>{processInlineMarkdown(item)}</li>)}
+          </ul>
+        );
+      case 'p':
+      default:
+        return <p key={index} className="mb-4 leading-relaxed">{processInlineMarkdown(block.content as string)}</p>;
+    }
+  });
+};
+
+// Renders content from the legacy string format (for backward compatibility)
+const renderLegacyContent = (content: string) => {
   const lines = content.split('\n');
-
-  // This function processes simple inline markdown like **bold** and *italic*.
-  const processInlineMarkdown = (line: string): React.ReactNode => {
-    const parts = line.split(/(\*\*.*?\*\*|\*.*?\*)/g).filter(Boolean);
-
-    return parts.map((part, i) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={i}>{part.slice(2, -2)}</strong>;
-      }
-      if (part.startsWith('*') && part.endsWith('*')) {
-        return <em key={i} className="italic">{part.slice(1, -1)}</em>;
-      }
-      return part;
-    });
-  };
   
-  // Smarter logic to distinguish between headers and standard numbered lists.
-  const isHeader = (line: string) => /^\.\d+\s/.test(line.trim()); // Matches ".1 My Header"
-  const isSubHeader = (line: string) => /^\d+\.\d+\s/.test(line.trim()); // Matches "2.1 My Sub-Header"
+  const isHeader = (line: string) => /^\.\d+\s/.test(line.trim());
+  const isSubHeader = (line: string) => /^\d+\.\d+\s/.test(line.trim());
   const isQuote = (line: string) => line.trim().startsWith('>');
 
   return lines.map((line, index) => {
     const trimmedLine = line.trim();
 
     if (trimmedLine === '') {
-      return null; // Don't render empty lines.
+      return null;
     }
 
     if (isHeader(trimmedLine)) {
@@ -113,7 +148,10 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
         </div>
 
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
-          {formatContent(contentToRender)}
+            {Array.isArray(contentToRender)
+              ? renderStructuredContent(contentToRender as ContentBlock[])
+              : renderLegacyContent(contentToRender as string)
+            }
         </article>
 
         <div className="flex flex-wrap gap-2" dir="ltr">

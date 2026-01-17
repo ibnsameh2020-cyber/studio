@@ -152,10 +152,10 @@ export default function AdminPage() {
     try {
         toast({
             title: "AI Stylist at Work",
-            description: "Automatically formatting your article...",
+            description: "Automatically structuring and styling your article...",
         });
         const result = await formatArticle({ content: data.content });
-        const formattedContent = result.formattedContent;
+        const formattedContent = result.structuredContent;
 
         const slug = editingArticleId || createSlug(data.title);
         const articleRef = doc(firestore, "articles", slug);
@@ -166,7 +166,7 @@ export default function AdminPage() {
             description: data.description,
             imageUrl: data.imageUrl,
             content: data.content, // Raw content
-            formattedContent: formattedContent, // AI-formatted content
+            formattedContent: formattedContent, // AI-structured content
             tags: data.tags.split(',').map(tag => tag.trim()),
             language: data.language,
             author: "Eng. Sameh Moussa",
@@ -337,7 +337,7 @@ export default function AdminPage() {
                         <FormLabel>Full Content</FormLabel>
                         <FormControl>
                             <Textarea 
-                              placeholder="Write the full article content here. You can use Markdown." 
+                              placeholder="Write the full article content here. The AI will automatically style it." 
                               rows={15} 
                               {...field}
                               className={cn(language === 'rtl' && 'text-lg')}
@@ -371,7 +371,7 @@ export default function AdminPage() {
                       {(form.formState.isSubmitting || isProcessing) ? (
                           <>
                               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                              {isProcessing ? 'Styling with AI...' : (editingArticleId ? 'Updating...' : 'Publishing...')}
+                              {isProcessing ? 'AI is Styling...' : (editingArticleId ? 'Updating...' : 'Publishing...')}
                           </>
                       ) : (editingArticleId ? 'Update Article' : 'Publish Article')}
                   </Button>
