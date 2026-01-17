@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -40,7 +39,7 @@ export default function HeroSection() {
             </Link>
             <Link href="/articles">
                 <Button size="lg" variant="outline" className="group">
-                    Read My Manifesto
+                    Read My Insights
                     <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
                 </Button>
             </Link>

@@ -23,7 +23,7 @@ const navItems = [
   { href: '#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
   { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
   { href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { href: '/articles', label: 'Articles', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
+  { href: '/articles', label: 'Insights', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
   { href: '/about', label: 'About', sectionId: 'about-cta', icon: <User className="w-4 h-4" /> },
   { href: '#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
