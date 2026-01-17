@@ -201,7 +201,7 @@ export default function AdminPage() {
   // START: One-time seed for new insights
   useEffect(() => {
     const seedInsights = async () => {
-        if (!firestore || !isAdmin || sessionStorage.getItem('insightsSeeded_v2')) {
+        if (!firestore || !isAdmin || sessionStorage.getItem('insightsSeeded_v3')) {
             return;
         }
 
@@ -269,7 +269,7 @@ export default function AdminPage() {
             });
         }
         
-        sessionStorage.setItem('insightsSeeded_v2', 'true');
+        sessionStorage.setItem('insightsSeeded_v3', 'true');
     };
 
     if (firestore && isAdmin) {
