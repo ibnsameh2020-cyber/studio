@@ -18,6 +18,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 
 const navItems = [
   { href: '#projects', label: 'Projects' },
@@ -34,6 +35,7 @@ export default function Header() {
   const { user, loading, isAdmin } = useUser();
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -255,6 +257,18 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={handleMenuLinkClick}
+                className={cn(
+                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
+                  pathname === '/admin' ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                )}
+              >
+                Admin Panel
+              </Link>
+            )}
           </nav>
         </div>
       )}
