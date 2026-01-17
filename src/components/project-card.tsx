@@ -25,6 +25,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}>
             {projectImage && (
               <div className="relative aspect-video overflow-hidden">
+                {/* This div creates the permanent highlight effect on the image */}
+                <div className="absolute inset-0 z-10 pointer-events-none rounded-t-lg ring-2 ring-inset ring-primary/60"></div>
                 <Image
                   src={projectImage.imageUrl}
                   alt={project.title}
