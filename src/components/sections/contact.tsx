@@ -97,7 +97,7 @@ export default function ContactSection() {
       logo: (
         <div className="relative w-40 h-40">
           <Image
-            src="https://greatplacetowork.me/wp-content/uploads/2024/08/Salehya-1.jpg"
+            src="https://i.ibb.co/Cptfs8Df/d28f4af5-6a73-482d-9161-94a56db6b1bf-removalai-preview.png"
             alt="Salehiya Logo"
             fill
             className="object-contain"
