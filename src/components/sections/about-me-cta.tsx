@@ -20,7 +20,7 @@ export default function AboutMeCtaSection() {
               <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground inline-block">
                 Beyond the Portfolio
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-muted-foreground h-24 [mask-image:linear-gradient(to_bottom,white_40%,transparent_100%)]">
                 Discover the journey, philosophy, and strategic mindset that drive my work. Learn more about my evolution from engineering to strategic governance.
               </p>
               <Link href="/about">
