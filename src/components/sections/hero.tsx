@@ -40,7 +40,7 @@ export default function HeroSection() {
             </Link>
             <Link href="/articles">
                 <Button size="lg" variant="outline" className="group">
-                    Explore My Insights
+                    Explore my manifesto
                     <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
             </Link>
