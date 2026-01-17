@@ -57,8 +57,8 @@
     {
       "id": "about-portrait",
       "description": "A professional portrait for the about page.",
-      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njg0OTAwMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "professional portrait"
+      "imageUrl": "https://res.cloudinary.com/dtvtphhsc/image/upload/v1718893815/sameh-moussa-portrait_p26f30.jpg",
+      "imageHint": "professional man"
     }
   ]
 }
