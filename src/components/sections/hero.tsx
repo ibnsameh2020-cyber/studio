@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Download } from 'lucide-react';
+import { ArrowDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 const AnimatedHeroText = () => {
@@ -37,10 +37,10 @@ export default function HeroSection() {
                 <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
               </Button>
             </Link>
-            <Link href="/articles">
+            <Link href="/about">
                 <Button size="lg" variant="outline" className="group">
-                    Read My Insights
-                    <Download className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
+                    Read my manifesto
+                    <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
             </Link>
         </div>
