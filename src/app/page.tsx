@@ -1,6 +1,5 @@
 
 
-
 import HeroSection from '@/components/sections/hero';
 import CaseStudiesSection from '@/components/sections/projects';
 import ExperienceSection from '@/components/sections/experience';
@@ -8,6 +7,7 @@ import ContactSection from '@/components/sections/contact';
 import { Separator } from '@/components/ui/separator';
 import AnimatedSection from '@/components/animated-section';
 import InsightsSection from '@/components/sections/articles';
+import { ServicesSection } from './services/page';
 
 export default function Home() {
   return (
@@ -24,6 +24,9 @@ export default function Home() {
         <HeroSection />
         <div className="relative z-10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32 pb-24 md:pb-32">
+            <AnimatedSection>
+              <ServicesSection />
+            </AnimatedSection>
             <CaseStudiesSection />
             <AnimatedSection>
               <ExperienceSection />

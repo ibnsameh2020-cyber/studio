@@ -21,7 +21,7 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { href: '/services', label: 'Services' },
+  { href: '#services', label: 'Services' },
   { href: '#case-studies', label: 'Case Studies' },
   { href: '#experience', label: 'Experience' },
   { href: '/articles', label: 'Insights', sectionId: 'insights' },

@@ -23,31 +23,33 @@ const services = [
   },
 ];
 
-export default function ServicesPage() {
+export function ServicesSection() {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-6xl font-headline font-bold">My Expertise</h1>
-        <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-          How I can help you bridge the gap between strategy and execution.
-        </p>
+    <section id="services" className="py-20 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-headline font-bold">My Expertise</h2>
+          <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
+            How I can help you bridge the gap between strategy and execution.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {services.map((service, index) => (
+            <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
+              <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center">
+                <div className="mb-6">{service.icon}</div>
+                <CardHeader className="p-0">
+                  <CardTitle className="text-xl font-headline mb-2">{service.title}</CardTitle>
+                </CardHeader>
+                <CardDescription className="text-base text-muted-foreground flex-grow">
+                  {service.description}
+                </CardDescription>
+              </Card>
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {services.map((service, index) => (
-          <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
-            <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center">
-              <div className="mb-6">{service.icon}</div>
-              <CardHeader className="p-0">
-                <CardTitle className="text-xl font-headline mb-2">{service.title}</CardTitle>
-              </CardHeader>
-              <CardDescription className="text-base text-muted-foreground flex-grow">
-                {service.description}
-              </CardDescription>
-            </Card>
-          </AnimatedSection>
-        ))}
-      </div>
-    </div>
+    </section>
   );
 }
