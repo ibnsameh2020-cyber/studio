@@ -148,10 +148,10 @@ export default function AdminPage() {
             return;
         }
 
-        console.log("Checking for articles to migrate...");
+        console.log("Checking for insights to migrate...");
         toast({
-            title: "Checking for old articles...",
-            description: "Automatically upgrading articles to the new AI style.",
+            title: "Checking for old insights...",
+            description: "Automatically upgrading insights to the new AI style.",
         });
 
         const articlesRef = collection(firestore, "articles");
@@ -166,13 +166,13 @@ export default function AdminPage() {
         });
 
         if (articlesToMigrate.length === 0) {
-            console.log("No articles to migrate.");
+            console.log("No insights to migrate.");
             sessionStorage.setItem('articlesMigrated_v2', 'true');
             return;
         }
 
         toast({
-            title: `Found ${articlesToMigrate.length} articles to upgrade.`,
+            title: `Found ${articlesToMigrate.length} insights to upgrade.`,
             description: "The AI stylist is getting to work. Please wait...",
         });
 
@@ -180,7 +180,7 @@ export default function AdminPage() {
         for (const article of articlesToMigrate) {
             try {
                 if (!article.content) continue;
-                console.log(`Migrating article: ${article.id}`);
+                console.log(`Migrating insight: ${article.id}`);
                 const result = await formatArticle({ content: article.content });
                 const formattedContent = result.structuredContent;
 
@@ -189,12 +189,12 @@ export default function AdminPage() {
                     formattedContent: formattedContent
                 });
                 successCount++;
-                console.log(`Successfully migrated article: ${article.id}`);
+                console.log(`Successfully migrated insight: ${article.id}`);
             } catch (error) {
-                console.error(`Failed to migrate article ${article.id}:`, error);
+                console.error(`Failed to migrate insight ${article.id}:`, error);
                 toast({
                     title: "Migration Error",
-                    description: `Could not upgrade article: ${article.title}.`,
+                    description: `Could not upgrade insight: ${article.title}.`,
                     variant: "destructive",
                 });
             }
@@ -203,12 +203,12 @@ export default function AdminPage() {
         if (successCount > 0) {
             toast({
                 title: "Migration Complete!",
-                description: `Successfully upgraded ${successCount} of ${articlesToMigrate.length} articles to the new style.`,
+                description: `Successfully upgraded ${successCount} of ${articlesToMigrate.length} insights to the new style.`,
             });
         } else {
              toast({
                 title: "Migration Finished",
-                description: `No articles were upgraded. They might be up to date already.`,
+                description: `No insights were upgraded. They might be up to date already.`,
             });
         }
         
@@ -221,10 +221,10 @@ export default function AdminPage() {
   }, [firestore, toast, isAdmin]);
   // END: One-time migration
   
-  // START: One-time seed for new articles
+  // START: One-time seed for new insights
   useEffect(() => {
     const seedArticles = async () => {
-        if (!firestore || !isAdmin || sessionStorage.getItem('articlesSeeded_v1')) {
+        if (!firestore || !isAdmin || sessionStorage.getItem('insightsSeeded_v1')) {
             return;
         }
 
@@ -263,7 +263,7 @@ export default function AdminPage() {
             }
         ];
 
-        console.log("Checking if articles need to be seeded...");
+        console.log("Checking if insights need to be seeded...");
         
         let articlesAdded = 0;
         for (const articleData of articlesToSeed) {
@@ -272,7 +272,7 @@ export default function AdminPage() {
 
             if (!docSnap.exists()) {
                 try {
-                    console.log(`Seeding article: ${articleData.id}`);
+                    console.log(`Seeding insight: ${articleData.id}`);
                     const result = await formatArticle({ content: articleData.content });
                     const formattedContent = result.structuredContent;
 
@@ -285,26 +285,26 @@ export default function AdminPage() {
                     }, { merge: true });
                     articlesAdded++;
                 } catch (error) {
-                    console.error(`Failed to seed article ${articleData.id}:`, error);
+                    console.error(`Failed to seed insight ${articleData.id}:`, error);
                 }
             }
         }
 
         if (articlesAdded > 0) {
             toast({
-                title: "Seeding New Articles",
-                description: `Added ${articlesAdded} new articles to your collection.`,
+                title: "Seeding New Insights",
+                description: `Added ${articlesAdded} new insights to your collection.`,
             });
         }
         
-        sessionStorage.setItem('articlesSeeded_v1', 'true');
+        sessionStorage.setItem('insightsSeeded_v1', 'true');
     };
 
     if (firestore && isAdmin) {
       seedArticles();
     }
   }, [firestore, isAdmin, toast]);
-  // END: One-time seed for new articles
+  // END: One-time seed for new insights
 
 
   const handleUploadSuccess = (result: UploadWidgetResult) => {
@@ -343,7 +343,7 @@ export default function AdminPage() {
     try {
         toast({
             title: "AI Stylist at Work",
-            description: "Automatically structuring and styling your article...",
+            description: "Automatically structuring and styling your insight...",
         });
         const result = await formatArticle({ content: data.content });
         const formattedContent = result.structuredContent;
@@ -365,15 +365,15 @@ export default function AdminPage() {
         }, { merge: true });
 
         toast({
-            title: `Article ${editingArticleId ? 'Updated' : 'Published'}!`,
-            description: `Your article is now ${editingArticleId ? 'updated' : 'live'}.`,
+            title: `Insight ${editingArticleId ? 'Updated' : 'Published'}!`,
+            description: `Your insight is now ${editingArticleId ? 'updated' : 'live'}.`,
         });
         articleForm.reset(emptyArticleFormValues);
         setEditingArticleId(null);
     } catch (error: any) {
         toast({
             title: "Error",
-            description: `Could not publish article. ${error.message}`,
+            description: `Could not publish insight. ${error.message}`,
             variant: "destructive",
         });
     } finally {
@@ -399,13 +399,13 @@ export default function AdminPage() {
     try {
       await deleteDoc(doc(firestore, "articles", articleId));
       toast({
-        title: "Article Deleted",
-        description: "The article has been successfully removed.",
+        title: "Insight Deleted",
+        description: "The insight has been successfully removed.",
       });
     } catch (error: any) {
        toast({
         title: "Error",
-        description: `Could not delete article. ${error.message}`,
+        description: `Could not delete insight. ${error.message}`,
         variant: "destructive",
       });
     }
@@ -519,12 +519,12 @@ export default function AdminPage() {
 
         <Tabs defaultValue="articles" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="articles">Manage Articles</TabsTrigger>
+                <TabsTrigger value="articles">Manage Insights</TabsTrigger>
                 <TabsTrigger value="resources">Manage Resources</TabsTrigger>
             </TabsList>
             <TabsContent value="articles">
                 <p className="text-muted-foreground mb-8">
-                    {editingArticleId ? `Editing article: ${editingArticleId}` : "Create a new public article."}
+                    {editingArticleId ? `Editing insight: ${editingArticleId}` : "Create a new public insight."}
                 </p>
                 <Form {...articleForm}>
                     <form 
@@ -542,7 +542,7 @@ export default function AdminPage() {
                                 <FormItem>
                                 <FormLabel>Title</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter article title" {...field} />
+                                    <Input placeholder="Enter insight title" {...field} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
@@ -555,7 +555,7 @@ export default function AdminPage() {
                                 <FormItem>
                                 <FormLabel>Short Description</FormLabel>
                                 <FormControl>
-                                    <Textarea placeholder="A brief summary of the article" {...field} />
+                                    <Textarea placeholder="A brief summary of the insight" {...field} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
@@ -603,7 +603,7 @@ export default function AdminPage() {
                                 <FormLabel>Full Content</FormLabel>
                                 <FormControl>
                                     <Textarea 
-                                    placeholder="Write the full article content here. The AI will automatically style it." 
+                                    placeholder="Write the full insight content here. The AI will automatically style it." 
                                     rows={15} 
                                     {...field}
                                     className={cn(language === 'rtl' && 'text-lg')}
@@ -638,13 +638,13 @@ export default function AdminPage() {
                                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                                     {isProcessingArticle ? 'AI is Styling...' : (editingArticleId ? 'Updating...' : 'Publishing...')}
                                 </>
-                            ) : (editingArticleId ? 'Update Article' : 'Publish Article')}
+                            ) : (editingArticleId ? 'Update Insight' : 'Publish Insight')}
                         </Button>
                         </div>
                     </form>
                 </Form>
                 <div className="space-y-8">
-                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Articles</h2>
+                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Insights</h2>
                     {articlesLoading ? (
                         <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
                     ) : (
@@ -671,7 +671,7 @@ export default function AdminPage() {
                                             <AlertDialogHeader>
                                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                                             <AlertDialogDescription>
-                                                This action cannot be undone. This will permanently delete the article.
+                                                This action cannot be undone. This will permanently delete the insight.
                                             </AlertDialogDescription>
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>
@@ -784,3 +784,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
