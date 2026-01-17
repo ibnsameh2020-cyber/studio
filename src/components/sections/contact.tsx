@@ -157,7 +157,12 @@ export default function ContactSection() {
         <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-5 gap-12 items-start">
                 <div className="md:col-span-2 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 h-full">
-                    <div>
+                    <div className="text-center">
+                        <div className="flex justify-center mb-4">
+                            <div className="p-4 bg-primary/10 rounded-full inline-block shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
+                                <CalendarCheck className="w-12 h-12 text-primary" />
+                            </div>
+                        </div>
                         <h3 className="text-2xl font-headline font-bold text-primary mb-2">Book a Strategic Discovery Call</h3>
                         <p className="text-muted-foreground mb-6">Skip the back-and-forth emails. Schedule a 15-minute introductory discussion to see if we are a good fit.</p>
                         <Link href="https://calendly.com/your-link" target="_blank" rel="noopener noreferrer">
@@ -267,11 +272,11 @@ export default function ContactSection() {
                 <div
                     className="group relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
                 >
-                    <div className="flex animate-marquee-scroll">
+                    <div className="flex animate-marquee-scroll group-hover:[animation-play-state:paused]">
                         {clientLogos.concat(clientLogos).map((client, index) => (
                            <div
                                 key={`${client.name}-${index}`}
-                                className="flex-shrink-0 mx-6"
+                                className="flex-shrink-0 mx-8"
                             >
                                 <div
                                     title={client.name}
