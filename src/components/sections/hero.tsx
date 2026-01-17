@@ -37,7 +37,7 @@ const AnimatedHeroText = () => {
 
     useEffect(() => {
         if (!isPaused) {
-            timeoutRef.current = setTimeout(changeSentence, 4000); // Sentence display duration
+            timeoutRef.current = setTimeout(changeSentence, 2500); // Sentence display duration
         }
         
         // Pause/resume progress bar
