@@ -16,45 +16,57 @@ const formatDate = (date: any) => {
 };
 
 const formatContent = (content: string) => {
-  const lines = content.split('\n').filter(line => line.trim() !== '');
+  const lines = content.split('\n');
 
-  const isHeader = (line: string) => {
-    const trimmed = line.trim();
-    // Main headers are like "1." or "1. Some Text"
-    return /^\d+\.\s/.test(trimmed) || /^\d+\.$/.test(trimmed);
+  // This function processes simple inline markdown like **bold** and *italic*.
+  const processInlineMarkdown = (line: string): React.ReactNode => {
+    const parts = line.split(/(\*\*.*?\*\*|\*.*?\*)/g).filter(Boolean);
+
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i}>{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('*') && part.endsWith('*')) {
+        return <em key={i} className="italic">{part.slice(1, -1)}</em>;
+      }
+      return part;
+    });
   };
 
-  const isSubHeader = (line: string) => {
-      const trimmed = line.trim();
-      // Sub-headers are like "2.1" or "2.1 Some Text"
-      return /^\d+\.\d+\s/.test(trimmed) || /^\d+\.\d+$/.test(trimmed);
-  };
-  
-  const isGenericHeader = (line: string) => {
-      const trimmed = line.trim();
-      if (trimmed.length > 80 || trimmed.endsWith('.')) return false;
-      if (trimmed.endsWith('?')) return true;
-      const words = trimmed.split(' ');
-      if (words.length > 10) return false;
-      const capitalizedWords = words.filter(word => word.length > 0 && word[0] === word[0].toUpperCase());
-      if (capitalizedWords.length / words.length > 0.5) return true;
-      return false;
-  };
-
+  const isHeader = (line: string) => /^\d+\.\s/.test(line.trim()) || /^\d+\.$/.test(line.trim());
+  const isSubHeader = (line: string) => /^\d+\.\d+\s/.test(line.trim()) || /^\d+\.\d+$/.test(line.trim());
+  const isQuote = (line: string) => line.trim().startsWith('>');
 
   return lines.map((line, index) => {
-      const trimmedLine = line.trim();
-      
-      if (isHeader(trimmedLine)) {
-          return <h2 key={index} className="text-3xl font-headline font-bold mt-10 mb-6">{trimmedLine}</h2>;
-      }
-      if (isSubHeader(trimmedLine)) {
-          return <h3 key={index} className="text-2xl font-headline font-semibold mt-8 mb-4">{trimmedLine}</h3>;
-      }
-       if (isGenericHeader(trimmedLine)) {
-            return <h2 key={index} className="text-2xl font-headline font-bold mt-8 mb-4">{trimmedLine}</h2>;
-        }
-      return <p key={index} className="mb-4 leading-relaxed">{trimmedLine}</p>;
+    const trimmedLine = line.trim();
+
+    if (trimmedLine === '') {
+      return null; // Don't render empty lines.
+    }
+
+    if (isHeader(trimmedLine)) {
+      return (
+        <h2 key={index} className="text-3xl font-headline font-bold mt-10 mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
+          {processInlineMarkdown(trimmedLine)}
+        </h2>
+      );
+    }
+    if (isSubHeader(trimmedLine)) {
+      return (
+        <h3 key={index} className="text-2xl font-headline font-semibold mt-8 mb-4 text-primary">
+          {processInlineMarkdown(trimmedLine)}
+        </h3>
+      );
+    }
+    if (isQuote(trimmedLine)) {
+      return (
+        <blockquote key={index} className="border-l-4 border-primary pl-4 py-2 my-6 bg-card/30">
+          <p className="text-lg italic text-foreground/90">{processInlineMarkdown(trimmedLine.substring(1).trim())}</p>
+        </blockquote>
+      );
+    }
+
+    return <p key={index} className="mb-4 leading-relaxed">{processInlineMarkdown(trimmedLine)}</p>;
   });
 };
 
