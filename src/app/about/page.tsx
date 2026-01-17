@@ -66,7 +66,7 @@ export default function AboutPage() {
             <Separator className="my-24" />
 
             <AnimatedSection style={{ animationDelay: '600ms' }}>
-                 <div className="text-center max-w-3xl mx-auto">
+                 <div className="text-center max-w-3xl mx-auto bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 md:p-12 shadow-xl transition-all duration-300 hover:border-primary/80 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2">
                     <h2 className="text-3xl md:text-5xl font-headline font-bold">The Promise</h2>
                     <p className="text-md md:text-lg text-muted-foreground mt-4 leading-relaxed">
                         I don't offer generic templates. I offer a partnership to navigate the chaos of transformation. Let’s build an organization that is efficient by design, strategic by intent, and human by nature.
