@@ -93,7 +93,16 @@ export default function ContactSection() {
     },
     {
       name: 'Salehiya',
-      logo: <p className="text-2xl font-bold font-headline tracking-wider">SALEHIYA</p>,
+      logo: (
+        <div className="relative w-40 h-40">
+          <Image
+            src="https://greatplacetowork.me/wp-content/uploads/2024/08/Salehya-1.jpg"
+            alt="Salehiya Logo"
+            fill
+            className="object-contain"
+          />
+        </div>
+      ),
     },
     {
       name: 'Rosmiman®',
