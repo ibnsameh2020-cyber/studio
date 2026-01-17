@@ -3,10 +3,28 @@ import AnimatedSection from '@/components/animated-section';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
-import { Target, TrendingUp, Users } from 'lucide-react';
+import { Target, TrendingUp, Users, Cpu, Handshake, Shield } from 'lucide-react';
 
 export default function AboutPage() {
     const aboutImage = PlaceHolderImages.find(img => img.id === 'about-portrait');
+
+    const journeySteps = [
+        {
+            icon: <Cpu className="w-6 h-6 text-primary" />,
+            title: "The Engineering Foundation",
+            description: "My career began with a foundation in the logical, structured world of engineering. This taught me the importance of precision, process, and problem-solving from the ground up. However, I quickly realized that the greatest technical solution is ineffective if it doesn't solve the right problem or align with the larger business vision."
+        },
+        {
+            icon: <Handshake className="w-6 h-6 text-primary" />,
+            title: "Bridging Tech & Business",
+            description: "This realization sparked my transition into project and program management, where I began to bridge the gap between technical teams and business stakeholders. For over 20 years, I've had the privilege of leading complex, large-scale digital transformation initiatives for both government and private sector giants, managing portfolios exceeding $120M."
+        },
+        {
+            icon: <Shield className="w-6 h-6 text-primary" />,
+            title: "Strategic Governance Focus",
+            description: "Today, my focus is on strategic governance. I help organizations build and mature their Project Management Offices (PMOs), transforming them from administrative functions into powerful strategic assets that drive efficiency, manage risk, and deliver undeniable value."
+        }
+    ];
 
     const values = [
         {
@@ -38,19 +56,21 @@ export default function AboutPage() {
             </AnimatedSection>
 
             <AnimatedSection style={{ animationDelay: '150ms' }}>
-                <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto mb-24">
-                    <div className="space-y-6 text-lg text-foreground/80 leading-relaxed">
-                        <p>
-                            My career began with a foundation in the logical, structured world of engineering. This taught me the importance of precision, process, and problem-solving from the ground up. However, I quickly realized that the greatest technical solution is ineffective if it doesn't solve the right problem or align with the larger business vision.
-                        </p>
-                        <p>
-                            This realization sparked my transition into project and program management, where I began to bridge the gap between technical teams and business stakeholders. For over 20 years, I've had the privilege of leading complex, large-scale digital transformation initiatives for both government and private sector giants, managing portfolios exceeding $120M.
-                        </p>
-                        <p>
-                            Today, my focus is on strategic governance. I help organizations build and mature their Project Management Offices (PMOs), transforming them from administrative functions into powerful strategic assets that drive efficiency, manage risk, and deliver undeniable value.
-                        </p>
+                <div className="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto mb-24">
+                    <div className="space-y-10">
+                        {journeySteps.map((step, index) => (
+                            <div key={index} className="flex items-start gap-6">
+                                <div className="flex-shrink-0 mt-1 bg-primary/10 p-4 rounded-full border-2 border-primary/20">
+                                    {step.icon}
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-headline font-semibold text-primary mb-2">{step.title}</h3>
+                                    <p className="text-base text-muted-foreground leading-relaxed">{step.description}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    <div className="relative aspect-square max-w-md mx-auto w-full">
+                    <div className="relative aspect-square max-w-md mx-auto w-full self-center">
                          {aboutImage && (
                             <Image
                                 src={aboutImage.imageUrl}
