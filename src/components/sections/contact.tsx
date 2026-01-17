@@ -120,7 +120,16 @@ export default function ContactSection() {
     },
     {
       name: 'Repotech',
-      logo: <p className="text-2xl font-bold font-headline tracking-widest">REPOTECH</p>,
+      logo: (
+        <div className="relative w-40 h-16">
+          <Image
+            src="https://i.ibb.co/XxLMZTyf/6fc6bfab-28d0-465a-830c-b5234bb1da2e-removalai-preview.png"
+            alt="Repotech Logo"
+            fill
+            className="object-contain"
+          />
+        </div>
+      ),
     },
   ];
 
