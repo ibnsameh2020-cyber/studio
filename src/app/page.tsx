@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import AnimatedSection from '@/components/animated-section';
 import InsightsSection from '@/components/sections/articles';
 import { ServicesSection } from './services/page';
+import AboutMeCtaSection from '@/components/sections/about-me-cta';
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
               <ExperienceSection />
             </AnimatedSection>
             <InsightsSection />
+            <AboutMeCtaSection />
             <AnimatedSection>
               <ContactSection />
             </AnimatedSection>
