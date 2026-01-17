@@ -6,9 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Button } from './ui/button';
-import Link from 'next/link';
-import { Github, ArrowUpRight } from 'lucide-react';
 
 export default function ProjectDetailsDialog({ project }: { project: Project }) {
   const projectImage = PlaceHolderImages.find(img => img.id === project.imagePlaceholderId);
@@ -39,11 +36,31 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
             )}
         </div>
 
-        <div className="space-y-4">
-            <h2 className="text-xl font-headline font-semibold">About This Project</h2>
-            <p className="text-base text-muted-foreground animate-fade-in-up">
-                {project.description}
-            </p>
+        <div className="space-y-6">
+           {project.situation && (
+              <div className="space-y-1">
+                  <h3 className="text-lg font-headline font-semibold text-primary">Situation</h3>
+                  <p className="text-sm text-muted-foreground">{project.situation}</p>
+              </div>
+          )}
+          {project.task && (
+              <div className="space-y-1">
+                  <h3 className="text-lg font-headline font-semibold text-primary">Task</h3>
+                  <p className="text-sm text-muted-foreground">{project.task}</p>
+              </div>
+          )}
+          {project.action && (
+              <div className="space-y-1">
+                  <h3 className="text-lg font-headline font-semibold text-primary">Action</h3>
+                  <p className="text-sm text-muted-foreground">{project.action}</p>
+              </div>
+          )}
+          {project.result && (
+              <div className="space-y-1">
+                  <h3 className="text-lg font-headline font-semibold text-primary">Result</h3>
+                  <p className="text-sm text-muted-foreground">{project.result}</p>
+              </div>
+          )}
         </div>
       </div>
     </>

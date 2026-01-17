@@ -21,9 +21,10 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { href: '#projects', label: 'Projects' },
+  { href: '/services', label: 'Services' },
+  { href: '#case-studies', label: 'Case Studies' },
   { href: '#experience', label: 'Experience' },
-  { href: '/articles', label: 'Blog', sectionId: 'articles' },
+  { href: '/articles', label: 'Insights', sectionId: 'insights' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -78,7 +79,7 @@ export default function Header() {
     // For page links like /articles
     if (item.href.startsWith('/')) {
         if (typeof window !== 'undefined') {
-            const onBlogPage = window.location.pathname === item.href;
+            const onBlogPage = window.location.pathname.startsWith(item.href);
             const onBlogSection = activeSection === item.sectionId;
             return onBlogPage || onBlogSection;
         }

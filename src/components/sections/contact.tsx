@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2, Mail, Phone, ArrowRight, Copy } from 'lucide-react';
+import { Send, Loader2, Mail, Phone, ArrowRight, Copy, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 const contactSchema = z.object({
@@ -118,7 +118,7 @@ export default function ContactSection() {
                     Let's Build Something Great Together
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground">
-                    Ready to transform your project portfolio into a strategic asset? Let's discuss how we can align your execution with your vision.
+                    Have a project in mind, need a speaker for your event, or want to discuss a consulting opportunity? I'm always open to new ideas. Let's connect.
                 </p>
                 <div className="space-y-4">
                     <Link href="mailto:contact@samehinsights.com" className="inline-flex items-center gap-3 text-lg group">
@@ -132,6 +132,10 @@ export default function ContactSection() {
                             <Copy className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                     </div>
+                     <Link href="https://calendly.com/your-link" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-lg group">
+                        <Calendar className="w-6 h-6 text-primary flex-shrink-0" />
+                        <span className="group-hover:text-primary transition-colors">Book a free 15-min consultation</span>
+                    </Link>
                 </div>
                  <Link href="#hero" className="inline-block mt-8">
                     <Button variant="outline" className="group bg-primary/10 border-primary/50 text-primary hover:bg-primary/20">

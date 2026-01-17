@@ -3,15 +3,15 @@ import ProjectCard from '@/components/project-card';
 import { projects } from '@/data/projects';
 import AnimatedSection from '../animated-section';
 
-export default function ProjectsSection() {
+export default function CaseStudiesSection() {
   return (
-    <section id="projects" className="relative overflow-hidden">
+    <section id="case-studies" className="relative overflow-hidden">
       <div className="relative z-10">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-headline font-bold">My Projects</h2>
+            <h2 className="text-3xl md:text-5xl font-headline font-bold">Success Stories</h2>
             <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-              A selection of my work, from web apps to design systems.
+              A deep dive into how I've delivered value and driven results in my key projects.
             </p>
           </div>
         </AnimatedSection>

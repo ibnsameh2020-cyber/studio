@@ -20,12 +20,12 @@ const formatDate = (date: any) => {
     return new Date(date).toLocaleDateString('en-US');
 };
 
-export default function ArticlesSection() {
+export default function InsightsSection() {
   const { data: articles, loading } = useCollection<Article>('articles');
   const recentArticles = articles ? articles.slice(0, 3) : [];
 
   return (
-    <section id="articles" className="relative z-10 py-20 md:py-32">
+    <section id="insights" className="relative z-10 py-20 md:py-32">
        <div 
           className="absolute inset-0 z-[-1] h-full w-full bg-transparent"
           style={{
@@ -41,14 +41,14 @@ export default function ArticlesSection() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                     <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground inline-block">
-                        From My Blog
+                        From My Insights
                     </h2>
                     <p className="text-base text-muted-foreground">
-                        Explore my latest thoughts on web development, design, and more.
+                        Explore my latest articles on AI, digital transformation, and the future of project management.
                     </p>
                      <Link href="/articles" className="inline-block mt-4">
                         <Button variant="outline" className="group">
-                            View All Articles
+                            View All Insights
                             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
