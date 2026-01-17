@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon } from 'lucide-react';
@@ -22,7 +21,7 @@ import { usePathname } from 'next/navigation';
 
 const navItems = [
   { href: '#services', label: 'Services' },
-  { href: '#case-studies', label: 'Success Stories' },
+  { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies' },
   { href: '#experience', label: 'Experience' },
   { href: '/articles', label: 'Insights', sectionId: 'insights' },
   { href: '/about', label: 'About', sectionId: 'about-cta' },
@@ -30,7 +29,7 @@ const navItems = [
 ];
 
 export default function Header() {
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -38,8 +37,6 @@ export default function Header() {
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-
-  const isNavVisible = activeSection !== 'hero' && activeSection !== '';
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -101,6 +98,7 @@ export default function Header() {
     return name.charAt(0).toUpperCase();
   };
 
+  const inHeroSection = activeSection === 'hero' || activeSection === '';
 
   return (
     <>
@@ -118,22 +116,25 @@ export default function Header() {
                 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center space-x-2">
-                    <nav className={cn(
-                        'flex items-center space-x-1 transition-all duration-300',
-                        isNavVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
-                    )}>
-                    {navItems.map((item) => (
-                        <Link
-                        key={item.href}
-                        href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
-                        className={cn(
-                            'text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-full',
-                            isLinkActive(item) ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-                        )}
-                        >
-                        {item.label}
-                        </Link>
-                    ))}
+                    <nav className="flex items-center justify-center gap-1 transition-all duration-300">
+                      {navItems.map((item) => {
+                          const isActive = isLinkActive(item);
+                          const isVisible = inHeroSection || isActive;
+
+                          return (
+                              <Link
+                                  key={item.href}
+                                  href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
+                                  className={cn(
+                                      'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2',
+                                      isVisible ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
+                                      isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                                  )}
+                              >
+                                  {item.label}
+                              </Link>
+                          );
+                      })}
                     </nav>
                     {isAdmin && (
                         <Link href="/admin">
