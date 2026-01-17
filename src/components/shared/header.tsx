@@ -25,7 +25,7 @@ const navItems = [
   { href: '#case-studies', label: 'Case Studies' },
   { href: '#experience', label: 'Experience' },
   { href: '/articles', label: 'Insights', sectionId: 'insights' },
-  { href: '/about', label: 'About' },
+  { href: '/about', label: 'About', sectionId: 'about-cta' },
   { href: '#contact', label: 'Contact' },
 ];
 
