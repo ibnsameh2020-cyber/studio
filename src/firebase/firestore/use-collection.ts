@@ -1,7 +1,7 @@
 
 "use client";
-import { useState, useEffect } from 'react';
-import { onSnapshot, Query, DocumentData, collection, getDocs, query } from 'firebase/firestore';
+import { useState, useEffect, useMemo } from 'react';
+import { onSnapshot, Query, DocumentData, collection } from 'firebase/firestore';
 import { useFirestore } from '../provider';
 
 export function useCollection<T>(path: string, q?: Query) {
@@ -10,19 +10,28 @@ export function useCollection<T>(path: string, q?: Query) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const memoizedQuery = useMemo(() => {
+    if (!firestore || !path) return null;
+    return q || collection(firestore, path);
+  }, [firestore, path, q]);
+
   useEffect(() => {
-    if (!firestore || !path) {
-        setLoading(false);
+    if (!memoizedQuery) {
+        // If firestore is ready but path is not, then we are not loading.
+        if (firestore) {
+            setLoading(false);
+        }
         return;
     }
-    const ref = q || collection(firestore, path);
-    const unsubscribe = onSnapshot(ref, (snapshot) => {
+
+    const unsubscribe = onSnapshot(memoizedQuery, (snapshot) => {
       try {
         const result = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as T[];
         setData(result);
-        setLoading(false);
+        setError(null);
       } catch (e: any) {
         setError(e);
+      } finally {
         setLoading(false);
       }
     }, (err) => {
@@ -31,7 +40,7 @@ export function useCollection<T>(path: string, q?: Query) {
     });
 
     return () => unsubscribe();
-  }, [firestore, path, q]);
+  }, [memoizedQuery, firestore]);
 
   return { data, loading, error };
 }
