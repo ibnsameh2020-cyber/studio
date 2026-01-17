@@ -22,7 +22,7 @@ import { usePathname } from 'next/navigation';
 
 const navItems = [
   { href: '#services', label: 'Services' },
-  { href: '#case-studies', label: 'Case Studies' },
+  { href: '#case-studies', label: 'Success Stories' },
   { href: '#experience', label: 'Experience' },
   { href: '/articles', label: 'Insights', sectionId: 'insights' },
   { href: '/about', label: 'About', sectionId: 'about-cta' },
