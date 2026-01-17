@@ -39,6 +39,8 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
 
+  const isNavVisible = activeSection !== 'hero' && activeSection !== '';
+
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -116,7 +118,10 @@ export default function Header() {
                 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center space-x-2">
-                    <nav className="flex items-center space-x-1">
+                    <nav className={cn(
+                        'flex items-center space-x-1 transition-all duration-300',
+                        isNavVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+                    )}>
                     {navItems.map((item) => (
                         <Link
                         key={item.href}

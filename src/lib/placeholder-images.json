@@ -3,55 +3,55 @@
     {
       "id": "project-1",
       "description": "A placeholder image for the first project.",
-      "imageUrl": "https://images.unsplash.com/photo-1569918190173-6a5792908184?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkYW18ZW58MHx8fHwxNzY4NDg4NzM5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1520361098688-a4b9960d394b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkYW18ZW58MHx8fHwxNzY4NjY2OTk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "dam"
     },
     {
       "id": "project-2",
       "description": "A placeholder image for the second project.",
-      "imageUrl": "https://images.unsplash.com/photo-1665238456957-48788e0a3e16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxyb2JvdGljJTIwd2FyZWhvdXNlfGVufDB8fHx8MTc2ODQ4OTEzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1653130092462-0fb9de06ce33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyb2JvdGljJTIwd2FyZWhvdXNlfGVufDB8fHx8MTc2ODY2Njk5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "robotic warehouse"
     },
     {
       "id": "project-3",
       "description": "A placeholder image for the third project.",
-      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxN3x8bWFuYWdlbWVudHxlbnwwfHx8fDE3Njg0ODkyNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1707157281599-d155d1da5b4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYW5hZ2VtZW50fGVufDB8fHx8MTc2ODY2Njk5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "management"
     },
     {
       "id": "project-4",
       "description": "A placeholder image for the fourth project.",
-      "imageUrl": "https://images.unsplash.com/photo-1716637644831-e046c73be197?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8YWl8ZW58MHx8fHwxNzY4NDg5MzUyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhaXxlbnwwfHx8fDE3Njg2NjY5OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "ai"
     },
     {
       "id": "project-5",
       "description": "A placeholder image for the fifth project.",
-      "imageUrl": "https://images.unsplash.com/photo-1587440871875-191322ee64b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3ZWJzaXRlJTIwZGVzaWdufGVufDB8fHx8MTc2ODI2Nzk4M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1678690832311-bb6e361989ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3ZWJzaXRlJTIwZGVzaWdufGVufDB8fHx8MTc2ODYyNTkyMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "website design"
     },
     {
       "id": "project-6",
       "description": "A placeholder image for the sixth project.",
-      "imageUrl": "https://images.unsplash.com/photo-1588324524886-7b9475d2a7d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxlY29tbWVyY2UlMjBwbGF0Zm9ybXxlbnwwfHx8fDE3NjgyMTA1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1760226642567-a5315592c810?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxlY29tbWVyY2UlMjBwbGF0Zm9ybXxlbnwwfHx8fDE3Njg2NDgyODZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "ecommerce platform"
     },
     {
       "id": "article-1",
       "description": "A placeholder image for the first article.",
-      "imageUrl": "https://images.unsplash.com/photo-1533543119973-d60296462573?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwYmxvZ3xlbnwwfHx8fDE3Njg0NjY1NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1607125517027-51e6eb339ea4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0ZWNobm9sb2d5JTIwYmxvZ3xlbnwwfHx8fDE3Njg2MzY0MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "technology blog"
     },
     {
       "id": "article-2",
       "description": "A placeholder image for the second article.",
-      "imageUrl": "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzZXJ2ZXJzfGVufDB8fHx8MTc2ODQ2ODM4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1560732488-6b0df240254a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzZXJ2ZXJzfGVufDB8fHx8MTc2ODU3MDMzNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "servers"
     },
     {
       "id": "article-3",
       "description": "A placeholder image for the third article.",
-      "imageUrl": "https://images.unsplash.com/photo-1619410283995-43d9134e7656?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzb2Z0d2FyZSUyMGRldmVsb3BtZW50fGVufDB8fHx8MTc2ODQzMTMzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzb2Z0d2FyZSUyMGRldmVsb3BtZW50fGVufDB8fHx8MTc2ODY2Njk5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "software development"
     },
     {
