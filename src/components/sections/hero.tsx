@@ -1,13 +1,81 @@
-
 "use client";
 
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowDown, Download } from 'lucide-react';
 import { useTypingEffect } from '@/hooks/use-typing-effect';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const heroTexts = ["A Strategic PMO Leader", "A Digital Transformation Expert", "An AI Governance Advisor"];
+
+const animatedSentences = [
+    "I translate complex strategies into measurable reality.",
+    "A Strategic PMO Leader with over 20 years of experience.",
+    "Managing $100M+ portfolios for government and private entities.",
+    "Ensuring digital initiatives deliver genuine ROI and excellence."
+];
+
+const AnimatedHeroText = () => {
+    const [index, setIndex] = useState(0);
+    const [isExiting, setIsExiting] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const progressBarRef = useRef<HTMLDivElement | null>(null);
+    
+    const sentence = animatedSentences[index];
+
+    const changeSentence = useCallback(() => {
+        setIsExiting(true);
+        setTimeout(() => {
+            setIndex(prevIndex => (prevIndex + 1) % animatedSentences.length);
+            setIsExiting(false);
+        }, 500); // Exit animation duration
+    }, []);
+
+    useEffect(() => {
+        if (!isPaused) {
+            timeoutRef.current = setTimeout(changeSentence, 4000); // Sentence display duration
+        }
+        
+        // Pause/resume progress bar
+        if (progressBarRef.current) {
+          progressBarRef.current.style.animationPlayState = isPaused ? 'paused' : 'running';
+        }
+
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, [index, isPaused, changeSentence]);
+    
+    return (
+        <div 
+            className="relative h-20 w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-muted-foreground text-base md:text-lg mb-10 overflow-hidden"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+        >
+            <p
+                key={index} // Re-render component to restart animation
+                className={cn(
+                    "text-center absolute",
+                    isExiting ? 'animate-slide-out-up-fade' : 'animate-slide-in-up-fade'
+                )}
+            >
+                {sentence}
+            </p>
+            <div className="absolute bottom-4 left-0 right-0 h-0.5 bg-border/20 mx-auto w-1/2">
+                <div
+                    ref={progressBarRef}
+                    key={index} // Reset progress bar on sentence change
+                    className="h-full bg-primary animate-progress-bar"
+                />
+            </div>
+        </div>
+    );
+};
 
 export default function HeroSection() {
   const typedText = useTypingEffect(heroTexts);
@@ -32,9 +100,9 @@ export default function HeroSection() {
               <span className="animate-ping absolute top-1/2 -right-1 h-full w-1 bg-accent rounded-full"></span>
             </span>
         </p>
-        <p className="max-w-3xl mx-auto text-sm text-muted-foreground mb-10">
-          I translate complex strategies into measurable reality. As a Strategic PMO Leader with over 20 years of experience, I partner with major government and private entities to manage $100M+ portfolios, ensuring digital initiatives deliver genuine ROI and operational excellence.
-        </p>
+        
+        <AnimatedHeroText />
+        
         <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="#projects">
               <Button size="lg" className="group">
