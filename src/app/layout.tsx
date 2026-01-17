@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
-import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/shared/theme-provider';
 import Script from 'next/script';
@@ -42,7 +41,6 @@ export default function RootLayout({
               <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
               {children}
             </main>
-            <FloatingCvButton />
             <BackToTopButton />
             <Footer />
             <Toaster />
