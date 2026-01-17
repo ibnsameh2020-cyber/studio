@@ -9,6 +9,7 @@ import FloatingCvButton from '@/components/shared/floating-cv-button';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/shared/theme-provider';
 import Script from 'next/script';
+import BackToTopButton from '@/components/shared/back-to-top-button';
 
 export const metadata: Metadata = {
   title: 'Sameh Insights | Strategic Digital PMO & Portfolio Governance',
@@ -42,6 +43,7 @@ export default function RootLayout({
               {children}
             </main>
             <FloatingCvButton />
+            <BackToTopButton />
             <Footer />
             <Toaster />
           </FirebaseClientProvider>

@@ -262,17 +262,21 @@ export default function ContactSection() {
             </div>
 
             <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
-                <h4 className="text-center text-xl font-headline font-semibold mb-6">You are in good company.</h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-20 items-center justify-items-center">
-                  {clientLogos.map((client) => (
-                    <div
-                      key={client.name}
-                      title={client.name}
-                      className="flex items-center justify-center p-2 text-muted-foreground transition-all duration-300 h-40"
-                    >
-                      {client.logo}
+                <h4 className="text-center text-xl font-headline font-semibold mb-8">You are in good company.</h4>
+                <div
+                    className="group relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
+                >
+                    <div className="flex animate-marquee-scroll group-hover:[animation-play-state:paused]">
+                        {clientLogos.concat(clientLogos).map((client, index) => (
+                            <div
+                                key={`${client.name}-${index}`}
+                                title={client.name}
+                                className="flex-shrink-0 flex items-center justify-center p-2 text-muted-foreground mx-10 h-40 w-40"
+                            >
+                                {client.logo}
+                            </div>
+                        ))}
                     </div>
-                  ))}
                 </div>
             </div>
         </div>
