@@ -5,6 +5,7 @@ import AnimatedSection from '@/components/animated-section';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Briefcase, BrainCircuit, Users, ShieldQuestion, Target, GanttChartSquare } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 
 const services = [
   {
@@ -74,7 +75,7 @@ export function ServicesSection() {
                         <CardHeader className="p-0">
                             <CardTitle className="text-2xl font-headline mb-4 text-primary">{service.title}</CardTitle>
                         </CardHeader>
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             <div>
                                 <h3 className="font-semibold text-lg mb-1">The Problem</h3>
                                 <p className="text-sm text-muted-foreground">{service.problem}</p>
@@ -82,6 +83,14 @@ export function ServicesSection() {
                             <div>
                                 <h3 className="font-semibold text-lg mb-1">My Solution</h3>
                                 <p className="text-sm text-muted-foreground">{service.solution}</p>
+                            </div>
+                             <div>
+                                <h3 className="font-semibold text-lg mb-2">Key Deliverables</h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {service.deliverables.map((item) => (
+                                        <Badge key={item} variant="secondary">{item}</Badge>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
