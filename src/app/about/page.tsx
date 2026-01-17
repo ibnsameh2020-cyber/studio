@@ -57,9 +57,12 @@ export default function AboutPage() {
 
             <AnimatedSection style={{ animationDelay: '150ms' }}>
                 <div className="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto mb-24">
-                    <div className="space-y-10">
+                    <div className="space-y-8">
                         {journeySteps.map((step, index) => (
-                            <div key={index} className="flex items-start gap-6">
+                            <div 
+                              key={index} 
+                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-2xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
+                            >
                                 <div className="flex-shrink-0 mt-1 bg-primary/10 p-4 rounded-full border-2 border-primary/20">
                                     {step.icon}
                                 </div>
