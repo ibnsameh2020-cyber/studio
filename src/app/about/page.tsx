@@ -26,6 +26,8 @@ export default function AboutPage() {
         }
     ];
 
+    const [firstJourneyStep, ...remainingJourneySteps] = journeySteps;
+
     const values = [
         {
             icon: <Target className="w-10 h-10 text-primary" />,
@@ -56,9 +58,36 @@ export default function AboutPage() {
             </AnimatedSection>
 
             <AnimatedSection style={{ animationDelay: '150ms' }}>
-                <div className="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto mb-24">
+                <div className="max-w-6xl mx-auto mb-24">
+                    <div className="grid md:grid-cols-2 gap-12 items-start mb-8">
+                        {firstJourneyStep && (
+                            <div 
+                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
+                            >
+                                <div className="flex-shrink-0 mt-1 bg-primary/10 p-4 rounded-full border-2 border-primary/20">
+                                    {firstJourneyStep.icon}
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-headline font-semibold text-primary mb-2">{firstJourneyStep.title}</h3>
+                                    <p className="text-base text-muted-foreground leading-relaxed">{firstJourneyStep.description}</p>
+                                </div>
+                            </div>
+                        )}
+                        <div className="relative aspect-square max-w-md mx-auto w-full self-center">
+                             {aboutImage && (
+                                <Image
+                                    src={aboutImage.imageUrl}
+                                    alt="Eng. Sameh Moussa"
+                                    fill
+                                    data-ai-hint={aboutImage.imageHint}
+                                    className="object-cover rounded-xl shadow-2xl shadow-primary/20 border-4 border-white/10"
+                                />
+                            )}
+                        </div>
+                    </div>
+                    
                     <div className="space-y-8">
-                        {journeySteps.map((step, index) => (
+                        {remainingJourneySteps.map((step, index) => (
                             <div 
                               key={index} 
                               className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
@@ -72,17 +101,6 @@ export default function AboutPage() {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                    <div className="relative aspect-square max-w-md mx-auto w-full self-center">
-                         {aboutImage && (
-                            <Image
-                                src={aboutImage.imageUrl}
-                                alt="Eng. Sameh Moussa"
-                                fill
-                                data-ai-hint={aboutImage.imageHint}
-                                className="object-cover rounded-xl shadow-2xl shadow-primary/20 border-4 border-white/10"
-                            />
-                        )}
                     </div>
                 </div>
             </AnimatedSection>
