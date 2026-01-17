@@ -12,12 +12,12 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
   return (
     <>
       <DialogHeader>
+        <Badge variant="secondary" className="mb-2 w-fit">{project.category}</Badge>
         <DialogTitle className="font-headline text-2xl">{project.title}</DialogTitle>
         <DialogDescription asChild>
-            <div className="flex flex-wrap gap-2 mt-2">
-                {project.techStack.map((tech) => (
-                    <Badge key={tech} variant="secondary">{tech}</Badge>
-                ))}
+            <div className="pt-2">
+                <p className="text-sm text-muted-foreground"><strong>Client:</strong> {project.client}</p>
+                {project.partner && <p className="text-sm text-muted-foreground"><strong>Partner:</strong> {project.partner}</p>}
             </div>
         </DialogDescription>
       </DialogHeader>
@@ -34,31 +34,30 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
                 />
             </div>
             )}
+             <div className="flex flex-wrap gap-2">
+                {project.techStack.map((skill) => (
+                    <Badge key={skill}>{skill}</Badge>
+                ))}
+            </div>
         </div>
 
         <div className="space-y-6">
-           {project.situation && (
+           {project.scale && (
               <div className="space-y-1">
-                  <h3 className="text-lg font-headline font-semibold text-primary">Situation</h3>
-                  <p className="text-sm text-muted-foreground">{project.situation}</p>
+                  <h3 className="text-lg font-headline font-semibold text-primary">The Scale / Challenge</h3>
+                  <p className="text-sm text-muted-foreground">{project.scale}</p>
               </div>
           )}
-          {project.task && (
+          {project.scope && (
               <div className="space-y-1">
-                  <h3 className="text-lg font-headline font-semibold text-primary">Task</h3>
-                  <p className="text-sm text-muted-foreground">{project.task}</p>
+                  <h3 className="text-lg font-headline font-semibold text-primary">Scope</h3>
+                  <p className="text-sm text-muted-foreground">{project.scope}</p>
               </div>
           )}
-          {project.action && (
+          {project.role && (
               <div className="space-y-1">
-                  <h3 className="text-lg font-headline font-semibold text-primary">Action</h3>
-                  <p className="text-sm text-muted-foreground">{project.action}</p>
-              </div>
-          )}
-          {project.result && (
-              <div className="space-y-1">
-                  <h3 className="text-lg font-headline font-semibold text-primary">Result</h3>
-                  <p className="text-sm text-muted-foreground">{project.result}</p>
+                  <h3 className="text-lg font-headline font-semibold text-primary">My Role</h3>
+                  <p className="text-sm text-muted-foreground">{project.role}</p>
               </div>
           )}
         </div>

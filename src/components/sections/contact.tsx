@@ -11,17 +11,28 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2, Mail, Phone, ArrowRight, Copy, Calendar } from 'lucide-react';
+import { Send, Loader2, CalendarCheck, ShieldCheck, Building } from 'lucide-react';
 import Link from 'next/link';
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Invalid email address."),
-  message: z.string().min(10, "Message must be at least 10 characters."),
+  name: z.string().min(2, "Name is required."),
+  email: z.string().email("A valid work email is required."),
+  organization: z.string().optional(),
+  challenge: z.string({ required_error: "Please select your primary challenge."}),
+  details: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
+
+const challenges = [
+    "I need to establish or fix a PMO.",
+    "We are struggling with Digital Transformation.",
+    "I need an expert speaker for an event.",
+    "I want to discuss AI Governance.",
+    "Other / General Inquiry.",
+];
 
 export default function ContactSection() {
   const [isPending, startTransition] = useTransition();
@@ -30,16 +41,10 @@ export default function ContactSection() {
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      message: '',
-    },
   });
 
   const onSubmit = (data: ContactFormValues) => {
     startTransition(() => {
-      // Make sure to add your EmailJS credentials to your .env.local file
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
       const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
       const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
@@ -47,57 +52,32 @@ export default function ContactSection() {
       if (!serviceId || !templateId || !publicKey) {
         toast({
             title: 'Configuration Error',
-            description: 'EmailJS is not configured. Please add credentials to your .env file.',
+            description: 'EmailJS is not configured.',
             variant: 'destructive',
         });
-        console.error("EmailJS credentials missing in .env.local file. Make sure to use NEXT_PUBLIC_ prefix.");
         return;
       }
       
-      if (!formRef.current) {
-        toast({
-            title: 'Error',
-            description: 'Could not find the form element.',
-            variant: 'destructive',
-        });
-        return;
-      }
+      if (!formRef.current) return;
 
       emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
-        .then((result) => {
-          console.log('Success:', result.text);
+        .then(() => {
           toast({
-            title: 'Success!',
-            description: 'Thank you! Your message has been sent.',
+            title: 'Request Sent!',
+            description: 'Thank you! I will review your inquiry and respond within 24 business hours.',
           });
           form.reset();
-        })
-        .catch((error) => {
-          console.error('EmailJS Full Error:', error);
+        }, (error) => {
           toast({
             title: 'Error',
-            description: `Could not send message. ${error.text || 'Please check the console for details.'}`,
+            description: `Could not send message. ${error.text || 'Please check console.'}`,
             variant: 'destructive',
           });
         });
     });
   };
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      toast({
-        title: 'Copied!',
-        description: 'Phone number copied to clipboard.',
-      });
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
-      toast({
-        title: 'Error',
-        description: 'Failed to copy phone number.',
-        variant: 'destructive',
-      });
-    });
-  };
+  
+  const clientLogos = ["Saudi Irrigation Organization", "Salehiya", "Rosmiman®", "Repotech"];
 
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
@@ -112,50 +92,78 @@ export default function ContactSection() {
         <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_500px_at_50%_200px,hsl(var(--primary)/0.15),transparent)]"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-                <h2 className="text-4xl md:text-6xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary inline-block">
-                    Let's Build Something Great Together
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground">
-                    Have a project in mind, need a speaker for your event, or want to discuss a consulting opportunity? I'm always open to new ideas. Let's connect.
-                </p>
-                <div className="space-y-4">
-                    <Link href="mailto:contact@samehinsights.com" className="inline-flex items-center gap-3 text-lg group">
-                        <Mail className="w-6 h-6 text-primary flex-shrink-0" />
-                        <span className="group-hover:text-primary transition-colors">contact@samehinsights.com</span>
+        <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-6xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary inline-block">
+                Ready to Turn Strategy into Reality?
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-3xl mx-auto">
+                I partner with visionary leaders to build resilient PMOs and drive digital transformation. Tell me about your next milestone.
+            </p>
+        </div>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-5 gap-12 items-start">
+            <div className="md:col-span-2 space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 h-full flex flex-col justify-between">
+                <div>
+                    <h3 className="text-2xl font-headline font-bold text-primary mb-2">Book a Strategic Discovery Call</h3>
+                    <p className="text-muted-foreground mb-6">Skip the back-and-forth emails. Schedule a 15-minute introductory discussion to see if we are a good fit.</p>
+                    <Link href="https://calendly.com/your-link" target="_blank" rel="noopener noreferrer">
+                        <Button size="lg" className="w-full group">
+                            Schedule Now
+                            <CalendarCheck className="w-5 h-5 ml-2" />
+                        </Button>
                     </Link>
-                    <div className="flex items-center gap-3 text-lg">
-                        <Phone className="w-6 h-6 text-primary flex-shrink-0" />
-                        <button onClick={() => copyToClipboard('+966565579000')} className="flex items-center gap-2 group">
-                            <span className="group-hover:text-primary transition-colors">+966565579000</span>
-                            <Copy className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </button>
-                    </div>
-                     <Link href="https://calendly.com/your-link" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-lg group">
-                        <Calendar className="w-6 h-6 text-primary flex-shrink-0" />
-                        <span className="group-hover:text-primary transition-colors">Book a free 15-min consultation</span>
-                    </Link>
+                    <p className="text-xs text-muted-foreground mt-4 text-center">Priority given to Government & Enterprise inquiries.</p>
                 </div>
-                 <Link href="#hero" className="inline-block mt-8">
-                    <Button variant="outline" className="group bg-primary/10 border-primary/50 text-primary hover:bg-primary/20">
-                        Back to Top
-                        <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                </Link>
+                <div className="border-t border-border/50 pt-6">
+                    <h4 className="text-center text-lg font-headline font-semibold mb-4">You are in good company.</h4>
+                    <div className="grid grid-cols-2 gap-4 text-center">
+                        {clientLogos.map(logo => (
+                            <div key={logo} className="flex items-center justify-center p-2 bg-background/50 rounded-md">
+                                <span className="font-semibold text-muted-foreground text-sm">{logo}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
             
-            <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
+            <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                  <Form {...form}>
                     <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Your Name" {...field} className="bg-background/70 h-11"/>
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Work Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="name@company.com" {...field} className="bg-background/70 h-11"/>
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="organization"
                             render={({ field }) => (
                                 <FormItem>
-                                <FormLabel className="text-foreground/80">Name</FormLabel>
+                                <FormLabel>Organization / Company Website</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Your Name" {...field} className="bg-background/70 h-12 text-base"/>
+                                    <Input placeholder="your-company.com" {...field} className="bg-background/70 h-11"/>
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
@@ -163,44 +171,46 @@ export default function ContactSection() {
                         />
                         <FormField
                             control={form.control}
-                            name="email"
+                            name="challenge"
                             render={({ field }) => (
                                 <FormItem>
-                                <FormLabel className="text-foreground/80">Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="your.email@example.com" {...field} className="bg-background/70 h-12 text-base"/>
-                                </FormControl>
+                                <FormLabel>What is your primary challenge?</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                    <SelectTrigger className="bg-background/70 h-11">
+                                        <SelectValue placeholder="Select a challenge..." />
+                                    </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {challenges.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
                                 <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
-                            name="message"
+                            name="details"
                             render={({ field }) => (
                                 <FormItem>
-                                <FormLabel className="text-foreground/80">Message</FormLabel>
+                                <FormLabel>Project Details (Optional)</FormLabel>
                                 <FormControl>
-                                    <Textarea placeholder="How can I help you?" rows={5} {...field} className="bg-background/70 text-base"/>
+                                    <Textarea placeholder="Tell me briefly about the project scope or the specific problem you are facing..." rows={4} {...field} className="bg-background/70"/>
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <div className="pt-4">
+                        <div className="pt-2 flex flex-col items-center">
                             <Button type="submit" size="lg" className="group w-full" disabled={isPending}>
                                 {isPending ? (
-                                <>
-                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    Sending...
-                                </>
+                                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending...</>
                                 ) : (
-                                <>
-                                    Send Message
-                                    <Send className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                                </>
+                                    <><Send className="w-5 h-5 mr-2" /> Request Consultation</>
                                 )}
                             </Button>
+                            <p className="text-xs text-muted-foreground mt-4 flex items-center gap-2"><ShieldCheck size={14}/> I personally review every inquiry and typically respond within 24 business hours.</p>
                         </div>
                     </form>
                 </Form>

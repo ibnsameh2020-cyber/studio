@@ -4,12 +4,13 @@ import type { Timestamp } from "firebase/firestore";
 export type Project = {
     id: string;
     title: string;
+    category: string;
     shortDescription: string;
-    description: string; // Retained for backward compatibility if needed, but new fields are preferred.
-    situation?: string;
-    task?: string;
-    action?: string;
-    result?: string;
+    client: string;
+    partner?: string;
+    scale?: string;
+    scope: string;
+    role: string;
     techStack: string[];
     liveUrl?: string;
     githubUrl?: string;

@@ -26,7 +26,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {projectImage && (
               <div className="relative aspect-video overflow-hidden">
                 {/* This div creates the permanent highlight effect on the image */}
-                <div className="absolute inset-0 z-10 pointer-events-none rounded-t-lg ring-2 ring-inset ring-primary/60"></div>
+                <div className="absolute inset-0 z-10 pointer-events-none rounded-t-lg ring-1 ring-inset ring-primary/60"></div>
                 <Image
                   src={projectImage.imageUrl}
                   alt={project.title}
@@ -37,25 +37,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               </div>
             )}
             <CardHeader>
-              <CardTitle className="font-headline">{project.title}</CardTitle>
+              <Badge variant="secondary" className="mb-2 w-fit">{project.category}</Badge>
+              <CardTitle className="font-headline text-base">{project.title}</CardTitle>
             </CardHeader>
             <CardContent className="flex-grow">
               <p className="text-xs text-muted-foreground mb-4">{project.shortDescription}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
-                  <Badge key={tech} variant="secondary">{tech}</Badge>
-                ))}
-              </div>
             </CardContent>
             <CardFooter className="mt-auto">
                 <div className="flex items-center text-sm text-primary group-hover:underline">
-                    Read more
+                    View Case Study
                     <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </div>
             </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl">
+      <DialogContent className="sm:max-w-4xl">
         <ProjectDetailsDialog project={project} />
       </DialogContent>
     </Dialog>
