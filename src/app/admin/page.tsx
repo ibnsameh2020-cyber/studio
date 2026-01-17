@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp, collection, getDocs, updateDoc } from 'firebase/firestore';
+import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp, collection, getDocs, updateDoc, getDoc } from 'firebase/firestore';
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cn } from '@/lib/utils';
@@ -195,6 +195,91 @@ export default function AdminPage() {
     }
   }, [firestore, toast, isAdmin]);
   // END: One-time migration
+  
+    // START: One-time seed for new articles
+  useEffect(() => {
+    const seedArticles = async () => {
+        if (!firestore || !isAdmin || sessionStorage.getItem('articlesSeeded_v1')) {
+            return;
+        }
+
+        const articlesToSeed = [
+            {
+                id: 'the-ai-warning',
+                title: 'The "Godfather of AI" Warns: 6 Shocking Truths About Our Future',
+                description: 'Yoshua Bengio, one of the founding fathers of AI, broke his silence for one reason: "Love for his children." From the "Tiger Cub" problem to the concentration of absolute power, here is why AI might be becoming more dangerous as it gets smarter—and what we must do about it.',
+                content: `Yoshua Bengio, one of the founding fathers of AI, broke his silence for one reason: "Love for his children." From the "Tiger Cub" problem to the concentration of absolute power, here is why AI might be becoming more dangerous as it gets smarter—and what we must do about it. Key Insight: "We are not programming AI; we are raising it. And it’s learning to deceive us."`,
+                tags: ['Artificial Intelligence & Strategy'],
+                imageUrl: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=1080',
+            },
+            {
+                id: 'strategic-efficiency',
+                title: 'Value Engineering: The Strategic Blueprint for Vision 2030',
+                description: "In an era of fiscal tightening, how do we achieve 'more with less'? Value Engineering isn't just about cost-cutting; it's a mathematical approach to optimizing public spending. Discover how this methodology is reshaping infrastructure, healthcare, and education in Saudi Arabia.",
+                content: `In an era of fiscal tightening, how do we achieve "more with less"? Value Engineering isn't just about cost-cutting; it's a mathematical approach to optimizing public spending. Discover how this methodology is reshaping infrastructure, healthcare, and education in Saudi Arabia. Key Insight: "Optimizing spend without compromising quality is the cornerstone of sustainable development."`,
+                tags: ['Vision 2030 & Operational Excellence'],
+                imageUrl: 'https://images.unsplash.com/photo-1556761175-b413da4b248b?w=1080',
+            },
+            {
+                id: 'modern-leadership',
+                title: 'The Strategic Guide to Leading Multi-Generational Teams',
+                description: 'For the first time in history, four generations (Boomers to Gen Z) are working under one roof. Is this a conflict trap or a strategic asset? Move beyond the stereotypes of "lazy Gen Z" or "stubborn Boomers" and learn how to harness the unique "Hidden Power" of each demographic.',
+                content: `For the first time in history, four generations (Boomers to Gen Z) are working under one roof. Is this a conflict trap or a strategic asset? Move beyond the stereotypes of "lazy Gen Z" or "stubborn Boomers" and learn how to harness the unique "Hidden Power" of each demographic. Key Insight: "Stop managing generations. Start leading humans."`,
+                tags: ['Leadership & Culture'],
+                imageUrl: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?w=1080',
+            },
+            {
+                id: 'the-nice-guy-syndrome',
+                title: 'The "Nice Guy" Syndrome: Why Kindness Might Be Destroying Your Career',
+                description: 'Are you the "candle" that burns itself out to light the way for others? Being "too nice" is often a mask for fear, not a virtue. This article explores the shocking truth about people-pleasing, the "Guilt Trap," and how to set boundaries that earn you respect, not just sympathy.',
+                content: `Are you the "candle" that burns itself out to light the way for others? Being "too nice" is often a mask for fear, not a virtue. This article explores the shocking truth about people-pleasing, the "Guilt Trap," and how to set boundaries that earn you respect, not just sympathy. Key Insight: "Your value doesn't come from infinite sacrifice. It comes from being authentic."`,
+                tags: ['Self-Development & Psychology'],
+                imageUrl: 'https://images.unsplash.com/photo-1506126613408-444d89898952?w=1080',
+            }
+        ];
+
+        console.log("Checking if articles need to be seeded...");
+        
+        let articlesAdded = 0;
+        for (const articleData of articlesToSeed) {
+            const articleRef = doc(firestore, "articles", articleData.id);
+            const docSnap = await getDoc(articleRef);
+
+            if (!docSnap.exists()) {
+                try {
+                    console.log(`Seeding article: ${articleData.id}`);
+                    const result = await formatArticle({ content: articleData.content });
+                    const formattedContent = result.structuredContent;
+
+                    await setDoc(articleRef, {
+                        ...articleData,
+                        author: "Eng. Sameh Moussa",
+                        date: serverTimestamp(),
+                        language: isRTL(articleData.title) ? 'rtl' : 'ltr',
+                        formattedContent: formattedContent,
+                    }, { merge: true });
+                    articlesAdded++;
+                } catch (error) {
+                    console.error(`Failed to seed article ${articleData.id}:`, error);
+                }
+            }
+        }
+
+        if (articlesAdded > 0) {
+            toast({
+                title: "Seeding New Articles",
+                description: `Added ${articlesAdded} new articles to your collection.`,
+            });
+        }
+        
+        sessionStorage.setItem('articlesSeeded_v1', 'true');
+    };
+
+    if (firestore && isAdmin) {
+      seedArticles();
+    }
+  }, [firestore, isAdmin, toast]);
+  // END: One-time seed for new articles
 
 
   const handleUploadSuccess = (result: UploadWidgetResult) => {
@@ -509,3 +594,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
