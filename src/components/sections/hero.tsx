@@ -61,7 +61,7 @@ const AnimatedHeroText = () => {
             <div
                 key={index} // Re-render component to restart animation
                 className={cn(
-                    "text-center absolute bg-card/20 backdrop-blur-sm border border-border/20 rounded-xl p-4 shadow-lg w-full",
+                    "text-center absolute bg-primary/10 backdrop-blur-sm border border-primary/30 rounded-xl p-4 shadow-lg shadow-primary/20 w-full max-w-2xl",
                     isExiting ? 'animate-slide-out-up-fade' : 'animate-slide-in-up-fade'
                 )}
             >
