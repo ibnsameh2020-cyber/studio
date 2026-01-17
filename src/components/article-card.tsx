@@ -6,6 +6,7 @@ import { ArrowRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 
 type ArticleCardProps = {
   article: Article;
@@ -41,6 +42,9 @@ export default function ArticleCard({ article, isFeatured = false }: ArticleCard
             )}
             <div className={cn("flex flex-col flex-grow p-6")}>
               <CardHeader className="p-0">
+                {article.tags && article.tags.length > 0 && (
+                  <Badge variant="secondary" className="mb-2 w-fit">{article.tags[0]}</Badge>
+                )}
                 <CardTitle className="font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
                   {article.title}
                 </CardTitle>
