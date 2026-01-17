@@ -81,7 +81,7 @@ export default function ContactSection() {
     {
       name: 'Saudi Irrigation Organization',
       logo: (
-        <div className="relative w-20 h-20">
+        <div className="relative w-24 h-24">
           <Image
             src="https://i0.wp.com/new-24.net/wp-content/uploads/2020/10/%D8%A7%D9%84%D8%B1%D9%8A.png?fit=827%2C827&ssl=1"
             alt="Saudi Irrigation Organization Logo"
@@ -241,7 +241,7 @@ export default function ContactSection() {
                     <div
                       key={client.name}
                       title={client.name}
-                      className="flex items-center justify-center p-2 text-muted-foreground grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300 h-20"
+                      className="flex items-center justify-center p-2 text-muted-foreground grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300 h-24"
                     >
                       {client.logo}
                     </div>
