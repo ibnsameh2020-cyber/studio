@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -264,7 +263,7 @@ export default function ContactSection() {
 
             <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                 <h4 className="text-center text-xl font-headline font-semibold mb-6">You are in good company.</h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-items-center">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-20 items-center justify-items-center">
                   {clientLogos.map((client) => (
                     <div
                       key={client.name}
