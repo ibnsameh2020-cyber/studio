@@ -21,11 +21,11 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { href: '/about', label: 'About' },
   { href: '#services', label: 'Services' },
   { href: '#case-studies', label: 'Case Studies' },
   { href: '#experience', label: 'Experience' },
   { href: '/articles', label: 'Insights', sectionId: 'insights' },
+  { href: '/about', label: 'About' },
   { href: '#contact', label: 'Contact' },
 ];
 
