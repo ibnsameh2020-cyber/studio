@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp, collection, getDocs, updateDoc } from 'firebase/firestore';
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cn } from '@/lib/utils';
@@ -114,6 +114,87 @@ export default function AdminPage() {
       form.setValue('language', 'ltr');
     }
   }, [title, form]);
+
+  // START: One-time migration for old articles
+  useEffect(() => {
+    const runMigration = async () => {
+        if (!firestore || sessionStorage.getItem('articlesMigrated_v2')) {
+            return;
+        }
+
+        console.log("Checking for articles to migrate...");
+        toast({
+            title: "Checking for old articles...",
+            description: "Automatically upgrading articles to the new AI style.",
+        });
+
+        const articlesRef = collection(firestore, "articles");
+        const querySnapshot = await getDocs(articlesRef);
+        const articlesToMigrate: Article[] = [];
+
+        querySnapshot.forEach((doc) => {
+            const article = { id: doc.id, ...doc.data() } as Article;
+            // Check if formattedContent is missing or is not an array (e.g., a string from a previous faulty migration)
+            if (!article.formattedContent || !Array.isArray(article.formattedContent)) {
+                articlesToMigrate.push(article);
+            }
+        });
+
+        if (articlesToMigrate.length === 0) {
+            console.log("No articles to migrate.");
+            sessionStorage.setItem('articlesMigrated_v2', 'true');
+            return;
+        }
+
+        toast({
+            title: `Found ${articlesToMigrate.length} articles to upgrade.`,
+            description: "The AI stylist is getting to work. Please wait...",
+        });
+
+        let successCount = 0;
+        for (const article of articlesToMigrate) {
+            try {
+                if (!article.content) continue;
+                console.log(`Migrating article: ${article.id}`);
+                const result = await formatArticle({ content: article.content });
+                const formattedContent = result.structuredContent;
+
+                const articleRef = doc(firestore, "articles", article.id);
+                await updateDoc(articleRef, {
+                    formattedContent: formattedContent
+                });
+                successCount++;
+                console.log(`Successfully migrated article: ${article.id}`);
+            } catch (error) {
+                console.error(`Failed to migrate article ${article.id}:`, error);
+                toast({
+                    title: "Migration Error",
+                    description: `Could not upgrade article: ${article.title}.`,
+                    variant: "destructive",
+                });
+            }
+        }
+
+        if (successCount > 0) {
+            toast({
+                title: "Migration Complete!",
+                description: `Successfully upgraded ${successCount} of ${articlesToMigrate.length} articles to the new style.`,
+            });
+        } else {
+             toast({
+                title: "Migration Finished",
+                description: `No articles were upgraded. They might be up to date already.`,
+            });
+        }
+        
+        sessionStorage.setItem('articlesMigrated_v2', 'true');
+    };
+
+    if (firestore && isAdmin) {
+      runMigration();
+    }
+  }, [firestore, toast, isAdmin]);
+  // END: One-time migration
 
 
   const handleUploadSuccess = (result: UploadWidgetResult) => {
