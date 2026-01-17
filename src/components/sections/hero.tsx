@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -53,20 +54,20 @@ const AnimatedHeroText = () => {
     
     return (
         <div 
-            className="relative h-20 w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-muted-foreground text-base md:text-lg mb-10 overflow-hidden"
+            className="relative h-28 w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-muted-foreground text-base md:text-lg mb-10 overflow-hidden"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            <p
+            <div
                 key={index} // Re-render component to restart animation
                 className={cn(
-                    "text-center absolute",
+                    "text-center absolute bg-card/20 backdrop-blur-sm border border-border/20 rounded-xl p-4 shadow-lg w-full",
                     isExiting ? 'animate-slide-out-up-fade' : 'animate-slide-in-up-fade'
                 )}
             >
-                {sentence}
-            </p>
-            <div className="absolute bottom-4 left-0 right-0 h-0.5 bg-border/20 mx-auto w-1/2">
+                <p className="text-foreground">{sentence}</p>
+            </div>
+            <div className="absolute bottom-2 left-0 right-0 h-0.5 bg-border/20 mx-auto w-1/2">
                 <div
                     ref={progressBarRef}
                     key={index} // Reset progress bar on sentence change
