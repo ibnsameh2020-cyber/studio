@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -266,14 +267,18 @@ export default function ContactSection() {
                 <div
                     className="group relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
                 >
-                    <div className="flex animate-marquee-scroll group-hover:[animation-play-state:paused]">
+                    <div className="flex animate-marquee-scroll">
                         {clientLogos.concat(clientLogos).map((client, index) => (
-                            <div
+                           <div
                                 key={`${client.name}-${index}`}
-                                title={client.name}
-                                className="flex-shrink-0 flex items-center justify-center p-2 text-muted-foreground mx-10 h-40 w-40"
+                                className="flex-shrink-0 mx-6"
                             >
-                                {client.logo}
+                                <div
+                                    title={client.name}
+                                    className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6"
+                                >
+                                    {client.logo}
+                                </div>
                             </div>
                         ))}
                     </div>
