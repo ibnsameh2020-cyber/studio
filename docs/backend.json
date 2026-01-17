@@ -36,6 +36,24 @@
             "description": "Confirms administrative privileges."
         }
       }
+    },
+    "Article": {
+      "title": "Blog Article",
+      "description": "Represents a blog article.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "content": { "type": "string", "description": "Raw, unformatted content written by the user." },
+        "formattedContent": { "type": "string", "description": "AI-formatted content with special markdown." },
+        "author": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "language": { "type": "string", "enum": ["ltr", "rtl"] }
+      },
+      "required": ["id", "title", "description", "content", "author", "date"]
     }
   },
   "auth": {
@@ -49,6 +67,10 @@
     "/roles_admin/{userId}": {
       "schema": { "$ref": "#/entities/AdminRole" },
       "description": "A collection where the document ID is a user's UID, granting them admin rights."
+    },
+    "/articles/{articleId}": {
+      "schema": { "$ref": "#/entities/Article" },
+      "description": "Stores individual blog articles."
     }
   }
 }

@@ -26,6 +26,7 @@ export type Article = {
     title: string;
     description: string;
     content: string;
+    formattedContent?: string;
     author: string;
     date: Timestamp | Date | string;
     tags: string[];

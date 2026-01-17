@@ -11,6 +11,7 @@ import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp } from 'firebase/fir
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cn } from '@/lib/utils';
+import { formatArticle } from '@/ai/flows/format-article-flow';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -82,6 +83,7 @@ export default function AdminPage() {
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const form = useForm<ArticleFormValues>({
     resolver: zodResolver(articleSchema),
@@ -145,16 +147,30 @@ export default function AdminPage() {
         return;
     }
 
-    const slug = editingArticleId || createSlug(data.title);
-    const articleRef = doc(firestore, "articles", slug);
+    setIsProcessing(true);
 
     try {
+        toast({
+            title: "AI Stylist at Work",
+            description: "Automatically formatting your article...",
+        });
+        const result = await formatArticle({ content: data.content });
+        const formattedContent = result.formattedContent;
+
+        const slug = editingArticleId || createSlug(data.title);
+        const articleRef = doc(firestore, "articles", slug);
+
         await setDoc(articleRef, {
             id: slug,
-            ...data,
+            title: data.title,
+            description: data.description,
+            imageUrl: data.imageUrl,
+            content: data.content, // Raw content
+            formattedContent: formattedContent, // AI-formatted content
+            tags: data.tags.split(',').map(tag => tag.trim()),
+            language: data.language,
             author: "Eng. Sameh Moussa",
             date: serverTimestamp(),
-            tags: data.tags.split(',').map(tag => tag.trim()),
         }, { merge: true });
 
         toast({
@@ -169,6 +185,8 @@ export default function AdminPage() {
             description: `Could not publish article. ${error.message}`,
             variant: "destructive",
         });
+    } finally {
+        setIsProcessing(false);
     }
   };
 
@@ -349,11 +367,11 @@ export default function AdminPage() {
                         Cancel
                     </Button>
                   )}
-                  <Button type="submit" size="lg" className="w-full group" disabled={form.formState.isSubmitting}>
-                      {form.formState.isSubmitting ? (
+                  <Button type="submit" size="lg" className="w-full group" disabled={form.formState.isSubmitting || isProcessing}>
+                      {(form.formState.isSubmitting || isProcessing) ? (
                           <>
                               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                              {editingArticleId ? 'Updating...' : 'Publishing...'}
+                              {isProcessing ? 'Styling with AI...' : (editingArticleId ? 'Updating...' : 'Publishing...')}
                           </>
                       ) : (editingArticleId ? 'Update Article' : 'Publish Article')}
                   </Button>
@@ -410,5 +428,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    

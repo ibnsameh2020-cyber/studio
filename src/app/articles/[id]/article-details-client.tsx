@@ -74,6 +74,7 @@ const formatContent = (content: string) => {
 
 export default function ArticleDetailsClient({ article }: { article: Article }) {
   const isRTL = article.language === 'rtl';
+  const contentToRender = article.formattedContent || article.content;
 
   return (
     <div 
@@ -112,7 +113,7 @@ export default function ArticleDetailsClient({ article }: { article: Article }) 
         </div>
 
         <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
-          {formatContent(article.content)}
+          {formatContent(contentToRender)}
         </article>
 
         <div className="flex flex-wrap gap-2" dir="ltr">
