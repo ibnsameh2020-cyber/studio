@@ -76,7 +76,30 @@ export default function ContactSection() {
     });
   };
   
-  const clientLogos = ["Saudi Irrigation Organization", "Salehiya", "Rosmiman®", "Repotech"];
+  const clientLogos = [
+    {
+      name: 'Saudi Irrigation Organization',
+      logo: (
+        // A simple text representation as their logo is complex
+        <div className="text-center font-headline">
+          <p className="text-sm">Saudi Irrigation</p>
+          <p className="text-sm">Organization</p>
+        </div>
+      ),
+    },
+    {
+      name: 'Salehiya',
+      logo: <p className="text-2xl font-bold font-headline tracking-wider">SALEHIYA</p>,
+    },
+    {
+      name: 'Rosmiman®',
+      logo: <p className="text-2xl font-bold font-headline">Rosmiman®</p>,
+    },
+    {
+      name: 'Repotech',
+      logo: <p className="text-2xl font-bold font-headline tracking-widest">REPOTECH</p>,
+    },
+  ];
 
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
@@ -210,11 +233,15 @@ export default function ContactSection() {
             <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                 <h4 className="text-center text-xl font-headline font-semibold mb-6">You are in good company.</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-                    {clientLogos.map(logo => (
-                        <div key={logo} className="flex items-center justify-center p-2">
-                            <span className="font-semibold text-muted-foreground text-center">{logo}</span>
-                        </div>
-                    ))}
+                  {clientLogos.map((client) => (
+                    <div
+                      key={client.name}
+                      title={client.name}
+                      className="flex items-center justify-center p-2 text-muted-foreground grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300 h-16"
+                    >
+                      {client.logo}
+                    </div>
+                  ))}
                 </div>
             </div>
         </div>
