@@ -73,7 +73,7 @@ export default function AboutPage() {
                                 </div>
                             </div>
                         )}
-                        <div className="relative aspect-square max-w-md mx-auto w-full self-center">
+                        <div className="relative aspect-square max-w-md mx-auto w-full self-center rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
                              {aboutImage && (
                                 <Image
                                     src={aboutImage.imageUrl}
