@@ -41,10 +41,10 @@ export default function InsightsSection() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                     <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground inline-block">
-                        From My Articles
+                        Insights
                     </h2>
                     <p className="text-base text-muted-foreground">
-                        Explore my latest articles on AI, digital transformation, and the future of project management.
+                        Explore my latest insights on AI, digital transformation, and the future of project management.
                     </p>
                      <Link href="/articles" className="inline-block mt-4">
                         <Button variant="outline" className="group">

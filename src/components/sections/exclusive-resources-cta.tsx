@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Lock } from 'lucide-react';
 import AnimatedSection from '@/components/animated-section';
 
-export default function ExclusiveInsightsCtaSection() {
+export default function ExclusiveResourcesCtaSection() {
   return (
     <AnimatedSection>
-      <section id="exclusive-insights-cta">
+      <section id="exclusive-resources-cta">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 md:p-12 shadow-xl text-center">
             <div className="flex justify-center mb-6">
@@ -18,13 +18,13 @@ export default function ExclusiveInsightsCtaSection() {
                 </div>
             </div>
             <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
-              Unlock Deeper Strategic Insights
+              Unlock Exclusive Resources
             </h2>
             <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Become a member to access exclusive, bite-sized analyses on strategy, leadership, and AI governance—updated regularly.
+              Become a member to access exclusive, bite-sized resources on strategy, leadership, and AI governance—updated regularly.
             </p>
             <div className="mt-8">
-                <Link href="/login">
+                <Link href="/resources">
                     <Button size="lg" className="group">
                     Sign Up to Access
                     <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />

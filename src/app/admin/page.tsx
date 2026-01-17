@@ -34,7 +34,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2, Edit, Upload } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
 import { useCollection } from '@/firebase';
-import type { Article, Insight } from '@/lib/types';
+import type { Article, Resource } from '@/lib/types';
 
 
 const articleSchema = z.object({
@@ -48,7 +48,7 @@ const articleSchema = z.object({
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
 
-const insightSchema = z.object({
+const resourceSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters."),
   category: z.string().min(3, "Category must be at least 3 characters."),
   headline: z.string().min(10, "Headline must be at least 10 characters."),
@@ -56,7 +56,7 @@ const insightSchema = z.object({
   keyInsight: z.string().min(10, "Key Insight must be at least 10 characters."),
 });
 
-type InsightFormValues = z.infer<typeof insightSchema>;
+type ResourceFormValues = z.infer<typeof resourceSchema>;
 
 type UploadWidgetResult = {
     info?: {
@@ -92,13 +92,13 @@ export default function AdminPage() {
   const firestore = useFirestore();
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
-  const { data: insights, loading: insightsLoading } = useCollection<Insight>('insights');
+  const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
   
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
   const [isProcessingArticle, setIsProcessingArticle] = useState(false);
   
-  const [editingInsightId, setEditingInsightId] = useState<string | null>(null);
-  const [isProcessingInsight, setIsProcessingInsight] = useState(false);
+  const [editingResourceId, setEditingResourceId] = useState<string | null>(null);
+  const [isProcessingResource, setIsProcessingResource] = useState(false);
 
   const articleForm = useForm<ArticleFormValues>({
     resolver: zodResolver(articleSchema),
@@ -112,8 +112,8 @@ export default function AdminPage() {
     },
   });
 
-  const insightForm = useForm<InsightFormValues>({
-    resolver: zodResolver(insightSchema),
+  const resourceForm = useForm<ResourceFormValues>({
+    resolver: zodResolver(resourceSchema),
     defaultValues: {
       title: "",
       category: "",
@@ -416,7 +416,7 @@ export default function AdminPage() {
     articleForm.reset(emptyArticleFormValues);
   }
 
-  const emptyInsightFormValues = {
+  const emptyResourceFormValues = {
       title: "",
       category: "",
       headline: "",
@@ -424,65 +424,65 @@ export default function AdminPage() {
       keyInsight: "",
   };
 
-  const onInsightSubmit: SubmitHandler<InsightFormValues> = async (data) => {
+  const onResourceSubmit: SubmitHandler<ResourceFormValues> = async (data) => {
     if (!firestore || !user) {
         toast({ title: "Error", description: "Firestore or user not available.", variant: "destructive" });
         return;
     }
-    setIsProcessingInsight(true);
+    setIsProcessingResource(true);
     try {
-        const slug = editingInsightId || createSlug(data.title);
-        const insightRef = doc(firestore, "insights", slug);
-        await setDoc(insightRef, {
+        const slug = editingResourceId || createSlug(data.title);
+        const resourceRef = doc(firestore, "resources", slug);
+        await setDoc(resourceRef, {
             id: slug,
             ...data,
             authorId: user.uid,
             createdAt: serverTimestamp(),
         }, { merge: true });
         toast({
-            title: `Insight ${editingInsightId ? 'Updated' : 'Published'}!`,
-            description: "Your new insight is now available to members.",
+            title: `Resource ${editingResourceId ? 'Updated' : 'Published'}!`,
+            description: "Your new resource is now available to members.",
         });
-        insightForm.reset(emptyInsightFormValues);
-        setEditingInsightId(null);
+        resourceForm.reset(emptyResourceFormValues);
+        setEditingResourceId(null);
     } catch (error: any) {
          toast({
             title: "Error",
-            description: `Could not publish insight. ${error.message}`,
+            description: `Could not publish resource. ${error.message}`,
             variant: "destructive",
         });
     } finally {
-        setIsProcessingInsight(false);
+        setIsProcessingResource(false);
     }
   };
 
-  const handleEditInsightClick = (insight: Insight) => {
-    setEditingInsightId(insight.id);
-    insightForm.reset(insight);
+  const handleEditResourceClick = (resource: Resource) => {
+    setEditingResourceId(resource.id);
+    resourceForm.reset(resource);
     // Might need a way to focus the right tab and scroll.
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDeleteInsight = async (insightId: string) => {
+  const handleDeleteResource = async (resourceId: string) => {
     if (!firestore) return;
     try {
-      await deleteDoc(doc(firestore, "insights", insightId));
+      await deleteDoc(doc(firestore, "resources", resourceId));
       toast({
-        title: "Insight Deleted",
-        description: "The insight has been successfully removed.",
+        title: "Resource Deleted",
+        description: "The resource has been successfully removed.",
       });
     } catch (error: any) {
        toast({
         title: "Error",
-        description: `Could not delete insight. ${error.message}`,
+        description: `Could not delete resource. ${error.message}`,
         variant: "destructive",
       });
     }
   };
   
-  const cancelEditInsight = () => {
-    setEditingInsightId(null);
-    insightForm.reset(emptyInsightFormValues);
+  const cancelEditResource = () => {
+    setEditingResourceId(null);
+    resourceForm.reset(emptyResourceFormValues);
   }
   
   const formatDate = (date: any) => {
@@ -520,7 +520,7 @@ export default function AdminPage() {
         <Tabs defaultValue="articles" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
                 <TabsTrigger value="articles">Manage Articles</TabsTrigger>
-                <TabsTrigger value="insights">Manage Insights</TabsTrigger>
+                <TabsTrigger value="resources">Manage Resources</TabsTrigger>
             </TabsList>
             <TabsContent value="articles">
                 <p className="text-muted-foreground mb-8">
@@ -689,41 +689,41 @@ export default function AdminPage() {
                     )}
                 </div>
             </TabsContent>
-            <TabsContent value="insights">
+            <TabsContent value="resources">
                 <p className="text-muted-foreground mb-8">
-                    {editingInsightId ? `Editing insight: ${editingInsightId}` : "Create a new members-only insight."}
+                    {editingResourceId ? `Editing resource: ${editingResourceId}` : "Create a new members-only resource."}
                 </p>
-                <Form {...insightForm}>
-                    <form onSubmit={insightForm.handleSubmit(onInsightSubmit)} className="space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16">
-                        <FormField control={insightForm.control} name="title" render={({ field }) => (
+                <Form {...resourceForm}>
+                    <form onSubmit={resourceForm.handleSubmit(onResourceSubmit)} className="space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16">
+                        <FormField control={resourceForm.control} name="title" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Internal Title</FormLabel>
                                 <FormControl><Input placeholder="e.g., AI in PMOs Q2" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
-                        <FormField control={insightForm.control} name="category" render={({ field }) => (
+                        <FormField control={resourceForm.control} name="category" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Category</FormLabel>
                                 <FormControl><Input placeholder="e.g., Strategic Advisory" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
-                         <FormField control={insightForm.control} name="headline" render={({ field }) => (
+                         <FormField control={resourceForm.control} name="headline" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Headline</FormLabel>
-                                <FormControl><Textarea placeholder="The main, bold statement or title of the insight" {...field} /></FormControl>
+                                <FormControl><Textarea placeholder="The main, bold statement or title of the resource" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
-                         <FormField control={insightForm.control} name="hook" render={({ field }) => (
+                         <FormField control={resourceForm.control} name="hook" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>The Hook</FormLabel>
                                 <FormControl><Textarea placeholder="A compelling sentence or question to draw the reader in" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
-                         <FormField control={insightForm.control} name="keyInsight" render={({ field }) => (
+                         <FormField control={resourceForm.control} name="keyInsight" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Key Insight</FormLabel>
                                 <FormControl><Textarea placeholder="The core takeaway or conclusion" {...field} /></FormControl>
@@ -732,31 +732,31 @@ export default function AdminPage() {
                         )} />
 
                         <div className="flex gap-4">
-                            {editingInsightId && (
-                                <Button type="button" variant="outline" onClick={cancelEditInsight} className="w-full">Cancel</Button>
+                            {editingResourceId && (
+                                <Button type="button" variant="outline" onClick={cancelEditResource} className="w-full">Cancel</Button>
                             )}
-                            <Button type="submit" size="lg" className="w-full group" disabled={insightForm.formState.isSubmitting || isProcessingInsight}>
-                                {isProcessingInsight ? (
+                            <Button type="submit" size="lg" className="w-full group" disabled={resourceForm.formState.isSubmitting || isProcessingResource}>
+                                {isProcessingResource ? (
                                     <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</>
-                                ) : (editingInsightId ? 'Update Insight' : 'Publish Insight')}
+                                ) : (editingResourceId ? 'Update Resource' : 'Publish Resource')}
                             </Button>
                         </div>
                     </form>
                 </Form>
                  <div className="space-y-8">
-                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Insights</h2>
-                    {insightsLoading ? (
+                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Resources</h2>
+                    {resourcesLoading ? (
                         <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
                     ) : (
                         <div className="space-y-4">
-                            {insights?.map(insight => (
-                                <Card key={insight.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
+                            {resources?.map(resource => (
+                                <Card key={resource.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
                                     <CardHeader className="p-0">
-                                        <CardTitle className="text-lg font-headline">{insight.headline}</CardTitle>
-                                        <CardDescription>{insight.category}</CardDescription>
+                                        <CardTitle className="text-lg font-headline">{resource.headline}</CardTitle>
+                                        <CardDescription>{resource.category}</CardDescription>
                                     </CardHeader>
                                     <CardFooter className="p-0 flex gap-2">
-                                        <Button variant="outline" size="icon" onClick={() => handleEditInsightClick(insight)}>
+                                        <Button variant="outline" size="icon" onClick={() => handleEditResourceClick(resource)}>
                                             <Edit className="w-4 h-4" />
                                         </Button>
                                         <AlertDialog>
@@ -764,11 +764,11 @@ export default function AdminPage() {
                                             <AlertDialogContent>
                                                 <AlertDialogHeader>
                                                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                    <AlertDialogDescription>This will permanently delete this insight.</AlertDialogDescription>
+                                                    <AlertDialogDescription>This will permanently delete this resource.</AlertDialogDescription>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
                                                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => handleDeleteInsight(insight.id)}>Delete</AlertDialogAction>
+                                                    <AlertDialogAction onClick={() => handleDeleteResource(resource.id)}>Delete</AlertDialogAction>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>

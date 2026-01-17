@@ -133,15 +133,15 @@ export default function Header() {
                       })}
                       {user && (
                          <Link
-                            href="/insights"
+                            href="/resources"
                             className={cn(
                                 'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2 flex items-center gap-1.5',
-                                inHeroSection || pathname.startsWith('/insights') ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
-                                pathname.startsWith('/insights') ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                                inHeroSection || pathname.startsWith('/resources') ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
+                                pathname.startsWith('/resources') ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
                             )}
                         >
                             <Sparkles className="w-4 h-4" />
-                            Insights
+                            Resources
                         </Link>
                       )}
                     </nav>
@@ -276,15 +276,15 @@ export default function Header() {
             ))}
              {user && (
               <Link
-                href="/insights"
+                href="/resources"
                 onClick={handleMenuLinkClick}
                 className={cn(
                   'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
-                  pathname.startsWith('/insights') ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                  pathname.startsWith('/resources') ? 'bg-primary text-primary-foreground' : 'text-foreground'
                 )}
               >
                 <Sparkles className="w-5 h-5"/>
-                Insights
+                Resources
               </Link>
             )}
             {isAdmin && (

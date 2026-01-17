@@ -60,9 +60,9 @@
       },
       "required": ["id", "title", "description", "content", "author", "date"]
     },
-    "Insight": {
-      "title": "Insight",
-      "description": "Represents a short, exclusive insight for signed-in users.",
+    "Resource": {
+      "title": "Resource",
+      "description": "Represents a short, exclusive resource for signed-in users.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
@@ -93,9 +93,9 @@
       "schema": { "$ref": "#/entities/Article" },
       "description": "Stores individual blog articles."
     },
-    "/insights/{insightId}": {
-      "schema": { "$ref": "#/entities/Insight" },
-      "description": "Stores exclusive insights for members."
+    "/resources/{resourceId}": {
+      "schema": { "$ref": "#/entities/Resource" },
+      "description": "Stores exclusive resources for members."
     }
   }
 }

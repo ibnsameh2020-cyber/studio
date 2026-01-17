@@ -44,7 +44,7 @@ export type Article = {
     language?: 'ltr' | 'rtl';
 };
 
-export type Insight = {
+export type Resource = {
   id: string;
   title: string;
   category: string;
