@@ -61,7 +61,7 @@ export default function AboutPage() {
                         {journeySteps.map((step, index) => (
                             <div 
                               key={index} 
-                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-2xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
+                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
                             >
                                 <div className="flex-shrink-0 mt-1 bg-primary/10 p-4 rounded-full border-2 border-primary/20">
                                     {step.icon}
@@ -80,7 +80,7 @@ export default function AboutPage() {
                                 alt="Eng. Sameh Moussa"
                                 fill
                                 data-ai-hint={aboutImage.imageHint}
-                                className="object-cover rounded-2xl shadow-2xl shadow-primary/20 border-4 border-white/10"
+                                className="object-cover rounded-xl shadow-2xl shadow-primary/20 border-4 border-white/10"
                             />
                         )}
                     </div>
@@ -98,7 +98,7 @@ export default function AboutPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     {values.map((value, index) => (
-                        <div key={index} className="text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 rounded-2xl flex flex-col items-center">
+                        <div key={index} className="text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 rounded-xl flex flex-col items-center">
                            <div className="mb-6">{value.icon}</div>
                            <h3 className="text-xl font-headline font-semibold mb-2">{value.title}</h3>
                            <p className="text-base text-muted-foreground flex-grow">{value.description}</p>
