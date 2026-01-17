@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -106,7 +107,16 @@ export default function ContactSection() {
     },
     {
       name: 'Rosmiman®',
-      logo: <p className="text-2xl font-bold font-headline">Rosmiman®</p>,
+      logo: (
+        <div className="relative w-40 h-16">
+          <Image
+            src="https://rosmiman.com/wp-content/uploads/2019/09/logo_new.png"
+            alt="Rosmiman Logo"
+            fill
+            className="object-contain"
+          />
+        </div>
+      ),
     },
     {
       name: 'Repotech',

@@ -64,6 +64,12 @@ const nextConfig: NextConfig = {
         hostname: 'greatplacetowork.me',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'rosmiman.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
