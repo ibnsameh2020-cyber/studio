@@ -79,8 +79,9 @@ export default function AboutPage() {
                                     src={aboutImage.imageUrl}
                                     alt="Eng. Sameh Moussa"
                                     fill
+                                    quality={100}
                                     data-ai-hint={aboutImage.imageHint}
-                                    className="object-contain drop-shadow-xl"
+                                    className="object-contain drop-shadow-xl scale-125"
                                 />
                             )}
                         </div>
