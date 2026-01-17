@@ -62,7 +62,7 @@ export default function AboutPage() {
                     <div className="grid md:grid-cols-2 gap-12 items-start mb-8">
                         {firstJourneyStep && (
                             <div 
-                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
+                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2"
                             >
                                 <div className="flex-shrink-0 mt-1 bg-primary/10 p-4 rounded-full border-2 border-primary/20">
                                     {firstJourneyStep.icon}
@@ -91,7 +91,7 @@ export default function AboutPage() {
                         {remainingJourneySteps.map((step, index) => (
                             <div 
                               key={index} 
-                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary/50 hover:shadow-primary/10 hover:shadow-xl hover:-translate-y-1"
+                              className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg p-6 rounded-xl flex items-start gap-6 transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2"
                             >
                                 <div className="flex-shrink-0 mt-1 bg-primary/10 p-4 rounded-full border-2 border-primary/20">
                                     {step.icon}
@@ -117,7 +117,7 @@ export default function AboutPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     {values.map((value, index) => (
-                        <div key={index} className="text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 rounded-xl flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
+                        <div key={index} className="text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 rounded-xl flex flex-col items-center transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2">
                            <div className="mb-6">{value.icon}</div>
                            <h3 className="text-xl font-headline font-semibold mb-2">{value.title}</h3>
                            <p className="text-base text-muted-foreground flex-grow">{value.description}</p>
