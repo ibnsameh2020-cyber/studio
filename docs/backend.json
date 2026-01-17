@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "UserProfile": {
@@ -58,6 +59,22 @@
         "language": { "type": "string", "enum": ["ltr", "rtl"] }
       },
       "required": ["id", "title", "description", "content", "author", "date"]
+    },
+    "Insight": {
+      "title": "Insight",
+      "description": "Represents a short, exclusive insight for signed-in users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "headline": { "type": "string" },
+        "hook": { "type": "string" },
+        "keyInsight": { "type": "string" },
+        "authorId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "category", "headline", "hook", "keyInsight", "authorId", "createdAt"]
     }
   },
   "auth": {
@@ -75,6 +92,10 @@
     "/articles/{articleId}": {
       "schema": { "$ref": "#/entities/Article" },
       "description": "Stores individual blog articles."
+    },
+    "/insights/{insightId}": {
+      "schema": { "$ref": "#/entities/Insight" },
+      "description": "Stores exclusive insights for members."
     }
   }
 }

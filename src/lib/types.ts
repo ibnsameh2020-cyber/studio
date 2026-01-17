@@ -43,3 +43,14 @@ export type Article = {
     imageUrl?: string;
     language?: 'ltr' | 'rtl';
 };
+
+export type Insight = {
+  id: string;
+  title: string;
+  category: string;
+  headline: string;
+  hook: string;
+  keyInsight: string;
+  authorId: string;
+  createdAt: Timestamp | Date | string;
+};

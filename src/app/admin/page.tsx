@@ -29,11 +29,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2, Edit, Upload } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
 import { useCollection } from '@/firebase';
-import type { Article } from '@/lib/types';
+import type { Article, Insight } from '@/lib/types';
 
 
 const articleSchema = z.object({
@@ -46,6 +47,16 @@ const articleSchema = z.object({
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
+
+const insightSchema = z.object({
+  title: z.string().min(3, "Title must be at least 3 characters."),
+  category: z.string().min(3, "Category must be at least 3 characters."),
+  headline: z.string().min(10, "Headline must be at least 10 characters."),
+  hook: z.string().min(10, "The Hook must be at least 10 characters."),
+  keyInsight: z.string().min(10, "Key Insight must be at least 10 characters."),
+});
+
+type InsightFormValues = z.infer<typeof insightSchema>;
 
 type UploadWidgetResult = {
     info?: {
@@ -81,11 +92,15 @@ export default function AdminPage() {
   const firestore = useFirestore();
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
+  const { data: insights, loading: insightsLoading } = useCollection<Insight>('insights');
   
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isProcessingArticle, setIsProcessingArticle] = useState(false);
+  
+  const [editingInsightId, setEditingInsightId] = useState<string | null>(null);
+  const [isProcessingInsight, setIsProcessingInsight] = useState(false);
 
-  const form = useForm<ArticleFormValues>({
+  const articleForm = useForm<ArticleFormValues>({
     resolver: zodResolver(articleSchema),
     defaultValues: {
       title: "",
@@ -97,9 +112,20 @@ export default function AdminPage() {
     },
   });
 
-  const imageUrl = form.watch("imageUrl");
-  const language = form.watch("language");
-  const title = form.watch("title");
+  const insightForm = useForm<InsightFormValues>({
+    resolver: zodResolver(insightSchema),
+    defaultValues: {
+      title: "",
+      category: "",
+      headline: "",
+      hook: "",
+      keyInsight: "",
+    },
+  });
+
+  const imageUrl = articleForm.watch("imageUrl");
+  const language = articleForm.watch("language");
+  const articleTitle = articleForm.watch("title");
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -108,12 +134,12 @@ export default function AdminPage() {
   }, [user, loading, isAdmin, router]);
 
   useEffect(() => {
-    if (isRTL(title)) {
-      form.setValue('language', 'rtl');
+    if (isRTL(articleTitle)) {
+      articleForm.setValue('language', 'rtl');
     } else {
-      form.setValue('language', 'ltr');
+      articleForm.setValue('language', 'ltr');
     }
-  }, [title, form]);
+  }, [articleTitle, articleForm]);
 
   // START: One-time migration for old articles
   useEffect(() => {
@@ -134,7 +160,6 @@ export default function AdminPage() {
 
         querySnapshot.forEach((doc) => {
             const article = { id: doc.id, ...doc.data() } as Article;
-            // Check if formattedContent is missing or is not an array (e.g., a string from a previous faulty migration)
             if (!article.formattedContent || !Array.isArray(article.formattedContent)) {
                 articlesToMigrate.push(article);
             }
@@ -196,7 +221,7 @@ export default function AdminPage() {
   }, [firestore, toast, isAdmin]);
   // END: One-time migration
   
-    // START: One-time seed for new articles
+  // START: One-time seed for new articles
   useEffect(() => {
     const seedArticles = async () => {
         if (!firestore || !isAdmin || sessionStorage.getItem('articlesSeeded_v1')) {
@@ -284,7 +309,7 @@ export default function AdminPage() {
 
   const handleUploadSuccess = (result: UploadWidgetResult) => {
     if (result.info && typeof result.info.secure_url === 'string') {
-        form.setValue('imageUrl', result.info.secure_url);
+        articleForm.setValue('imageUrl', result.info.secure_url);
         toast({
             title: 'Image Uploaded',
             description: 'Your image has been successfully uploaded.',
@@ -298,7 +323,7 @@ export default function AdminPage() {
     }
   }
 
-  const emptyFormValues = {
+  const emptyArticleFormValues = {
     title: "",
     description: "",
     content: "",
@@ -307,13 +332,13 @@ export default function AdminPage() {
     language: 'ltr' as 'ltr' | 'rtl',
   };
 
-  const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
+  const onArticleSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!firestore) {
         toast({ title: "Error", description: "Firestore not available.", variant: "destructive" });
         return;
     }
 
-    setIsProcessing(true);
+    setIsProcessingArticle(true);
 
     try {
         toast({
@@ -331,8 +356,8 @@ export default function AdminPage() {
             title: data.title,
             description: data.description,
             imageUrl: data.imageUrl,
-            content: data.content, // Raw content
-            formattedContent: formattedContent, // AI-structured content
+            content: data.content,
+            formattedContent: formattedContent,
             tags: data.tags.split(',').map(tag => tag.trim()),
             language: data.language,
             author: "Eng. Sameh Moussa",
@@ -343,7 +368,7 @@ export default function AdminPage() {
             title: `Article ${editingArticleId ? 'Updated' : 'Published'}!`,
             description: `Your article is now ${editingArticleId ? 'updated' : 'live'}.`,
         });
-        form.reset(emptyFormValues);
+        articleForm.reset(emptyArticleFormValues);
         setEditingArticleId(null);
     } catch (error: any) {
         toast({
@@ -352,13 +377,13 @@ export default function AdminPage() {
             variant: "destructive",
         });
     } finally {
-        setIsProcessing(false);
+        setIsProcessingArticle(false);
     }
   };
 
-  const handleEditClick = (article: Article) => {
+  const handleEditArticleClick = (article: Article) => {
     setEditingArticleId(article.id);
-    form.reset({
+    articleForm.reset({
       title: article.title,
       description: article.description,
       content: article.content,
@@ -369,7 +394,7 @@ export default function AdminPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
-  const handleDelete = async (articleId: string) => {
+  const handleDeleteArticle = async (articleId: string) => {
     if (!firestore) return;
     try {
       await deleteDoc(doc(firestore, "articles", articleId));
@@ -386,9 +411,78 @@ export default function AdminPage() {
     }
   };
 
-  const cancelEdit = () => {
+  const cancelEditArticle = () => {
     setEditingArticleId(null);
-    form.reset(emptyFormValues);
+    articleForm.reset(emptyArticleFormValues);
+  }
+
+  const emptyInsightFormValues = {
+      title: "",
+      category: "",
+      headline: "",
+      hook: "",
+      keyInsight: "",
+  };
+
+  const onInsightSubmit: SubmitHandler<InsightFormValues> = async (data) => {
+    if (!firestore || !user) {
+        toast({ title: "Error", description: "Firestore or user not available.", variant: "destructive" });
+        return;
+    }
+    setIsProcessingInsight(true);
+    try {
+        const slug = editingInsightId || createSlug(data.title);
+        const insightRef = doc(firestore, "insights", slug);
+        await setDoc(insightRef, {
+            id: slug,
+            ...data,
+            authorId: user.uid,
+            createdAt: serverTimestamp(),
+        }, { merge: true });
+        toast({
+            title: `Insight ${editingInsightId ? 'Updated' : 'Published'}!`,
+            description: "Your new insight is now available to members.",
+        });
+        insightForm.reset(emptyInsightFormValues);
+        setEditingInsightId(null);
+    } catch (error: any) {
+         toast({
+            title: "Error",
+            description: `Could not publish insight. ${error.message}`,
+            variant: "destructive",
+        });
+    } finally {
+        setIsProcessingInsight(false);
+    }
+  };
+
+  const handleEditInsightClick = (insight: Insight) => {
+    setEditingInsightId(insight.id);
+    insightForm.reset(insight);
+    // Might need a way to focus the right tab and scroll.
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDeleteInsight = async (insightId: string) => {
+    if (!firestore) return;
+    try {
+      await deleteDoc(doc(firestore, "insights", insightId));
+      toast({
+        title: "Insight Deleted",
+        description: "The insight has been successfully removed.",
+      });
+    } catch (error: any) {
+       toast({
+        title: "Error",
+        description: `Could not delete insight. ${error.message}`,
+        variant: "destructive",
+      });
+    }
+  };
+  
+  const cancelEditInsight = () => {
+    setEditingInsightId(null);
+    insightForm.reset(emptyInsightFormValues);
   }
   
   const formatDate = (date: any) => {
@@ -420,179 +514,273 @@ export default function AdminPage() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl md:text-5xl font-headline font-bold mb-2">Admin Panel</h1>
-        <p className="text-muted-foreground mb-8">
-            {editingArticleId ? `Editing article: ${editingArticleId}` : "Create a new article."}
-        </p>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Admin Panel</h1>
 
-        <Form {...form}>
-            <form 
-              onSubmit={form.handleSubmit(onSubmit)} 
-              className={cn(
-                "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
-                language === 'rtl' && 'font-arabic'
-              )}
-              dir={language}
-            >
-                <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Title</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Enter article title" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
+        <Tabs defaultValue="articles" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="articles">Manage Articles</TabsTrigger>
+                <TabsTrigger value="insights">Manage Insights</TabsTrigger>
+            </TabsList>
+            <TabsContent value="articles">
+                <p className="text-muted-foreground mb-8">
+                    {editingArticleId ? `Editing article: ${editingArticleId}` : "Create a new public article."}
+                </p>
+                <Form {...articleForm}>
+                    <form 
+                    onSubmit={articleForm.handleSubmit(onArticleSubmit)} 
+                    className={cn(
+                        "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
+                        language === 'rtl' && 'font-arabic'
                     )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Short Description</FormLabel>
-                        <FormControl>
-                            <Textarea placeholder="A brief summary of the article" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <FormItem dir="ltr">
-                      <FormLabel>Cover Image</FormLabel>
-                      <div className="flex items-center gap-4">
-                         <CldUploadWidget
-                            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-                            onSuccess={handleUploadSuccess}
-                            options={{
-                                sources: ['local', 'url', 'camera'],
-                                multiple: false,
-                            }}
-                        >
-                            {({ open }) => {
-                                return (
-                                    <Button type="button" variant="outline" onClick={() => open()}>
-                                        <Upload className="mr-2 h-4 w-4" />
-                                        Upload
-                                    </Button>
-                                );
-                            }}
-                        </CldUploadWidget>
+                    dir={language}
+                    >
+                        <FormField
+                            control={articleForm.control}
+                            name="title"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Title</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter article title" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={articleForm.control}
+                            name="description"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Short Description</FormLabel>
+                                <FormControl>
+                                    <Textarea placeholder="A brief summary of the article" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <FormItem dir="ltr">
+                            <FormLabel>Cover Image</FormLabel>
+                            <div className="flex items-center gap-4">
+                                <CldUploadWidget
+                                    uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                                    onSuccess={handleUploadSuccess}
+                                    options={{
+                                        sources: ['local', 'url', 'camera'],
+                                        multiple: false,
+                                    }}
+                                >
+                                    {({ open }) => {
+                                        return (
+                                            <Button type="button" variant="outline" onClick={() => open()}>
+                                                <Upload className="mr-2 h-4 w-4" />
+                                                Upload
+                                            </Button>
+                                        );
+                                    }}
+                                </CldUploadWidget>
 
-                        {imageUrl && (
-                          <div className="relative w-32 h-20 rounded-md overflow-hidden">
-                            <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
-                          </div>
+                                {imageUrl && (
+                                <div className="relative w-32 h-20 rounded-md overflow-hidden">
+                                    <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
+                                </div>
+                                )}
+                            </div>
+                            <FormControl>
+                                <Input type="hidden" {...articleForm.register("imageUrl")} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        </div>
+                        <FormField
+                            control={articleForm.control}
+                            name="content"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Full Content</FormLabel>
+                                <FormControl>
+                                    <Textarea 
+                                    placeholder="Write the full article content here. The AI will automatically style it." 
+                                    rows={15} 
+                                    {...field}
+                                    className={cn(language === 'rtl' && 'text-lg')}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={articleForm.control}
+                            name="tags"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Tags (comma-separated)</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="e.g., React, Firebase, Web Dev" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="flex gap-4" dir="ltr">
+                        {editingArticleId && (
+                            <Button type="button" variant="outline" onClick={cancelEditArticle} className="w-full">
+                                Cancel
+                            </Button>
                         )}
-                      </div>
-                      <FormControl>
-                         <Input type="hidden" {...form.register("imageUrl")} />
-                      </FormControl>
-                       <FormMessage />
-                    </FormItem>
+                        <Button type="submit" size="lg" className="w-full group" disabled={articleForm.formState.isSubmitting || isProcessingArticle}>
+                            {(articleForm.formState.isSubmitting || isProcessingArticle) ? (
+                                <>
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                    {isProcessingArticle ? 'AI is Styling...' : (editingArticleId ? 'Updating...' : 'Publishing...')}
+                                </>
+                            ) : (editingArticleId ? 'Update Article' : 'Publish Article')}
+                        </Button>
+                        </div>
+                    </form>
+                </Form>
+                <div className="space-y-8">
+                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Articles</h2>
+                    {articlesLoading ? (
+                        <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                    ) : (
+                        <div className="space-y-4">
+                            {articles?.map(article => (
+                                <Card key={article.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
+                                    <CardHeader className="p-0">
+                                        <CardTitle className="text-lg font-headline">{article.title}</CardTitle>
+                                        <CardDescription>
+                                            Published on: {formatDate(article.date)}
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardFooter className="p-0 flex gap-2">
+                                        <Button variant="outline" size="icon" onClick={() => handleEditArticleClick(article)}>
+                                            <Edit className="w-4 h-4" />
+                                        </Button>
+                                        <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button variant="destructive" size="icon">
+                                                <Trash2 className="w-4 h-4" />
+                                            </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                This action cannot be undone. This will permanently delete the article.
+                                            </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={() => handleDeleteArticle(article.id)}>
+                                                Delete
+                                            </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                        </AlertDialog>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                    )}
                 </div>
-                <FormField
-                    control={form.control}
-                    name="content"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Full Content</FormLabel>
-                        <FormControl>
-                            <Textarea 
-                              placeholder="Write the full article content here. The AI will automatically style it." 
-                              rows={15} 
-                              {...field}
-                              className={cn(language === 'rtl' && 'text-lg')}
-                            />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="tags"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Tags (comma-separated)</FormLabel>
-                        <FormControl>
-                            <Input placeholder="e.g., React, Firebase, Web Dev" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
+            </TabsContent>
+            <TabsContent value="insights">
+                <p className="text-muted-foreground mb-8">
+                    {editingInsightId ? `Editing insight: ${editingInsightId}` : "Create a new members-only insight."}
+                </p>
+                <Form {...insightForm}>
+                    <form onSubmit={insightForm.handleSubmit(onInsightSubmit)} className="space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16">
+                        <FormField control={insightForm.control} name="title" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Internal Title</FormLabel>
+                                <FormControl><Input placeholder="e.g., AI in PMOs Q2" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )} />
+                        <FormField control={insightForm.control} name="category" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Category</FormLabel>
+                                <FormControl><Input placeholder="e.g., Strategic Advisory" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )} />
+                         <FormField control={insightForm.control} name="headline" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Headline</FormLabel>
+                                <FormControl><Textarea placeholder="The main, bold statement or title of the insight" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )} />
+                         <FormField control={insightForm.control} name="hook" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>The Hook</FormLabel>
+                                <FormControl><Textarea placeholder="A compelling sentence or question to draw the reader in" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )} />
+                         <FormField control={insightForm.control} name="keyInsight" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Key Insight</FormLabel>
+                                <FormControl><Textarea placeholder="The core takeaway or conclusion" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )} />
 
-                <div className="flex gap-4" dir="ltr">
-                  {editingArticleId && (
-                     <Button type="button" variant="outline" onClick={cancelEdit} className="w-full">
-                        Cancel
-                    </Button>
-                  )}
-                  <Button type="submit" size="lg" className="w-full group" disabled={form.formState.isSubmitting || isProcessing}>
-                      {(form.formState.isSubmitting || isProcessing) ? (
-                          <>
-                              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                              {isProcessing ? 'AI is Styling...' : (editingArticleId ? 'Updating...' : 'Publishing...')}
-                          </>
-                      ) : (editingArticleId ? 'Update Article' : 'Publish Article')}
-                  </Button>
+                        <div className="flex gap-4">
+                            {editingInsightId && (
+                                <Button type="button" variant="outline" onClick={cancelEditInsight} className="w-full">Cancel</Button>
+                            )}
+                            <Button type="submit" size="lg" className="w-full group" disabled={insightForm.formState.isSubmitting || isProcessingInsight}>
+                                {isProcessingInsight ? (
+                                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</>
+                                ) : (editingInsightId ? 'Update Insight' : 'Publish Insight')}
+                            </Button>
+                        </div>
+                    </form>
+                </Form>
+                 <div className="space-y-8">
+                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Insights</h2>
+                    {insightsLoading ? (
+                        <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                    ) : (
+                        <div className="space-y-4">
+                            {insights?.map(insight => (
+                                <Card key={insight.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
+                                    <CardHeader className="p-0">
+                                        <CardTitle className="text-lg font-headline">{insight.headline}</CardTitle>
+                                        <CardDescription>{insight.category}</CardDescription>
+                                    </CardHeader>
+                                    <CardFooter className="p-0 flex gap-2">
+                                        <Button variant="outline" size="icon" onClick={() => handleEditInsightClick(insight)}>
+                                            <Edit className="w-4 h-4" />
+                                        </Button>
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild><Button variant="destructive" size="icon"><Trash2 className="w-4 h-4" /></Button></AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                    <AlertDialogDescription>This will permanently delete this insight.</AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction onClick={() => handleDeleteInsight(insight.id)}>Delete</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                    )}
                 </div>
-            </form>
-        </Form>
-        
-        <div className="space-y-8">
-            <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Articles</h2>
-            {articlesLoading ? (
-                <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
-            ) : (
-                <div className="space-y-4">
-                    {articles?.map(article => (
-                        <Card key={article.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
-                            <CardHeader className="p-0">
-                                <CardTitle className="text-lg font-headline">{article.title}</CardTitle>
-                                <CardDescription>
-                                    Published on: {formatDate(article.date)}
-                                </CardDescription>
-                            </CardHeader>
-                            <CardFooter className="p-0 flex gap-2">
-                                <Button variant="outline" size="icon" onClick={() => handleEditClick(article)}>
-                                    <Edit className="w-4 h-4" />
-                                </Button>
-                                <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Button variant="destructive" size="icon">
-                                        <Trash2 className="w-4 h-4" />
-                                    </Button>
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                      <AlertDialogDescription>
-                                        This action cannot be undone. This will permanently delete the article.
-                                      </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction onClick={() => handleDelete(article.id)}>
-                                        Delete
-                                      </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                  </AlertDialogContent>
-                                </AlertDialog>
-                            </CardFooter>
-                        </Card>
-                    ))}
-                </div>
-            )}
-        </div>
+            </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
 }
-
-    

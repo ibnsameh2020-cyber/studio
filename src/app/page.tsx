@@ -9,6 +9,7 @@ import AnimatedSection from '@/components/animated-section';
 import InsightsSection from '@/components/sections/articles';
 import { ServicesSection } from './services/page';
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
+import ExclusiveInsightsCtaSection from '@/components/sections/exclusive-insights-cta';
 
 export default function Home() {
   return (
@@ -33,6 +34,7 @@ export default function Home() {
               <ExperienceSection />
             </AnimatedSection>
             <InsightsSection />
+            <ExclusiveInsightsCtaSection />
             <AboutMeCtaSection />
             <AnimatedSection>
               <ContactSection />

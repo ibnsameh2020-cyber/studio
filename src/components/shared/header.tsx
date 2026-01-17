@@ -1,9 +1,10 @@
+
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon } from 'lucide-react';
+import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon, Sparkles } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser } from '@/firebase';
 import {
@@ -23,7 +24,7 @@ const navItems = [
   { href: '#services', label: 'Services' },
   { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies' },
   { href: '#experience', label: 'Experience' },
-  { href: '/articles', label: 'Insights', sectionId: 'insights' },
+  { href: '/articles', label: 'Articles', sectionId: 'insights' },
   { href: '/about', label: 'About', sectionId: 'about-cta' },
   { href: '#contact', label: 'Contact' },
 ];
@@ -76,16 +77,11 @@ export default function Header() {
   };
 
   const isLinkActive = (item: typeof navItems[0]) => {
-    // For page links like /articles
     if (item.href.startsWith('/')) {
-        if (typeof window !== 'undefined') {
-            const onBlogPage = window.location.pathname.startsWith(item.href);
-            const onBlogSection = activeSection === item.sectionId;
-            return onBlogPage || onBlogSection;
-        }
-        return false;
+        const onPage = pathname.startsWith(item.href);
+        const onHomepageSection = pathname === '/' && activeSection === item.sectionId;
+        return onPage || onHomepageSection;
     }
-    // For anchor links like #projects
     return activeSection === item.href.substring(1);
   };
   
@@ -135,6 +131,19 @@ export default function Header() {
                               </Link>
                           );
                       })}
+                      {user && (
+                         <Link
+                            href="/insights"
+                            className={cn(
+                                'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2 flex items-center gap-1.5',
+                                inHeroSection || pathname.startsWith('/insights') ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
+                                pathname.startsWith('/insights') ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                            )}
+                        >
+                            <Sparkles className="w-4 h-4" />
+                            Insights
+                        </Link>
+                      )}
                     </nav>
                     {isAdmin && (
                         <Link href="/admin">
@@ -265,6 +274,19 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+             {user && (
+              <Link
+                href="/insights"
+                onClick={handleMenuLinkClick}
+                className={cn(
+                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
+                  pathname.startsWith('/insights') ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                )}
+              >
+                <Sparkles className="w-5 h-5"/>
+                Insights
+              </Link>
+            )}
             {isAdmin && (
               <Link
                 href="/admin"

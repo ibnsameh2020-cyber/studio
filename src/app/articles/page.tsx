@@ -13,7 +13,7 @@ export default function ArticlesPage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-6xl font-headline font-bold">Insights</h1>
+        <h1 className="text-4xl md:text-6xl font-headline font-bold">Articles</h1>
         <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           Explore my latest articles on AI, digital transformation, and the future of project management.
         </p>
