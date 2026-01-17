@@ -32,9 +32,10 @@ const formatContent = (content: string) => {
       return part;
     });
   };
-
-  const isHeader = (line: string) => /^\d+\.\s/.test(line.trim()) || /^\d+\.$/.test(line.trim());
-  const isSubHeader = (line: string) => /^\d+\.\d+\s/.test(line.trim()) || /^\d+\.\d+$/.test(line.trim());
+  
+  // Smarter logic to distinguish between headers and standard numbered lists.
+  const isHeader = (line: string) => /^\.\d+\s/.test(line.trim()); // Matches ".1 My Header"
+  const isSubHeader = (line: string) => /^\d+\.\d+\s/.test(line.trim()); // Matches "2.1 My Sub-Header"
   const isQuote = (line: string) => line.trim().startsWith('>');
 
   return lines.map((line, index) => {
