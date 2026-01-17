@@ -80,7 +80,7 @@ export default function AboutPage() {
                                     alt="Eng. Sameh Moussa"
                                     fill
                                     data-ai-hint={aboutImage.imageHint}
-                                    className="object-cover rounded-xl shadow-2xl shadow-primary/20 border-4 border-white/10"
+                                    className="object-contain drop-shadow-xl"
                                 />
                             )}
                         </div>
