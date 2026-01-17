@@ -32,6 +32,17 @@ export type ContentBlock = {
 };
 
 export type Article = {
+  id: string;
+  title: string;
+  category: string;
+  headline: string;
+  hook: string;
+  keyInsight: string;
+  authorId: string;
+  date: Timestamp | Date | string;
+};
+
+export type Resource = {
     id: string;
     title: string;
     description: string;
@@ -42,15 +53,4 @@ export type Article = {
     tags: string[];
     imageUrl?: string;
     language?: 'ltr' | 'rtl';
-};
-
-export type Resource = {
-  id: string;
-  title: string;
-  category: string;
-  headline: string;
-  hook: string;
-  keyInsight: string;
-  authorId: string;
-  createdAt: Timestamp | Date | string;
 };

@@ -39,8 +39,24 @@
       }
     },
     "Article": {
-      "title": "Blog Article",
-      "description": "Represents a blog article.",
+      "title": "Insight",
+      "description": "Represents a short, public insight.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "headline": { "type": "string" },
+        "hook": { "type": "string" },
+        "keyInsight": { "type": "string" },
+        "authorId": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "category", "headline", "hook", "keyInsight", "authorId", "date"]
+    },
+    "Resource": {
+      "title": "Resource Article",
+      "description": "Represents a long-form, exclusive resource for signed-in users.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
@@ -59,22 +75,6 @@
         "language": { "type": "string", "enum": ["ltr", "rtl"] }
       },
       "required": ["id", "title", "description", "content", "author", "date"]
-    },
-    "Resource": {
-      "title": "Resource",
-      "description": "Represents a short, exclusive resource for signed-in users.",
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "title": { "type": "string" },
-        "category": { "type": "string" },
-        "headline": { "type": "string" },
-        "hook": { "type": "string" },
-        "keyInsight": { "type": "string" },
-        "authorId": { "type": "string" },
-        "createdAt": { "type": "string", "format": "date-time" }
-      },
-      "required": ["id", "title", "category", "headline", "hook", "keyInsight", "authorId", "createdAt"]
     }
   },
   "auth": {
@@ -91,11 +91,11 @@
     },
     "/articles/{articleId}": {
       "schema": { "$ref": "#/entities/Article" },
-      "description": "Stores individual blog articles."
+      "description": "Stores individual public insights."
     },
     "/resources/{resourceId}": {
       "schema": { "$ref": "#/entities/Resource" },
-      "description": "Stores exclusive resources for members."
+      "description": "Stores exclusive, long-form resources for members."
     }
   }
 }

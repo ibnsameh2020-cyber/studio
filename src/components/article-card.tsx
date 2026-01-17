@@ -1,71 +1,29 @@
 
 import type { Article } from '@/lib/types';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
-import { ArrowRight, Calendar } from 'lucide-react';
-import Link from 'next/link';
-import { Timestamp } from 'firebase/firestore';
-import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 type ArticleCardProps = {
   article: Article;
-  isFeatured?: boolean;
 };
 
-const formatDate = (date: any) => {
-    if (!date) return '';
-    if (date instanceof Timestamp) {
-      return date.toDate().toLocaleDateString('en-US');
-    }
-    return new Date(date).toLocaleDateString('en-US');
-};
-
-export default function ArticleCard({ article, isFeatured = false }: ArticleCardProps) {
-
+export default function ArticleCard({ article }: ArticleCardProps) {
   return (
-    <Link href={`/articles/${article.id}`}>
-        <Card className={cn(
-          "h-full w-full flex flex-col group overflow-hidden cursor-pointer",
-          "bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300",
-          "hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2"
-        )}>
-            {article.imageUrl && (
-              <div className="relative aspect-video overflow-hidden">
-                <Image
-                  src={article.imageUrl}
-                  alt={article.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-            )}
-            <div className={cn("flex flex-col flex-grow p-6")}>
-              <CardHeader className="p-0">
-                {article.tags && article.tags.length > 0 && (
-                  <Badge variant="secondary" className="mb-2 w-fit">{article.tags[0]}</Badge>
-                )}
-                <CardTitle className="font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
-                  {article.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 flex-grow pt-4">
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{article.description}</p>
-              </CardContent>
-              <CardFooter className="p-0 mt-auto flex justify-between items-center text-xs text-muted-foreground">
-                  <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1.5">
-                          <Calendar className="w-3 h-3" />
-                          <span>{formatDate(article.date)}</span>
-                      </div>
-                  </div>
-                  <div className="flex items-center text-sm text-primary group-hover:underline">
-                      Read more
-                      <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                  </div>
-              </CardFooter>
-            </div>
-        </Card>
-    </Link>
+    <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
+      <CardHeader className="p-0">
+        {article.category && <Badge variant="secondary" className="mb-4 w-fit">{article.category}</Badge>}
+        <CardTitle className="font-headline text-xl text-primary">{article.headline}</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0 flex-grow pt-6 space-y-4">
+        <div>
+            <h3 className="font-semibold text-foreground/80 mb-2 uppercase tracking-wider text-xs">The Hook</h3>
+            <p className="text-base text-muted-foreground italic">"{article.hook}"</p>
+        </div>
+        <div>
+            <h3 className="font-semibold text-foreground/80 mb-2 uppercase tracking-wider text-xs">Key Insight</h3>
+            <p className="text-base text-foreground font-medium">{article.keyInsight}</p>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
