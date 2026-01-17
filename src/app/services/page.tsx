@@ -37,7 +37,7 @@ export function ServicesSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {services.map((service, index) => (
             <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
-              <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center">
+              <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 cursor-pointer">
                 <div className="mb-6">{service.icon}</div>
                 <CardHeader className="p-0">
                   <CardTitle className="text-xl font-headline mb-2">{service.title}</CardTitle>
