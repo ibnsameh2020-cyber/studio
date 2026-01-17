@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon, Sparkles } from 'lucide-react';
+import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser } from '@/firebase';
 import {
@@ -21,12 +20,12 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { href: '#services', label: 'Services' },
-  { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies' },
-  { href: '#experience', label: 'Experience' },
-  { href: '/articles', label: 'Articles', sectionId: 'insights' },
-  { href: '/about', label: 'About', sectionId: 'about-cta' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
+  { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
+  { href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
+  { href: '/articles', label: 'Articles', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
+  { href: '/about', label: 'About', sectionId: 'about-cta', icon: <User className="w-4 h-4" /> },
+  { href: '#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
 export default function Header() {
@@ -122,12 +121,13 @@ export default function Header() {
                                   key={item.href}
                                   href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
                                   className={cn(
-                                      'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2',
+                                      'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2 flex items-center gap-1.5',
                                       isVisible ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
                                       isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
                                   )}
                               >
-                                  {item.label}
+                                  {item.icon}
+                                  <span>{item.label}</span>
                               </Link>
                           );
                       })}
@@ -267,10 +267,11 @@ export default function Header() {
                 href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
                 onClick={handleMenuLinkClick}
                 className={cn(
-                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
+                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
                   isLinkActive(item) ? 'bg-primary text-primary-foreground' : 'text-foreground'
                 )}
               >
+                {item.icon}
                 {item.label}
               </Link>
             ))}
