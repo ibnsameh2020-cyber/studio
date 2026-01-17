@@ -1,28 +1,8 @@
-
 "use client";
 
-import { Lightbulb, Linkedin, Mail, Phone, Copy } from 'lucide-react';
+import { Lightbulb, Linkedin, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
-import { useToast } from '@/hooks/use-toast';
 
-
-// A simple SVG for WhatsApp as it's not in lucide-react
-const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-    </svg>
-  );
   
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
@@ -38,24 +18,6 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function Footer() {
-  const { toast } = useToast();
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      toast({
-        title: 'Copied!',
-        description: 'Phone number copied to clipboard.',
-      });
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
-      toast({
-        title: 'Error',
-        description: 'Failed to copy phone number.',
-        variant: 'destructive',
-      });
-    });
-  };
-
   return (
     <footer className="bg-background border-t border-border/30">
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -72,12 +34,12 @@ export default function Footer() {
                     <Mail className="w-4 h-4 text-primary"/>
                     <a href="mailto:contact@samehinsights.com" className="hover:text-primary transition-colors">contact@samehinsights.com</a>
                 </div>
-                 <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-primary"/>
-                    <button onClick={() => copyToClipboard('+966565579000')} className="flex items-center gap-1 group">
-                        <span className="hover:text-primary transition-colors">+966565579000</span>
-                        <Copy className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
+                 <div className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 text-primary mt-1 flex-shrink-0"/>
+                    <div className="flex flex-col items-center md:items-start">
+                        <span>Eastern Province, KSA</span>
+                        <span className="text-xs text-muted-foreground/80">(Available for remote & on-site consulting)</span>
+                    </div>
                 </div>
             </div>
           </div>
@@ -88,9 +50,6 @@ export default function Footer() {
                 </Link>
                 <Link href="https://twitter.com/SamehInsights" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <XIcon className="w-6 h-6" />
-                </Link>
-                <Link href="https://wa.me/966565579000" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                    <WhatsAppIcon className="w-6 h-6" />
                 </Link>
             </div>
             <div className="text-sm text-muted-foreground mt-2 text-center md:text-right">
