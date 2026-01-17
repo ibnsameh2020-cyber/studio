@@ -21,7 +21,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <DialogTrigger asChild>
         <Card className={cn(
           "h-full w-full flex flex-col group overflow-hidden cursor-pointer",
-          "bg-card/50 backdrop-blur-lg border border-border/30 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1"
+          "bg-card/50 backdrop-blur-lg border border-border/30 transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1"
         )}>
             {projectImage && (
               <div className="relative aspect-video overflow-hidden">
