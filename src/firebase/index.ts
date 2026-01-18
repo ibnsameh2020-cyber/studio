@@ -10,7 +10,11 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
-    type UserCredential
+    type UserCredential,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updateEmail as firebaseUpdateEmail,
+    updatePassword as firebaseUpdatePassword,
 } from "firebase/auth";
 import { getFirestore, Firestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { firebaseConfig as importedConfig } from './config';
@@ -65,11 +69,14 @@ function useAuthActions() {
                 return 'This user account has been disabled.';
             case 'auth/user-not-found':
             case 'auth/wrong-password':
-                return 'Invalid email or password.';
+            case 'auth/invalid-credential':
+                return 'Invalid credentials. Please check your email and password.';
             case 'auth/email-already-in-use':
                 return 'An account with this email already exists.';
             case 'auth/weak-password':
                 return 'The password is too weak. Please use at least 6 characters.';
+            case 'auth/requires-recent-login':
+                return 'This action is sensitive and requires recent authentication. Please sign in again before retrying.';
             default:
                 return 'An unknown error occurred. Please try again.';
         }
@@ -139,7 +146,54 @@ function useAuthActions() {
         }
     };
 
-    return { signInWithGoogle, signOut, signInWithEmailPassword, signUpWithEmailPassword, updateUserProfile };
+    const updateUserEmail = async (newEmail: string, currentPassword: string): Promise<string | null> => {
+        const user = auth.currentUser;
+        if (!user || !user.email) {
+            return "No user is currently signed in or user has no email.";
+        }
+
+        try {
+            const credential = EmailAuthProvider.credential(user.email, currentPassword);
+            await reauthenticateWithCredential(user, credential);
+            
+            await firebaseUpdateEmail(user, newEmail);
+            
+            const userRef = doc(firestore, "users", user.uid);
+            await setDoc(userRef, { email: newEmail }, { merge: true });
+
+            return null;
+        } catch (error: any) {
+            console.error("Error updating email:", error);
+            return getFirebaseErrorMessage(error.code);
+        }
+    };
+
+    const updateUserPassword = async (currentPassword: string, newPassword: string): Promise<string | null> => {
+        const user = auth.currentUser;
+        if (!user || !user.email) {
+            return "No user is currently signed in or user has no email.";
+        }
+
+        try {
+            const credential = EmailAuthProvider.credential(user.email, currentPassword);
+            await reauthenticateWithCredential(user, credential);
+            await firebaseUpdatePassword(user, newPassword);
+            return null;
+        } catch (error: any) {
+            console.error("Error updating password:", error);
+            return getFirebaseErrorMessage(error.code);
+        }
+    };
+
+    return { 
+        signInWithGoogle, 
+        signOut, 
+        signInWithEmailPassword, 
+        signUpWithEmailPassword, 
+        updateUserProfile,
+        updateUserEmail,
+        updateUserPassword
+    };
 }
 
 // Custom hook to memoize Firebase queries
