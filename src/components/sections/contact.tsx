@@ -54,7 +54,7 @@ export default function ContactSection() {
             toast({
                 variant: 'destructive',
                 title: 'Configuration Error',
-                description: 'EmailJS is not configured. Please check environment variables.',
+                description: 'EmailJS is not configured. Please check environment variables and restart the server.',
             });
             setIsSubmitting(false);
             return;
@@ -79,7 +79,7 @@ export default function ContactSection() {
             form.reset();
         } catch (error: any) {
             const errorText = error?.text || 'An unknown error occurred. Check the console for more details.';
-            console.error('EmailJS Error:', error);
+            console.error('EmailJS Error:', errorText);
             toast({
                 variant: 'destructive',
                 title: 'Submission Failed',
@@ -309,5 +309,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    
