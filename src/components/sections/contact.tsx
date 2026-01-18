@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -80,7 +81,7 @@ export default function ContactSection() {
           });
           form.reset();
         }, (error) => {
-           console.error("EmailJS submission failed. Double-check your environment variables in the .env file and ensure the server was restarted.");
+           console.error('EmailJS Error:', error);
            console.log("Using Service ID:", serviceId);
            console.log("Using Template ID:", templateId);
            console.log("Using Public Key:", publicKey);
