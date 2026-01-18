@@ -54,3 +54,10 @@ export type Resource = {
     imageUrl?: string;
     language?: 'ltr' | 'rtl';
 };
+
+export type UserProfile = {
+  id: string;
+  displayName: string;
+  email: string;
+  photoURL?: string;
+};

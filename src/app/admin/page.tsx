@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,7 +34,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2, Edit, Upload } from "lucide-react";
 import { useFirestore } from '@/firebase/provider';
 import { useCollection } from '@/firebase';
-import type { Article, Resource } from '@/lib/types';
+import type { Article, Resource, UserProfile } from '@/lib/types';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 const insightSchema = z.object({
@@ -92,6 +94,7 @@ export default function AdminPage() {
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
+  const { data: users, loading: usersLoading } = useCollection<UserProfile>('users');
   
   const [editingInsightId, setEditingInsightId] = useState<string | null>(null);
   const [isProcessingInsight, setIsProcessingInsight] = useState(false);
@@ -489,9 +492,10 @@ export default function AdminPage() {
         <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Admin Panel</h1>
 
         <Tabs defaultValue="articles" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsList className="grid w-full grid-cols-3 mb-8">
                 <TabsTrigger value="articles">Manage Insights</TabsTrigger>
                 <TabsTrigger value="resources">Manage Resources</TabsTrigger>
+                <TabsTrigger value="users">User Data</TabsTrigger>
             </TabsList>
             <TabsContent value="articles">
                 <p className="text-muted-foreground mb-8">
@@ -749,6 +753,50 @@ export default function AdminPage() {
                         </div>
                     )}
                 </div>
+            </TabsContent>
+            <TabsContent value="users">
+                <h2 className="text-2xl md:text-4xl font-headline font-bold mb-4">User Data</h2>
+                <p className="text-muted-foreground mb-8">
+                    A list of all registered users in your application.
+                </p>
+                <Card className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl">
+                    <CardHeader>
+                        <CardTitle>Registered Users</CardTitle>
+                        <CardDescription>Total users: {users?.length ?? 0}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {usersLoading ? (
+                            <div className="flex justify-center items-center h-48">
+                                <Loader2 className="h-8 w-8 animate-spin" />
+                            </div>
+                        ) : (
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>User</TableHead>
+                                        <TableHead>Email</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {users?.map(user => (
+                                        <TableRow key={user.id}>
+                                            <TableCell>
+                                                <div className="flex items-center gap-4">
+                                                    <Avatar>
+                                                        <AvatarImage src={user.photoURL || ''} />
+                                                        <AvatarFallback>{user.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                                                    </Avatar>
+                                                    <span className="font-medium">{user.displayName}</span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>{user.email}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        )}
+                    </CardContent>
+                </Card>
             </TabsContent>
         </Tabs>
       </div>
