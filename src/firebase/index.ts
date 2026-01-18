@@ -118,7 +118,28 @@ function useAuthActions() {
         }
     };
 
-    return { signInWithGoogle, signOut, signInWithEmailPassword, signUpWithEmailPassword };
+    const updateUserProfile = async (displayName: string): Promise<string | null> => {
+        const user = auth.currentUser;
+        if (!user) {
+            return "No user is signed in.";
+        }
+
+        try {
+            // Update Firebase Auth profile
+            await updateProfile(user, { displayName });
+
+            // Update Firestore document
+            const userRef = doc(firestore, "users", user.uid);
+            await setDoc(userRef, { displayName }, { merge: true });
+
+            return null;
+        } catch (error: any) {
+            console.error("Error updating profile: ", error);
+            return getFirebaseErrorMessage(error.code) || "An unexpected error occurred.";
+        }
+    };
+
+    return { signInWithGoogle, signOut, signInWithEmailPassword, signUpWithEmailPassword, updateUserProfile };
 }
 
 // Custom hook to memoize Firebase queries

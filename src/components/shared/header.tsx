@@ -222,9 +222,11 @@ export default function Header() {
                                         </Link>
                                     </DropdownMenuItem>
                                 )}
-                                <DropdownMenuItem>
-                                    <Settings className="w-4 h-4" />
-                                    <span>Settings</span>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/settings">
+                                        <Settings className="w-4 h-4" />
+                                        <span>Settings</span>
+                                    </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
@@ -275,9 +277,11 @@ export default function Header() {
                                         </Link>
                                     </DropdownMenuItem>
                                 )}
-                                <DropdownMenuItem>
-                                    <Settings className="w-4 h-4" />
-                                    <span>Settings</span>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/settings">
+                                        <Settings className="w-4 h-4" />
+                                        <span>Settings</span>
+                                    </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
