@@ -91,7 +91,6 @@ function useAuthActions() {
             await storeUser(result.user);
             return null;
         } catch (error: any) {
-            console.error("Error signing in with Google: ", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -101,7 +100,6 @@ function useAuthActions() {
             await signInWithEmailAndPassword(auth, email, password);
             return null;
         } catch (error: any) {
-            console.error("Error signing in: ", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -113,7 +111,6 @@ function useAuthActions() {
             await storeUser(result.user);
             return null;
         } catch (error: any) {
-            console.error("Error signing up: ", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -142,7 +139,6 @@ function useAuthActions() {
 
             return null;
         } catch (error: any) {
-            console.error("Error updating profile: ", error);
             return getFirebaseErrorMessage(error.code) || "An unexpected error occurred.";
         }
     };
@@ -164,7 +160,6 @@ function useAuthActions() {
 
             return null;
         } catch (error: any) {
-            console.error("Error updating email:", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -181,7 +176,6 @@ function useAuthActions() {
             await firebaseUpdatePassword(user, newPassword);
             return null;
         } catch (error: any) {
-            console.error("Error updating password:", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -191,7 +185,6 @@ function useAuthActions() {
             await firebaseSendPasswordResetEmail(auth, email);
             return null;
         } catch (error: any) {
-            console.error("Error sending password reset email: ", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
