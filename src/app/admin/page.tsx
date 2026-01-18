@@ -45,6 +45,7 @@ const insightSchema = z.object({
   headline: z.string().min(10, "Headline must be at least 10 characters."),
   hook: z.string().min(10, "The Hook must be at least 10 characters."),
   keyInsight: z.string().min(10, "Key Insight must be at least 10 characters."),
+  language: z.enum(['ltr', 'rtl']).default('ltr'),
 });
 type InsightFormValues = z.infer<typeof insightSchema>;
 
@@ -110,6 +111,7 @@ export default function AdminPage() {
       headline: "",
       hook: "",
       keyInsight: "",
+      language: "ltr",
     },
   });
   
@@ -129,6 +131,10 @@ export default function AdminPage() {
   const language = resourceForm.watch("language");
   const resourceTitle = resourceForm.watch("title");
 
+  const insightLanguage = insightForm.watch("language");
+  const insightTitle = insightForm.watch("title");
+
+
   useEffect(() => {
     if (!loading && !isAdmin) {
       router.push('/');
@@ -142,6 +148,15 @@ export default function AdminPage() {
       resourceForm.setValue('language', 'ltr');
     }
   }, [resourceTitle, resourceForm]);
+  
+  useEffect(() => {
+    if (isRTL(insightTitle)) {
+        insightForm.setValue('language', 'rtl');
+    } else {
+        insightForm.setValue('language', 'ltr');
+    }
+  }, [insightTitle, insightForm]);
+
 
   // START: One-time migration for old articles (now resources)
   useEffect(() => {
@@ -304,6 +319,7 @@ export default function AdminPage() {
       headline: "",
       hook: "",
       keyInsight: "",
+      language: 'ltr' as 'ltr' | 'rtl',
   };
 
   const onInsightSubmit: SubmitHandler<InsightFormValues> = async (data) => {
@@ -340,7 +356,10 @@ export default function AdminPage() {
 
   const handleEditInsightClick = (insight: Article) => {
     setEditingInsightId(insight.id);
-    insightForm.reset(insight);
+    insightForm.reset({
+      ...insight,
+      language: insight.language || 'ltr',
+    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -502,7 +521,14 @@ export default function AdminPage() {
                     {editingInsightId ? `Editing insight: ${editingInsightId}` : "Create a new public insight."}
                 </p>
                 <Form {...insightForm}>
-                    <form onSubmit={insightForm.handleSubmit(onInsightSubmit)} className="space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16">
+                    <form 
+                        onSubmit={insightForm.handleSubmit(onInsightSubmit)} 
+                        className={cn(
+                            "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
+                            insightLanguage === 'rtl' && 'font-arabic'
+                        )}
+                        dir={insightLanguage}
+                    >
                         <FormField control={insightForm.control} name="title" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Internal Title</FormLabel>
@@ -539,7 +565,7 @@ export default function AdminPage() {
                             </FormItem>
                         )} />
 
-                        <div className="flex gap-4">
+                        <div className="flex gap-4" dir="ltr">
                             {editingInsightId && (
                                 <Button type="button" variant="outline" onClick={cancelEditInsight} className="w-full">Cancel</Button>
                             )}

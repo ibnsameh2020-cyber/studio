@@ -40,6 +40,7 @@ export type Article = {
   keyInsight: string;
   authorId: string;
   date: Timestamp | Date | string;
+  language?: 'ltr' | 'rtl';
 };
 
 export type Resource = {
