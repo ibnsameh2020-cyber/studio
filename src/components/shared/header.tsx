@@ -1,12 +1,13 @@
-
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight, Bell, Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useAuth, useUser } from '@/firebase';
+import { useAuth, useUser, useCollection } from '@/firebase';
+import type { Article } from '@/lib/types';
+import { Timestamp } from 'firebase/firestore';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,9 +40,26 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
 
+  const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
+  const [newArticles, setNewArticles] = useState<Article[]>([]);
+
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  useEffect(() => {
+    if (articles) {
+        const lastViewedTimestamp = localStorage.getItem('last-viewed-articles-timestamp');
+        const lastViewedDate = lastViewedTimestamp ? new Date(parseInt(lastViewedTimestamp)) : new Date(0);
+
+        const filteredNewArticles = articles.filter(article => {
+            if (!article.date) return false;
+            const articleDate = article.date instanceof Timestamp ? article.date.toDate() : new Date(article.date);
+            return articleDate > lastViewedDate;
+        });
+        setNewArticles(filteredNewArticles);
+    }
+  }, [articles]);
 
 
   useEffect(() => {
@@ -74,6 +92,13 @@ export default function Header() {
   
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleNotificationsOpenChange = (open: boolean) => {
+    if (!open) {
+        localStorage.setItem('last-viewed-articles-timestamp', Date.now().toString());
+        setNewArticles([]);
+    }
   };
 
   const isLinkActive = (item: typeof navItems[0]) => {
@@ -256,6 +281,50 @@ export default function Header() {
                     </Button>
                 </div>
             </div>
+            <DropdownMenu onOpenChange={handleNotificationsOpenChange}>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className={cn(
+                            "group h-16 w-16 rounded-full transition-all duration-300 ease-in-out ml-4 flex-shrink-0 relative",
+                            "bg-background/30 backdrop-blur-lg border-border/50 shadow-lg"
+                        )}
+                        aria-label="Notifications"
+                    >
+                        <Bell className="h-6 w-6" />
+                        {newArticles.length > 0 && (
+                             <span className="absolute top-4 right-4 flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                            </span>
+                        )}
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-80" align="end">
+                    <DropdownMenuLabel>New Insights</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {articlesLoading ? (
+                        <DropdownMenuItem disabled>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Loading...
+                        </DropdownMenuItem>
+                    ) : newArticles.length > 0 ? (
+                        newArticles.map(article => (
+                            <DropdownMenuItem key={article.id} asChild>
+                                <Link href={`/articles`}>
+                                    <div className="flex flex-col w-full overflow-hidden">
+                                        <p className="font-semibold truncate">{article.headline}</p>
+                                        <p className="text-xs text-muted-foreground">{article.category}</p>
+                                    </div>
+                                </Link>
+                            </DropdownMenuItem>
+                        ))
+                    ) : (
+                        <DropdownMenuItem disabled>No new insights.</DropdownMenuItem>
+                    )}
+                </DropdownMenuContent>
+            </DropdownMenu>
             <Button
                 variant="outline"
                 size="icon"
