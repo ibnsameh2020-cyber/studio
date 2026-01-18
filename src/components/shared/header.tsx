@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
@@ -301,7 +302,7 @@ export default function Header() {
                         )}
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-80" align="end">
+                <DropdownMenuContent className="w-80 bg-background/80 backdrop-blur-lg border-border/50" align="end">
                     <DropdownMenuLabel>New Insights</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {articlesLoading ? (
