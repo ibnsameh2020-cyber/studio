@@ -1,18 +1,32 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useTypingEffect } from '@/hooks/use-typing-effect';
 
 const AnimatedHeroText = () => {
+    const sentences = [
+        "Most transformations fail not because of bad strategy, but because of disconnected execution.",
+        "As a Strategic Advisor for Government & Healthcare sectors, I turn $120M+ portfolios from 'cost centers' into 'public value engines'.",
+        "I use AI governance, Value Engineering, and Human-Centric Leadership to bridge the gap."
+    ];
+
+    const typedSentence = useTypingEffect(sentences, {
+        loop: true,
+        typeSpeed: 40,
+        deleteSpeed: 20,
+        delay: 2500,
+    });
+
     return (
-        <div 
-            className="relative w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-muted-foreground text-base md:text-lg mb-10"
-        >
-            <p className="text-center">
-                Most transformations fail not because of bad strategy, but because of disconnected execution. As a Strategic Advisor for Government & Healthcare sectors, I turn $120M+ portfolios from 'cost centers' into 'public value engines'—using AI governance, Value Engineering, and Human-Centric Leadership.
-            </p>
+        <div className="relative w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-base md:text-lg mb-10">
+            <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl w-full min-h-[160px] md:min-h-[140px] flex items-center justify-center">
+                <p className="text-center text-muted-foreground">
+                    {typedSentence}
+                    <span className="text-primary animate-pulse ml-1 opacity-70">|</span>
+                </p>
+            </div>
         </div>
     );
 };
