@@ -77,12 +77,13 @@ export default function ContactSection() {
                 description: 'Thank you for your inquiry. I will get back to you shortly.',
             });
             form.reset();
-        } catch (error) {
+        } catch (error: any) {
+            const errorText = error?.text || 'An unknown error occurred. Check the console for more details.';
             console.error('EmailJS Error:', error);
             toast({
                 variant: 'destructive',
                 title: 'Submission Failed',
-                description: 'Something went wrong. Please try again or email me directly.',
+                description: errorText,
             });
         } finally {
             setIsSubmitting(false);
@@ -308,3 +309,5 @@ export default function ContactSection() {
     </section>
   );
 }
+
+    
