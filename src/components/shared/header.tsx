@@ -120,9 +120,6 @@ export default function Header() {
 
   const isLinkActive = (item: typeof navItems[0]) => {
     if (pathname === '/' && item.sectionId) {
-        if (item.sectionId === 'insights' && activeSection === 'exclusive-resources-cta') {
-            return true;
-        }
         return activeSection === item.sectionId;
     }
     if (item.href.startsWith('/')) {
