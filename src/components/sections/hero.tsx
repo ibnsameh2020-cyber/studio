@@ -67,7 +67,8 @@ const SwitchingHeroText = () => {
                     >
                         <div
                             className={cn(
-                                "relative overflow-hidden bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center"
+                                "relative overflow-hidden backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center",
+                                isCurrent ? "bg-primary/40" : "bg-primary/20"
                             )}
                         >
                             <p className="text-center">{sentence}</p>
