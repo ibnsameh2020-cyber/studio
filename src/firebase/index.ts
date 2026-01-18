@@ -15,6 +15,7 @@ import {
     reauthenticateWithCredential,
     updateEmail as firebaseUpdateEmail,
     updatePassword as firebaseUpdatePassword,
+    sendPasswordResetEmail as firebaseSendPasswordResetEmail,
 } from "firebase/auth";
 import { getFirestore, Firestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { firebaseConfig as importedConfig } from './config';
@@ -185,6 +186,16 @@ function useAuthActions() {
         }
     };
 
+    const sendPasswordResetEmail = async (email: string): Promise<string | null> => {
+        try {
+            await firebaseSendPasswordResetEmail(auth, email);
+            return null;
+        } catch (error: any) {
+            console.error("Error sending password reset email: ", error);
+            return getFirebaseErrorMessage(error.code);
+        }
+    };
+
     return { 
         signInWithGoogle, 
         signOut, 
@@ -192,7 +203,8 @@ function useAuthActions() {
         signUpWithEmailPassword, 
         updateUserProfile,
         updateUserEmail,
-        updateUserPassword
+        updateUserPassword,
+        sendPasswordResetEmail,
     };
 }
 

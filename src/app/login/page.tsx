@@ -29,7 +29,7 @@ const signInSchema = z.object({
 
 export default function LoginPage() {
   const { user, loading } = useUser();
-  const { signInWithEmailPassword, signUpWithEmailPassword } = useAuth();
+  const { signInWithEmailPassword, signUpWithEmailPassword, sendPasswordResetEmail } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,7 +57,7 @@ export default function LoginPage() {
     const error = await signInWithEmailPassword(data.email, data.password);
     if (error) {
       toast({
-        title: 'Sign In Error',
+        title: 'Sign In Failed',
         description: error,
         variant: 'destructive',
       });
@@ -80,6 +80,35 @@ export default function LoginPage() {
     } else {
         toast({ title: 'Welcome!', description: 'Your account has been created.' });
         router.push('/');
+    }
+    setIsSubmitting(false);
+  };
+  
+  const handleForgotPassword = async () => {
+    const email = signInForm.getValues("email");
+    if (!email || !z.string().email().safeParse(email).success) {
+        signInForm.trigger("email");
+        toast({
+            title: "Invalid Email",
+            description: "Please enter a valid email address to reset your password.",
+            variant: "destructive",
+        });
+        return;
+    }
+
+    setIsSubmitting(true);
+    const error = await sendPasswordResetEmail(email);
+    if (error) {
+        toast({
+            title: "Error",
+            description: error,
+            variant: "destructive",
+        });
+    } else {
+        toast({
+            title: "Password Reset Email Sent",
+            description: "Please check your inbox for instructions to reset your password.",
+        });
     }
     setIsSubmitting(false);
   };
@@ -152,6 +181,17 @@ export default function LoginPage() {
                             </FormItem>
                         )}
                     />
+                    <div className="flex justify-end -mt-2">
+                        <Button
+                            type="button"
+                            variant="link"
+                            className="p-0 h-auto text-sm text-muted-foreground hover:text-primary"
+                            onClick={handleForgotPassword}
+                            disabled={isSubmitting}
+                        >
+                            Forgot Password?
+                        </Button>
+                    </div>
                     <Button type="submit" className="w-full h-12 text-base" disabled={isSubmitting}>
                       {isSubmitting ? <Loader2 className="animate-spin" /> : <><LogIn /> Sign In</>}
                     </Button>
