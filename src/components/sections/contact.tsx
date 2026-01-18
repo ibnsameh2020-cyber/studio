@@ -42,6 +42,12 @@ export default function ContactSection() {
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      organization: "",
+      details: "",
+    },
   });
 
   const onSubmit = (data: ContactFormValues) => {
