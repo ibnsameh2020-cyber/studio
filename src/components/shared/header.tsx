@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight, Bell, Loader2 } from 'lucide-react';
@@ -21,13 +22,14 @@ import { Skeleton } from '../ui/skeleton';
 import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
-const navItems = [
-  { href: '#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
+const baseNavItems = [
+  { href: '#services', label: 'Services', sectionId: 'services', icon: <LayoutGrid className="w-4 h-4" /> },
   { href: '#case-studies', label: 'Case Studies', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
-  { href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
+  { href: '#experience', label: 'Experience', sectionId: 'experience', icon: <Briefcase className="w-4 h-4" /> },
   { href: '/articles', label: 'Insights', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
+  // Resources will be inserted here conditionally
   { href: '/about', label: 'About', sectionId: 'about-cta', icon: <User className="w-4 h-4" /> },
-  { href: '#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
+  { href: '#contact', label: 'Contact', sectionId: 'contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
 export default function Header() {
@@ -42,6 +44,19 @@ export default function Header() {
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const [newArticles, setNewArticles] = useState<Article[]>([]);
+
+  const navItems = useMemo(() => {
+    const items = [...baseNavItems];
+    if (user) {
+      items.splice(4, 0, {
+        href: '/resources',
+        label: 'Resources',
+        sectionId: 'exclusive-resources-cta',
+        icon: <Sparkles className="w-4 h-4" />,
+      });
+    }
+    return items;
+  }, [user]);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -102,31 +117,23 @@ export default function Header() {
   };
 
   const isLinkActive = (item: typeof navItems[0]) => {
-    // For links that go to a different page (e.g., /articles, /about)
+    // For page links (e.g., /articles, /resources, /about)
     if (item.href.startsWith('/')) {
-        // If we are currently on that page, it's active.
+        // Active if we are on that page
         if (pathname.startsWith(item.href)) {
             return true;
         }
-        // If we are on the homepage, check if the corresponding section is active.
-        if (pathname === '/') {
-            // Special case: Highlight "Insights" for both its own section and the one after it.
-            if (item.sectionId === 'insights' && (activeSection === 'insights' || activeSection === 'exclusive-resources-cta')) {
-                return true;
-            }
-             // Special case for case-studies
-            if (item.sectionId === 'case-studies' && activeSection === 'case-studies') {
-                return true;
-            }
-            // Default case for other sections linked from the nav.
-            if (activeSection === item.sectionId) {
-                return true;
-            }
+        // Also active if we are on the homepage and its corresponding section is in view
+        if (pathname === '/' && item.sectionId && activeSection === item.sectionId) {
+            return true;
         }
         return false;
     }
-    // For hash links on the homepage
-    return activeSection === item.href.substring(1);
+    // For hash links (e.g., #services) on the homepage
+    if (pathname === '/') {
+        return activeSection === item.sectionId;
+    }
+    return false;
   };
   
   const getInitials = (name?: string | null) => {
@@ -190,19 +197,6 @@ export default function Header() {
                                 </Link>
                             );
                         })}
-                      {user && (
-                         <Link
-                            href="/resources"
-                            className={cn(
-                                'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2 flex items-center gap-1.5',
-                                inHeroSection || pathname.startsWith('/resources') ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
-                                pathname.startsWith('/resources') ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-                            )}
-                        >
-                            <Sparkles className="w-4 h-4" />
-                            Resources
-                        </Link>
-                      )}
                     </nav>
                     {isAdmin && (
                         <Link href="/admin">
@@ -378,19 +372,6 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-             {user && (
-              <Link
-                href="/resources"
-                onClick={handleMenuLinkClick}
-                className={cn(
-                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
-                  pathname.startsWith('/resources') ? 'bg-primary text-primary-foreground' : 'text-foreground'
-                )}
-              >
-                <Sparkles className="w-5 h-5"/>
-                Resources
-              </Link>
-            )}
             {isAdmin && (
               <Link
                 href="/admin"
