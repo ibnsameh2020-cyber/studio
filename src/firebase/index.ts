@@ -23,31 +23,22 @@ import { useUser } from './auth/use-user';
 import { useCollection } from './firestore/use-collection';
 import { useDoc } from './firestore/use-doc';
 import { useMemo } from 'react';
+import { useAuth as useAuthInstance, useFirestore as useFirestoreInstance } from './provider';
 
 // This is a hack to get around the fact that the config is not available at build time
 const firebaseConfig = importedConfig || JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG || '{}');
 
-let app: FirebaseApp;
-let auth: Auth;
-let firestore: Firestore;
-
 export async function initializeFirebase() {
-  if (!getApps().length) {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    firestore = getFirestore(app);
-  } else {
-    app = getApp();
-    auth = getAuth(app);
-    firestore = getFirestore(app);
-  }
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const auth = getAuth(app);
+  const firestore = getFirestore(app);
   return { app, auth, firestore };
 }
 
 
 function useAuthActions() {
-    const auth = getAuth(app); 
-    const firestore = getFirestore(app);
+    const auth = useAuthInstance();
+    const firestore = useFirestoreInstance();
 
     const storeUser = async (user: UserCredential["user"]) => {
         const userRef = doc(firestore, "users", user.uid);
