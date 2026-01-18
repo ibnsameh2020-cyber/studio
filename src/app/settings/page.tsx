@@ -15,7 +15,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import { Label } from '@/components/ui/label';
 
 const profileSchema = z.object({
@@ -49,6 +49,11 @@ export default function SettingsPage() {
   const [isProfileSubmitting, setIsProfileSubmitting] = useState(false);
   const [isEmailSubmitting, setIsEmailSubmitting] = useState(false);
   const [isPasswordSubmitting, setIsPasswordSubmitting] = useState(false);
+
+  const [showEmailPassword, setShowEmailPassword] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -98,7 +103,6 @@ export default function SettingsPage() {
       toast({ title: 'Error', description: error, variant: 'destructive' });
     } else {
       toast({ title: 'Email Updated', description: 'Your email has been successfully updated. Please sign in again.' });
-      // NOTE: Consider signing the user out here for security.
       router.push('/login');
     }
     setIsEmailSubmitting(false);
@@ -197,9 +201,26 @@ export default function SettingsPage() {
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                        <FormLabel>Current Password</FormLabel>
-                                        <FormControl><Input type="password" placeholder="••••••••" {...field} /></FormControl>
-                                        <FormMessage />
+                                            <FormLabel>Current Password</FormLabel>
+                                            <div className="relative">
+                                                <FormControl>
+                                                    <Input
+                                                        type={showEmailPassword ? "text" : "password"}
+                                                        placeholder="••••••••"
+                                                        {...field}
+                                                        className="pr-10"
+                                                    />
+                                                </FormControl>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowEmailPassword((prev) => !prev)}
+                                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                    aria-label={showEmailPassword ? "Hide password" : "Show password"}
+                                                >
+                                                    {showEmailPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                </button>
+                                            </div>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -227,7 +248,24 @@ export default function SettingsPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                         <FormLabel>Current Password</FormLabel>
-                                        <FormControl><Input type="password" placeholder="••••••••" {...field} /></FormControl>
+                                         <div className="relative">
+                                            <FormControl>
+                                                <Input
+                                                    type={showCurrentPassword ? "text" : "password"}
+                                                    placeholder="••••••••"
+                                                    {...field}
+                                                    className="pr-10"
+                                                />
+                                            </FormControl>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowCurrentPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                aria-label={showCurrentPassword ? "Hide password" : "Show password"}
+                                            >
+                                                {showCurrentPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            </button>
+                                        </div>
                                         <FormMessage />
                                         </FormItem>
                                     )}
@@ -238,7 +276,24 @@ export default function SettingsPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                         <FormLabel>New Password</FormLabel>
-                                        <FormControl><Input type="password" placeholder="••••••••" {...field} /></FormControl>
+                                        <div className="relative">
+                                            <FormControl>
+                                                <Input
+                                                    type={showNewPassword ? "text" : "password"}
+                                                    placeholder="••••••••"
+                                                    {...field}
+                                                    className="pr-10"
+                                                />
+                                            </FormControl>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowNewPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                aria-label={showNewPassword ? "Hide password" : "Show password"}
+                                            >
+                                                {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            </button>
+                                        </div>
                                         <FormMessage />
                                         </FormItem>
                                     )}
@@ -249,7 +304,24 @@ export default function SettingsPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                         <FormLabel>Confirm New Password</FormLabel>
-                                        <FormControl><Input type="password" placeholder="••••••••" {...field} /></FormControl>
+                                        <div className="relative">
+                                            <FormControl>
+                                                <Input
+                                                    type={showConfirmPassword ? "text" : "password"}
+                                                    placeholder="••••••••"
+                                                    {...field}
+                                                    className="pr-10"
+                                                />
+                                            </FormControl>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                            >
+                                                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            </button>
+                                        </div>
                                         <FormMessage />
                                         </FormItem>
                                     )}
@@ -281,8 +353,6 @@ export default function SettingsPage() {
                             </div>
                             <Switch
                                 id="email-notifications"
-                                // This is a placeholder for now.
-                                // In a real app, you'd hook this up to a user preference in your database.
                                 defaultChecked={true}
                             />
                         </div>
@@ -294,3 +364,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    
