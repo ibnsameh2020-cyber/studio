@@ -152,7 +152,7 @@ export default function SettingsPage() {
                  <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
                     <CardHeader>
                         <CardTitle>Password</CardTitle>
-                        <CardDescription>Change your password. After updating, you will be logged out.</CardDescription>
+                        <CardDescription>Change your password.</CardDescription>
                     </CardHeader>
                      <Form {...passwordForm}>
                         <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
@@ -279,5 +279,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    
