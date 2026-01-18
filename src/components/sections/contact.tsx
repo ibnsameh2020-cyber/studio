@@ -56,10 +56,13 @@ export default function ContactSection() {
       const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
       const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
+      // Validation Check: Log the key to verify it's being read from .env
+      console.log("Attempting to initialize EmailJS with Public Key:", publicKey);
+
       if (!serviceId || !templateId || !publicKey) {
         toast({
             title: 'Configuration Error',
-            description: 'Email sending is not configured. Please ensure your EmailJS keys are set in the .env file and restart the server.',
+            description: 'Email sending is not configured. Please ensure your EmailJS keys are in the .env file and the server was restarted.',
             variant: 'destructive',
         });
         return;
@@ -72,8 +75,12 @@ export default function ContactSection() {
         challenge: data.challenge,
         details: data.details,
       };
+      
+      // Initialize with Public Key
+      emailjs.init({ publicKey });
 
-      emailjs.send(serviceId, templateId, templateParams, publicKey)
+      // Send email using the service and template IDs
+      emailjs.send(serviceId, templateId, templateParams)
         .then(() => {
           toast({
             title: 'Request Sent!',
@@ -82,16 +89,15 @@ export default function ContactSection() {
           form.reset();
         }, (error) => {
            console.error('EmailJS Error:', error);
-           console.log("Using Service ID:", serviceId);
-           console.log("Using Template ID:", templateId);
-           console.log("Using Public Key:", publicKey);
-
            let description = `Could not send message. ${error.text || 'Please try again later.'}`;
-            if (error.text && error.text.toLowerCase().includes('public key is invalid')) {
-                description = 'Your EmailJS Public Key is invalid. Please double-check your .env file and restart the server. See the developer console for the exact keys being used.';
+            if (error.text && error.text.toLowerCase().includes('the public key is invalid')) {
+                description = 'The EmailJS Public Key is invalid. Please double-check the NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in your .env file and restart the server. The key being used is logged in the developer console.';
+            } else if (error.text) {
+                description = `EmailJS Error: ${error.text}`;
             }
+
           toast({
-            title: 'EmailJS Error',
+            title: 'Submission Failed',
             description: description,
             variant: 'destructive',
           });
@@ -105,7 +111,7 @@ export default function ContactSection() {
       logo: (
         <div className="relative w-40 h-40">
           <Image
-            src="https://i0.wp.com/new-24.net/wp-content/uploads/2020/10/%D8%A7%D9%84%D8%B1%D9%8A.png?fit=827%2C827&ssl=1"
+            src="https://i0.wp.com/new-24.net/wp-content/uploads/2020/10/%D8%A7%D9%84%D8%B1%D9%89.png?fit=827%2C827&ssl=1"
             alt="Saudi Irrigation Organization Logo"
             fill
             className="object-contain"
@@ -315,3 +321,5 @@ export default function ContactSection() {
     </section>
   );
 }
+
+    
