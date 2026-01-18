@@ -4,7 +4,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useTransition, useRef } from 'react';
+import { useTransition } from 'react';
 import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
@@ -38,7 +38,6 @@ const challenges = [
 export default function ContactSection() {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
-  const formRef = useRef<HTMLFormElement>(null);
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -46,6 +45,7 @@ export default function ContactSection() {
       name: "",
       email: "",
       organization: "",
+      challenge: "",
       details: "",
     },
   });
@@ -59,15 +59,21 @@ export default function ContactSection() {
       if (!serviceId || !templateId || !publicKey) {
         toast({
             title: 'Configuration Error',
-            description: 'EmailJS is not configured.',
+            description: 'Email sending is not configured. Please ensure your EmailJS keys are set in the .env file and restart the server.',
             variant: 'destructive',
         });
         return;
       }
       
-      if (!formRef.current) return;
+      const templateParams = {
+        name: data.name,
+        email: data.email,
+        organization: data.organization,
+        challenge: data.challenge,
+        details: data.details,
+      };
 
-      emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+      emailjs.send(serviceId, templateId, templateParams, publicKey)
         .then(() => {
           toast({
             title: 'Request Sent!',
@@ -77,7 +83,7 @@ export default function ContactSection() {
         }, (error) => {
           toast({
             title: 'Error',
-            description: `Could not send message. ${error.text || 'Please check console.'}`,
+            description: `Could not send message. ${error.text || 'Please try again later.'}`,
             variant: 'destructive',
           });
         });
@@ -183,7 +189,7 @@ export default function ContactSection() {
                 
                 <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                     <Form {...form}>
-                        <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <FormField
                                     control={form.control}
