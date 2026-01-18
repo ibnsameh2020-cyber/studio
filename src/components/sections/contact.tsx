@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -58,9 +59,19 @@ export default function ContactSection() {
             setIsSubmitting(false);
             return;
         }
+
+        const templateParams = {
+            name: data.name,
+            email: data.email,
+            message: `
+                Organization / Company: ${data.organization}
+                Primary Challenge: ${data.challenge}
+                Project Details: ${data.details || 'Not provided'}
+            `
+        };
         
         try {
-            await emailjs.send(serviceId, templateId, data, publicKey);
+            await emailjs.send(serviceId, templateId, templateParams, publicKey);
             toast({
                 title: 'Message Sent!',
                 description: 'Thank you for your inquiry. I will get back to you shortly.',
