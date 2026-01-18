@@ -106,7 +106,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://greatplacetowork.me/wp-content/uploads/2023/12/SIO-LOGO.png"
+                src="https://i.ibb.co/xthtSmgM/saudi-io.png"
                 alt="Saudi Irrigation Organization Logo"
                 fill
                 className="object-contain"
