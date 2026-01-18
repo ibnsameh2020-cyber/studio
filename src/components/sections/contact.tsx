@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -27,6 +26,14 @@ const contactSchema = z.object({
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
+
+const challengeOptions = {
+    'fix-pmo': 'I need to establish or fix a PMO.',
+    'digital-transformation': 'We are struggling with Digital Transformation.',
+    'expert-speaker': 'I need an expert speaker for an event.',
+    'ai-governance': 'I want to discuss AI Governance.',
+    'other': 'Other / General Inquiry.'
+};
 
 
 export default function ContactSection() {
@@ -60,12 +67,14 @@ export default function ContactSection() {
             return;
         }
 
+        const fullChallengeText = challengeOptions[data.challenge as keyof typeof challengeOptions] || data.challenge;
+
         const templateParams = {
             name: data.name,
             email: data.email,
             message: `
                 Organization / Company: ${data.organization}
-                Primary Challenge: ${data.challenge}
+                Primary Challenge: ${fullChallengeText}
                 Project Details: ${data.details || 'Not provided'}
             `
         };
