@@ -22,11 +22,6 @@ const profileSchema = z.object({
   displayName: z.string().min(2, "Name must be at least 2 characters."),
 });
 
-const emailSchema = z.object({
-  newEmail: z.string().email("Please enter a valid email address."),
-  password: z.string().min(1, "Current password is required to change email."),
-});
-
 const passwordSchema = z.object({
     currentPassword: z.string().min(1, "Current password is required."),
     newPassword: z.string().min(6, "New password must be at least 6 characters."),
@@ -37,20 +32,17 @@ const passwordSchema = z.object({
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
-type EmailFormValues = z.infer<typeof emailSchema>;
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 export default function SettingsPage() {
   const { user, loading } = useUser();
-  const { updateUserProfile, updateUserEmail, updateUserPassword } = useAuth();
+  const { updateUserProfile, updateUserPassword } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
   
   const [isProfileSubmitting, setIsProfileSubmitting] = useState(false);
-  const [isEmailSubmitting, setIsEmailSubmitting] = useState(false);
   const [isPasswordSubmitting, setIsPasswordSubmitting] = useState(false);
 
-  const [showEmailPassword, setShowEmailPassword] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -60,11 +52,6 @@ export default function SettingsPage() {
     defaultValues: {
       displayName: "",
     },
-  });
-
-  const emailForm = useForm<EmailFormValues>({
-    resolver: zodResolver(emailSchema),
-    defaultValues: { newEmail: "", password: "" },
   });
 
   const passwordForm = useForm<PasswordFormValues>({
@@ -79,9 +66,8 @@ export default function SettingsPage() {
     }
     if (user) {
       profileForm.reset({ displayName: user.displayName || "" });
-      emailForm.reset({ newEmail: "", password: ""});
     }
-  }, [user, loading, router, profileForm, emailForm]);
+  }, [user, loading, router, profileForm]);
 
   const onProfileSubmit: SubmitHandler<ProfileFormValues> = async (data) => {
     if (!updateUserProfile) return;
@@ -93,20 +79,6 @@ export default function SettingsPage() {
       toast({ title: 'Profile Updated', description: 'Your display name has been successfully updated.' });
     }
     setIsProfileSubmitting(false);
-  };
-  
-  const onEmailSubmit: SubmitHandler<EmailFormValues> = async (data) => {
-    if (!updateUserEmail) return;
-    setIsEmailSubmitting(true);
-    const error = await updateUserEmail(data.newEmail, data.password);
-     if (error) {
-      toast({ title: 'Error', description: error, variant: 'destructive' });
-    } else {
-      toast({ title: 'Email Updated', description: 'Your email has been successfully updated. Please sign in again.' });
-      router.push('/login');
-    }
-    setIsEmailSubmitting(false);
-    emailForm.reset({ newEmail: "", password: "" });
   };
   
   const onPasswordSubmit: SubmitHandler<PasswordFormValues> = async (data) => {
@@ -177,65 +149,6 @@ export default function SettingsPage() {
             </TabsContent>
             
             <TabsContent value="account" className="mt-6 space-y-6">
-                 <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
-                    <CardHeader>
-                        <CardTitle>Email Address</CardTitle>
-                        <CardDescription>
-                            Your current email is <strong>{user.email}</strong>. Use the form below to change it.
-                        </CardDescription>
-                    </CardHeader>
-                     <Form {...emailForm}>
-                        <form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
-                            <CardContent className="space-y-4">
-                                 <FormField
-                                    control={emailForm.control}
-                                    name="newEmail"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>New Email</FormLabel>
-                                        <FormControl><Input type="email" placeholder="Enter your new email" {...field} /></FormControl>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={emailForm.control}
-                                    name="password"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Current Password</FormLabel>
-                                            <div className="relative">
-                                                <FormControl>
-                                                    <Input
-                                                        type={showEmailPassword ? "text" : "password"}
-                                                        placeholder="••••••••"
-                                                        {...field}
-                                                        className="pr-10"
-                                                    />
-                                                </FormControl>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setShowEmailPassword((prev) => !prev)}
-                                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                                    aria-label={showEmailPassword ? "Hide password" : "Show password"}
-                                                >
-                                                    {showEmailPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                                </button>
-                                            </div>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </CardContent>
-                            <CardFooter className="border-t px-6 py-4">
-                                <Button type="submit" disabled={isEmailSubmitting || emailForm.formState.isSubmitting}>
-                                    {isEmailSubmitting ? <Loader2 className="animate-spin" /> : 'Update Email'}
-                                </Button>
-                            </CardFooter>
-                        </form>
-                    </Form>
-                </Card>
-
                  <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
                     <CardHeader>
                         <CardTitle>Password</CardTitle>
@@ -366,3 +279,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    
