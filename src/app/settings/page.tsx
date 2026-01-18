@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { Label } from '@/components/ui/label';
 
 const profileSchema = z.object({
   displayName: z.string().min(2, "Name must be at least 2 characters."),
@@ -273,18 +274,17 @@ export default function SettingsPage() {
                     <CardContent>
                        <div className="flex items-center justify-between rounded-lg border p-4">
                             <div className="space-y-0.5">
-                                <FormLabel className="text-base">Email Notifications</FormLabel>
-                                <FormDescription>
+                                <Label htmlFor="email-notifications" className="text-base">Email Notifications</Label>
+                                <p className="text-sm text-muted-foreground">
                                     Receive emails about new articles and resources.
-                                </FormDescription>
+                                </p>
                             </div>
-                            <FormControl>
-                                <Switch
-                                    // This is a placeholder for now.
-                                    // In a real app, you'd hook this up to a user preference in your database.
-                                    defaultChecked={true}
-                                />
-                            </FormControl>
+                            <Switch
+                                id="email-notifications"
+                                // This is a placeholder for now.
+                                // In a real app, you'd hook this up to a user preference in your database.
+                                defaultChecked={true}
+                            />
                         </div>
                     </CardContent>
                 </Card>
