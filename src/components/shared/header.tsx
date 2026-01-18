@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight, Bell, Loader2 } from 'lucide-react';
+import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight, Bell, Loader2, Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser, useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
@@ -12,6 +12,7 @@ import { Timestamp } from 'firebase/firestore';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -192,14 +193,6 @@ export default function Header() {
                             );
                         })}
                     </nav>
-                    {isAdmin && (
-                        <Link href="/admin">
-                        <Button variant="outline" size="sm" className="group">
-                            <ShieldCheck className="w-4 h-4 mr-2" />
-                            Admin Panel
-                        </Button>
-                        </Link>
-                    )}
                     {loading ? (
                     <Skeleton className="h-10 w-10 rounded-full" />
                     ) : user ? (
@@ -212,17 +205,33 @@ export default function Header() {
                             </Avatar>
                         </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56" align="end" forceMount>
-                        <DropdownMenuLabel className="font-normal">
-                            <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-medium leading-none">{user.displayName}</p>
-                            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                            </div>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={signOut}>
-                            Log out
-                        </DropdownMenuItem>
+                        <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
+                            <DropdownMenuLabel className="font-normal">
+                                <div className="flex flex-col space-y-1">
+                                <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                                <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                                </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                {isAdmin && (
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/admin">
+                                            <ShieldCheck className="w-4 h-4" />
+                                            <span>Admin Panel</span>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                )}
+                                <DropdownMenuItem>
+                                    <Settings className="w-4 h-4" />
+                                    <span>Settings</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={signOut}>
+                                <LogOut className="w-4 h-4" />
+                                <span>Log out</span>
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     ) : (
@@ -249,23 +258,33 @@ export default function Header() {
                             </Avatar>
                         </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56" align="end" forceMount>
-                        <DropdownMenuLabel className="font-normal">
-                            <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-medium leading-none">{user.displayName}</p>
-                            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                            </div>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {isAdmin && (
-                            <DropdownMenuItem asChild>
-                            <Link href="/admin">Admin Panel</Link>
+                        <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
+                            <DropdownMenuLabel className="font-normal">
+                                <div className="flex flex-col space-y-1">
+                                <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                                <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                                </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                {isAdmin && (
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/admin">
+                                            <ShieldCheck className="w-4 h-4" />
+                                            <span>Admin Panel</span>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                )}
+                                <DropdownMenuItem>
+                                    <Settings className="w-4 h-4" />
+                                    <span>Settings</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={signOut}>
+                                <LogOut className="w-4 h-4" />
+                                <span>Log out</span>
                             </DropdownMenuItem>
-                        )}
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={signOut}>
-                            Log out
-                        </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     ) : (
@@ -384,5 +403,3 @@ export default function Header() {
     </>
   );
 }
-
-    
