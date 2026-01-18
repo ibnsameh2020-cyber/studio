@@ -25,7 +25,10 @@ const SwitchingHeroText = () => {
     }, [currentIndex]);
 
     return (
-        <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center justify-center text-base md:text-lg mb-10">
+        <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center justify-center text-base md:text-lg mb-10 h-[180px] group">
+            <div className="absolute top-0 w-[95%] h-full bg-primary/10 rounded-2xl shadow-lg transform rotate-2 transition-transform duration-500 ease-in-out group-hover:rotate-3"></div>
+            <div className="absolute top-0 w-[95%] h-full bg-primary/10 rounded-2xl shadow-lg transform -rotate-2 transition-transform duration-500 ease-in-out group-hover:-rotate-3"></div>
+            
             <div className="relative overflow-hidden bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center">
                 <p key={currentIndex} className="text-center animate-fade-in-up">
                     {sentences[currentIndex]}
