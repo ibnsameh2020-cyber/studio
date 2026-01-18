@@ -40,7 +40,7 @@ export function useCollection<T>(path: string, q?: Query) {
     });
 
     return () => unsubscribe();
-  }, [memoizedQuery, firestore]);
+  }, [memoizedQuery]);
 
   return { data, loading, error };
 }
