@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -72,15 +73,20 @@ const SwitchingHeroText = () => {
                                     : "bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground"
                             )}
                         >
-                            <p className="text-center">{sentence}</p>
+                            <p className="text-center px-6">{sentence}</p>
                             {isCurrent && (
-                                <div className="absolute bottom-0 left-0 h-1 bg-primary-foreground/20 w-full">
-                                    <div
-                                        key={currentIndex}
-                                        className="h-1 bg-primary-foreground"
-                                        style={{ animation: `progress-bar ${DURATION / 1000}s linear forwards` }}
-                                    />
-                                </div>
+                                <>
+                                    <div className="absolute top-4 right-4 text-xs font-mono text-primary-foreground/70">
+                                        {currentIndex + 1} of {sentences.length}
+                                    </div>
+                                    <div className="absolute bottom-0 left-0 h-1 bg-primary-foreground/20 w-full">
+                                        <div
+                                            key={currentIndex}
+                                            className="h-1 bg-primary-foreground"
+                                            style={{ animation: `progress-bar ${DURATION / 1000}s linear forwards` }}
+                                        />
+                                    </div>
+                                </>
                             )}
                         </div>
                     </div>
