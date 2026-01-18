@@ -13,10 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Switch } from '@/components/ui/switch';
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Eye, EyeOff } from "lucide-react";
-import { Label } from '@/components/ui/label';
 
 const profileSchema = z.object({
   displayName: z.string().min(2, "Name must be at least 2 characters."),
@@ -89,9 +87,9 @@ export default function SettingsPage() {
       toast({ title: 'Error', description: error, variant: 'destructive' });
     } else {
       toast({ title: 'Password Updated', description: 'Your password has been changed successfully.' });
+      passwordForm.reset();
     }
     setIsPasswordSubmitting(false);
-    passwordForm.reset();
   };
 
 
@@ -109,10 +107,9 @@ export default function SettingsPage() {
         <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Settings</h1>
         
         <Tabs defaultValue="profile" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="profile">Profile</TabsTrigger>
                 <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="notifications">Notifications</TabsTrigger>
             </TabsList>
             
             <TabsContent value="profile" className="mt-6">
@@ -249,29 +246,6 @@ export default function SettingsPage() {
                             </CardFooter>
                         </form>
                     </Form>
-                </Card>
-            </TabsContent>
-
-             <TabsContent value="notifications" className="mt-6">
-                <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
-                    <CardHeader>
-                        <CardTitle>Notifications</CardTitle>
-                        <CardDescription>Manage how you receive notifications from us.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                       <div className="flex items-center justify-between rounded-lg border p-4">
-                            <div className="space-y-0.5">
-                                <Label htmlFor="email-notifications" className="text-base">Email Notifications</Label>
-                                <p className="text-sm text-muted-foreground">
-                                    Receive emails about new articles and resources.
-                                </p>
-                            </div>
-                            <Switch
-                                id="email-notifications"
-                                defaultChecked={true}
-                            />
-                        </div>
-                    </CardContent>
                 </Card>
             </TabsContent>
         </Tabs>
