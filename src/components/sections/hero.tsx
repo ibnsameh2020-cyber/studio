@@ -26,14 +26,14 @@ const SwitchingHeroText = () => {
 
     return (
         <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center justify-center text-base md:text-lg mb-10">
-            <div className="relative overflow-hidden bg-primary text-primary-foreground rounded-2xl p-8 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center">
+            <div className="relative overflow-hidden bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center">
                 <p key={currentIndex} className="text-center animate-fade-in-up">
                     {sentences[currentIndex]}
                 </p>
-                <div className="absolute bottom-0 left-0 h-1 bg-primary-foreground/20 w-full">
+                <div className="absolute bottom-0 left-0 h-1 bg-foreground/20 w-full">
                     <div
                         key={currentIndex}
-                        className="h-1 bg-primary-foreground"
+                        className="h-1 bg-foreground"
                         style={{ animation: `progress-bar ${DURATION / 1000}s linear forwards` }}
                     />
                 </div>
