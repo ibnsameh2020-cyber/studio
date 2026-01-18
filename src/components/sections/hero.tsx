@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -67,16 +66,18 @@ const SwitchingHeroText = () => {
                     >
                         <div
                             className={cn(
-                                "relative overflow-hidden backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center",
-                                isCurrent ? "bg-primary/40" : "bg-primary/20"
+                                "relative overflow-hidden rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center",
+                                isCurrent 
+                                    ? "bg-primary text-primary-foreground border border-primary" 
+                                    : "bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground"
                             )}
                         >
                             <p className="text-center">{sentence}</p>
                             {isCurrent && (
-                                <div className="absolute bottom-0 left-0 h-1 bg-foreground/20 w-full">
+                                <div className="absolute bottom-0 left-0 h-1 bg-primary-foreground/20 w-full">
                                     <div
                                         key={currentIndex}
-                                        className="h-1 bg-foreground"
+                                        className="h-1 bg-primary-foreground"
                                         style={{ animation: `progress-bar ${DURATION / 1000}s linear forwards` }}
                                     />
                                 </div>
