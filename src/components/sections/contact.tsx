@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -105,7 +106,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i0.wp.com/new-24.net/wp-content/uploads/2020/10/%D8%A7%D9%84%D8%B1%D9%89.png?fit=827%2C827&ssl=1"
+                src="https://greatplacetowork.me/wp-content/uploads/2023/12/SIO-LOGO.png"
                 alt="Saudi Irrigation Organization Logo"
                 fill
                 className="object-contain"
