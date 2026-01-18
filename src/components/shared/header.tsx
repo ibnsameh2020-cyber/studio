@@ -24,7 +24,7 @@ import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
   { href: '#services', label: 'Services', sectionId: 'services', icon: <LayoutGrid className="w-4 h-4" /> },
-  { href: '#case-studies', label: 'Case Studies', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
+  { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
   { href: '#experience', label: 'Experience', sectionId: 'experience', icon: <Briefcase className="w-4 h-4" /> },
   { href: '/articles', label: 'Insights', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
   // Resources will be inserted here conditionally
@@ -48,7 +48,8 @@ export default function Header() {
   const navItems = useMemo(() => {
     const items = [...baseNavItems];
     if (user) {
-      items.splice(4, 0, {
+      const resourcesIndex = items.findIndex(item => item.label === 'Insights') + 1;
+      items.splice(resourcesIndex, 0, {
         href: '/resources',
         label: 'Resources',
         sectionId: 'exclusive-resources-cta',
@@ -117,21 +118,14 @@ export default function Header() {
   };
 
   const isLinkActive = (item: typeof navItems[0]) => {
-    // For page links (e.g., /articles, /resources, /about)
-    if (item.href.startsWith('/')) {
-        // Active if we are on that page
-        if (pathname.startsWith(item.href)) {
+    if (pathname === '/' && item.sectionId) {
+        if (item.sectionId === 'insights' && activeSection === 'exclusive-resources-cta') {
             return true;
         }
-        // Also active if we are on the homepage and its corresponding section is in view
-        if (pathname === '/' && item.sectionId && activeSection === item.sectionId) {
-            return true;
-        }
-        return false;
-    }
-    // For hash links (e.g., #services) on the homepage
-    if (pathname === '/') {
         return activeSection === item.sectionId;
+    }
+    if (item.href.startsWith('/')) {
+        return pathname.startsWith(item.href);
     }
     return false;
   };
@@ -390,3 +384,5 @@ export default function Header() {
     </>
   );
 }
+
+    
