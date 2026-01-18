@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -81,9 +80,14 @@ export default function ContactSection() {
           });
           form.reset();
         }, (error) => {
+           console.error("EmailJS submission failed. Double-check your environment variables in the .env file and ensure the server was restarted.");
+           console.log("Using Service ID:", serviceId);
+           console.log("Using Template ID:", templateId);
+           console.log("Using Public Key:", publicKey);
+
            let description = `Could not send message. ${error.text || 'Please try again later.'}`;
             if (error.text && error.text.toLowerCase().includes('public key is invalid')) {
-                description = 'Your EmailJS Public Key is invalid. Please double-check that you have correctly added the NEXT_PUBLIC_EMAILJS_PUBLIC_KEY to your .env file and have restarted the server.';
+                description = 'Your EmailJS Public Key is invalid. Please double-check your .env file and restart the server. See the developer console for the exact keys being used.';
             }
           toast({
             title: 'EmailJS Error',
@@ -310,5 +314,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    
