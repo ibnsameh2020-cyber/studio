@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
@@ -24,7 +23,7 @@ import { usePathname } from 'next/navigation';
 
 const navItems = [
   { href: '#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
-  { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
+  { href: '#case-studies', label: 'Case Studies', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
   { href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
   { href: '/articles', label: 'Insights', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
   { href: '/about', label: 'About', sectionId: 'about-cta', icon: <User className="w-4 h-4" /> },
@@ -115,6 +114,10 @@ export default function Header() {
             if (item.sectionId === 'insights' && (activeSection === 'insights' || activeSection === 'exclusive-resources-cta')) {
                 return true;
             }
+             // Special case for case-studies
+            if (item.sectionId === 'case-studies' && activeSection === 'case-studies') {
+                return true;
+            }
             // Default case for other sections linked from the nav.
             if (activeSection === item.sectionId) {
                 return true;
@@ -155,24 +158,38 @@ export default function Header() {
                 <div className="hidden md:flex items-center space-x-2">
                     <nav className="flex items-center justify-center gap-1 transition-all duration-300">
                       {navItems.map((item) => {
-                          const isActive = isLinkActive(item);
-                          const isVisible = inHeroSection || isActive;
+                            const isActive = isLinkActive(item);
+                            const isVisible = inHeroSection || isActive;
+                            const isIconOnly = inHeroSection && !isActive;
 
-                          return (
-                              <Link
-                                  key={item.href}
-                                  href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
-                                  className={cn(
-                                      'text-sm font-medium transition-all duration-300 ease-in-out hover:text-primary rounded-full whitespace-nowrap py-2 flex items-center gap-1.5',
-                                      isVisible ? 'max-w-xs px-4 opacity-100' : 'max-w-0 px-0 opacity-0 pointer-events-none',
-                                      isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-                                  )}
-                              >
-                                  {item.icon}
-                                  <span>{item.label}</span>
-                              </Link>
-                          );
-                      })}
+                            return (
+                                <Link
+                                    key={item.href}
+                                    href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
+                                    className={cn(
+                                        'group text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center',
+                                        {
+                                            'max-w-0 opacity-0 p-0 pointer-events-none': !isVisible,
+                                            'max-w-xs opacity-100': isVisible,
+                                            
+                                            'bg-primary text-primary-foreground': isActive,
+                                            'text-muted-foreground hover:text-primary': !isActive,
+
+                                            'h-10 px-4 gap-1.5': !isIconOnly,
+                                            'h-10 w-10 justify-center p-0 gap-0 hover:w-auto hover:px-4 hover:gap-1.5': isIconOnly,
+                                        }
+                                    )}
+                                >
+                                    {item.icon}
+                                    <span className={cn(
+                                        'transition-all duration-300 overflow-hidden',
+                                        { 'w-0 group-hover:w-auto': isIconOnly, 'w-auto': !isIconOnly }
+                                    )}>
+                                        {item.label}
+                                    </span>
+                                </Link>
+                            );
+                        })}
                       {user && (
                          <Link
                             href="/resources"
