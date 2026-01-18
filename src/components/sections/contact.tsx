@@ -1,66 +1,148 @@
 "use client";
 
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import emailjs from '@emailjs/browser';
+
 import { Button } from '@/components/ui/button';
-import { Mail, CalendarCheck } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2, Mail, CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+
+const contactSchema = z.object({
+    name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+    email: z.string().email({ message: 'Please enter a valid email address.' }),
+    organization: z.string().min(2, { message: 'Organization is required.' }),
+    challenge: z.string().min(1, { message: 'Please select a challenge.' }),
+    details: z.string().optional(),
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
+
+
 export default function ContactSection() {
-  
-  const clientLogos = [
-    {
-      name: 'Saudi Irrigation Organization',
-      logo: (
-        <div className="relative w-40 h-40">
-          <Image
-            src="https://i0.wp.com/new-24.net/wp-content/uploads/2020/10/%D8%A7%D9%84%D8%B1%D9%89.png?fit=827%2C827&ssl=1"
-            alt="Saudi Irrigation Organization Logo"
-            fill
-            className="object-contain"
-          />
-        </div>
-      ),
-    },
-    {
-      name: 'Salehiya',
-      logo: (
-        <div className="relative w-40 h-40">
-          <Image
-            src="https://i.ibb.co/Cptfs8Df/d28f4af5-6a73-482d-9161-94a56db6b1bf-removalai-preview.png"
-            alt="Salehiya Logo"
-            fill
-            className="object-contain"
-          />
-        </div>
-      ),
-    },
-    {
-      name: 'Rosmiman®',
-      logo: (
-        <div className="relative w-40 h-16">
-          <Image
-            src="https://rosmiman.com/wp-content/uploads/2019/09/logo_new.png"
-            alt="Rosmiman Logo"
-            fill
-            className="object-contain"
-          />
-        </div>
-      ),
-    },
-    {
-      name: 'Repotech',
-      logo: (
-        <div className="relative w-40 h-16">
-          <Image
-            src="https://i.ibb.co/XxLMZTyf/6fc6bfab-28d0-465a-830c-b5234bb1da2e-removalai-preview.png"
-            alt="Repotech Logo"
-            fill
-            className="object-contain"
-          />
-        </div>
-      ),
-    },
-  ];
+    const formRef = useRef<HTMLFormElement>(null);
+    const { toast } = useToast();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const form = useForm<ContactFormValues>({
+        resolver: zodResolver(contactSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            organization: '',
+            challenge: '',
+            details: '',
+        },
+    });
+
+    const onSubmit = async (data: ContactFormValues) => {
+        setIsSubmitting(true);
+        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+        if (!serviceId || !templateId || !publicKey) {
+            toast({
+                variant: 'destructive',
+                title: 'Configuration Error',
+                description: 'EmailJS is not configured. Please check environment variables.',
+            });
+            setIsSubmitting(false);
+            return;
+        }
+
+        if (!formRef.current) {
+             toast({
+                variant: 'destructive',
+                title: 'Form Error',
+                description: 'Could not find the form element to send.',
+            });
+            setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
+            toast({
+                title: 'Message Sent!',
+                description: 'Thank you for your inquiry. I will get back to you shortly.',
+            });
+            form.reset();
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            toast({
+                variant: 'destructive',
+                title: 'Submission Failed',
+                description: 'Something went wrong. Please try again or email me directly.',
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+    
+      const clientLogos = [
+        {
+        name: 'Saudi Irrigation Organization',
+        logo: (
+            <div className="relative w-40 h-40">
+            <Image
+                src="https://i0.wp.com/new-24.net/wp-content/uploads/2020/10/%D8%A7%D9%84%D8%B1%D9%89.png?fit=827%2C827&ssl=1"
+                alt="Saudi Irrigation Organization Logo"
+                fill
+                className="object-contain"
+            />
+            </div>
+        ),
+        },
+        {
+        name: 'Salehiya',
+        logo: (
+            <div className="relative w-40 h-40">
+            <Image
+                src="https://i.ibb.co/Cptfs8Df/d28f4af5-6a73-482d-9161-94a56db6b1bf-removalai-preview.png"
+                alt="Salehiya Logo"
+                fill
+                className="object-contain"
+            />
+            </div>
+        ),
+        },
+        {
+        name: 'Rosmiman®',
+        logo: (
+            <div className="relative w-40 h-16">
+            <Image
+                src="https://rosmiman.com/wp-content/uploads/2019/09/logo_new.png"
+                alt="Rosmiman Logo"
+                fill
+                className="object-contain"
+            />
+            </div>
+        ),
+        },
+        {
+        name: 'Repotech',
+        logo: (
+            <div className="relative w-40 h-16">
+            <Image
+                src="https://i.ibb.co/XxLMZTyf/6fc6bfab-28d0-465a-830c-b5234bb1da2e-removalai-preview.png"
+                alt="Repotech Logo"
+                fill
+                className="object-contain"
+            />
+            </div>
+        ),
+        },
+    ];
 
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
@@ -104,17 +186,98 @@ export default function ContactSection() {
                     </div>
                 </div>
                 
-                <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 flex flex-col items-center justify-center text-center">
-                    <h3 className="text-2xl font-headline font-bold text-primary mb-4">Get In Touch</h3>
-                    <p className="text-muted-foreground mb-6 max-w-sm">
-                        The contact form is currently under maintenance. For all inquiries, please reach out to me directly via email.
-                    </p>
-                    <a href="mailto:contact@samehinsights.com" className="w-full max-w-xs">
-                        <Button size="lg" className="w-full group">
-                            contact@samehinsights.com
-                            <Mail className="w-5 h-5 ml-2" />
-                        </Button>
-                    </a>
+                <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
+                    <Form {...form}>
+                        <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Name</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Your Name" {...field} name="name" />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Work Email</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="name@company.com" {...field} name="email" />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <FormField
+                                control={form.control}
+                                name="organization"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Organization / Company Website</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="https://your-company.com" {...field} name="organization" />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="challenge"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>What is your primary challenge?</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value} name="challenge">
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a challenge..." />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="fix-pmo">I need to establish or fix a PMO.</SelectItem>
+                                                <SelectItem value="digital-transformation">We are struggling with Digital Transformation.</SelectItem>
+                                                <SelectItem value="expert-speaker">I need an expert speaker for an event.</SelectItem>
+                                                <SelectItem value="ai-governance">I want to discuss AI Governance.</SelectItem>
+                                                <SelectItem value="other">Other / General Inquiry.</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="details"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Project Details (Optional)</FormLabel>
+                                        <FormControl>
+                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} name="details" />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <div className="flex flex-col items-center">
+                                <Button type="submit" size="lg" className="w-full max-w-xs" disabled={isSubmitting}>
+                                    {isSubmitting ? <Loader2 className="animate-spin" /> : "Request Consultation"}
+                                </Button>
+                                <p className="text-xs text-muted-foreground mt-4 text-center">
+                                    I personally review every inquiry and typically respond within 24 business hours.
+                                </p>
+                            </div>
+                        </form>
+                    </Form>
                 </div>
             </div>
 
