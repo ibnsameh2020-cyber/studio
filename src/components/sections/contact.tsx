@@ -1,109 +1,11 @@
-
 "use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useTransition } from 'react';
-import emailjs from '@emailjs/browser';
-
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2, CalendarCheck, ShieldCheck } from 'lucide-react';
+import { Mail, CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Name is required."),
-  email: z.string().email("A valid work email is required."),
-  organization: z.string().optional(),
-  challenge: z.string({ required_error: "Please select your primary challenge."}),
-  details: z.string().optional(),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
-
-const challenges = [
-    "I need to establish or fix a PMO.",
-    "We are struggling with Digital Transformation.",
-    "I need an expert speaker for an event.",
-    "I want to discuss AI Governance.",
-    "Other / General Inquiry.",
-];
-
 export default function ContactSection() {
-  const [isPending, startTransition] = useTransition();
-  const { toast } = useToast();
-  
-  const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      organization: "",
-      challenge: "",
-      details: "",
-    },
-  });
-
-  const onSubmit = (data: ContactFormValues) => {
-    startTransition(() => {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-      // Validation Check: Log the key to verify it's being read from .env
-      console.log("Attempting to initialize EmailJS with Public Key:", publicKey);
-
-      if (!serviceId || !templateId || !publicKey) {
-        toast({
-            title: 'Configuration Error',
-            description: 'Email sending is not configured. Please ensure your EmailJS keys are in the .env file and the server was restarted.',
-            variant: 'destructive',
-        });
-        return;
-      }
-      
-      const templateParams = {
-        name: data.name,
-        email: data.email,
-        organization: data.organization,
-        challenge: data.challenge,
-        details: data.details,
-      };
-      
-      // Initialize with Public Key
-      emailjs.init({ publicKey });
-
-      // Send email using the service and template IDs
-      emailjs.send(serviceId, templateId, templateParams)
-        .then(() => {
-          toast({
-            title: 'Request Sent!',
-            description: 'Thank you! I will review your inquiry and respond within 24 business hours.',
-          });
-          form.reset();
-        }, (error) => {
-           console.error('EmailJS Error:', error);
-           let description = `Could not send message. ${error.text || 'Please try again later.'}`;
-            if (error.text && error.text.toLowerCase().includes('the public key is invalid')) {
-                description = 'The EmailJS Public Key is invalid. Please double-check the NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in your .env file and restart the server. The key being used is logged in the developer console.';
-            } else if (error.text) {
-                description = `EmailJS Error: ${error.text}`;
-            }
-
-          toast({
-            title: 'Submission Failed',
-            description: description,
-            variant: 'destructive',
-          });
-        });
-    });
-  };
   
   const clientLogos = [
     {
@@ -202,95 +104,17 @@ export default function ContactSection() {
                     </div>
                 </div>
                 
-                <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <FormField
-                                    control={form.control}
-                                    name="name"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>Name</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Your Name" {...field} className="bg-background/70 h-11"/>
-                                        </FormControl>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="email"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>Work Email</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="name@company.com" {...field} className="bg-background/70 h-11"/>
-                                        </FormControl>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <FormField
-                                control={form.control}
-                                name="organization"
-                                render={({ field }) => (
-                                    <FormItem>
-                                    <FormLabel>Organization / Company Website</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="your-company.com" {...field} className="bg-background/70 h-11"/>
-                                    </FormControl>
-                                    <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="challenge"
-                                render={({ field }) => (
-                                    <FormItem>
-                                    <FormLabel>What is your primary challenge?</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                        <SelectTrigger className="bg-background/70 h-11">
-                                            <SelectValue placeholder="Select a challenge..." />
-                                        </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {challenges.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="details"
-                                render={({ field }) => (
-                                    <FormItem>
-                                    <FormLabel>Project Details (Optional)</FormLabel>
-                                    <FormControl>
-                                        <Textarea placeholder="Tell me briefly about the project scope or the specific problem you are facing..." rows={4} {...field} className="bg-background/70"/>
-                                    </FormControl>
-                                    <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <div className="pt-2 flex flex-col items-center">
-                                <Button type="submit" size="lg" className="group w-full" disabled={isPending}>
-                                    {isPending ? (
-                                        <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending...</>
-                                    ) : (
-                                        <><Send className="w-5 h-5 mr-2" /> Request Consultation</>
-                                    )}
-                                </Button>
-                                <p className="text-xs text-muted-foreground mt-4 flex items-center gap-2"><ShieldCheck size={14}/> I personally review every inquiry and typically respond within 24 business hours.</p>
-                            </div>
-                        </form>
-                    </Form>
+                <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 flex flex-col items-center justify-center text-center">
+                    <h3 className="text-2xl font-headline font-bold text-primary mb-4">Get In Touch</h3>
+                    <p className="text-muted-foreground mb-6 max-w-sm">
+                        The contact form is currently under maintenance. For all inquiries, please reach out to me directly via email.
+                    </p>
+                    <a href="mailto:contact@samehinsights.com" className="w-full max-w-xs">
+                        <Button size="lg" className="w-full group">
+                            contact@samehinsights.com
+                            <Mail className="w-5 h-5 ml-2" />
+                        </Button>
+                    </a>
                 </div>
             </div>
 
@@ -321,5 +145,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    
