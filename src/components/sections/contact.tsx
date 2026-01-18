@@ -81,9 +81,13 @@ export default function ContactSection() {
           });
           form.reset();
         }, (error) => {
+           let description = `Could not send message. ${error.text || 'Please try again later.'}`;
+            if (error.text && error.text.toLowerCase().includes('public key is invalid')) {
+                description = 'Your EmailJS Public Key is invalid. Please double-check that you have correctly added the NEXT_PUBLIC_EMAILJS_PUBLIC_KEY to your .env file and have restarted the server.';
+            }
           toast({
-            title: 'Error',
-            description: `Could not send message. ${error.text || 'Please try again later.'}`,
+            title: 'EmailJS Error',
+            description: description,
             variant: 'destructive',
           });
         });
@@ -306,3 +310,5 @@ export default function ContactSection() {
     </section>
   );
 }
+
+    
