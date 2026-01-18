@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 const sentences = [
     "Most transformations fail not because of bad strategy, but because of disconnected execution.",
@@ -25,22 +26,64 @@ const SwitchingHeroText = () => {
     }, [currentIndex]);
 
     return (
-        <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center justify-center text-base md:text-lg mb-10 h-[180px] group">
-            <div className="absolute top-0 w-[95%] h-full bg-primary/10 rounded-2xl shadow-lg transform rotate-2 transition-transform duration-500 ease-in-out group-hover:rotate-3"></div>
-            <div className="absolute top-0 w-[95%] h-full bg-primary/10 rounded-2xl shadow-lg transform -rotate-2 transition-transform duration-500 ease-in-out group-hover:-rotate-3"></div>
-            
-            <div className="relative overflow-hidden bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center">
-                <p key={currentIndex} className="text-center animate-fade-in-up">
-                    {sentences[currentIndex]}
-                </p>
-                <div className="absolute bottom-0 left-0 h-1 bg-foreground/20 w-full">
+        <div className="relative w-full max-w-2xl mx-auto flex items-center justify-center text-base md:text-lg mb-10 h-[220px]">
+            {sentences.map((sentence, index) => {
+                const position = (index - currentIndex + sentences.length) % sentences.length;
+                const isCurrent = position === 0;
+
+                let styles: React.CSSProperties = {
+                    transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+                    position: 'absolute',
+                    width: '95%',
+                };
+
+                if (isCurrent) { // Current card, comes from bottom
+                    styles = {
+                        ...styles,
+                        transform: 'translateY(0) scale(1)',
+                        opacity: 1,
+                        zIndex: 30,
+                    };
+                } else if (position === sentences.length - 1) { // Previous card, goes to back
+                    styles = {
+                        ...styles,
+                        transform: 'translateY(-1.5rem) scale(0.95) rotate(-3deg)',
+                        opacity: 1,
+                        zIndex: 25,
+                    };
+                } else { // All other cards are hidden below, waiting their turn
+                    styles = {
+                        ...styles,
+                        transform: 'translateY(2rem) scale(0.8)',
+                        opacity: 0,
+                        zIndex: 20,
+                    };
+                }
+
+                return (
                     <div
-                        key={currentIndex}
-                        className="h-1 bg-foreground"
-                        style={{ animation: `progress-bar ${DURATION / 1000}s linear forwards` }}
-                    />
-                </div>
-            </div>
+                        key={index}
+                        style={styles}
+                    >
+                        <div
+                            className={cn(
+                                "relative overflow-hidden bg-primary/20 backdrop-blur-lg border border-primary/50 text-foreground rounded-2xl p-6 shadow-xl w-full min-h-[150px] md:min-h-[130px] flex items-center justify-center"
+                            )}
+                        >
+                            <p className="text-center">{sentence}</p>
+                            {isCurrent && (
+                                <div className="absolute bottom-0 left-0 h-1 bg-foreground/20 w-full">
+                                    <div
+                                        key={currentIndex}
+                                        className="h-1 bg-foreground"
+                                        style={{ animation: `progress-bar ${DURATION / 1000}s linear forwards` }}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
 };
