@@ -1,8 +1,7 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
@@ -16,17 +15,33 @@ const DURATION = 5000; // ms
 
 const SwitchingHeroText = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % sentences.length);
-        }, DURATION);
+        let timer: NodeJS.Timeout;
+        if (!isHovered) {
+            timer = setTimeout(() => {
+                setCurrentIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+            }, DURATION);
+        }
 
         return () => clearTimeout(timer);
-    }, [currentIndex]);
+    }, [currentIndex, isHovered]);
+
+    const nextCard = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+    };
+
+    const prevCard = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + sentences.length) % sentences.length);
+    };
 
     return (
-        <div className="relative w-full max-w-2xl mx-auto flex items-center justify-center text-base md:text-lg mb-10 h-[220px]">
+        <div 
+            className="relative w-full max-w-2xl mx-auto flex items-center justify-center text-base md:text-lg mb-10 h-[220px] group"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             {sentences.map((sentence, index) => {
                 const position = (index - currentIndex + sentences.length) % sentences.length;
                 const isCurrent = position === 0;
@@ -92,6 +107,24 @@ const SwitchingHeroText = () => {
                     </div>
                 );
             })}
+            
+            {/* Navigation controls */}
+            <div className="absolute inset-0 z-40 flex justify-between items-center">
+                <div 
+                    onClick={prevCard} 
+                    className="h-full w-1/2 cursor-pointer"
+                    aria-label="Previous card"
+                >
+                    <ChevronLeft className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 text-primary-foreground/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
+                <div 
+                    onClick={nextCard} 
+                    className="h-full w-1/2 cursor-pointer"
+                    aria-label="Next card"
+                >
+                    <ChevronRight className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 text-primary-foreground/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
+            </div>
         </div>
     );
 };
