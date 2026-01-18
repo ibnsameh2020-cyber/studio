@@ -175,7 +175,7 @@ export default {
         'blob-6': 'blob-6 11s infinite ease-in-out',
         'slide-in-up-fade': 'slide-in-up-fade 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'slide-out-up-fade': 'slide-out-up-fade 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards',
-        'progress-bar': 'progress-bar 2.5s linear forwards',
+        'progress-bar': 'progress-bar 5s linear forwards',
         'marquee-scroll': 'marquee-scroll 20s linear infinite',
       },
     },
