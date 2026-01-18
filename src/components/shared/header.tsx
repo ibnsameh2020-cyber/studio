@@ -1,9 +1,10 @@
+
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail } from 'lucide-react';
+import { Lightbulb, Menu, X, Download, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser } from '@/firebase';
 import {
@@ -76,11 +77,26 @@ export default function Header() {
   };
 
   const isLinkActive = (item: typeof navItems[0]) => {
+    // For links that go to a different page (e.g., /articles, /about)
     if (item.href.startsWith('/')) {
-        const onPage = pathname.startsWith(item.href);
-        const onHomepageSection = pathname === '/' && activeSection === item.sectionId;
-        return onPage || onHomepageSection;
+        // If we are currently on that page, it's active.
+        if (pathname.startsWith(item.href)) {
+            return true;
+        }
+        // If we are on the homepage, check if the corresponding section is active.
+        if (pathname === '/') {
+            // Special case: Highlight "Insights" for both its own section and the one after it.
+            if (item.sectionId === 'insights' && (activeSection === 'insights' || activeSection === 'exclusive-resources-cta')) {
+                return true;
+            }
+            // Default case for other sections linked from the nav.
+            if (activeSection === item.sectionId) {
+                return true;
+            }
+        }
+        return false;
     }
+    // For hash links on the homepage
     return activeSection === item.href.substring(1);
   };
   
