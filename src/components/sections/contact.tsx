@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -12,7 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, CalendarCheck } from 'lucide-react';
+import { Loader2, CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -29,7 +29,6 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 
 export default function ContactSection() {
-    const formRef = useRef<HTMLFormElement>(null);
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -59,19 +58,9 @@ export default function ContactSection() {
             setIsSubmitting(false);
             return;
         }
-
-        if (!formRef.current) {
-             toast({
-                variant: 'destructive',
-                title: 'Form Error',
-                description: 'Could not find the form element to send.',
-            });
-            setIsSubmitting(false);
-            return;
-        }
-
+        
         try {
-            await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
+            await emailjs.send(serviceId, templateId, data, publicKey);
             toast({
                 title: 'Message Sent!',
                 description: 'Thank you for your inquiry. I will get back to you shortly.',
@@ -189,7 +178,7 @@ export default function ContactSection() {
                 
                 <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                     <Form {...form}>
-                        <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <FormField
                                     control={form.control}
@@ -198,7 +187,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Your Name" {...field} name="name" />
+                                                <Input placeholder="Your Name" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -211,7 +200,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Work Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="name@company.com" {...field} name="email" />
+                                                <Input placeholder="name@company.com" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -225,7 +214,7 @@ export default function ContactSection() {
                                     <FormItem>
                                         <FormLabel>Organization / Company Website</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="https://your-company.com" {...field} name="organization" />
+                                            <Input placeholder="https://your-company.com" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -237,7 +226,7 @@ export default function ContactSection() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>What is your primary challenge?</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value} name="challenge">
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Select a challenge..." />
@@ -262,7 +251,7 @@ export default function ContactSection() {
                                     <FormItem>
                                         <FormLabel>Project Details (Optional)</FormLabel>
                                         <FormControl>
-                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} name="details" />
+                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
