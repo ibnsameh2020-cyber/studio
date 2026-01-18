@@ -10,7 +10,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
@@ -79,7 +79,7 @@ export default function SettingsPage() {
     }
     if (user) {
       profileForm.reset({ displayName: user.displayName || "" });
-      emailForm.reset({ newEmail: user.email || "", password: ""});
+      emailForm.reset({ newEmail: "", password: ""});
     }
   }, [user, loading, router, profileForm, emailForm]);
 
@@ -106,7 +106,7 @@ export default function SettingsPage() {
       router.push('/login');
     }
     setIsEmailSubmitting(false);
-    emailForm.reset({ newEmail: data.newEmail, password: "" });
+    emailForm.reset({ newEmail: "", password: "" });
   };
   
   const onPasswordSubmit: SubmitHandler<PasswordFormValues> = async (data) => {
@@ -180,7 +180,9 @@ export default function SettingsPage() {
                  <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
                     <CardHeader>
                         <CardTitle>Email Address</CardTitle>
-                        <CardDescription>Change the email address associated with your account.</CardDescription>
+                        <CardDescription>
+                            Your current email is <strong>{user.email}</strong>. Use the form below to change it.
+                        </CardDescription>
                     </CardHeader>
                      <Form {...emailForm}>
                         <form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
@@ -191,7 +193,7 @@ export default function SettingsPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                         <FormLabel>New Email</FormLabel>
-                                        <FormControl><Input type="email" {...field} /></FormControl>
+                                        <FormControl><Input type="email" placeholder="Enter your new email" {...field} /></FormControl>
                                         <FormMessage />
                                         </FormItem>
                                     )}
@@ -364,5 +366,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    
