@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -209,7 +210,7 @@ export default function ContactSection() {
                                   </DialogDescription>
                                 </DialogHeader>
                                 <iframe 
-                                    src="https://cal.com/عبدالرحمن-سامح-auo83p/15min" 
+                                    src="https://cal.com/عبدالرحمن-سامح-auo83p/15min?layout=column_view" 
                                     className="w-full h-full rounded-lg"
                                     frameBorder="0"
                                     title="Schedule a Discovery Call"
