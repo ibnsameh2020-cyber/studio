@@ -13,7 +13,7 @@ export default function AboutMeCtaSection() {
 
   return (
     <AnimatedSection>
-      <section id="about-cta">
+      <section id="about-cta" className="py-20 md:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 md:p-12 shadow-xl grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">

@@ -1,11 +1,12 @@
 
-
-import HeroSection from '@/components/sections/hero';
-import ServicesSection from '@/components/sections/services';
-import ProjectsSection from '@/components/sections/projects';
-import ExperienceSection from '@/components/sections/experience';
-import InsightsSection from '@/components/sections/articles';
+import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
+import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
+import ExperienceSection from '@/components/sections/experience';
+import HeroSection from '@/components/sections/hero';
+import InsightsSection from '@/components/sections/articles';
+import ProjectsSection from '@/components/sections/projects';
+import ServicesSection from '@/components/sections/services';
 
 
 export default function Home() {
@@ -26,6 +27,8 @@ export default function Home() {
         <ProjectsSection />
         <ExperienceSection />
         <InsightsSection />
+        <AboutMeCtaSection />
+        <ExclusiveResourcesCtaSection />
         <ContactSection />
     </>
   );
