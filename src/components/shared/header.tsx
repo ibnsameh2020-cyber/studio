@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from 'react';
@@ -193,46 +192,47 @@ export default function Header() {
                     {loading ? (
                     <Skeleton className="h-10 w-10 rounded-full" />
                     ) : user ? (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                            <Avatar className="h-10 w-10">
-                            <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
-                            <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
-                            </Avatar>
-                        </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
-                            <DropdownMenuLabel className="font-normal">
-                                <div className="flex flex-col space-y-1">
-                                <p className="text-sm font-medium leading-none">{user.displayName}</p>
-                                <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                                </div>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                {isAdmin && (
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/admin">
-                                            <ShieldCheck className="w-4 h-4" />
-                                            <span>Admin Panel</span>
-                                        </Link>
+                        <div className="flex items-center gap-1">
+                            {isAdmin && (
+                                <Link href="/admin" passHref>
+                                    <Button variant={pathname.startsWith('/admin') ? 'secondary' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
+                                        <ShieldCheck className="h-5 w-5" />
+                                    </Button>
+                                </Link>
+                            )}
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                                    <Avatar className="h-10 w-10">
+                                    <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                                    <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
+                                    <DropdownMenuLabel className="font-normal">
+                                        <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                                        <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                                        </div>
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/settings">
+                                                <Settings className="w-4 h-4" />
+                                                <span>Settings</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={signOut}>
+                                        <LogOut className="w-4 h-4" />
+                                        <span>Log out</span>
                                     </DropdownMenuItem>
-                                )}
-                                <DropdownMenuItem asChild>
-                                    <Link href="/settings">
-                                        <Settings className="w-4 h-4" />
-                                        <span>Settings</span>
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={signOut}>
-                                <LogOut className="w-4 h-4" />
-                                <span>Log out</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     ) : (
                         <Link href="/login">
                             <Button variant="ghost" size="sm">
@@ -248,46 +248,47 @@ export default function Header() {
                     {loading ? (
                     <Skeleton className="h-8 w-8 rounded-full" />
                     ) : user ? (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                            <Avatar className="h-8 w-8">
-                            <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
-                            <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
-                            </Avatar>
-                        </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
-                            <DropdownMenuLabel className="font-normal">
-                                <div className="flex flex-col space-y-1">
-                                <p className="text-sm font-medium leading-none">{user.displayName}</p>
-                                <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                                </div>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                {isAdmin && (
+                    <>
+                        {isAdmin && (
+                            <Link href="/admin" passHref>
+                                <Button variant={pathname.startsWith('/admin') ? 'secondary' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
+                                    <ShieldCheck className="h-5 w-5" />
+                                </Button>
+                            </Link>
+                        )}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                                <Avatar className="h-8 w-8">
+                                <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                                <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                                </Avatar>
+                            </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
+                                <DropdownMenuLabel className="font-normal">
+                                    <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                                    <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                                    </div>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
                                     <DropdownMenuItem asChild>
-                                        <Link href="/admin">
-                                            <ShieldCheck className="w-4 h-4" />
-                                            <span>Admin Panel</span>
+                                        <Link href="/settings">
+                                            <Settings className="w-4 h-4" />
+                                            <span>Settings</span>
                                         </Link>
                                     </DropdownMenuItem>
-                                )}
-                                <DropdownMenuItem asChild>
-                                    <Link href="/settings">
-                                        <Settings className="w-4 h-4" />
-                                        <span>Settings</span>
-                                    </Link>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={signOut}>
+                                    <LogOut className="w-4 h-4" />
+                                    <span>Log out</span>
                                 </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={signOut}>
-                                <LogOut className="w-4 h-4" />
-                                <span>Log out</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </>
                     ) : (
                     <Link href="/login">
                         <Button variant="ghost" size="sm" className="mr-2">
@@ -386,18 +387,6 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            {isAdmin && (
-              <Link
-                href="/admin"
-                onClick={handleMenuLinkClick}
-                className={cn(
-                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md',
-                  pathname === '/admin' ? 'bg-primary text-primary-foreground' : 'text-foreground'
-                )}
-              >
-                Admin Panel
-              </Link>
-            )}
           </nav>
         </div>
       )}
