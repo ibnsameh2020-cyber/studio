@@ -202,7 +202,7 @@ export default function ContactSection() {
                                     <CalendarCheck className="w-5 h-5 ml-2" />
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="sm:max-w-5xl h-[90vh] p-0 border-0">
+                            <DialogContent className="p-0 border-0 w-[95vw] h-[90vh] max-w-5xl">
                                 <DialogHeader className="sr-only">
                                   <DialogTitle>Schedule a Discovery Call</DialogTitle>
                                   <DialogDescription>
@@ -343,9 +343,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    
-
-    
-
-    
