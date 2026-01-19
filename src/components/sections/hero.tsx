@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,7 @@ const sentences = [
     "As a Strategic Advisor for Government & Healthcare sectors, I turn $120M+ portfolios from 'cost centers' into 'public value engines'.",
     "I use AI governance, Value Engineering, and Human-Centric Leadership to bridge the gap."
 ];
-const DURATION = 5000; // ms
+const DURATION = 3000; // ms
 
 const SwitchingHeroText = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
