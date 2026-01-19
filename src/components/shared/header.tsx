@@ -182,20 +182,20 @@ export default function Header() {
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-10',
-                          // Animation logic
-                          isHeroActive && !isPageLink
+                          isHeroActive
                             ? 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
-                            : 'w-auto px-4 gap-1.5',
-                          // Active state
-                          isLinkActive
-                            ? 'bg-primary text-primary-foreground w-auto px-4 gap-1.5'
-                            : 'text-muted-foreground'
+                            : [
+                                'w-auto px-4 gap-1.5',
+                                isLinkActive
+                                  ? 'bg-primary text-primary-foreground'
+                                  : 'text-muted-foreground'
+                              ]
                         )}
                       >
                         {item.icon}
                         <span className={cn(
                           'transition-opacity duration-200',
-                          isHeroActive && !isPageLink
+                          isHeroActive
                             ? 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
                             : 'opacity-100 w-auto'
                         )}>
