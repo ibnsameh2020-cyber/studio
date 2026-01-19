@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -202,7 +201,7 @@ export default function ContactSection() {
                                     <CalendarCheck className="w-5 h-5 ml-2" />
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="p-0 border-0 w-[95vw] h-[90vh] max-w-5xl">
+                            <DialogContent className="p-0 border-0 w-[90vw] h-[90vh] max-w-5xl">
                                 <DialogHeader className="sr-only">
                                   <DialogTitle>Schedule a Discovery Call</DialogTitle>
                                   <DialogDescription>
