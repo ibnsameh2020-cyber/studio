@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -27,11 +28,11 @@ const baseNavItems = [
   { id: 'case-studies', href: '#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
   { id: 'experience', href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
   { id: 'insights', href: '#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
-  { id: 'about', href: '/about', label: 'About', icon: <User className="w-4 h-4" /> },
+  { id: 'about-cta', href: '#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
   { id: 'contact', href: '#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
-const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'insights', 'contact'];
+const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
 
 
 export default function Header() {
@@ -49,13 +50,15 @@ export default function Header() {
   const navItems = useMemo(() => {
     const items = [...baseNavItems];
     if (user) {
-      const resourcesIndex = items.findIndex(item => item.label === 'Insights') + 1;
-      items.splice(resourcesIndex, 0, {
-        id: 'resources',
-        href: '/resources',
-        label: 'Resources',
-        icon: <Sparkles className="w-4 h-4" />,
-      });
+      const insightsIndex = items.findIndex(item => item.id === 'insights');
+      if (insightsIndex !== -1) {
+        items.splice(insightsIndex + 1, 0, {
+          id: 'exclusive-resources-cta',
+          href: '#exclusive-resources-cta',
+          label: 'Resources',
+          icon: <Sparkles className="w-4 h-4" />,
+        });
+      }
     }
     return items;
   }, [user]);
@@ -166,9 +169,9 @@ export default function Header() {
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center space-x-1">
                   {navItems.map((item) => {
-                    const isPageLink = item.href.startsWith('/');
+                    const isPageLink = !item.href.startsWith('#');
                     const isLinkActive = isPageLink
-                      ? pathname === item.href
+                      ? pathname.startsWith(item.href) && item.href !== '/'
                       : activeSection === item.id;
 
                     return (
@@ -329,7 +332,7 @@ export default function Header() {
                         )}
                         aria-label="Notifications"
                     >
-                        <Bell className="h-6 w-6" />
+                        <Bell className="h-6 h-6" />
                         {newArticles.length > 0 && (
                              <span className="absolute top-4 right-4 flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -384,9 +387,9 @@ export default function Header() {
         <div className="md:hidden fixed top-24 left-4 right-4 z-40 bg-background/90 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl p-6 animate-in fade-in-20 slide-in-from-top-4">
           <nav className="flex flex-col items-center justify-center flex-grow gap-y-4">
             {navItems.map((item) => {
-                 const isPageLink = item.href.startsWith('/');
+                 const isPageLink = !item.href.startsWith('#');
                  const isLinkActive = isPageLink
-                   ? pathname === item.href
+                   ? pathname.startsWith(item.href) && item.href !== '/'
                    : activeSection === item.id;
                 return (
                     <Link

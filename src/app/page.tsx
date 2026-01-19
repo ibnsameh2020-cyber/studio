@@ -27,8 +27,8 @@ export default function Home() {
         <ProjectsSection />
         <ExperienceSection />
         <InsightsSection />
-        <AboutMeCtaSection />
         <ExclusiveResourcesCtaSection />
+        <AboutMeCtaSection />
         <ContactSection />
     </>
   );
