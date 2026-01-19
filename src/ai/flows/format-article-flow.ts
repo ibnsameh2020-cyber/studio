@@ -80,11 +80,17 @@ const formatArticleFlow = ai.defineFlow(
     outputSchema: FormatArticleOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    if (!output || !output.structuredContent || output.structuredContent.length === 0) {
-      // If AI fails, return original content as a single paragraph block.
+    try {
+      const {output} = await prompt(input);
+      if (!output || !output.structuredContent || output.structuredContent.length === 0) {
+        // If AI returns empty, return original content as a single paragraph block.
+        return { structuredContent: [{ type: 'p', content: input.content }] };
+      }
+      return output;
+    } catch (error) {
+      console.error("AI content formatting failed, falling back to raw content.", error);
+      // If AI call throws an error, return original content as a single paragraph block.
       return { structuredContent: [{ type: 'p', content: input.content }] };
     }
-    return output;
   }
 );
