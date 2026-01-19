@@ -9,6 +9,7 @@ import type { Resource } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Timestamp } from 'firebase/firestore';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 const formatDate = (date: any) => {
     if (!date) return '';
@@ -72,6 +73,16 @@ const LoggedInView = () => {
                 {!loading && recentResources.map((resource) => (
                     <Link href={`/resources/${resource.id}`} key={resource.id}>
                         <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
+                            {resource.imageUrl && (
+                                <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-md">
+                                    <Image
+                                        src={resource.imageUrl}
+                                        alt={resource.title}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+                            )}
                             <div className={cn("flex-grow", 'text-left')}>
                                 <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{resource.title}</h3>
                                 <div className={cn("flex items-center gap-2 text-xs text-muted-foreground mt-1", 'justify-start')}>
