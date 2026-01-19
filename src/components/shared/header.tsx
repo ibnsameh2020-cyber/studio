@@ -195,7 +195,7 @@ export default function Header() {
                         <div className="flex items-center gap-1">
                             {isAdmin && (
                                 <Link href="/admin" passHref>
-                                    <Button variant={pathname.startsWith('/admin') ? 'secondary' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
+                                    <Button variant={pathname.startsWith('/admin') ? 'default' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
                                         <ShieldCheck className="h-5 w-5" />
                                     </Button>
                                 </Link>
@@ -251,7 +251,7 @@ export default function Header() {
                     <>
                         {isAdmin && (
                             <Link href="/admin" passHref>
-                                <Button variant={pathname.startsWith('/admin') ? 'secondary' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
+                                <Button variant={pathname.startsWith('/admin') ? 'default' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
                                     <ShieldCheck className="h-5 w-5" />
                                 </Button>
                             </Link>
