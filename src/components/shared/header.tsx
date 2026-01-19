@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -43,7 +42,6 @@ export default function Header() {
   const pathname = usePathname();
 
   const [activeSection, setActiveSection] = useState('hero');
-  const isHeroActive = activeSection === 'hero' && pathname === '/';
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const [newArticles, setNewArticles] = useState<Article[]>([]);
@@ -74,7 +72,6 @@ export default function Header() {
 
     const handleScroll = () => {
       let currentSection = 'hero';
-      let maxVisibleHeight = 0;
       
       const viewportMidpoint = window.innerHeight / 2;
 
@@ -182,22 +179,17 @@ export default function Header() {
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-10',
-                          isHeroActive
-                            ? 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
-                            : [
-                                'w-auto px-4 gap-1.5',
-                                isLinkActive
-                                  ? 'bg-primary text-primary-foreground'
-                                  : 'text-muted-foreground'
-                              ]
+                          isLinkActive
+                            ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
+                            : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
                         )}
                       >
                         {item.icon}
                         <span className={cn(
                           'transition-opacity duration-200',
-                          isHeroActive
-                            ? 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
-                            : 'opacity-100 w-auto'
+                          isLinkActive
+                            ? 'opacity-100 w-auto'
+                            : 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
                         )}>
                           {item.label}
                         </span>
