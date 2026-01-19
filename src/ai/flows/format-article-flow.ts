@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview An AI flow to automatically structure article content.
@@ -83,14 +84,13 @@ const formatArticleFlow = ai.defineFlow(
     try {
       const {output} = await prompt(input);
       if (!output || !output.structuredContent || output.structuredContent.length === 0) {
-        // If AI returns empty, return original content as a single paragraph block.
-        return { structuredContent: [{ type: 'p', content: input.content }] };
+        throw new Error("AI returned empty or invalid content.");
       }
       return output;
     } catch (error) {
-      console.error("AI content formatting failed, falling back to raw content.", error);
-      // If AI call throws an error, return original content as a single paragraph block.
-      return { structuredContent: [{ type: 'p', content: input.content }] };
+      console.error("AI content formatting failed.", error);
+      // If AI call fails or returns empty, throw an error to be handled by the caller.
+      throw new Error("The AI Stylist was unable to process the content. Please try again.");
     }
   }
 );

@@ -434,8 +434,8 @@ export default function AdminPage() {
         setEditingResourceId(null);
     } catch (error: any) {
         toast({
-            title: "Error",
-            description: `Could not publish resource. ${error.message}`,
+            title: "Publishing Failed",
+            description: error.message || "An unexpected error occurred and the resource was not saved.",
             variant: "destructive",
         });
     } finally {
