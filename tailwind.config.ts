@@ -10,6 +10,21 @@ export default {
   ],
   theme: {
     extend: {
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-headings': 'hsl(var(--primary))',
+            '--tw-prose-links': 'hsl(var(--primary))',
+            '--tw-prose-bullets': 'hsl(var(--primary))',
+            '--tw-prose-quote-borders': 'hsl(var(--primary))',
+            
+            '--tw-prose-invert-headings': 'hsl(var(--primary))',
+            '--tw-prose-invert-links': 'hsl(var(--primary))',
+            '--tw-prose-invert-bullets': 'hsl(var(--primary))',
+            '--tw-prose-invert-quote-borders': 'hsl(var(--primary))',
+          },
+        },
+      }),
       fontFamily: {
         body: ['Inter', 'sans-serif'],
         headline: ['Poppins', 'sans-serif'],
