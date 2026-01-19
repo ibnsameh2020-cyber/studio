@@ -34,7 +34,7 @@ const prompt = ai.definePrompt({
   {{{content}}}
   `,
   config: {
-    model: 'gemini-1.5-flash-latest',
+    model: 'gemini-2.5-flash-lite',
   },
 });
 
