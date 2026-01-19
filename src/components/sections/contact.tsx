@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
 
 
 const contactSchema = z.object({
@@ -187,12 +188,21 @@ export default function ContactSection() {
                         </div>
                         <h3 className="text-2xl font-headline font-bold text-primary mb-2">Book a Strategic Discovery Call</h3>
                         <p className="text-muted-foreground mb-6">Skip the back-and-forth emails. Schedule a 15-minute introductory discussion to see if we are a good fit.</p>
-                        <Link href="https://cal.com/عبدالرحمن-سامح-auo83p/15min" target="_blank" rel="noopener noreferrer">
-                            <Button size="lg" className="w-full group">
-                                Schedule Now
-                                <CalendarCheck className="w-5 h-5 ml-2" />
-                            </Button>
-                        </Link>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button size="lg" className="w-full group">
+                                    Schedule Now
+                                    <CalendarCheck className="w-5 h-5 ml-2" />
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-5xl h-[90vh] p-0 border-0">
+                                <iframe 
+                                    src="https://cal.com/عبدالرحمن-سامح-auo83p/15min" 
+                                    className="w-full h-full rounded-lg"
+                                    frameBorder="0"
+                                ></iframe>
+                            </DialogContent>
+                        </Dialog>
                         <p className="text-xs text-muted-foreground mt-4 text-center">Priority given to Government & Enterprise inquiries.</p>
                     </div>
                 </div>
@@ -319,5 +329,7 @@ export default function ContactSection() {
     </section>
   );
 }
+
+    
 
     
