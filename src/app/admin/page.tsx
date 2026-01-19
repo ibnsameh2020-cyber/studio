@@ -11,6 +11,7 @@ import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp, collection, getDocs
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cn } from '@/lib/utils';
+import { formatContent } from '@/ai/flows/format-article-flow';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -343,6 +344,7 @@ export default function AdminPage() {
     setIsProcessingResource(true);
 
     try {
+        const formattedContent = await formatContent(data.content);
         const slug = editingResourceId || createSlug(data.title);
         const resourceRef = doc(firestore, "resources", slug);
 
@@ -351,7 +353,7 @@ export default function AdminPage() {
             title: data.title,
             description: data.description,
             imageUrl: data.imageUrl,
-            content: data.content,
+            content: formattedContent,
             tags: data.tags.split(',').map(tag => tag.trim()),
             language: data.language,
             author: "Eng. Sameh Moussa",
@@ -365,6 +367,7 @@ export default function AdminPage() {
         resourceForm.reset(emptyResourceFormValues);
         setEditingResourceId(null);
     } catch (error: any) {
+        console.error("Publishing Failed:", error);
         toast({
             title: "Publishing Failed",
             description: error.message || "An unexpected error occurred and the resource was not saved.",

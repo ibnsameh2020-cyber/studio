@@ -15,62 +15,6 @@ const formatDate = (date: any) => {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 };
 
-// This function processes simple inline markdown like **bold** and *italic*.
-const processInlineMarkdown = (line: string): React.ReactNode => {
-  const parts = line.split(/(\*\*.*?\*\*|\*.*?\*)/g).filter(Boolean);
-
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i}>{part.slice(2, -2)}</strong>;
-    }
-    if (part.startsWith('*') && part.endsWith('*')) {
-      return <em key={i} className="italic">{part.slice(1, -1)}</em>;
-    }
-    return part;
-  });
-};
-
-// Renders content from the legacy string format (for backward compatibility)
-const renderLegacyContent = (content: string) => {
-  const lines = content.split('\n');
-  
-  const isHeader = (line: string) => /^\.\d+\s/.test(line.trim());
-  const isSubHeader = (line: string) => /^\d+\.\d+\s/.test(line.trim());
-  const isQuote = (line: string) => line.trim().startsWith('>');
-
-  return lines.map((line, index) => {
-    const trimmedLine = line.trim();
-
-    if (trimmedLine === '') {
-      return null;
-    }
-
-    if (isHeader(trimmedLine)) {
-      return (
-        <h2 key={index} className="text-3xl font-headline font-bold mt-10 mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
-          {processInlineMarkdown(trimmedLine)}
-        </h2>
-      );
-    }
-    if (isSubHeader(trimmedLine)) {
-      return (
-        <h3 key={index} className="text-2xl font-headline font-semibold mt-8 mb-4 text-primary">
-          {processInlineMarkdown(trimmedLine)}
-        </h3>
-      );
-    }
-    if (isQuote(trimmedLine)) {
-      return (
-        <blockquote key={index} className="border-l-4 border-primary pl-4 py-2 my-6 bg-card/30">
-          <p className="text-lg italic text-foreground/90">{processInlineMarkdown(trimmedLine.substring(1).trim())}</p>
-        </blockquote>
-      );
-    }
-
-    return <p key={index} className="mb-4 leading-relaxed">{processInlineMarkdown(trimmedLine)}</p>;
-  });
-};
-
 
 export default function ResourceDetailsClient({ resource }: { resource: Resource }) {
   const isRTL = resource.language === 'rtl';
@@ -120,9 +64,10 @@ export default function ResourceDetailsClient({ resource }: { resource: Resource
                 </div>
             </div>
 
-            <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
-                {renderLegacyContent(resource.content as string)}
-            </article>
+            <article 
+              className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12"
+              dangerouslySetInnerHTML={{ __html: resource.content as string }} 
+            />
 
             <div className="flex flex-wrap gap-2" dir="ltr">
             {Array.isArray(resource.tags) && resource.tags.map((tag) => (
