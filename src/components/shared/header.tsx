@@ -1,9 +1,10 @@
+
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, ChevronLeft, ChevronRight, Bell, Loader2, Settings, LogOut } from 'lucide-react';
+import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser, useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
@@ -23,20 +24,16 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
-  { href: '#services', label: 'Services', sectionId: 'services', icon: <LayoutGrid className="w-4 h-4" /> },
-  { href: '#case-studies', label: 'Success Stories', sectionId: 'case-studies', icon: <Trophy className="w-4 h-4" /> },
-  { href: '#experience', label: 'Experience', sectionId: 'experience', icon: <Briefcase className="w-4 h-4" /> },
-  { href: '/articles', label: 'Insights', sectionId: 'insights', icon: <Newspaper className="w-4 h-4" /> },
-  // Resources will be inserted here conditionally
-  { href: '/about', label: 'About', sectionId: 'about-cta', icon: <User className="w-4 h-4" /> },
-  { href: '#contact', label: 'Contact', sectionId: 'contact', icon: <Mail className="w-4 h-4" /> },
+  { href: '/services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
+  { href: '/projects', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
+  { href: '/experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
+  { href: '/articles', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
+  { href: '/about', label: 'About', icon: <User className="w-4 h-4" /> },
+  { href: '/contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
 export default function Header() {
-  const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const observer = useRef<IntersectionObserver | null>(null);
-
   const { user, loading, isAdmin } = useUser();
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
@@ -52,7 +49,6 @@ export default function Header() {
       items.splice(resourcesIndex, 0, {
         href: '/resources',
         label: 'Resources',
-        sectionId: 'exclusive-resources-cta',
         icon: <Sparkles className="w-4 h-4" />,
       });
     }
@@ -77,35 +73,6 @@ export default function Header() {
     }
   }, [articles]);
 
-
-  useEffect(() => {
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-30% 0px -70% 0px" } // More reliable trigger point
-    );
-
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach((section) => {
-        if (observer.current) {
-            observer.current.observe(section);
-        }
-    });
-
-    return () => {
-      sections.forEach((section) => {
-        if(observer.current) {
-            observer.current.unobserve(section)
-        }
-      });
-    };
-  }, []);
-  
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
   };
@@ -117,14 +84,9 @@ export default function Header() {
     }
   };
 
-  const isLinkActive = (item: typeof navItems[0]) => {
-    if (pathname === '/' && item.sectionId) {
-        return activeSection === item.sectionId;
-    }
-    if (item.href.startsWith('/')) {
-        return pathname.startsWith(item.href);
-    }
-    return false;
+  const isLinkActive = (itemHref: string) => {
+    if (itemHref === '/') return pathname === '/';
+    return pathname.startsWith(itemHref);
   };
   
   const getInitials = (name?: string | null) => {
@@ -135,8 +97,6 @@ export default function Header() {
     }
     return name.charAt(0).toUpperCase();
   };
-
-  const inHeroSection = activeSection === 'hero' || activeSection === '';
 
   return (
     <>
@@ -153,42 +113,25 @@ export default function Header() {
                 </Link>
                 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex items-center space-x-2">
-                    <nav className="flex items-center justify-center gap-1 transition-all duration-300">
-                      {navItems.map((item) => {
-                            const isActive = isLinkActive(item);
-                            const isVisible = inHeroSection || isActive;
-                            const isIconOnly = inHeroSection && !isActive;
-
-                            return (
-                                <Link
-                                    key={item.href}
-                                    href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
-                                    className={cn(
-                                        'group text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center',
-                                        {
-                                            'max-w-0 opacity-0 p-0 pointer-events-none': !isVisible,
-                                            'max-w-xs opacity-100': isVisible,
-                                            
-                                            'bg-primary text-primary-foreground': isActive,
-                                            'text-muted-foreground hover:text-primary': !isActive,
-
-                                            'h-10 px-4 gap-1.5': !isIconOnly,
-                                            'h-10 w-10 justify-center p-0 gap-0 hover:w-auto hover:px-4 hover:gap-1.5': isIconOnly,
-                                        }
-                                    )}
-                                >
-                                    {item.icon}
-                                    <span className={cn(
-                                        'transition-all duration-300 overflow-hidden',
-                                        { 'w-0 group-hover:w-auto': isIconOnly, 'w-auto': !isIconOnly }
-                                    )}>
-                                        {item.label}
-                                    </span>
-                                </Link>
-                            );
-                        })}
-                    </nav>
+                <nav className="hidden md:flex items-center space-x-1">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        'group text-sm font-medium transition-colors duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center h-10 px-4 gap-1.5',
+                        isLinkActive(item.href)
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                      )}
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </nav>
+                
+                <div className="hidden md:flex items-center gap-1">
                     {loading ? (
                     <Skeleton className="h-10 w-10 rounded-full" />
                     ) : user ? (
@@ -376,11 +319,11 @@ export default function Header() {
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                href={item.href.startsWith('/') ? item.href : `/#${item.href.substring(1)}`}
+                href={item.href}
                 onClick={handleMenuLinkClick}
                 className={cn(
                   'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
-                  isLinkActive(item) ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                  isLinkActive(item.href) ? 'bg-primary text-primary-foreground' : 'text-foreground'
                 )}
               >
                 {item.icon}

@@ -1,9 +1,9 @@
+
 "use client";
 
 import AnimatedSection from '@/components/animated-section';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Briefcase, BrainCircuit, Users, ShieldQuestion, Target, GanttChartSquare } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
+import { Briefcase, BrainCircuit, ShieldQuestion, GanttChartSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 const services = [
@@ -52,9 +52,9 @@ const engagementModels = [
     }
 ]
 
-export function ServicesSection() {
+export default function ServicesPage() {
   return (
-    <section id="services">
+    <section id="services" className="py-24 pt-32">
       <div className="py-20 md:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
