@@ -16,7 +16,14 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription
+} from '@/components/ui/dialog';
 
 
 const contactSchema = z.object({
@@ -196,10 +203,17 @@ export default function ContactSection() {
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-5xl h-[90vh] p-0 border-0">
+                                <DialogHeader className="sr-only">
+                                  <DialogTitle>Schedule a Discovery Call</DialogTitle>
+                                  <DialogDescription>
+                                    Use the calendar below to book a 15-minute introductory call.
+                                  </DialogDescription>
+                                </DialogHeader>
                                 <iframe 
                                     src="https://cal.com/عبدالرحمن-سامح-auo83p/15min" 
                                     className="w-full h-full rounded-lg"
                                     frameBorder="0"
+                                    title="Schedule a Discovery Call"
                                 ></iframe>
                             </DialogContent>
                         </Dialog>
@@ -329,6 +343,8 @@ export default function ContactSection() {
     </section>
   );
 }
+
+    
 
     
 
