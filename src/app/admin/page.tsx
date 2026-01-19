@@ -11,7 +11,6 @@ import { serverTimestamp, doc, setDoc, deleteDoc, Timestamp, collection, getDocs
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cn } from '@/lib/utils';
-import { formatArticle } from '@/ai/flows/format-article-flow';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -156,65 +155,6 @@ export default function AdminPage() {
         insightForm.setValue('language', 'ltr');
     }
   }, [insightTitle, insightForm]);
-
-
-  // START: One-time migration for old articles (now resources)
-  useEffect(() => {
-    const runMigration = async () => {
-        if (!firestore || sessionStorage.getItem('articlesMigrated_v2')) {
-            return;
-        }
-        
-        // This migration logic might now apply to the 'resources' collection
-        // if old articles have become resources. We'll check the 'articles'
-        // collection for any remaining long-form content that needs migrating.
-        console.log("Checking for legacy articles to migrate...");
-
-        const articlesRef = collection(firestore, "articles");
-        const querySnapshot = await getDocs(articlesRef);
-        let migratedCount = 0;
-        
-        for (const doc of querySnapshot.docs) {
-          const article = doc.data();
-          // Heuristic to check if it's an old, long-form article
-          if (article.content && typeof article.content === 'string' && !article.headline) {
-              console.log(`Found legacy article to migrate/move: ${doc.id}`);
-              try {
-                  const result = await formatArticle({ content: article.content });
-                  const formattedContent = result.structuredContent;
-
-                  // Move to resources collection
-                  const resourceRef = doc(firestore, "resources", doc.id);
-                  await setDoc(resourceRef, {
-                      ...article,
-                      formattedContent,
-                  }, { merge: true });
-                  
-                  // Delete from articles collection
-                  await deleteDoc(doc.ref);
-                  migratedCount++;
-
-              } catch(e) {
-                  console.error(`Failed to migrate article ${doc.id}:`, e);
-              }
-          }
-        }
-        
-        if (migratedCount > 0) {
-            toast({
-                title: "Migration Complete",
-                description: `Successfully moved and upgraded ${migratedCount} legacy articles to resources.`
-            });
-        }
-
-        sessionStorage.setItem('articlesMigrated_v2', 'true');
-    };
-
-    if (firestore && isAdmin) {
-      runMigration();
-    }
-  }, [firestore, toast, isAdmin]);
-  // END: One-time migration
   
   // START: One-time seed for new insights
   useEffect(() => {
@@ -403,13 +343,6 @@ export default function AdminPage() {
     setIsProcessingResource(true);
 
     try {
-        toast({
-            title: "AI Stylist at Work",
-            description: "Automatically structuring and styling your resource...",
-        });
-        const result = await formatArticle({ content: data.content });
-        const formattedContent = result.structuredContent;
-
         const slug = editingResourceId || createSlug(data.title);
         const resourceRef = doc(firestore, "resources", slug);
 
@@ -419,7 +352,6 @@ export default function AdminPage() {
             description: data.description,
             imageUrl: data.imageUrl,
             content: data.content,
-            formattedContent: formattedContent,
             tags: data.tags.split(',').map(tag => tag.trim()),
             language: data.language,
             author: "Eng. Sameh Moussa",
@@ -703,7 +635,7 @@ export default function AdminPage() {
                                     <FormLabel>Full Content</FormLabel>
                                     <FormControl>
                                         <Textarea 
-                                        placeholder="Write the full resource content here. The AI will automatically style it." 
+                                        placeholder="Write the full resource content here." 
                                         rows={15} 
                                         {...field}
                                         className={cn(language === 'rtl' && 'text-lg')}
@@ -736,7 +668,7 @@ export default function AdminPage() {
                                 {(resourceForm.formState.isSubmitting || isProcessingResource) ? (
                                     <>
                                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                        {isProcessingResource ? 'AI is Styling...' : (editingResourceId ? 'Updating...' : 'Publishing...')}
+                                        {editingResourceId ? 'Updating...' : 'Publishing...'}
                                     </>
                                 ) : (editingResourceId ? 'Update Resource' : 'Publish Resource')}
                             </Button>

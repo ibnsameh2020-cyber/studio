@@ -26,11 +26,6 @@ export type ExperienceItem = {
     longDescription: string;
 };
 
-export type ContentBlock = {
-  type: 'h1' | 'h2' | 'p' | 'blockquote' | 'list';
-  content: string | string[];
-};
-
 export type Article = {
   id: string;
   title: string;
@@ -48,7 +43,6 @@ export type Resource = {
     title: string;
     description: string;
     content: string;
-    formattedContent?: ContentBlock[] | string;
     author: string;
     date: Timestamp | Date | string;
     tags: string[];

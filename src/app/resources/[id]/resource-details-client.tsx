@@ -1,7 +1,7 @@
 
 "use client";
 
-import type { Resource, ContentBlock } from '@/lib/types';
+import type { Resource } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User } from 'lucide-react';
 import { Timestamp } from 'firebase/firestore';
@@ -27,41 +27,6 @@ const processInlineMarkdown = (line: string): React.ReactNode => {
       return <em key={i} className="italic">{part.slice(1, -1)}</em>;
     }
     return part;
-  });
-};
-
-// Renders content from the new structured format
-const renderStructuredContent = (blocks: ContentBlock[]) => {
-  return blocks.map((block, index) => {
-    switch (block.type) {
-      case 'h1':
-        return (
-          <h2 key={index} className="text-3xl font-headline font-bold mt-10 mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
-            {processInlineMarkdown(block.content as string)}
-          </h2>
-        );
-      case 'h2':
-        return (
-          <h3 key={index} className="text-2xl font-headline font-semibold mt-8 mb-4 text-primary">
-            {processInlineMarkdown(block.content as string)}
-          </h3>
-        );
-      case 'blockquote':
-        return (
-          <blockquote key={index} className="border-l-4 border-primary pl-4 py-2 my-6 bg-card/30">
-            <p className="text-lg italic text-foreground/90">{processInlineMarkdown(block.content as string)}</p>
-          </blockquote>
-        );
-      case 'list':
-        return (
-          <ul key={index} className="list-disc list-inside mb-4 space-y-2 pl-4">
-            {(block.content as string[]).map((item, i) => <li key={i}>{processInlineMarkdown(item)}</li>)}
-          </ul>
-        );
-      case 'p':
-      default:
-        return <p key={index} className="mb-4 leading-relaxed">{processInlineMarkdown(block.content as string)}</p>;
-    }
   });
 };
 
@@ -109,7 +74,6 @@ const renderLegacyContent = (content: string) => {
 
 export default function ResourceDetailsClient({ resource }: { resource: Resource }) {
   const isRTL = resource.language === 'rtl';
-  const contentToRender = resource.formattedContent || resource.content;
 
   return (
     <div className="relative overflow-hidden">
@@ -157,10 +121,7 @@ export default function ResourceDetailsClient({ resource }: { resource: Resource
             </div>
 
             <article className="prose prose-lg dark:prose-invert max-w-none mx-auto text-foreground/90 mb-12">
-                {Array.isArray(contentToRender)
-                ? renderStructuredContent(contentToRender as ContentBlock[])
-                : renderLegacyContent(contentToRender as string)
-                }
+                {renderLegacyContent(resource.content as string)}
             </article>
 
             <div className="flex flex-wrap gap-2" dir="ltr">
