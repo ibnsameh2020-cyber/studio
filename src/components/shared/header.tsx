@@ -27,8 +27,8 @@ const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
   { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
   { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
-  { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
+  { id: 'insights', href: '/articles', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
+  { id: 'about', href: '/about', label: 'About', icon: <User className="w-4 h-4" /> },
   { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
@@ -53,8 +53,8 @@ export default function Header() {
       const insightsIndex = items.findIndex(item => item.id === 'insights');
       if (insightsIndex !== -1) {
         items.splice(insightsIndex + 1, 0, {
-          id: 'exclusive-resources-cta',
-          href: '/#exclusive-resources-cta',
+          id: 'resources',
+          href: '/resources',
           label: 'Resources',
           icon: <Sparkles className="w-4 h-4" />,
         });
@@ -182,9 +182,7 @@ export default function Header() {
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-10',
-                           (activeSection === 'hero' && pathname ==='/')
-                           ? 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
-                           : isLinkActive
+                           isLinkActive
                            ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
                            : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
                         )}
@@ -192,9 +190,7 @@ export default function Header() {
                         {item.icon}
                         <span className={cn(
                           'transition-opacity duration-200',
-                          (activeSection === 'hero' && pathname ==='/')
-                          ? 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
-                          : isLinkActive
+                          isLinkActive
                           ? 'opacity-100 w-auto'
                           : 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
                         )}>
@@ -211,10 +207,25 @@ export default function Header() {
                     ) : user ? (
                         <div className="flex items-center gap-1">
                             {isAdmin && (
-                                <Link href="/admin" passHref>
-                                    <Button variant={pathname.startsWith('/admin') ? 'default' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
-                                        <ShieldCheck className="h-5 w-5" />
-                                    </Button>
+                                <Link
+                                    href="/admin"
+                                    className={cn(
+                                        'group/admin-btn text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
+                                        'h-10',
+                                        pathname.startsWith('/admin')
+                                        ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
+                                        : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                                    )}
+                                >
+                                    <ShieldCheck className="h-5 w-5" />
+                                    <span className={cn(
+                                        'transition-opacity duration-200',
+                                        pathname.startsWith('/admin')
+                                        ? 'opacity-100 w-auto'
+                                        : 'opacity-0 w-0 group-hover/admin-btn:opacity-100 group-hover/admin-btn:w-auto'
+                                    )}>
+                                        Admin Panel
+                                    </span>
                                 </Link>
                             )}
                             <DropdownMenu>
