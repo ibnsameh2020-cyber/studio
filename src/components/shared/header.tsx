@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -20,14 +21,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 import { useTheme } from 'next-themes';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
   { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
   { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'insights', href: '/articles', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
-  { id: 'about', href: '/about', label: 'About', icon: <User className="w-4 h-4" /> },
+  { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
+  { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
   { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
@@ -40,6 +41,7 @@ export default function Header() {
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+  const router = useRouter();
 
   const [activeSection, setActiveSection] = useState('hero');
 
@@ -52,8 +54,8 @@ export default function Header() {
       const insightsIndex = items.findIndex(item => item.id === 'insights');
       if (insightsIndex !== -1) {
         items.splice(insightsIndex + 1, 0, {
-          id: 'resources',
-          href: '/resources',
+          id: 'exclusive-resources-cta',
+          href: '/#exclusive-resources-cta',
           label: 'Resources',
           icon: <Sparkles className="w-4 h-4" />,
         });
@@ -131,6 +133,9 @@ export default function Header() {
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
       }
+    } else if (href.startsWith('/#')) {
+        e.preventDefault();
+        router.push(href);
     }
   };
 
