@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut } from 'lucide-react';
@@ -24,13 +24,16 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
-  { href: '/services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
-  { href: '/projects', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
-  { href: '/experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { href: '/articles', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
-  { href: '/about', label: 'About', icon: <User className="w-4 h-4" /> },
-  { href: '/contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
+  { id: 'services', href: '#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
+  { id: 'case-studies', href: '#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
+  { id: 'experience', href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
+  { id: 'insights', href: '#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
+  { id: 'about', href: '/about', label: 'About', icon: <User className="w-4 h-4" /> },
+  { id: 'contact', href: '#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
+
+const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'insights', 'contact'];
+
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,6 +41,9 @@ export default function Header() {
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+
+  const [activeSection, setActiveSection] = useState('hero');
+  const isHeroActive = activeSection === 'hero' && pathname === '/';
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const [newArticles, setNewArticles] = useState<Article[]>([]);
@@ -47,6 +53,7 @@ export default function Header() {
     if (user) {
       const resourcesIndex = items.findIndex(item => item.label === 'Insights') + 1;
       items.splice(resourcesIndex, 0, {
+        id: 'resources',
         href: '/resources',
         label: 'Resources',
         icon: <Sparkles className="w-4 h-4" />,
@@ -58,6 +65,45 @@ export default function Header() {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const handleScroll = () => {
+      let currentSection = 'hero';
+      let maxVisibleHeight = 0;
+      
+      const viewportMidpoint = window.innerHeight / 2;
+
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= viewportMidpoint && rect.bottom >= viewportMidpoint) {
+            currentSection = id;
+            break; 
+          }
+        }
+      }
+      
+      // Fallback for top of page
+      if (window.scrollY < 200) {
+        currentSection = 'hero';
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (articles) {
@@ -77,16 +123,24 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    handleMenuLinkClick();
+    if (pathname === '/' && href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+
   const handleNotificationsOpenChange = (open: boolean) => {
     if (!open) {
         localStorage.setItem('last-viewed-articles-timestamp', Date.now().toString());
         setNewArticles([]);
     }
-  };
-
-  const isLinkActive = (itemHref: string) => {
-    if (itemHref === '/') return pathname === '/';
-    return pathname.startsWith(itemHref);
   };
   
   const getInitials = (name?: string | null) => {
@@ -114,21 +168,42 @@ export default function Header() {
                 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center space-x-1">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        'group text-sm font-medium transition-colors duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center h-10 px-4 gap-1.5',
-                        isLinkActive(item.href)
-                          ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
-                      )}
-                    >
-                      {item.icon}
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
+                  {navItems.map((item) => {
+                    const isPageLink = item.href.startsWith('/');
+                    const isLinkActive = isPageLink
+                      ? pathname === item.href
+                      : activeSection === item.id;
+
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.href}
+                        onClick={(e) => handleNavClick(e, item.href)}
+                        className={cn(
+                          'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
+                          'h-10',
+                          // Animation logic
+                          isHeroActive && !isPageLink
+                            ? 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                            : 'w-auto px-4 gap-1.5',
+                          // Active state
+                          isLinkActive
+                            ? 'bg-primary text-primary-foreground w-auto px-4 gap-1.5'
+                            : 'text-muted-foreground'
+                        )}
+                      >
+                        {item.icon}
+                        <span className={cn(
+                          'transition-opacity duration-200',
+                          isHeroActive && !isPageLink
+                            ? 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
+                            : 'opacity-100 w-auto'
+                        )}>
+                          {item.label}
+                        </span>
+                      </Link>
+                    )
+                  })}
                 </nav>
                 
                 <div className="hidden md:flex items-center gap-1">
@@ -316,20 +391,26 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden fixed top-24 left-4 right-4 z-40 bg-background/90 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl p-6 animate-in fade-in-20 slide-in-from-top-4">
           <nav className="flex flex-col items-center justify-center flex-grow gap-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={handleMenuLinkClick}
-                className={cn(
-                  'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
-                  isLinkActive(item.href) ? 'bg-primary text-primary-foreground' : 'text-foreground'
-                )}
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+                 const isPageLink = item.href.startsWith('/');
+                 const isLinkActive = isPageLink
+                   ? pathname === item.href
+                   : activeSection === item.id;
+                return (
+                    <Link
+                        key={item.id}
+                        href={item.href}
+                        onClick={(e) => handleNavClick(e, item.href)}
+                        className={cn(
+                        'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
+                        isLinkActive ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                        )}
+                    >
+                        {item.icon}
+                        {item.label}
+                    </Link>
+                )
+            })}
           </nav>
         </div>
       )}
