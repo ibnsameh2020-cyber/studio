@@ -129,106 +129,34 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 pt-24">
-      <div className="relative w-full max-w-md">
-        <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10 animate-fade-in-up">
-          <Tabs defaultValue="sign-in" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="sign-in">Sign In</TabsTrigger>
-              <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="sign-in">
-              <CardHeader className="text-center">
-                <CardTitle className="text-3xl font-headline">Welcome Back</CardTitle>
-                <CardDescription className="pt-2">Enter your credentials to access your account.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Form {...signInForm}>
-                  <form onSubmit={signInForm.handleSubmit(onSignInSubmit)} className="space-y-4">
-                     <FormField
-                        control={signInForm.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                                <Input type="email" placeholder="your.email@example.com" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                     <FormField
-                        control={signInForm.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <div className="relative">
-                                    <FormControl>
-                                        <Input
-                                            type={showSignInPassword ? "text" : "password"}
-                                            placeholder="••••••••"
-                                            {...field}
-                                            className="pr-10"
-                                        />
-                                    </FormControl>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowSignInPassword((prev) => !prev)}
-                                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                        aria-label={showSignInPassword ? "Hide password" : "Show password"}
-                                    >
-                                        {showSignInPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                    </button>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className="flex justify-end -mt-2">
-                        <Button
-                            type="button"
-                            variant="link"
-                            className="p-0 h-auto text-sm text-muted-foreground hover:text-primary"
-                            onClick={handleForgotPassword}
-                            disabled={isSubmitting}
-                        >
-                            Forgot Password?
-                        </Button>
-                    </div>
-                    <Button type="submit" className="w-full h-12 text-base" disabled={isSubmitting}>
-                      {isSubmitting ? <Loader2 className="animate-spin" /> : <><LogIn /> Sign In</>}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-            </TabsContent>
-
-            <TabsContent value="sign-up">
+    <div className="relative overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 z-0">
+            <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
+            <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
+            <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
+            <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
+            <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
+            <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
+        </div>
+      <div className="relative flex min-h-screen items-center justify-center px-4 py-12 pt-24">
+        <div className="relative w-full max-w-md">
+            <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10 animate-fade-in-up">
+            <Tabs defaultValue="sign-in" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="sign-in">Sign In</TabsTrigger>
+                <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="sign-in">
                 <CardHeader className="text-center">
-                    <CardTitle className="text-3xl font-headline">Create an Account</CardTitle>
-                    <CardDescription className="pt-2">Fill in the details below to join.</CardDescription>
+                    <CardTitle className="text-3xl font-headline">Welcome Back</CardTitle>
+                    <CardDescription className="pt-2">Enter your credentials to access your account.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Form {...signUpForm}>
-                    <form onSubmit={signUpForm.handleSubmit(onSignUpSubmit)} className="space-y-4">
+                    <Form {...signInForm}>
+                    <form onSubmit={signInForm.handleSubmit(onSignInSubmit)} className="space-y-4">
                         <FormField
-                            control={signUpForm.control}
-                            name="displayName"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Display Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Your Name" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={signUpForm.control}
+                            control={signInForm.control}
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
@@ -241,7 +169,7 @@ export default function LoginPage() {
                             )}
                         />
                         <FormField
-                            control={signUpForm.control}
+                            control={signInForm.control}
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
@@ -249,7 +177,7 @@ export default function LoginPage() {
                                     <div className="relative">
                                         <FormControl>
                                             <Input
-                                                type={showSignUpPassword ? "text" : "password"}
+                                                type={showSignInPassword ? "text" : "password"}
                                                 placeholder="••••••••"
                                                 {...field}
                                                 className="pr-10"
@@ -257,54 +185,136 @@ export default function LoginPage() {
                                         </FormControl>
                                         <button
                                             type="button"
-                                            onClick={() => setShowSignUpPassword((prev) => !prev)}
+                                            onClick={() => setShowSignInPassword((prev) => !prev)}
                                             className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                            aria-label={showSignUpPassword ? "Hide password" : "Show password"}
+                                            aria-label={showSignInPassword ? "Hide password" : "Show password"}
                                         >
-                                            {showSignUpPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            {showSignInPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                         </button>
                                     </div>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={signUpForm.control}
-                            name="confirmPassword"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Confirm Password</FormLabel>
-                                    <div className="relative">
-                                        <FormControl>
-                                            <Input
-                                                type={showConfirmPassword ? "text" : "password"}
-                                                placeholder="••••••••"
-                                                {...field}
-                                                className="pr-10"
-                                            />
-                                        </FormControl>
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowConfirmPassword((prev) => !prev)}
-                                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                            aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                                        >
-                                            {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                        </button>
-                                    </div>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <div className="flex justify-end -mt-2">
+                            <Button
+                                type="button"
+                                variant="link"
+                                className="p-0 h-auto text-sm text-muted-foreground hover:text-primary"
+                                onClick={handleForgotPassword}
+                                disabled={isSubmitting}
+                            >
+                                Forgot Password?
+                            </Button>
+                        </div>
                         <Button type="submit" className="w-full h-12 text-base" disabled={isSubmitting}>
-                           {isSubmitting ? <Loader2 className="animate-spin" /> : <><UserPlus /> Sign Up</>}
+                        {isSubmitting ? <Loader2 className="animate-spin" /> : <><LogIn /> Sign In</>}
                         </Button>
                     </form>
                     </Form>
                 </CardContent>
-            </TabsContent>
-          </Tabs>
-        </Card>
+                </TabsContent>
+
+                <TabsContent value="sign-up">
+                    <CardHeader className="text-center">
+                        <CardTitle className="text-3xl font-headline">Create an Account</CardTitle>
+                        <CardDescription className="pt-2">Fill in the details below to join.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Form {...signUpForm}>
+                        <form onSubmit={signUpForm.handleSubmit(onSignUpSubmit)} className="space-y-4">
+                            <FormField
+                                control={signUpForm.control}
+                                name="displayName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Display Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Your Name" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={signUpForm.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input type="email" placeholder="your.email@example.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={signUpForm.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <div className="relative">
+                                            <FormControl>
+                                                <Input
+                                                    type={showSignUpPassword ? "text" : "password"}
+                                                    placeholder="••••••••"
+                                                    {...field}
+                                                    className="pr-10"
+                                                />
+                                            </FormControl>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowSignUpPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                aria-label={showSignUpPassword ? "Hide password" : "Show password"}
+                                            >
+                                                {showSignUpPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            </button>
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={signUpForm.control}
+                                name="confirmPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Confirm Password</FormLabel>
+                                        <div className="relative">
+                                            <FormControl>
+                                                <Input
+                                                    type={showConfirmPassword ? "text" : "password"}
+                                                    placeholder="••••••••"
+                                                    {...field}
+                                                    className="pr-10"
+                                                />
+                                            </FormControl>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                            >
+                                                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            </button>
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="w-full h-12 text-base" disabled={isSubmitting}>
+                               {isSubmitting ? <Loader2 className="animate-spin" /> : <><UserPlus /> Sign Up</>}
+                            </Button>
+                        </form>
+                        </Form>
+                    </CardContent>
+                </TabsContent>
+            </Tabs>
+            </Card>
+        </div>
       </div>
     </div>
   );

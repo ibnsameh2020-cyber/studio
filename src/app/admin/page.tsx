@@ -506,326 +506,336 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Admin Panel</h1>
+    <div className="relative overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 z-0">
+            <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
+            <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
+            <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
+            <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
+            <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
+            <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
+        </div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32 relative">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Admin Panel</h1>
 
-        <Tabs defaultValue="articles" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="articles">Manage Insights</TabsTrigger>
-                <TabsTrigger value="resources">Manage Resources</TabsTrigger>
-                <TabsTrigger value="users">User Data</TabsTrigger>
-            </TabsList>
-            <TabsContent value="articles">
-                <p className="text-muted-foreground mb-8">
-                    {editingInsightId ? `Editing insight: ${editingInsightId}` : "Create a new public insight."}
-                </p>
-                <Form {...insightForm}>
-                    <form 
-                        onSubmit={insightForm.handleSubmit(onInsightSubmit)} 
+            <Tabs defaultValue="articles" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 mb-8">
+                    <TabsTrigger value="articles">Manage Insights</TabsTrigger>
+                    <TabsTrigger value="resources">Manage Resources</TabsTrigger>
+                    <TabsTrigger value="users">User Data</TabsTrigger>
+                </TabsList>
+                <TabsContent value="articles">
+                    <p className="text-muted-foreground mb-8">
+                        {editingInsightId ? `Editing insight: ${editingInsightId}` : "Create a new public insight."}
+                    </p>
+                    <Form {...insightForm}>
+                        <form 
+                            onSubmit={insightForm.handleSubmit(onInsightSubmit)} 
+                            className={cn(
+                                "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
+                                insightLanguage === 'rtl' && 'font-arabic'
+                            )}
+                            dir={insightLanguage}
+                        >
+                            <FormField control={insightForm.control} name="title" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Internal Title</FormLabel>
+                                    <FormControl><Input placeholder="e.g., AI in PMOs Q2" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+                            <FormField control={insightForm.control} name="category" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Category</FormLabel>
+                                    <FormControl><Input placeholder="e.g., Strategic Advisory" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+                             <FormField control={insightForm.control} name="headline" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Headline</FormLabel>
+                                    <FormControl><Textarea placeholder="The main, bold statement or title of the insight" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+                             <FormField control={insightForm.control} name="hook" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>The Hook</FormLabel>
+                                    <FormControl><Textarea placeholder="A compelling sentence or question to draw the reader in" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+                             <FormField control={insightForm.control} name="keyInsight" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Key Insight</FormLabel>
+                                    <FormControl><Textarea placeholder="The core takeaway or conclusion" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+
+                            <div className="flex gap-4" dir="ltr">
+                                {editingInsightId && (
+                                    <Button type="button" variant="outline" onClick={cancelEditInsight} className="w-full">Cancel</Button>
+                                )}
+                                <Button type="submit" size="lg" className="w-full group" disabled={insightForm.formState.isSubmitting || isProcessingInsight}>
+                                    {isProcessingInsight ? (
+                                        <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</>
+                                    ) : (editingInsightId ? 'Update Insight' : 'Publish Insight')}
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
+                     <div className="space-y-8">
+                        <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Insights</h2>
+                        {articlesLoading ? (
+                            <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                        ) : (
+                            <div className="space-y-4">
+                                {articles?.map(insight => (
+                                    <Card key={insight.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
+                                        <CardHeader className="p-0">
+                                            <CardTitle className="text-lg font-headline">{insight.headline}</CardTitle>
+                                            <CardDescription>{insight.category}</CardDescription>
+                                        </CardHeader>
+                                        <CardFooter className="p-0 flex gap-2">
+                                            <Button variant="outline" size="icon" onClick={() => handleEditInsightClick(insight)}>
+                                                <Edit className="w-4 h-4" />
+                                            </Button>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild><Button variant="destructive" size="icon"><Trash2 className="w-4 h-4" /></Button></AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription>This will permanently delete this insight.</AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDeleteInsight(insight.id)}>Delete</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </CardFooter>
+                                    </Card>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </TabsContent>
+                <TabsContent value="resources">
+                    <p className="text-muted-foreground mb-8">
+                        {editingResourceId ? `Editing resource: ${editingResourceId}` : "Create a new members-only resource."}
+                    </p>
+                    <Form {...resourceForm}>
+                        <form 
+                        onSubmit={resourceForm.handleSubmit(onResourceSubmit)} 
                         className={cn(
                             "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
-                            insightLanguage === 'rtl' && 'font-arabic'
+                            language === 'rtl' && 'font-arabic'
                         )}
-                        dir={insightLanguage}
-                    >
-                        <FormField control={insightForm.control} name="title" render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Internal Title</FormLabel>
-                                <FormControl><Input placeholder="e.g., AI in PMOs Q2" {...field} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )} />
-                        <FormField control={insightForm.control} name="category" render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Category</FormLabel>
-                                <FormControl><Input placeholder="e.g., Strategic Advisory" {...field} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )} />
-                         <FormField control={insightForm.control} name="headline" render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Headline</FormLabel>
-                                <FormControl><Textarea placeholder="The main, bold statement or title of the insight" {...field} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )} />
-                         <FormField control={insightForm.control} name="hook" render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>The Hook</FormLabel>
-                                <FormControl><Textarea placeholder="A compelling sentence or question to draw the reader in" {...field} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )} />
-                         <FormField control={insightForm.control} name="keyInsight" render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Key Insight</FormLabel>
-                                <FormControl><Textarea placeholder="The core takeaway or conclusion" {...field} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )} />
+                        dir={language}
+                        >
+                            <FormField
+                                control={resourceForm.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Title</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter resource title" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={resourceForm.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Short Description</FormLabel>
+                                    <FormControl>
+                                        <Textarea placeholder="A brief summary of the resource" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                <FormItem dir="ltr">
+                                <FormLabel>Cover Image</FormLabel>
+                                <div className="flex items-center gap-4">
+                                    <CldUploadWidget
+                                        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                                        onSuccess={handleUploadSuccess}
+                                        options={{
+                                            sources: ['local', 'url', 'camera'],
+                                            multiple: false,
+                                        }}
+                                    >
+                                        {({ open }) => {
+                                            return (
+                                                <Button type="button" variant="outline" onClick={() => open()}>
+                                                    <Upload className="mr-2 h-4 w-4" />
+                                                    Upload
+                                                </Button>
+                                            );
+                                        }}
+                                    </CldUploadWidget>
 
-                        <div className="flex gap-4" dir="ltr">
-                            {editingInsightId && (
-                                <Button type="button" variant="outline" onClick={cancelEditInsight} className="w-full">Cancel</Button>
+                                    {imageUrl && (
+                                    <div className="relative w-32 h-20 rounded-md overflow-hidden">
+                                        <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
+                                    </div>
+                                    )}
+                                </div>
+                                <FormControl>
+                                    <Input type="hidden" {...resourceForm.register("imageUrl")} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            </div>
+                            <FormField
+                                control={resourceForm.control}
+                                name="content"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Full Content</FormLabel>
+                                    <FormControl>
+                                        <Textarea 
+                                        placeholder="Write the full resource content here. The AI will automatically style it." 
+                                        rows={15} 
+                                        {...field}
+                                        className={cn(language === 'rtl' && 'text-lg')}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={resourceForm.control}
+                                name="tags"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Tags (comma-separated)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., React, Firebase, Web Dev" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex gap-4" dir="ltr">
+                            {editingResourceId && (
+                                <Button type="button" variant="outline" onClick={cancelEditResource} className="w-full">
+                                    Cancel
+                                </Button>
                             )}
-                            <Button type="submit" size="lg" className="w-full group" disabled={insightForm.formState.isSubmitting || isProcessingInsight}>
-                                {isProcessingInsight ? (
-                                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</>
-                                ) : (editingInsightId ? 'Update Insight' : 'Publish Insight')}
+                            <Button type="submit" size="lg" className="w-full group" disabled={resourceForm.formState.isSubmitting || isProcessingResource}>
+                                {(resourceForm.formState.isSubmitting || isProcessingResource) ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                        {isProcessingResource ? 'AI is Styling...' : (editingResourceId ? 'Updating...' : 'Publishing...')}
+                                    </>
+                                ) : (editingResourceId ? 'Update Resource' : 'Publish Resource')}
                             </Button>
-                        </div>
-                    </form>
-                </Form>
-                 <div className="space-y-8">
-                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Insights</h2>
-                    {articlesLoading ? (
-                        <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
-                    ) : (
-                        <div className="space-y-4">
-                            {articles?.map(insight => (
-                                <Card key={insight.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
-                                    <CardHeader className="p-0">
-                                        <CardTitle className="text-lg font-headline">{insight.headline}</CardTitle>
-                                        <CardDescription>{insight.category}</CardDescription>
-                                    </CardHeader>
-                                    <CardFooter className="p-0 flex gap-2">
-                                        <Button variant="outline" size="icon" onClick={() => handleEditInsightClick(insight)}>
-                                            <Edit className="w-4 h-4" />
-                                        </Button>
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild><Button variant="destructive" size="icon"><Trash2 className="w-4 h-4" /></Button></AlertDialogTrigger>
+                            </div>
+                        </form>
+                    </Form>
+                    <div className="space-y-8">
+                        <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Resources</h2>
+                        {resourcesLoading ? (
+                            <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                        ) : (
+                            <div className="space-y-4">
+                                {resources?.map(resource => (
+                                    <Card key={resource.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
+                                        <CardHeader className="p-0">
+                                            <CardTitle className="text-lg font-headline">{resource.title}</CardTitle>
+                                            <CardDescription>
+                                                Published on: {formatDate(resource.date)}
+                                            </CardDescription>
+                                        </CardHeader>
+                                        <CardFooter className="p-0 flex gap-2">
+                                            <Button variant="outline" size="icon" onClick={() => handleEditResourceClick(resource)}>
+                                                <Edit className="w-4 h-4" />
+                                            </Button>
+                                            <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button variant="destructive" size="icon">
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            </AlertDialogTrigger>
                                             <AlertDialogContent>
                                                 <AlertDialogHeader>
-                                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                    <AlertDialogDescription>This will permanently delete this insight.</AlertDialogDescription>
+                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action cannot be undone. This will permanently delete the resource.
+                                                </AlertDialogDescription>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => handleDeleteInsight(insight.id)}>Delete</AlertDialogAction>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction onClick={() => handleDeleteResource(resource.id)}>
+                                                    Delete
+                                                </AlertDialogAction>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
-                                        </AlertDialog>
-                                    </CardFooter>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </TabsContent>
-            <TabsContent value="resources">
-                <p className="text-muted-foreground mb-8">
-                    {editingResourceId ? `Editing resource: ${editingResourceId}` : "Create a new members-only resource."}
-                </p>
-                <Form {...resourceForm}>
-                    <form 
-                    onSubmit={resourceForm.handleSubmit(onResourceSubmit)} 
-                    className={cn(
-                        "space-y-8 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl mb-16",
-                        language === 'rtl' && 'font-arabic'
-                    )}
-                    dir={language}
-                    >
-                        <FormField
-                            control={resourceForm.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Enter resource title" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={resourceForm.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Short Description</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="A brief summary of the resource" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <FormItem dir="ltr">
-                            <FormLabel>Cover Image</FormLabel>
-                            <div className="flex items-center gap-4">
-                                <CldUploadWidget
-                                    uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-                                    onSuccess={handleUploadSuccess}
-                                    options={{
-                                        sources: ['local', 'url', 'camera'],
-                                        multiple: false,
-                                    }}
-                                >
-                                    {({ open }) => {
-                                        return (
-                                            <Button type="button" variant="outline" onClick={() => open()}>
-                                                <Upload className="mr-2 h-4 w-4" />
-                                                Upload
-                                            </Button>
-                                        );
-                                    }}
-                                </CldUploadWidget>
-
-                                {imageUrl && (
-                                <div className="relative w-32 h-20 rounded-md overflow-hidden">
-                                    <Image src={imageUrl} alt="Uploaded preview" fill className="object-cover" />
+                                            </AlertDialog>
+                                        </CardFooter>
+                                    </Card>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </TabsContent>
+                <TabsContent value="users">
+                    <h2 className="text-2xl md:text-4xl font-headline font-bold mb-4">User Data</h2>
+                    <p className="text-muted-foreground mb-8">
+                        A list of all registered users in your application.
+                    </p>
+                    <Card className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl">
+                        <CardHeader>
+                            <CardTitle>Registered Users</CardTitle>
+                            <CardDescription>Total users: {users?.length ?? 0}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {usersLoading ? (
+                                <div className="flex justify-center items-center h-48">
+                                    <Loader2 className="h-8 w-8 animate-spin" />
                                 </div>
-                                )}
-                            </div>
-                            <FormControl>
-                                <Input type="hidden" {...resourceForm.register("imageUrl")} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        </div>
-                        <FormField
-                            control={resourceForm.control}
-                            name="content"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Full Content</FormLabel>
-                                <FormControl>
-                                    <Textarea 
-                                    placeholder="Write the full resource content here. The AI will automatically style it." 
-                                    rows={15} 
-                                    {...field}
-                                    className={cn(language === 'rtl' && 'text-lg')}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={resourceForm.control}
-                            name="tags"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Tags (comma-separated)</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="e.g., React, Firebase, Web Dev" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex gap-4" dir="ltr">
-                        {editingResourceId && (
-                            <Button type="button" variant="outline" onClick={cancelEditResource} className="w-full">
-                                Cancel
-                            </Button>
-                        )}
-                        <Button type="submit" size="lg" className="w-full group" disabled={resourceForm.formState.isSubmitting || isProcessingResource}>
-                            {(resourceForm.formState.isSubmitting || isProcessingResource) ? (
-                                <>
-                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    {isProcessingResource ? 'AI is Styling...' : (editingResourceId ? 'Updating...' : 'Publishing...')}
-                                </>
-                            ) : (editingResourceId ? 'Update Resource' : 'Publish Resource')}
-                        </Button>
-                        </div>
-                    </form>
-                </Form>
-                <div className="space-y-8">
-                    <h2 className="text-2xl md:text-4xl font-headline font-bold">Manage Resources</h2>
-                    {resourcesLoading ? (
-                        <div className="flex justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
-                    ) : (
-                        <div className="space-y-4">
-                            {resources?.map(resource => (
-                                <Card key={resource.id} className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-lg flex flex-col sm:flex-row justify-between sm:items-center p-4 gap-4">
-                                    <CardHeader className="p-0">
-                                        <CardTitle className="text-lg font-headline">{resource.title}</CardTitle>
-                                        <CardDescription>
-                                            Published on: {formatDate(resource.date)}
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardFooter className="p-0 flex gap-2">
-                                        <Button variant="outline" size="icon" onClick={() => handleEditResourceClick(resource)}>
-                                            <Edit className="w-4 h-4" />
-                                        </Button>
-                                        <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button variant="destructive" size="icon">
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                            <AlertDialogDescription>
-                                                This action cannot be undone. This will permanently delete the resource.
-                                            </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                            <AlertDialogAction onClick={() => handleDeleteResource(resource.id)}>
-                                                Delete
-                                            </AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                        </AlertDialog>
-                                    </CardFooter>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </TabsContent>
-            <TabsContent value="users">
-                <h2 className="text-2xl md:text-4xl font-headline font-bold mb-4">User Data</h2>
-                <p className="text-muted-foreground mb-8">
-                    A list of all registered users in your application.
-                </p>
-                <Card className="bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl">
-                    <CardHeader>
-                        <CardTitle>Registered Users</CardTitle>
-                        <CardDescription>Total users: {users?.length ?? 0}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {usersLoading ? (
-                            <div className="flex justify-center items-center h-48">
-                                <Loader2 className="h-8 w-8 animate-spin" />
-                            </div>
-                        ) : (
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>User</TableHead>
-                                        <TableHead>Email</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {users?.map(user => (
-                                        <TableRow key={user.id}>
-                                            <TableCell>
-                                                <div className="flex items-center gap-4">
-                                                    <Avatar>
-                                                        <AvatarImage src={user.photoURL || ''} />
-                                                        <AvatarFallback>{user.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
-                                                    </Avatar>
-                                                    <span className="font-medium">{user.displayName}</span>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>{user.email}</TableCell>
+                            ) : (
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>User</TableHead>
+                                            <TableHead>Email</TableHead>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-                    </CardContent>
-                </Card>
-            </TabsContent>
-        </Tabs>
-      </div>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {users?.map(user => (
+                                            <TableRow key={user.id}>
+                                                <TableCell>
+                                                    <div className="flex items-center gap-4">
+                                                        <Avatar>
+                                                            <AvatarImage src={user.photoURL || ''} />
+                                                            <AvatarFallback>{user.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                                                        </Avatar>
+                                                        <span className="font-medium">{user.displayName}</span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>{user.email}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            )}
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+            </Tabs>
+          </div>
+        </div>
     </div>
   );
 }

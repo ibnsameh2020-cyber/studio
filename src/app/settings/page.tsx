@@ -95,160 +95,180 @@ export default function SettingsPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+        <div className="relative overflow-hidden">
+            <div aria-hidden="true" className="absolute inset-0 z-0">
+                <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
+                <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
+                <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
+                <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
+                <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
+                <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
+            </div>
+            <div className="relative flex h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Settings</h1>
-        
-        <Tabs defaultValue="profile" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="profile">Profile</TabsTrigger>
-                <TabsTrigger value="account">Account</TabsTrigger>
-            </TabsList>
+    <div className="relative overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 z-0">
+            <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
+            <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
+            <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
+            <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
+            <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
+            <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
+        </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32 relative">
+        <div className="max-w-2xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-headline font-bold mb-8">Settings</h1>
             
-            <TabsContent value="profile" className="mt-6">
-                <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
-                    <CardHeader>
-                        <CardTitle>Public Profile</CardTitle>
-                        <CardDescription>This is how others will see you on the site.</CardDescription>
-                    </CardHeader>
-                     <Form {...profileForm}>
-                        <form onSubmit={profileForm.handleSubmit(onProfileSubmit)}>
-                            <CardContent>
-                                <FormField
-                                control={profileForm.control}
-                                name="displayName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                    <FormLabel>Display Name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Your Name" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                    </FormItem>
-                                )}
-                                />
-                            </CardContent>
-                            <CardFooter className="border-t px-6 py-4">
-                                <Button type="submit" disabled={isProfileSubmitting || profileForm.formState.isSubmitting}>
-                                    {isProfileSubmitting ? <Loader2 className="animate-spin" /> : 'Save Changes'}
-                                </Button>
-                            </CardFooter>
-                        </form>
-                    </Form>
-                </Card>
-            </TabsContent>
-            
-            <TabsContent value="account" className="mt-6 space-y-6">
-                 <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
-                    <CardHeader>
-                        <CardTitle>Password</CardTitle>
-                        <CardDescription>Change your password.</CardDescription>
-                    </CardHeader>
-                     <Form {...passwordForm}>
-                        <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
-                            <CardContent className="space-y-4">
-                                <FormField
-                                    control={passwordForm.control}
-                                    name="currentPassword"
+            <Tabs defaultValue="profile" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="profile">Profile</TabsTrigger>
+                    <TabsTrigger value="account">Account</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="profile" className="mt-6">
+                    <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
+                        <CardHeader>
+                            <CardTitle>Public Profile</CardTitle>
+                            <CardDescription>This is how others will see you on the site.</CardDescription>
+                        </CardHeader>
+                         <Form {...profileForm}>
+                            <form onSubmit={profileForm.handleSubmit(onProfileSubmit)}>
+                                <CardContent>
+                                    <FormField
+                                    control={profileForm.control}
+                                    name="displayName"
                                     render={({ field }) => (
                                         <FormItem>
-                                        <FormLabel>Current Password</FormLabel>
-                                         <div className="relative">
-                                            <FormControl>
-                                                <Input
-                                                    type={showCurrentPassword ? "text" : "password"}
-                                                    placeholder="••••••••"
-                                                    {...field}
-                                                    className="pr-10"
-                                                />
-                                            </FormControl>
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowCurrentPassword((prev) => !prev)}
-                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                                aria-label={showCurrentPassword ? "Hide password" : "Show password"}
-                                            >
-                                                {showCurrentPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                            </button>
-                                        </div>
+                                        <FormLabel>Display Name</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Your Name" {...field} />
+                                        </FormControl>
                                         <FormMessage />
                                         </FormItem>
                                     )}
-                                />
-                                 <FormField
-                                    control={passwordForm.control}
-                                    name="newPassword"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>New Password</FormLabel>
-                                        <div className="relative">
-                                            <FormControl>
-                                                <Input
-                                                    type={showNewPassword ? "text" : "password"}
-                                                    placeholder="••••••••"
-                                                    {...field}
-                                                    className="pr-10"
-                                                />
-                                            </FormControl>
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowNewPassword((prev) => !prev)}
-                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                                aria-label={showNewPassword ? "Hide password" : "Show password"}
-                                            >
-                                                {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                            </button>
-                                        </div>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                 <FormField
-                                    control={passwordForm.control}
-                                    name="confirmPassword"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                        <FormLabel>Confirm New Password</FormLabel>
-                                        <div className="relative">
-                                            <FormControl>
-                                                <Input
-                                                    type={showConfirmPassword ? "text" : "password"}
-                                                    placeholder="••••••••"
-                                                    {...field}
-                                                    className="pr-10"
-                                                />
-                                            </FormControl>
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
-                                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                                            >
-                                                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                            </button>
-                                        </div>
-                                        <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </CardContent>
-                            <CardFooter className="border-t px-6 py-4">
-                                <Button type="submit" disabled={isPasswordSubmitting || passwordForm.formState.isSubmitting}>
-                                    {isPasswordSubmitting ? <Loader2 className="animate-spin" /> : 'Update Password'}
-                                </Button>
-                            </CardFooter>
-                        </form>
-                    </Form>
-                </Card>
-            </TabsContent>
-        </Tabs>
+                                    />
+                                </CardContent>
+                                <CardFooter className="border-t px-6 py-4">
+                                    <Button type="submit" disabled={isProfileSubmitting || profileForm.formState.isSubmitting}>
+                                        {isProfileSubmitting ? <Loader2 className="animate-spin" /> : 'Save Changes'}
+                                    </Button>
+                                </CardFooter>
+                            </form>
+                        </Form>
+                    </Card>
+                </TabsContent>
+                
+                <TabsContent value="account" className="mt-6 space-y-6">
+                     <Card className="bg-card/60 backdrop-blur-lg border-border/30 shadow-2xl shadow-primary/10">
+                        <CardHeader>
+                            <CardTitle>Password</CardTitle>
+                            <CardDescription>Change your password.</CardDescription>
+                        </CardHeader>
+                         <Form {...passwordForm}>
+                            <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
+                                <CardContent className="space-y-4">
+                                    <FormField
+                                        control={passwordForm.control}
+                                        name="currentPassword"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                            <FormLabel>Current Password</FormLabel>
+                                             <div className="relative">
+                                                <FormControl>
+                                                    <Input
+                                                        type={showCurrentPassword ? "text" : "password"}
+                                                        placeholder="••••••••"
+                                                        {...field}
+                                                        className="pr-10"
+                                                    />
+                                                </FormControl>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowCurrentPassword((prev) => !prev)}
+                                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                    aria-label={showCurrentPassword ? "Hide password" : "Show password"}
+                                                >
+                                                    {showCurrentPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                </button>
+                                            </div>
+                                            <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                     <FormField
+                                        control={passwordForm.control}
+                                        name="newPassword"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                            <FormLabel>New Password</FormLabel>
+                                            <div className="relative">
+                                                <FormControl>
+                                                    <Input
+                                                        type={showNewPassword ? "text" : "password"}
+                                                        placeholder="••••••••"
+                                                        {...field}
+                                                        className="pr-10"
+                                                    />
+                                                </FormControl>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowNewPassword((prev) => !prev)}
+                                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                    aria-label={showNewPassword ? "Hide password" : "Show password"}
+                                                >
+                                                    {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                </button>
+                                            </div>
+                                            <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                     <FormField
+                                        control={passwordForm.control}
+                                        name="confirmPassword"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                            <FormLabel>Confirm New Password</FormLabel>
+                                            <div className="relative">
+                                                <FormControl>
+                                                    <Input
+                                                        type={showConfirmPassword ? "text" : "password"}
+                                                        placeholder="••••••••"
+                                                        {...field}
+                                                        className="pr-10"
+                                                    />
+                                                </FormControl>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                                                    aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                                >
+                                                    {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                </button>
+                                            </div>
+                                            <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </CardContent>
+                                <CardFooter className="border-t px-6 py-4">
+                                    <Button type="submit" disabled={isPasswordSubmitting || passwordForm.formState.isSubmitting}>
+                                        {isPasswordSubmitting ? <Loader2 className="animate-spin" /> : 'Update Password'}
+                                    </Button>
+                                </CardFooter>
+                            </form>
+                        </Form>
+                    </Card>
+                </TabsContent>
+            </Tabs>
+        </div>
       </div>
     </div>
   );
