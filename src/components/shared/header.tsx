@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -214,7 +213,7 @@ export default function Header() {
                                         'h-10',
                                         pathname.startsWith('/admin')
                                         ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
-                                        : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                                        : 'w-10 border border-primary/30 text-primary hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-primary/10 hover:border-primary/80'
                                     )}
                                 >
                                     <ShieldCheck className="h-5 w-5" />
