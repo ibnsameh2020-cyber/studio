@@ -24,12 +24,12 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
-  { id: 'services', href: '#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
-  { id: 'case-studies', href: '#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
-  { id: 'experience', href: '#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'insights', href: '#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
-  { id: 'about-cta', href: '#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
-  { id: 'contact', href: '#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
+  { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
+  { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
+  { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
+  { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
+  { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
+  { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
 const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
@@ -54,7 +54,7 @@ export default function Header() {
       if (insightsIndex !== -1) {
         items.splice(insightsIndex + 1, 0, {
           id: 'exclusive-resources-cta',
-          href: '#exclusive-resources-cta',
+          href: '/#exclusive-resources-cta',
           label: 'Resources',
           icon: <Sparkles className="w-4 h-4" />,
         });
@@ -125,9 +125,9 @@ export default function Header() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     handleMenuLinkClick();
-    if (pathname === '/' && href.startsWith('#')) {
+    if (pathname === '/' && href.startsWith('/#')) {
       e.preventDefault();
-      const targetId = href.substring(1);
+      const targetId = href.substring(2);
       const targetElement = document.getElementById(targetId);
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -169,9 +169,9 @@ export default function Header() {
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center space-x-1">
                   {navItems.map((item) => {
-                    const isPageLink = !item.href.startsWith('#');
+                    const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
                     const isLinkActive = isPageLink
-                      ? pathname.startsWith(item.href) && item.href !== '/'
+                      ? pathname.startsWith(item.href)
                       : activeSection === item.id;
 
                     return (
@@ -182,17 +182,21 @@ export default function Header() {
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-10',
-                          isLinkActive
-                            ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
-                            : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                           (activeSection === 'hero' && pathname ==='/')
+                           ? 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                           : isLinkActive
+                           ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
+                           : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
                         )}
                       >
                         {item.icon}
                         <span className={cn(
                           'transition-opacity duration-200',
-                          isLinkActive
-                            ? 'opacity-100 w-auto'
-                            : 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
+                          (activeSection === 'hero' && pathname ==='/')
+                          ? 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
+                          : isLinkActive
+                          ? 'opacity-100 w-auto'
+                          : 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
                         )}>
                           {item.label}
                         </span>
@@ -387,9 +391,9 @@ export default function Header() {
         <div className="md:hidden fixed top-24 left-4 right-4 z-40 bg-background/90 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl p-6 animate-in fade-in-20 slide-in-from-top-4">
           <nav className="flex flex-col items-center justify-center flex-grow gap-y-4">
             {navItems.map((item) => {
-                 const isPageLink = !item.href.startsWith('#');
+                 const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
                  const isLinkActive = isPageLink
-                   ? pathname.startsWith(item.href) && item.href !== '/'
+                   ? pathname.startsWith(item.href)
                    : activeSection === item.id;
                 return (
                     <Link
