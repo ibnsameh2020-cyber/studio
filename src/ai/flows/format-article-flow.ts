@@ -1,41 +1,37 @@
 'use server';
-/**
- * @fileOverview A simple AI flow to format resource content.
- * - formatContent - Takes raw text and returns it with basic HTML styling.
- */
+
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
 const ArticleFormatInputSchema = z.object({
-    content: z.string().describe('The raw, unformatted text of the article.'),
+  content: z.string().describe('The raw, unformatted text of the article.'),
 });
 
 const ArticleFormatOutputSchema = z.object({
-    formattedContent: z.string().describe('The article content formatted with simple HTML tags for styling (e.g., <h2>, <h3>, <p>, <strong>, <em>).'),
+  formattedContent: z.string().describe('The article content formatted with engaging HTML tags.'),
 });
 
 const prompt = ai.definePrompt({
   name: 'formatArticlePrompt',
+  model: 'googleai/gemini-2.5-flash-lite',
   input: { schema: ArticleFormatInputSchema },
   output: { schema: ArticleFormatOutputSchema },
-  prompt: `You are an expert content styler. Your task is to format the given text into a clean, readable HTML format.
+  prompt: `You are an expert content styler and editor. Your task is to format the given raw text into a clean, readable, and engaging HTML format. The output should be suitable for a professional blog or resource article.
 
   Use the following guidelines:
-  - Wrap paragraphs in <p> tags.
-  - Identify main topics and use <h2> for their headings.
-  - Use <h3> for sub-headings where appropriate.
-  - Use <strong> for bolding key terms and sentences for emphasis.
-  - Use <em> for italicizing words that need a different tone.
-  - Do not add any classes or inline styles to the HTML tags.
-  - Ensure the output is a single string of valid HTML.
-  - Do not add a title for the whole article. The content provided is just the body.
+  - Structure the content logically with headings and paragraphs.
+  - Use <h2> for main section titles and <h3> for sub-headings.
+  - Wrap all standard paragraphs in <p> tags.
+  - Identify key terms, phrases, or sentences that deserve emphasis and wrap them in <strong> tags.
+  - Use <em> for subtle emphasis or to introduce concepts.
+  - If you identify a significant quote or a powerful statement that should stand out, wrap it in a <blockquote> tag. Inside the blockquote, place the text within a <p> tag.
+  - If the text contains a list of items, format it as an unordered list (<ul>) with list items (<li>).
+  - Do NOT add any classes or inline styles to the HTML tags.
+  - Ensure the final output is a single, well-formed string of valid HTML.
 
   Here is the content to format:
   {{{content}}}
   `,
-  config: {
-    model: 'gemini-2.5-flash-lite',
-  },
 });
 
 const formatArticleFlow = ai.defineFlow(
