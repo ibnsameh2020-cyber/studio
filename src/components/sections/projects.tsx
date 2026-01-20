@@ -22,7 +22,7 @@ const GlobalFootprint = () => {
                         My experience extends beyond borders. I have led strategic consultations, IT infrastructure deployments, and complex medical integrations across Egypt, North & Middle Africa, the UK, and the Gulf Countries.
                     </p>
                 </div>
-                 <div className="max-w-4xl mx-auto bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl">
+                 <div className="max-w-4xl mx-auto bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl transition-all duration-300 hover:border-primary/80 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2">
                     <h3 className="text-xl font-headline font-semibold text-center mb-6">Core Competencies Across Regions</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                         {competencies.map(item => (
