@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +13,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, CalendarCheck } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
 import {
     Dialog,
@@ -62,46 +60,56 @@ export default function ContactSection() {
 
     const onSubmit = async (data: ContactFormValues) => {
         setIsSubmitting(true);
-        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-        if (!serviceId || !templateId || !publicKey) {
-            toast({
-                variant: 'destructive',
-                title: 'Configuration Error',
-                description: 'EmailJS is not configured. Please check environment variables and restart the server.',
-            });
-            setIsSubmitting(false);
-            return;
+        const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    
+        if (!accessKey || accessKey === 'YOUR_ACCESS_KEY_HERE') {
+          toast({
+            variant: 'destructive',
+            title: 'Configuration Error',
+            description: 'Web3Forms access key is not configured. Please add it to the .env file.',
+          });
+          setIsSubmitting(false);
+          return;
         }
 
+        const formData = new FormData();
+        formData.append("access_key", accessKey);
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("organization", data.organization);
         const fullChallengeText = challengeOptions[data.challenge as keyof typeof challengeOptions] || data.challenge;
-
-        const templateParams = {
-            name: data.name,
-            email: data.email,
-            message: `
-                Organization / Company: ${data.organization}
-                Primary Challenge: ${fullChallengeText}
-                Project Details: ${data.details || 'Not provided'}
-            `
-        };
+        formData.append("Primary Challenge", fullChallengeText);
+        formData.append("details", data.details || 'Not provided');
+        formData.append("subject", `New Inquiry from ${data.name} - ${data.organization}`);
         
         try {
-            await emailjs.send(serviceId, templateId, templateParams, publicKey);
-            toast({
-                title: 'Message Sent!',
-                description: 'Thank you for your inquiry. I will get back to you shortly.',
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData,
             });
-            form.reset();
-        } catch (error: any) {
-            const errorText = error?.text || 'An unknown error occurred. Check the console for more details.';
-            console.error('EmailJS Error:', errorText);
+
+            const result = await response.json();
+
+            if (result.success) {
+                toast({
+                    title: 'Message Sent!',
+                    description: 'Thank you for your inquiry. I will get back to you shortly.',
+                });
+                form.reset();
+            } else {
+                console.error("Web3Forms Error:", result);
+                toast({
+                    variant: 'destructive',
+                    title: 'Submission Failed',
+                    description: result.message || 'An unknown error occurred.',
+                });
+            }
+        } catch (error) {
+            console.error('Form Submission Error:', error);
             toast({
                 variant: 'destructive',
                 title: 'Submission Failed',
-                description: errorText,
+                description: 'A network error occurred. Please try again.',
             });
         } finally {
             setIsSubmitting(false);
