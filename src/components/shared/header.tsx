@@ -124,22 +124,6 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    handleMenuLinkClick();
-    if (pathname === '/' && href.startsWith('/#')) {
-      e.preventDefault();
-      const targetId = href.substring(2);
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else if (href.startsWith('/#')) {
-        e.preventDefault();
-        router.push(href);
-    }
-  };
-
-
   const handleNotificationsOpenChange = (open: boolean) => {
     if (!open) {
         localStorage.setItem('last-viewed-articles-timestamp', Date.now().toString());
@@ -182,7 +166,6 @@ export default function Header() {
                       <Link
                         key={item.id}
                         href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href)}
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-10',
@@ -414,7 +397,7 @@ export default function Header() {
                     <Link
                         key={item.id}
                         href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href)}
+                        onClick={handleMenuLinkClick}
                         className={cn(
                         'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
                         isLinkActive ? 'bg-primary text-primary-foreground' : 'text-foreground'

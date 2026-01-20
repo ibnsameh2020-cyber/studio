@@ -5,7 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 10rem; /* Adjust this value based on your fixed header's height */
+    scroll-padding-top: 7rem; /* Adjust this value based on your fixed header's height */
   }
   
   :root {

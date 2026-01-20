@@ -145,7 +145,7 @@ export default function HeroSection() {
         <SwitchingHeroText />
         
         <div className="flex flex-col sm:flex-row items-center gap-4">
-            <Link href="#services">
+            <Link href="/#services">
               <Button size="lg" className="group">
                 Audit My Portfolio Strategy
                 <ArrowDown className="w-5 h-5 ml-2 transition-transform group-hover:translate-y-1" />
