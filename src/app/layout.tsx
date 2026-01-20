@@ -37,7 +37,7 @@ export default function RootLayout({
         >
           <FirebaseClientProvider>
             <Header />
-            <main className="relative">
+            <main className="relative overflow-hidden">
               <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
               {children}
             </main>
