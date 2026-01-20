@@ -33,7 +33,7 @@ const LoggedOutView = () => (
             Become a member to access exclusive, bite-sized resources on strategy, leadership, and AI governance—updated regularly.
         </p>
         <div className="mt-8">
-            <Link href="/resources">
+            <Link href="/login">
                 <Button size="lg" className="group">
                     Sign Up to Access
                     <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
