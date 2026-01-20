@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut } from 'lucide-react';
@@ -21,7 +20,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 import { useTheme } from 'next-themes';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
@@ -41,15 +40,15 @@ export default function Header() {
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-  const router = useRouter();
 
   const [activeSection, setActiveSection] = useState('hero');
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const [newArticles, setNewArticles] = useState<Article[]>([]);
-
+  
   const navItems = useMemo(() => {
-    const items = [...baseNavItems];
+    let items = [...baseNavItems];
+
     if (user) {
       const insightsIndex = items.findIndex(item => item.id === 'insights');
       if (insightsIndex !== -1) {
@@ -90,7 +89,6 @@ export default function Header() {
         }
       }
       
-      // Fallback for top of page
       if (window.scrollY < 200) {
         currentSection = 'hero';
       }
@@ -149,7 +147,7 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-start justify-center">
             <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6">
-                <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
+                <Link href="/" onClick={handleMenuLinkClick} className="flex items-center gap-2 text-lg font-headline font-bold">
                     <Lightbulb className="w-6 h-6 text-primary" />
                     <span>Sameh insights</span>
                 </Link>
@@ -159,13 +157,14 @@ export default function Header() {
                   {navItems.map((item) => {
                     const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
                     const isLinkActive = isPageLink
-                      ? pathname.startsWith(item.href)
+                      ? pathname === item.href
                       : activeSection === item.id;
 
                     return (
                       <Link
                         key={item.id}
                         href={item.href}
+                        onClick={handleMenuLinkClick}
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-10',

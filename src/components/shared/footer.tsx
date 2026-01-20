@@ -1,7 +1,9 @@
 "use client";
 
-import { Lightbulb, Linkedin, Mail, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import { Lightbulb, Linkedin, Mail, MapPin, Phone, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
 
   
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -18,6 +20,21 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function Footer() {
+  const { toast } = useToast();
+  const phoneNumber = "+1 (234) 567-890";
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(phoneNumber).then(() => {
+        setIsCopied(true);
+        toast({ title: "Copied to clipboard!", description: phoneNumber });
+        setTimeout(() => setIsCopied(false), 2000);
+    }, (err) => {
+        console.error('Could not copy text: ', err);
+        toast({ title: "Failed to copy", variant: "destructive" });
+    });
+  };
+
   return (
     <footer className="bg-background border-t border-border/30">
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -33,6 +50,13 @@ export default function Footer() {
                 <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary"/>
                     <a href="mailto:contact@samehinsights.com" className="hover:text-primary transition-colors">contact@samehinsights.com</a>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-primary"/>
+                    <button onClick={handleCopy} className="hover:text-primary transition-colors flex items-center gap-1.5">
+                      <span>{phoneNumber}</span>
+                      {isCopied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-3 h-3" />}
+                    </button>
                 </div>
                  <div className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-primary mt-1 flex-shrink-0"/>
