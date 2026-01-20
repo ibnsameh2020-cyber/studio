@@ -21,7 +21,7 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   const { toast } = useToast();
-  const phoneNumber = "+1 (234) 567-890";
+  const phoneNumber = "+966 56 557 9000";
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {

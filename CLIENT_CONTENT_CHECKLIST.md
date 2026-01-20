@@ -12,11 +12,11 @@ Please replace the bracketed `[placeholder text]` with your final content.
 ## 2. Contact Information & Social Media
 
 *   **Email Address:** Currently "[hello@johndoe.com]" in the contact section and footer.
-*   **Phone Number:** Currently "[+1 (234) 567-890]" in the contact section and footer.
+*   **Phone Number:** Currently "[+966 56 557 9000]" in the contact section and footer.
 *   **Social Media Links (in footer):**
     *   LinkedIn: `https://linkedin.com`
     *   X (Twitter): `https://twitter.com`
-    *   WhatsApp: `https://wa.me/1234567890`
+    *   WhatsApp: `https://wa.me/966565579000`
     *   Facebook: `https://facebook.com`
 
 ## 3. Resume/CV File
