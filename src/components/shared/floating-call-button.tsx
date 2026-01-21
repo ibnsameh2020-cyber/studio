@@ -10,7 +10,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { CalendarCheck } from "lucide-react";
+import { CalendarPlus } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function FloatingCallButton() {
@@ -38,7 +38,7 @@ export default function FloatingCallButton() {
               )}
               aria-label="Book a Call"
             >
-              <CalendarCheck className="h-10 w-10" />
+              <CalendarPlus className="h-11 w-11" />
               <span className="max-w-0 opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-xs group-hover:opacity-100">
                 Book a Call
               </span>
