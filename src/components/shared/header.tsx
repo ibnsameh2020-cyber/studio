@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser, useCollection } from '@/firebase';
-import type { Article } from '@/lib/types';
+import type { Article, Resource } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
 import {
   DropdownMenu,
@@ -34,6 +34,7 @@ const baseNavItems = [
 
 const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
 
+type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,7 +46,10 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState('hero');
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
-  const [newArticles, setNewArticles] = useState<Article[]>([]);
+  const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
+
+  const [newItems, setNewItems] = useState<NotificationItem[]>([]);
+  const notificationsLoading = articlesLoading || (user ? resourcesLoading : false);
   
   const navItems = useMemo(() => {
     let items = [...baseNavItems];
@@ -106,27 +110,45 @@ export default function Header() {
   }, [pathname]);
 
   useEffect(() => {
-    if (articles) {
-        const lastViewedTimestamp = localStorage.getItem('last-viewed-articles-timestamp');
-        const lastViewedDate = lastViewedTimestamp ? new Date(parseInt(lastViewedTimestamp)) : new Date(0);
+    if (notificationsLoading) return;
 
-        const filteredNewArticles = articles.filter(article => {
-            if (!article.date) return false;
-            const articleDate = article.date instanceof Timestamp ? article.date.toDate() : new Date(article.date);
-            return articleDate > lastViewedDate;
-        });
-        setNewArticles(filteredNewArticles);
+    const lastViewedTimestamp = localStorage.getItem('last-viewed-notifications-timestamp');
+    const lastViewedDate = lastViewedTimestamp ? new Date(parseInt(lastViewedTimestamp)) : new Date(0);
+      
+    const allItems: NotificationItem[] = [];
+
+    if (articles) {
+      allItems.push(...articles.map(a => ({ ...a, itemType: 'article' as const })));
     }
-  }, [articles]);
+    
+    if (resources && user) {
+      allItems.push(...resources.map(r => ({ ...r, itemType: 'resource' as const })));
+    }
+
+    const filteredNewItems = allItems.filter(item => {
+      if (!item.date) return false;
+      const itemDate = item.date instanceof Timestamp ? item.date.toDate() : new Date(item.date);
+      return itemDate > lastViewedDate;
+    });
+
+    filteredNewItems.sort((a, b) => {
+      const dateA = a.date instanceof Timestamp ? a.date.toDate() : new Date(a.date);
+      const dateB = b.date instanceof Timestamp ? b.date.toDate() : new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    setNewItems(filteredNewItems);
+  }, [articles, resources, user, notificationsLoading]);
+
 
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
   };
 
   const handleNotificationsOpenChange = (open: boolean) => {
-    if (!open) {
-        localStorage.setItem('last-viewed-articles-timestamp', Date.now().toString());
-        setNewArticles([]);
+    if (!open && newItems.length > 0) {
+        localStorage.setItem('last-viewed-notifications-timestamp', Date.now().toString());
+        setNewItems([]);
     }
   };
   
@@ -335,7 +357,7 @@ export default function Header() {
                         aria-label="Notifications"
                     >
                         <Bell className="h-6 h-6" />
-                        {newArticles.length > 0 && (
+                        {newItems.length > 0 && (
                              <span className="absolute top-4 right-4 flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
@@ -344,26 +366,26 @@ export default function Header() {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-80 bg-background/80 backdrop-blur-lg border-border/50" align="end">
-                    <DropdownMenuLabel>New Insights</DropdownMenuLabel>
+                    <DropdownMenuLabel>Notifications</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {articlesLoading ? (
+                    {notificationsLoading ? (
                         <DropdownMenuItem disabled>
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                             Loading...
                         </DropdownMenuItem>
-                    ) : newArticles.length > 0 ? (
-                        newArticles.map(article => (
-                            <DropdownMenuItem key={article.id} asChild>
-                                <Link href={`/articles`}>
+                    ) : newItems.length > 0 ? (
+                        newItems.map(item => (
+                            <DropdownMenuItem key={item.id} asChild>
+                                <Link href={item.itemType === 'article' ? `/articles` : `/resources/${item.id}`}>
                                     <div className="flex flex-col w-full overflow-hidden">
-                                        <p className="font-semibold truncate">{article.headline}</p>
-                                        <p className="text-xs text-muted-foreground">{article.category}</p>
+                                        <p className="font-semibold truncate">{item.itemType === 'article' ? item.headline : item.title}</p>
+                                        <p className="text-xs text-muted-foreground">{item.itemType === 'article' ? 'New Insight' : 'New Resource'}</p>
                                     </div>
                                 </Link>
                             </DropdownMenuItem>
                         ))
                     ) : (
-                        <DropdownMenuItem disabled>No new insights.</DropdownMenuItem>
+                        <DropdownMenuItem disabled>No new notifications.</DropdownMenuItem>
                     )}
                 </DropdownMenuContent>
             </DropdownMenu>
