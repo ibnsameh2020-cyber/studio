@@ -49,7 +49,7 @@ export default function Footer() {
             <div className="flex flex-col items-center md:items-start gap-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary"/>
-                    <a href="mailto:contact@samehinsights.com" className="hover:text-primary transition-colors">contact@samehinsights.com</a>
+                    <a href="mailto:Sameh@samehinsights.com" className="hover:text-primary transition-colors">Sameh@samehinsights.com</a>
                 </div>
                 <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-primary"/>
