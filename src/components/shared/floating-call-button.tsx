@@ -31,7 +31,7 @@ export default function FloatingCallButton() {
         <DialogTrigger asChild>
             <Button
               className={cn(
-                "group fixed bottom-6 left-6 z-50 flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap shadow-lg rounded-full transition-all duration-300 ease-in-out",
+                "group fixed bottom-6 left-6 z-50 flex items-center justify-center overflow-hidden whitespace-nowrap shadow-lg rounded-full transition-all duration-300 ease-in-out hover:gap-2",
                 "h-14 w-14 hover:w-40", // Starts as a circle, expands on hover
                 "bg-primary text-primary-foreground",
                 "hover:bg-primary/90",
@@ -39,8 +39,8 @@ export default function FloatingCallButton() {
               )}
               aria-label="Book a Call"
             >
-              <CalendarCheck className="h-6 w-6 flex-shrink-0" />
-              <span className="w-0 opacity-0 transition-all duration-300 group-hover:w-auto group-hover:opacity-100">
+              <CalendarCheck className="h-7 w-7 flex-shrink-0" />
+              <span className="max-w-0 opacity-0 transition-all duration-300 group-hover:max-w-xs group-hover:opacity-100">
                 Book a Call
               </span>
             </Button>
