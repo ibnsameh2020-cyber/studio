@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { CalendarPlus } from "lucide-react";
 
 export default function FloatingCallButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,10 +34,12 @@ export default function FloatingCallButton() {
                 "h-14 w-14 hover:w-40", // Starts as a circle, expands on hover
                 "bg-primary text-primary-foreground",
                 "hover:bg-primary/90",
+                "gap-0 group-hover:gap-2", // Manages spacing for centering
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
               )}
               aria-label="Book a Call"
             >
+              <CalendarPlus className="h-8 w-8 flex-shrink-0" />
               <span className="max-w-0 opacity-0 transition-all duration-300 group-hover:max-w-xs group-hover:opacity-100">
                 Book a Call
               </span>
