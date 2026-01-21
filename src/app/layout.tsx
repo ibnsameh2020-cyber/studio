@@ -9,6 +9,7 @@ import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/shared/theme-provider';
 import Script from 'next/script';
 import BackToTopButton from '@/components/shared/back-to-top-button';
+import FloatingCallButton from '@/components/shared/floating-call-button';
 
 export const metadata: Metadata = {
   title: 'Sameh Insights | Strategic Digital PMO & Portfolio Governance',
@@ -41,6 +42,7 @@ export default function RootLayout({
               <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
               {children}
             </main>
+            <FloatingCallButton />
             <BackToTopButton />
             <Footer />
             <Toaster />
