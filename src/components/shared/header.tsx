@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -153,7 +154,7 @@ export default function Header() {
                 </Link>
                 
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center space-x-1">
+                <nav className="hidden md:flex items-center space-x-2">
                   {navItems.map((item) => {
                     const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
                     const isLinkActive = isPageLink
