@@ -11,7 +11,7 @@ export type ExperienceItem = {
 export const experience: ExperienceItem[] = [
     {
         id: 1,
-        date: 'Aug 2025 – Present',
+        date: 'Jan 2024 – Present',
         title: 'Strategic Planning & Cost Efficiency Consultant (IT-PMO)',
         company: 'Saudi Irrigation Organization (SIO)',
         description: 'Leading strategic cost optimization and PMO maturity initiatives.',
@@ -19,7 +19,7 @@ export const experience: ExperienceItem[] = [
     },
     {
         id: 2,
-        date: '[Year] – [Year]',
+        date: 'Jun 2021 – Jan 2024',
         title: 'Digital Transformation Manager',
         company: 'REPOTECH',
         description: 'Drove digital adoption and process modernization.',
@@ -27,7 +27,7 @@ export const experience: ExperienceItem[] = [
     },
     {
         id: 3,
-        date: '[Year] – [Year]',
+        date: 'Mar 2018 – Jun 2021',
         title: 'Senior IT Projects Manager',
         company: 'ROSMIMAN®',
         description: 'Managed complex IT infrastructure and asset management projects.',
@@ -35,7 +35,7 @@ export const experience: ExperienceItem[] = [
     },
     {
         id: 4,
-        date: '[Year] – [Year]',
+        date: 'Mar 2013 – Mar 2018',
         title: 'Projects Director',
         company: 'SALEHIYA HEALTHCARE',
         description: 'Directed large-scale healthcare technology programs.',
