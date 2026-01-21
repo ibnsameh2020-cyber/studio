@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ export default function FloatingCallButton() {
               aria-label="Book a Call"
             >
               <CalendarCheck className="h-6 w-6 flex-shrink-0" />
-              <span className="transition-opacity opacity-0 group-hover:opacity-100 delay-100">
+              <span className="w-0 opacity-0 transition-all duration-300 group-hover:w-auto group-hover:opacity-100">
                 Book a Call
               </span>
             </Button>
