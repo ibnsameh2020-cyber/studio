@@ -197,7 +197,7 @@ export default function ContactSection() {
                 <div className="md:col-span-2 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 h-full">
                     <div className="text-center">
                         <div className="flex justify-center mb-4">
-                            <div className="p-4 bg-primary/10 rounded-full inline-block shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
+                            <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
                                 <CalendarCheck className="w-12 h-12 text-primary" />
                             </div>
                         </div>
