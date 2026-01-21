@@ -38,7 +38,7 @@ export default function FloatingCallButton() {
               )}
               aria-label="Book a Call"
             >
-              <CalendarCheck className="h-7 w-7" />
+              <CalendarCheck className="h-10 w-10" />
               <span className="max-w-0 opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-xs group-hover:opacity-100">
                 Book a Call
               </span>
