@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -130,6 +129,26 @@ const SwitchingHeroText = () => {
     );
 };
 
+const FloatingRoleCard = () => (
+    <div className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30 animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+        <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
+            <div className="bg-primary px-4 py-2">
+                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
+            </div>
+            <div className="p-4">
+                <p className="text-xs text-muted-foreground text-center leading-relaxed">
+                    Strategic Planning & PMO Advisor
+                    <span className="block my-1.5 text-primary/50">·</span>
+                    Driving Efficiency in Major Gov Portfolios
+                    <span className="block my-1.5 text-primary/50">·</span>
+                    Digital Transformation & Governance
+                </p>
+            </div>
+        </div>
+    </div>
+);
+
+
 export default function HeroSection() {
 
   return (
@@ -159,6 +178,7 @@ export default function HeroSection() {
             </Link>
         </div>
       </div>
+      <FloatingRoleCard />
     </section>
   );
 }
