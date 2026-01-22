@@ -1,4 +1,3 @@
-
 'use client';
 
 import AnimatedSection from '../animated-section';
@@ -86,7 +85,7 @@ export default function CertificatesSection() {
                 <div className="text-center mt-12">
                     <Link href="/certificates">
                         <Button size="lg" className="group">
-                            View All 45+ Credentials
+                            View All Credentials
                             <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
