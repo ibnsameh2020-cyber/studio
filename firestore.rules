@@ -8,7 +8,7 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return request.auth != null && request.auth.token.email == 'ibn.sameh.2020@gmail.com';
+      return request.auth != null && request.auth.token.email in ['ibn.sameh.2020@gmail.com', 'same7mousa@gmail.com'];
     }
 
     function isOwner(userId) {

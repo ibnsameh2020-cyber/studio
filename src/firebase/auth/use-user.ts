@@ -13,8 +13,8 @@ export function useUser() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       
-      const ADMIN_EMAIL = "ibn.sameh.2020@gmail.com";
-      if (user && user.email === ADMIN_EMAIL) {
+      const ADMIN_EMAILS = ["ibn.sameh.2020@gmail.com", "same7mousa@gmail.com"];
+      if (user && user.email && ADMIN_EMAILS.includes(user.email)) {
         setIsAdmin(true);
       } else {
         setIsAdmin(false);
