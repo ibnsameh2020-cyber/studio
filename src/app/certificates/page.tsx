@@ -23,6 +23,7 @@ const allDisplayCategories = ['View All', ...certificateCategories];
 const topCertBadges = [
     'CPHIMS',
     'ITIL 4 Leader: Digital & IT Strategy',
+    'HL7® FHIR® Fundamentals',
     'COBIT 5 Foundation',
     'Certified PMO Professional',
     'CNSS',

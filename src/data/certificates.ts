@@ -1,7 +1,7 @@
 import type { Certificate } from '@/lib/types';
 
 export const certificates: Certificate[] = [
-  // Strategic Leadership & Governance
+  // Prioritized Certificates
   {
     title: 'CPHIMS',
     issuer: 'Certified Professional in Healthcare Information and Management Systems',
@@ -9,14 +9,23 @@ export const certificates: Certificate[] = [
     imagePlaceholderId: 'cert-default',
   },
   {
-    title: 'COBIT 5 Foundation',
-    issuer: 'IT Governance',
+    title: 'ITIL 4 Leader: Digital & IT Strategy',
+    issuer: 'ITIL',
     category: 'Strategic Leadership & Governance',
     imagePlaceholderId: 'cert-default',
   },
   {
-    title: 'ITIL 4 Leader: Digital & IT Strategy',
-    issuer: 'ITIL',
+    title: 'HL7® FHIR® Fundamentals',
+    issuer: 'Full Course Completion',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-default',
+  },
+
+  // Other Certificates
+  // Strategic Leadership & Governance
+  {
+    title: 'COBIT 5 Foundation',
+    issuer: 'IT Governance',
     category: 'Strategic Leadership & Governance',
     imagePlaceholderId: 'cert-default',
   },
@@ -85,12 +94,6 @@ export const certificates: Certificate[] = [
   {
     title: 'Creative AI',
     issuer: 'UAL Creative Computing Institute',
-    category: 'Digital Innovation & Analytics',
-    imagePlaceholderId: 'cert-default',
-  },
-  {
-    title: 'HL7® FHIR® Fundamentals',
-    issuer: 'Full Course Completion',
     category: 'Digital Innovation & Analytics',
     imagePlaceholderId: 'cert-default',
   },
