@@ -61,9 +61,117 @@
       "imageHint": "professional man"
     },
     {
-      "id": "cert-default",
-      "description": "A placeholder for a certificate document.",
-      "imageUrl": "https://images.unsplash.com/photo-1568137224279-f19f0f825447?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjZXJ0aWZpY2F0ZSUyMGRvY3VtZW50fGVufDB8fHx8MTc2ODk5NTA5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "id": "cert-cphims",
+      "description": "CPHIMS Certificate",
+      "imageUrl": "https://i.ibb.co/fGryC0RT/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-itil",
+      "description": "ITIL 4 Leader Certificate",
+      "imageUrl": "https://i.ibb.co/v4y9BnKR/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-hl7-fhir",
+      "description": "HL7 FHIR Fundamentals Certificate",
+      "imageUrl": "https://i.ibb.co/0pJY1mRB/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-cobit",
+      "description": "COBIT 5 Foundation Certificate",
+      "imageUrl": "https://i.ibb.co/hRN8dbSq/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-kpip",
+      "description": "KPI Professional Certificate",
+      "imageUrl": "https://i.ibb.co/27LdJYyL/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-pmo",
+      "description": "Certified PMO Professional Certificate",
+      "imageUrl": "https://i.ibb.co/SDrTbMqJ/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-okr",
+      "description": "Certified OKR Professional Certificate",
+      "imageUrl": "https://i.ibb.co/fYrfC7wj/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-olympus-vmc3",
+      "description": "Olympus VMC-3 300 Certificate",
+      "imageUrl": "https://i.ibb.co/5gdZjxMN/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-olympus-eavns",
+      "description": "Olympus EA-VNS-310 Certificate",
+      "imageUrl": "https://i.ibb.co/MkBkVhr1/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-olympus-uces",
+      "description": "Olympus UCES-3 300 Certificate",
+      "imageUrl": "https://i.ibb.co/qYjMcdxQ/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-bausch-lomb",
+      "description": "Bausch + Lomb Stellaris PC Certificate",
+      "imageUrl": "https://i.ibb.co/Xk4tdH9r/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-cnss",
+      "description": "CNSS Certificate",
+      "imageUrl": "https://i.ibb.co/6718k3WV/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-big-data",
+      "description": "Big Data Analytics Certificate",
+      "imageUrl": "https://i.ibb.co/N6WxzsvN/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-ai",
+      "description": "Artificial Intelligence Certificate",
+      "imageUrl": "https://i.ibb.co/tpQrSxSR/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-creative-ai",
+      "description": "Creative AI Certificate",
+      "imageUrl": "https://i.ibb.co/rRQRPVvh/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-pacs",
+      "description": "PACS & Imaging Informatics Certificate",
+      "imageUrl": "https://i.ibb.co/xSjj1X2G/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-rcmc-recommendation",
+      "description": "Project Management Recommendation from RCMC",
+      "imageUrl": "https://i.ibb.co/60tJhkv9/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-salehiya-endorsement",
+      "description": "Role Model Performance Endorsement from Salehiya Medical",
+      "imageUrl": "https://i.ibb.co/0T0jNw8/image.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-taif-competence",
+      "description": "Certification of Competence from King Abdul Aziz Hospital, Taif",
+      "imageUrl": "https://i.ibb.co/fz69wP5m/image.jpg",
       "imageHint": "certificate document"
     }
   ]

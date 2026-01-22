@@ -34,23 +34,25 @@ const topCertBadges = [
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
     return (
-        <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer">
-            {certImage && (
-                <div className="relative aspect-video overflow-hidden rounded-md mb-4">
-                     <Image
-                        src={certImage.imageUrl}
-                        alt={certificate.title}
-                        fill
-                        data-ai-hint={certImage.imageHint}
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                </div>
-            )}
-            <CardHeader className="p-0">
-                <CardTitle className="font-headline text-lg">{certificate.title}</CardTitle>
-                <CardDescription>{certificate.issuer}</CardDescription>
-            </CardHeader>
-        </Card>
+        <a href={certImage?.imageUrl} target="_blank" rel="noopener noreferrer">
+            <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer">
+                {certImage && (
+                    <div className="relative aspect-video overflow-hidden rounded-md mb-4">
+                        <Image
+                            src={certImage.imageUrl}
+                            alt={certificate.title}
+                            fill
+                            data-ai-hint={certImage.imageHint}
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                    </div>
+                )}
+                <CardHeader className="p-0">
+                    <CardTitle className="font-headline text-lg">{certificate.title}</CardTitle>
+                    <CardDescription>{certificate.issuer}</CardDescription>
+                </CardHeader>
+            </Card>
+        </a>
     );
 };
 
