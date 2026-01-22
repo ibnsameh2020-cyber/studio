@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -120,9 +119,13 @@ export default function CertificatesPage() {
                     </div>
                 ) : (
                     <Tabs defaultValue="View All" className="w-full">
-                        <TabsList className="flex h-auto flex-wrap justify-center gap-2 mb-8">
+                        <TabsList className="flex h-auto flex-wrap justify-center gap-2 mb-8 bg-transparent border-none p-0 shadow-none">
                             {allDisplayCategories.map(category => (
-                                <TabsTrigger key={category} value={category} className="whitespace-normal h-auto">
+                                <TabsTrigger 
+                                    key={category} 
+                                    value={category} 
+                                    className="whitespace-normal h-auto rounded-full border border-border/20 bg-card/50 text-foreground hover:bg-accent/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary/50"
+                                >
                                     {category}
                                 </TabsTrigger>
                             ))}
