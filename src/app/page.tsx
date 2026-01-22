@@ -7,6 +7,7 @@ import HeroSection from '@/components/sections/hero';
 import InsightsSection from '@/components/sections/articles';
 import ProjectsSection from '@/components/sections/projects';
 import ServicesSection from '@/components/sections/services';
+import CertificatesSection from '@/components/sections/certificates';
 
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         </div>
         <HeroSection />
         <ServicesSection />
+        <CertificatesSection />
         <ProjectsSection />
         <ExperienceSection />
         <InsightsSection />

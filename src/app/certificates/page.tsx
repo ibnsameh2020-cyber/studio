@@ -18,6 +18,8 @@ const certificateCategories: Certificate['category'][] = [
     'Professional Endorsements'
 ];
 
+const allDisplayCategories = ['View All', ...certificateCategories];
+
 const topCertBadges = [
     'CPHIMS',
     'ITIL 4 Leader: Digital & IT Strategy',
@@ -116,12 +118,20 @@ export default function CertificatesPage() {
                         )}
                     </div>
                 ) : (
-                    <Tabs defaultValue={certificateCategories[0]} className="w-full">
-                        <TabsList className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 h-auto">
-                            {certificateCategories.map(category => (
+                    <Tabs defaultValue="View All" className="w-full">
+                        <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mb-8 h-auto">
+                            {allDisplayCategories.map(category => (
                                 <TabsTrigger key={category} value={category} className="whitespace-normal h-full py-2">{category}</TabsTrigger>
                             ))}
                         </TabsList>
+
+                        <TabsContent value="View All">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {certificates.map(cert => (
+                                    <CertificateCard key={cert.title} certificate={cert} />
+                                ))}
+                            </div>
+                        </TabsContent>
                         
                         {certificateCategories.map(category => (
                             <TabsContent key={category} value={category}>

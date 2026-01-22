@@ -24,15 +24,15 @@ import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
+  { id: 'certificates-section', href: '/#certificates-section', label: 'Certificates', icon: <GraduationCap className="w-4 h-4" /> },
   { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
   { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'certificates', href: '/certificates', label: 'Certificates', icon: <GraduationCap className="w-4 h-4" /> },
   { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
   { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
   { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
-const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'certificates', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
+const sectionIds = ['hero', 'services', 'certificates-section', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
 
 type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
 
