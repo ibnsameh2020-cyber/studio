@@ -59,6 +59,12 @@
       "description": "A professional portrait for the about page.",
       "imageUrl": "https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png",
       "imageHint": "professional man"
+    },
+    {
+      "id": "cert-default",
+      "description": "A placeholder for a certificate document.",
+      "imageUrl": "https://images.unsplash.com/photo-1568137224279-f19f0f825447?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjZXJ0aWZpY2F0ZSUyMGRvY3VtZW50fGVufDB8fHx8MTc2ODk5NTA5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "certificate document"
     }
   ]
 }

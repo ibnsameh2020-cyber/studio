@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut } from 'lucide-react';
+import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut, GraduationCap } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser, useCollection } from '@/firebase';
 import type { Article, Resource } from '@/lib/types';
@@ -27,12 +26,13 @@ const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
   { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
   { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
+  { id: 'certificates', href: '/certificates', label: 'Certificates', icon: <GraduationCap className="w-4 h-4" /> },
   { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
   { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
   { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
 ];
 
-const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
+const sectionIds = ['hero', 'services', 'case-studies', 'experience', 'certificates', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
 
 type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
 

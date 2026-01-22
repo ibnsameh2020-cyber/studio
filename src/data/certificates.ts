@@ -1,0 +1,122 @@
+import type { Certificate } from '@/lib/types';
+
+export const certificates: Certificate[] = [
+  // Strategic Leadership & Governance
+  {
+    title: 'CPHIMS',
+    issuer: 'Certified Professional in Healthcare Information and Management Systems',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'COBIT 5 Foundation',
+    issuer: 'IT Governance',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'ITIL 4 Leader: Digital & IT Strategy',
+    issuer: 'ITIL',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'KPI Professional (KPIP)',
+    issuer: 'Balanced Scorecard Institute',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Certified PMO Professional',
+    issuer: 'IABFM',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Certified OKR Professional',
+    issuer: 'The KPI Institute',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-default',
+  },
+  // Technical Licenses & Authorizations
+  {
+    title: 'Olympus VMC-3 300',
+    issuer: 'Authorized Service & Repair',
+    category: 'Technical Licenses & Authorizations',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Olympus EA-VNS-310',
+    issuer: 'Video Network Solution Installation',
+    category: 'Technical Licenses & Authorizations',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Olympus UCES-3 300',
+    issuer: 'System Configuration & GUI',
+    category: 'Technical Licenses & Authorizations',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Bausch + Lomb Stellaris PC',
+    issuer: 'Vision Enhancement System Certification',
+    category: 'Technical Licenses & Authorizations',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'CNSS',
+    issuer: 'Certified Network Security Specialist',
+    category: 'Technical Licenses & Authorizations',
+    imagePlaceholderId: 'cert-default',
+  },
+  // Digital Innovation & Analytics
+  {
+    title: 'Big Data Analytics',
+    issuer: 'Griffith University',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Artificial Intelligence',
+    issuer: 'Accenture',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Creative AI',
+    issuer: 'UAL Creative Computing Institute',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'HL7® FHIR® Fundamentals',
+    issuer: 'Full Course Completion',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'PACS & Imaging Informatics',
+    issuer: 'Professional Review Series',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-default',
+  },
+  // Professional Endorsements
+  {
+    title: 'Project Management Recommendation',
+    issuer: 'Royal Commission at Yanbu (RCMC)',
+    category: 'Professional Endorsements',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: '"Role Model" Performance Endorsement',
+    issuer: 'Salehiya Medical',
+    category: 'Professional Endorsements',
+    imagePlaceholderId: 'cert-default',
+  },
+  {
+    title: 'Certification of Competence in Digital OR Supervision',
+    issuer: 'King Abdul Aziz Hospital, Taif',
+    category: 'Professional Endorsements',
+    imagePlaceholderId: 'cert-default',
+  },
+];

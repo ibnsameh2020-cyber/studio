@@ -1,4 +1,3 @@
-
 import type { Timestamp } from "firebase/firestore";
 
 export type Project = {
@@ -55,4 +54,11 @@ export type UserProfile = {
   displayName: string;
   email: string;
   photoURL?: string;
+};
+
+export type Certificate = {
+  title: string;
+  issuer: string;
+  category: 'Strategic Leadership & Governance' | 'Technical Licenses & Authorizations' | 'Digital Innovation & Analytics' | 'Professional Endorsements';
+  imagePlaceholderId: string;
 };
