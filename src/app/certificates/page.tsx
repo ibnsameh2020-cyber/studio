@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 
 const certificateCategories: Certificate['category'][] = [
     'Strategic Leadership & Governance',
@@ -57,6 +58,12 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
             </DialogTrigger>
             {certImage && (
                 <DialogContent className="sm:max-w-4xl p-4 bg-background/80 backdrop-blur-lg">
+                    <DialogHeader className="sr-only">
+                        <DialogTitle>{certificate.title}</DialogTitle>
+                        <DialogDescription>
+                            A high-resolution image of the {certificate.title} certificate from {certificate.issuer}.
+                        </DialogDescription>
+                    </DialogHeader>
                     <div className="relative aspect-[1.414] w-full"> {/* A4 paper approx aspect ratio */}
                         <Image
                             src={certImage.imageUrl}
