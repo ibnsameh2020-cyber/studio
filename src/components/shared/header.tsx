@@ -271,12 +271,7 @@ export default function Header() {
                             </DropdownMenu>
                         </div>
                     ) : (
-                        <Link href="/login">
-                            <Button variant="ghost" size="sm">
-                                <LogIn className="w-4 h-4 mr-2" />
-                                Sign In
-                            </Button>
-                        </Link>
+                        null
                     )}
                 </div>
                 
@@ -327,12 +322,7 @@ export default function Header() {
                         </DropdownMenu>
                     </>
                     ) : (
-                    <Link href="/login">
-                        <Button variant="ghost" size="sm" className="mr-2">
-                        <LogIn className="w-5 h-5 mr-1" />
-                        Sign In
-                        </Button>
-                    </Link>
+                        null
                     )}
                     <Button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
