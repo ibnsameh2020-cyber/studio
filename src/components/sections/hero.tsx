@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -157,7 +158,7 @@ export default function HeroSection() {
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
         </h1>
-        <p className="text-xl sm:text-2xl md:text-4xl text-primary font-headline mb-8 h-10 md:h-12">
+        <p className="text-xl sm:text-2xl md:text-4xl text-foreground font-headline mb-8 h-10 md:h-12">
             I Bridge the Gap.
         </p>
         
