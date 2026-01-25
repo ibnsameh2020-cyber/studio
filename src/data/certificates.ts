@@ -3,10 +3,10 @@ import type { Certificate } from '@/lib/types';
 export const certificates: Certificate[] = [
   // Prioritized Certificates
   {
-    title: 'CPHIMS',
-    issuer: 'Certified Professional in Healthcare Information and Management Systems',
+    title: 'KPI Professional (KPIP)',
+    issuer: 'Balanced Scorecard Institute',
     category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-cphims',
+    imagePlaceholderId: 'cert-kpip',
   },
   {
     title: 'ITIL 4 Leader: Digital & IT Strategy',
@@ -15,12 +15,11 @@ export const certificates: Certificate[] = [
     imagePlaceholderId: 'cert-itil',
   },
   {
-    title: 'HL7® FHIR® Fundamentals',
-    issuer: 'Full Course Completion',
-    category: 'Digital Innovation & Analytics',
-    imagePlaceholderId: 'cert-hl7-fhir',
+    title: 'Certified PMO Professional',
+    issuer: 'IABFM',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-pmo',
   },
-
   // Other Certificates
   // Strategic Leadership & Governance
   {
@@ -30,22 +29,22 @@ export const certificates: Certificate[] = [
     imagePlaceholderId: 'cert-cobit',
   },
   {
-    title: 'KPI Professional (KPIP)',
-    issuer: 'Balanced Scorecard Institute',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-kpip',
-  },
-  {
-    title: 'Certified PMO Professional',
-    issuer: 'IABFM',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-pmo',
-  },
-  {
     title: 'Certified OKR Professional',
     issuer: 'The KPI Institute',
     category: 'Strategic Leadership & Governance',
     imagePlaceholderId: 'cert-okr',
+  },
+  {
+    title: 'CPHIMS',
+    issuer: 'Certified Professional in Healthcare Information and Management Systems',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-cphims',
+  },
+  {
+    title: 'HL7® FHIR® Fundamentals',
+    issuer: 'Full Course Completion',
+    category: 'Digital Innovation & Analytics',
+    imagePlaceholderId: 'cert-hl7-fhir',
   },
   // Technical Licenses & Authorizations
   {

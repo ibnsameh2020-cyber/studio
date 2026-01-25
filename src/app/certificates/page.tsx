@@ -23,14 +23,14 @@ const certificateCategories: Certificate['category'][] = [
 const allDisplayCategories = ['View All', ...certificateCategories];
 
 const topCertBadges = [
-    'CPHIMS',
+    'KPI Professional (KPIP)',
     'ITIL 4 Leader: Digital & IT Strategy',
+    'Certified PMO Professional',
+    'CPHIMS',
     'HL7® FHIR® Fundamentals',
     'COBIT 5 Foundation',
-    'Certified PMO Professional',
     'CNSS',
     'Big Data Analytics',
-    'Artificial Intelligence'
 ];
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
@@ -69,6 +69,7 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
                             src={certImage.imageUrl}
                             alt={certificate.title}
                             fill
+                            quality={100}
                             className="object-contain"
                         />
                     </div>
