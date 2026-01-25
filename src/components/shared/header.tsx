@@ -23,13 +23,13 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
-  { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-4 h-4" /> },
-  { id: 'certificates-section', href: '/#certificates-section', label: 'Certificates', icon: <GraduationCap className="w-4 h-4" /> },
-  { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-4 h-4" /> },
-  { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-4 h-4" /> },
-  { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-4 h-4" /> },
-  { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-4 h-4" /> },
+  { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-5 h-5" /> },
+  { id: 'certificates-section', href: '/#certificates-section', label: 'Certificates', icon: <GraduationCap className="w-5 h-5" /> },
+  { id: 'case-studies', href: '/#case-studies', label: 'Success Stories', icon: <Trophy className="w-5 h-5" /> },
+  { id: 'experience', href: '/#experience', label: 'Experience', icon: <Briefcase className="w-5 h-5" /> },
+  { id: 'insights', href: '/#insights', label: 'Insights', icon: <Newspaper className="w-5 h-5" /> },
+  { id: 'about-cta', href: '/#about-cta', label: 'About', icon: <User className="w-5 h-5" /> },
+  { id: 'contact', href: '/#contact', label: 'Contact', icon: <Mail className="w-5 h-5" /> },
 ];
 
 const sectionIds = ['hero', 'services', 'certificates-section', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
@@ -61,7 +61,7 @@ export default function Header() {
           id: 'exclusive-resources-cta',
           href: '/#exclusive-resources-cta',
           label: 'Resources',
-          icon: <Sparkles className="w-4 h-4" />,
+          icon: <Sparkles className="w-5 h-5" />,
         });
       }
     }
@@ -190,10 +190,10 @@ export default function Header() {
                         onClick={handleMenuLinkClick}
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
-                          'h-10',
+                          'h-12',
                            isLinkActive
                            ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
-                           : 'w-10 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                           : 'w-12 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
                         )}
                       >
                         {item.icon}
