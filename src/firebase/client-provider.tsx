@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ import { FirebaseProvider } from './provider';
 import type { FirebaseApp } from 'firebase/app';
 import type { Auth } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
+import type { Analytics } from 'firebase/analytics';
 
 interface FirebaseClientProviderProps {
   children: React.ReactNode;
@@ -16,6 +18,7 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
     app: FirebaseApp;
     auth: Auth;
     firestore: Firestore;
+    analytics: Analytics | null;
   } | null>(null);
 
   useEffect(() => {
@@ -37,6 +40,7 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
       app={firebase.app}
       auth={firebase.auth}
       firestore={firebase.firestore}
+      analytics={firebase.analytics}
     >
       {children}
     </FirebaseProvider>

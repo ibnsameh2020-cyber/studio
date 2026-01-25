@@ -18,6 +18,7 @@ import {
     sendPasswordResetEmail as firebaseSendPasswordResetEmail,
 } from "firebase/auth";
 import { getFirestore, Firestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getAnalytics, isSupported, type Analytics } from "firebase/analytics";
 import { firebaseConfig as importedConfig } from './config';
 import { useUser } from './auth/use-user';
 import { useCollection } from './firestore/use-collection';
@@ -32,7 +33,13 @@ export async function initializeFirebase() {
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   const auth = getAuth(app);
   const firestore = getFirestore(app);
-  return { app, auth, firestore };
+  let analytics: Analytics | null = null;
+  if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
+    if (await isSupported()) {
+        analytics = getAnalytics(app);
+    }
+  }
+  return { app, auth, firestore, analytics };
 }
 
 

@@ -1,3 +1,3 @@
 // This file is intentionally left blank. 
 // The Firebase configuration will be populated by the backend.
-export const firebaseConfig = {"apiKey":"AIzaSyBQ0bJC1JDTqXlPTTZX45EESnQnhubZ5Hk","authDomain":"studio-682444090-a63bd.firebaseapp.com","projectId":"studio-682444090-a63bd","storageBucket":"studio-682444090-a63bd.firebasestorage.app","messagingSenderId":"890010531816","appId":"1:890010531816:web:d975d8825b1f955bcbd65d"};
+export const firebaseConfig = {"apiKey":"AIzaSyBQ0bJC1JDTqXlPTTZX45EESnQnhubZ5Hk","authDomain":"studio-682444090-a63bd.firebaseapp.com","projectId":"studio-682444090-a63bd","storageBucket":"studio-682444090-a63bd.firebasestorage.app","messagingSenderId":"890010531816","appId":"1:890010531816:web:d975d8825b1f955bcbd65d","measurementId":"G-8EGJFM8C63"};
