@@ -25,7 +25,7 @@ const services = [
     icon: <GanttChartSquare className="w-10 h-10 text-primary" />,
     title: 'Bridging the Gap Between Strategy & Technology',
     problem: 'Technology investments often fail not due to the software, but because of poor user adoption and a lack of strategic alignment.',
-    solution: 'I ensure your digital transformation (ERP, IoT, Cloud) solves real business problems. I govern the transformation journey, ensuring that technology, people, and processes move in sync to achieve true operational maturity.',
+    solution: 'I ensure your digital transformation (ERP, IOT, Cloud) solves real business problems. I govern the transformation journey, ensuring that technology, people, and processes move in sync to achieve true operational maturity.',
     deliverables: ['Digital Maturity Assessment', 'Transformation Roadmap', 'Change Management (ACMP)']
   },
   {
