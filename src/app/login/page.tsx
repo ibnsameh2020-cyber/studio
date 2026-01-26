@@ -33,7 +33,7 @@ const signInSchema = z.object({
 });
 
 export default function LoginPage() {
-  const { user, loading } = useUser();
+  const { user, loading, isAnonymous } = useUser();
   const { signInWithEmailPassword, signUpWithEmailPassword, sendPasswordResetEmail } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -53,10 +53,10 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && !isAnonymous) {
       router.push('/');
     }
-  }, [user, loading, router]);
+  }, [user, loading, isAnonymous, router]);
   
   const onSignInSubmit = async (data: z.infer<typeof signInSchema>) => {
     setIsSubmitting(true);
@@ -120,7 +120,7 @@ export default function LoginPage() {
   };
 
 
-  if (loading || user) {
+  if (loading || (user && !isAnonymous)) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />

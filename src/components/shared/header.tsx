@@ -39,7 +39,7 @@ type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { item
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, loading, isAdmin } = useUser();
+  const { user, loading, isAdmin, isAnonymous } = useUser();
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
@@ -213,7 +213,7 @@ export default function Header() {
                 <div className="hidden md:flex items-center gap-1">
                     {loading ? (
                     <Skeleton className="h-10 w-10 rounded-full" />
-                    ) : user ? (
+                    ) : (user && !isAnonymous) ? (
                         <div className="flex items-center gap-1">
                             {isAdmin && (
                                 <Link
@@ -279,7 +279,7 @@ export default function Header() {
                 <div className="md:hidden flex items-center">
                     {loading ? (
                     <Skeleton className="h-8 w-8 rounded-full" />
-                    ) : user ? (
+                    ) : (user && !isAnonymous) ? (
                     <>
                         {isAdmin && (
                             <Link href="/admin" passHref>

@@ -33,7 +33,7 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 export default function SettingsPage() {
-  const { user, loading } = useUser();
+  const { user, loading, isAnonymous } = useUser();
   const { updateUserProfile, updateUserPassword } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -59,13 +59,13 @@ export default function SettingsPage() {
 
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && (!user || isAnonymous)) {
       router.push('/login');
     }
-    if (user) {
+    if (user && !isAnonymous) {
       profileForm.reset({ displayName: user.displayName || "" });
     }
-  }, [user, loading, router, profileForm]);
+  }, [user, loading, isAnonymous, router, profileForm]);
 
   const onProfileSubmit: SubmitHandler<ProfileFormValues> = async (data) => {
     if (!updateUserProfile) return;
@@ -93,7 +93,7 @@ export default function SettingsPage() {
   };
 
 
-  if (loading || !user) {
+  if (loading || !user || isAnonymous) {
     return (
         <div className="relative overflow-hidden">
             <div aria-hidden="true" className="absolute inset-0 z-0">
