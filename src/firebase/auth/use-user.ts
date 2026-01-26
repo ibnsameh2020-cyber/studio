@@ -1,6 +1,7 @@
+
 "use client";
 import { useState, useEffect } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User, signInAnonymously } from 'firebase/auth';
 import { useAuth } from '../provider';
 
 export function useUser() {
@@ -11,16 +12,24 @@ export function useUser() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      
-      const ADMIN_EMAILS = ["ibn.sameh.2020@gmail.com", "same7mousa@gmail.com"];
-      if (user && user.email && ADMIN_EMAILS.includes(user.email)) {
-        setIsAdmin(true);
+      if (user) {
+        setUser(user);
+        
+        const ADMIN_EMAILS = ["ibn.sameh.2020@gmail.com", "same7mousa@gmail.com"];
+        if (user.email && ADMIN_EMAILS.includes(user.email)) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+        
+        setLoading(false);
       } else {
-        setIsAdmin(false);
+        // No user, sign in anonymously. The listener will re-run with the new user.
+        signInAnonymously(auth).catch(error => {
+          console.error("Anonymous sign in failed:", error);
+          setLoading(false); // Ensure loading completes even if anon sign-in fails
+        });
       }
-      
-      setLoading(false);
     });
 
     return () => unsubscribe();
