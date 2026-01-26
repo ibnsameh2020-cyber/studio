@@ -7,7 +7,7 @@ import { Separator } from '../ui/separator';
 
 const GlobalFootprint = () => {
     const competencies = [
-        { icon: <Bot className="w-5 h-5 mr-3 text-primary" />, text: "Smart Ecosystems: IOT & Smart Cities" },
+        { icon: <Bot className="w-5 h-5 mr-3 text-primary" />, text: "Smart Ecosystems: IoT & Smart Cities" },
         { icon: <Hospital className="w-5 h-5 mr-3 text-primary" />, text: "Digital Health: Medical Archiving, HMS, & Integration" },
         { icon: <Building className="w-5 h-5 mr-3 text-primary" />, text: "Enterprise Technology: ERP, CRM, & Low-Current Systems" },
         { icon: <Globe className="w-5 h-5 mr-3 text-primary" />, text: "Facility Intelligence: CAFM & Infrastructure Management" }
@@ -63,3 +63,5 @@ export default function ProjectsSection() {
     </section>
   );
 }
+
+    

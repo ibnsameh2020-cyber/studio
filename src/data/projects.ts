@@ -50,8 +50,10 @@ export const projects: Project[] = [
     partner: 'Rosmiman® (Smart Cities & CAFM Solutions)',
     scale: 'Implementing a comprehensive Smart City management framework.',
     scope: 'Deployed an IWMS (Integrated Workplace Management System) and CAFM solutions to efficiently manage the city\'s lifecycle, assets, and maintenance operations.',
-    role: 'Provided strategic consultation on adopting IOT and automated facility management technologies to enhance the city\'s livability and operational sustainability.',
-    techStack: ['Smart Cities', 'IOT', 'CAFM', 'Strategic Consulting'],
+    role: 'Provided strategic consultation on adopting IoT and automated facility management technologies to enhance the city\'s livability and operational sustainability.',
+    techStack: ['Smart Cities', 'IoT', 'CAFM', 'Strategic Consulting'],
     imagePlaceholderId: 'project-4',
   },
 ];
+
+    
