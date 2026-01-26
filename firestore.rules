@@ -30,7 +30,7 @@ service cloud.firestore {
     }
 
     match /resources/{resourceId} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow write: if isAdmin();
     }
   }

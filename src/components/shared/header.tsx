@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -49,24 +50,23 @@ export default function Header() {
   const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
 
   const [newItems, setNewItems] = useState<NotificationItem[]>([]);
-  const notificationsLoading = articlesLoading || (user ? resourcesLoading : false);
+  const notificationsLoading = articlesLoading || resourcesLoading;
   
   const navItems = useMemo(() => {
     let items = [...baseNavItems];
 
-    if (user) {
-      const insightsIndex = items.findIndex(item => item.id === 'insights');
-      if (insightsIndex !== -1) {
-        items.splice(insightsIndex + 1, 0, {
-          id: 'exclusive-resources-cta',
-          href: '/#exclusive-resources-cta',
-          label: 'Resources',
-          icon: <Sparkles className="w-5 h-5" />,
-        });
-      }
+    const insightsIndex = items.findIndex(item => item.id === 'insights');
+    if (insightsIndex !== -1) {
+    items.splice(insightsIndex + 1, 0, {
+        id: 'exclusive-resources-cta',
+        href: '/#exclusive-resources-cta',
+        label: 'Resources',
+        icon: <Sparkles className="w-5 h-5" />,
+    });
     }
+    
     return items;
-  }, [user]);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -121,7 +121,7 @@ export default function Header() {
       allItems.push(...articles.map(a => ({ ...a, itemType: 'article' as const })));
     }
     
-    if (resources && user) {
+    if (resources) {
       allItems.push(...resources.map(r => ({ ...r, itemType: 'resource' as const })));
     }
 
@@ -138,7 +138,7 @@ export default function Header() {
     });
 
     setNewItems(filteredNewItems);
-  }, [articles, resources, user, notificationsLoading]);
+  }, [articles, resources, notificationsLoading]);
 
 
   const handleMenuLinkClick = () => {

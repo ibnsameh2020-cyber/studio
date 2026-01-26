@@ -3,58 +3,13 @@
 
 import AnimatedSection from '@/components/animated-section';
 import ResourceCard from '@/components/resource-card';
-import { useCollection, useUser } from '@/firebase';
+import { useCollection } from '@/firebase';
 import type { Resource } from '@/lib/types';
 import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 
 export default function ResourcesPage() {
-  const { user, loading: userLoading } = useUser();
   const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
 
-  if (userLoading) {
-    return (
-      <div className="relative overflow-hidden">
-          <div aria-hidden="true" className="absolute inset-0 z-0">
-              <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
-              <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
-              <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
-              <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
-              <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
-              <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
-          </div>
-          <div className="relative flex h-screen items-center justify-center">
-            <Loader2 className="w-12 h-12 animate-spin text-primary" />
-          </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="relative overflow-hidden">
-          <div aria-hidden="true" className="absolute inset-0 z-0">
-              <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
-              <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
-              <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
-              <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
-              <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
-              <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
-          </div>
-          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32 text-center">
-            <h1 className="text-3xl md:text-5xl font-headline font-bold mb-4">Access Denied</h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              These resources are for members only. Please sign in to continue.
-            </p>
-            <Link href="/login">
-              <Button size="lg">Sign In to Access</Button>
-            </Link>
-          </div>
-      </div>
-    );
-  }
-  
   return (
     <div className="relative overflow-hidden">
         <div aria-hidden="true" className="absolute inset-0 z-0">
