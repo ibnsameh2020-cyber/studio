@@ -1,7 +1,7 @@
 
 "use client";
 import { useState, useEffect } from 'react';
-import { onAuthStateChanged, User, signInAnonymously } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { useAuth } from '../provider';
 
 export function useUser() {
@@ -21,15 +21,11 @@ export function useUser() {
         } else {
           setIsAdmin(false);
         }
-        
-        setLoading(false);
       } else {
-        // No user, sign in anonymously. The listener will re-run with the new user.
-        signInAnonymously(auth).catch(error => {
-          console.error("Anonymous sign in failed:", error);
-          setLoading(false); // Ensure loading completes even if anon sign-in fails
-        });
+        setUser(null);
+        setIsAdmin(false);
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
