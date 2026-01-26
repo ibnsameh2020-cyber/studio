@@ -9,30 +9,30 @@ import { Badge } from '@/components/ui/badge';
 const services = [
   {
     icon: <Briefcase className="w-10 h-10 text-primary" />,
-    title: 'Turn Your PMO into a Value Engine.',
-    problem: 'Is your PMO just a reporting bureaucracy? Many organizations suffer from "Zombie PMOs" that generate paperwork but fail to deliver strategic outcomes.',
-    solution: 'I don\'t just build PMOs; I engineer Strategy Realization Offices. Using frameworks like Balanced Scorecard and McKinsey 7S, I transform your PMO from a cost center into a strategic partner that drives execution velocity and aligns every project with Vision 2030.',
+    title: 'Transform Your PMO into a Value Engine.',
+    problem: 'Is your PMO a reporting bureaucracy? Many organizations suffer from "Zombie PMOs" that generate paperwork but fail to deliver strategic outcomes.',
+    solution: 'I do not just build PMOs; I engineer Strategy Realization Offices. Using frameworks like the Balanced Scorecard and McKinsey 7S, I transform your PMO from a cost center into a strategic partner that drives execution velocity and aligns every project with Vision 2030.',
     deliverables: ['Governance Frameworks', 'PMO Setup/Re-engineering', 'Portfolio Optimization']
   },
   {
     icon: <ShieldQuestion className="w-10 h-10 text-primary" />,
     title: 'Rescuing High-Stakes Initiatives.',
-    problem: 'Critical projects are over budget, behind schedule, or failing to meet quality standards. The bleeding needs to stop.',
-    solution: 'I deploy a rapid "Triage & Stabilize" methodology. By auditing the root causes—whether technical, cultural, or procedural—I provide an immediate roadmap to bring the program back on track or strategically restructure it to minimize loss.',
+    problem: 'Your critical projects are over budget, behind schedule, or failing to meet quality standards. The financial drain must stop.',
+    solution: 'I deploy a rapid "Triage & Stabilize" methodology. By auditing the root causes—technical, cultural, or procedural—I provide an immediate roadmap to bring the program back on track or strategically restructure it to minimize loss.',
     deliverables: ['Root Cause Analysis', 'Recovery Roadmap', 'Crisis Leadership']
   },
   {
     icon: <GanttChartSquare className="w-10 h-10 text-primary" />,
-    title: 'Bridging the Gap Between Strategy & Tech.',
-    problem: 'Technology investments often fail not because of the software, but because of poor adoption and lack of strategic alignment.',
-    solution: 'I ensure your digital transformation (ERP, IoT, Cloud) solves actual business problems. I govern the transformation journey, ensuring that technology, people, and processes move in sync to achieve genuine operational maturity.',
+    title: 'Bridging the Gap Between Strategy & Technology.',
+    problem: 'Technology investments often fail not due to the software, but because of poor user adoption and a lack of strategic alignment.',
+    solution: 'I ensure your digital transformation (ERP, IoT, Cloud) solves real business problems. I govern the transformation journey, ensuring that technology, people, and processes move in sync to achieve true operational maturity.',
     deliverables: ['Digital Maturity Assessment', 'Transformation Roadmap', 'Change Management (ACMP)']
   },
   {
     icon: <BrainCircuit className="w-10 h-10 text-primary" />,
     title: 'Future-Proof Your Portfolio with AI.',
-    problem: 'Traditional reporting looks backward. You need to know what will happen, not what has happened.',
-    solution: 'Leveraging the power of Generative AI and Predictive Analytics, I help you build a "Cognitive PMO." We implement systems that predict risks, automate routine reporting, and provide data-driven decision support for C-level executives.',
+    problem: 'Traditional reporting is retrospective. You need to know what will happen, not just what has already happened.',
+    solution: 'Leveraging Generative AI and Predictive Analytics, I help you build a "Cognitive PMO." We will implement systems that predict risks, automate routine reporting, and provide data-driven decision support for C-level executives.',
     deliverables: ['AI Use-Case Identification', 'Predictive Dashboard Setup', 'Data-Driven Governance']
   }
 ];
@@ -48,7 +48,7 @@ const engagementModels = [
     },
     {
         title: "The 'Portfolio Health Check'",
-        description: "A 2-week rapid audit to diagnose your current PMO maturity and identify quick wins."
+        description: "A two-week rapid audit to diagnose your current PMO maturity and identify quick wins."
     }
 ]
 
@@ -106,7 +106,7 @@ export default function ServicesSection() {
               <div className="text-center mb-12">
                   <h2 className="text-3xl md:text-5xl font-headline font-bold">How We Can Work Together</h2>
                   <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-                      Flexible engagement models to suit your strategic needs.
+                      Flexible engagement models designed to suit your strategic needs.
                   </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">

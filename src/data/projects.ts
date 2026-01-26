@@ -1,3 +1,4 @@
+
 import type { Project } from '@/lib/types';
 
 export const projects: Project[] = [
@@ -10,7 +11,7 @@ export const projects: Project[] = [
     partner: 'Associated with Salehiya Healthcare',
     scale: 'One of the largest modular healthcare expansions in the region.',
     scope: '50 NICU Beds/Rooms (Neonatal Intensive Care), 32 PICU Rooms (Paediatric Intensive Care), and 6 Advanced Integrated ORs.',
-    role: 'Led the end-to-end turnkey execution using Full Glass Modular Solutions. Managed the complexity of large systems integration while maintaining strict SLA and Quality Assurance processes.',
+    role: 'Led the end-to-end turnkey execution using Full-Glass Modular Solutions. I managed the complexity of large-scale systems integration while maintaining strict SLA and Quality Assurance processes.',
     techStack: ['PMP', 'Large Systems Integration', 'Cost Efficiency'],
     imagePlaceholderId: 'project-1',
   },
@@ -22,7 +23,7 @@ export const projects: Project[] = [
     client: 'King Fahd Armed Forces Hospital | Jeddah',
     partner: 'Associated with Salehiya Healthcare',
     scale: 'Upgrading critical care facilities in a live, high-stakes military hospital.',
-    scope: 'Delivered 26 ICU rooms with Full Glass Modular Solutions and CSU (Turnkey Project).',
+    scope: 'Delivered 26 ICU rooms with Full-Glass Modular Solutions and CSU (Turnkey Project).',
     role: 'Orchestrated the project lifecycle from budget oversight to operational risk management, ensuring the highest standards of medical isolation and technology integration.',
     techStack: ['Turnkey Projects', 'Risk Management', 'Healthcare IT'],
     imagePlaceholderId: 'project-2',
@@ -35,8 +36,8 @@ export const projects: Project[] = [
     client: 'King Fahd Medical City (KFMC) & Princess Noura University (PNU)',
     partner: 'Salehiya Healthcare & Olympus Medical Systems',
     scale: 'Digital Operating Rooms & Hospital ERP Integration.',
-    scope: 'KFMC: Installed 10 Gastro Rooms, EndoAlpha Integration, and a full IT infrastructure. PNU: Commissioned 3 Integrated Operation Rooms linked with Hospital ERP.',
-    role: 'Managed the "Integration Layer" (EndoAlpha), enabling seamless data flow between the ORs and the Electronic Health Records (EHR).',
+    scope: 'KFMC: Installed 10 Gastro Rooms and full IT infrastructure with EndoAlpha integration. PNU: Commissioned 3 Integrated Operating Rooms linked with the Hospital ERP.',
+    role: 'Managed the "Integration Layer" (EndoAlpha), enabling seamless data flow between the Operating Rooms (ORs) and the Electronic Health Records (EHR).',
     techStack: ['Healthcare IT (HIT)', 'Smart Integration', 'Disaster Recovery'],
     imagePlaceholderId: 'project-3',
   },
@@ -48,7 +49,7 @@ export const projects: Project[] = [
     client: 'NewGiza City',
     partner: 'Rosmiman® (Smart Cities & CAFM Solutions)',
     scale: 'Implementing a comprehensive Smart City management framework.',
-    scope: 'Deploying IWMS (Integrated Workplace Management System) and CAFM solutions to manage the city\'s lifecycle, assets, and maintenance operations efficiently.',
+    scope: 'Deployed an IWMS (Integrated Workplace Management System) and CAFM solutions to efficiently manage the city\'s lifecycle, assets, and maintenance operations.',
     role: 'Provided strategic consultation on adopting IoT and automated facility management technologies to enhance the city\'s livability and operational sustainability.',
     techStack: ['Smart Cities', 'IoT', 'CAFM', 'Strategic Consulting'],
     imagePlaceholderId: 'project-4',

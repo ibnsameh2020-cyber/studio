@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -201,7 +202,7 @@ export default function ContactSection() {
                             </div>
                         </div>
                         <h3 className="text-2xl font-headline font-bold text-primary mb-2">Book a Strategic Discovery Call</h3>
-                        <p className="text-muted-foreground mb-6">Skip the back-and-forth emails. Schedule a 15-minute introductory discussion to see if we are a good fit.</p>
+                        <p className="text-muted-foreground mb-6">Skip the back-and-forth emails. Schedule a 15-minute introductory call to see if we are a good fit.</p>
                         <Dialog>
                             <DialogTrigger asChild>
                                 <Button size="lg" className="w-full group">

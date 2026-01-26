@@ -13,7 +13,7 @@ import FloatingCallButton from '@/components/shared/floating-call-button';
 
 export const metadata: Metadata = {
   title: 'Sameh Insights | Strategic Digital PMO & Portfolio Governance',
-  description: 'The professional portfolio of Eng. Sameh Moussa, with over 20 years of expertise in private and government sector digital transformation, driving $120M+ programs and establishing AI-driven PMOs.',
+  description: 'Professional portfolio of Eng. Sameh Moussa, showcasing over 20 years of expertise in private and government sector digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.',
 };
 
 export default function RootLayout({

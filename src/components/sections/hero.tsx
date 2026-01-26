@@ -8,9 +8,9 @@ import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 const sentences = [
-    "Most transformations fail not because of bad strategy, but because of disconnected execution.",
-    "As a strategic advisor for the government and healthcare sectors, I turn $120M+ portfolios from 'cost centers' into 'public value engines'.",
-    "I use AI governance, Value Engineering, and Human-Centric Leadership to bridge the gap."
+    "Most transformations fail not because of poor strategy, but because of disconnected execution.",
+    "As a strategic advisor for the government and healthcare sectors, I transform $120M+ portfolios from 'cost centers' into 'public value engines'.",
+    "I use AI Governance, Value Engineering, and Human-Centric Leadership to bridge the gap."
 ];
 const DURATION = 3000; // ms
 
