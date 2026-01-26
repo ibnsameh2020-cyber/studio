@@ -9,7 +9,7 @@ const GlobalFootprint = () => {
     const competencies = [
         { icon: <Bot className="w-5 h-5 mr-3 text-primary" />, text: "Smart Ecosystems: IoT & Smart Cities" },
         { icon: <Hospital className="w-5 h-5 mr-3 text-primary" />, text: "Digital Health: Medical Archiving, HMS, & Integration" },
-        { icon: <Building className="w-5 h-5 mr-3 text-primary" />, text: "Enterprise Tech: ERP, CRM, & Low Current Systems" },
+        { icon: <Building className="w-5 h-5 mr-3 text-primary" />, text: "Enterprise Tech: ERP, CRM, & Low-Current Systems" },
         { icon: <Globe className="w-5 h-5 mr-3 text-primary" />, text: "Facility Intelligence: CAFM & Infrastructure Management" }
     ];
 
@@ -19,7 +19,7 @@ const GlobalFootprint = () => {
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-5xl font-headline font-bold">Global Expertise. Local Impact.</h2>
                     <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                        My experience extends beyond borders. I have led strategic consultations, IT infrastructure deployments, and complex medical integrations across Egypt, North & Middle Africa, the UK, and the Gulf Countries.
+                        My experience extends beyond borders. I have led strategic consultations, IT infrastructure deployments, and complex medical integrations across Egypt, North & Middle Africa, the UK, and the Gulf countries.
                     </p>
                 </div>
                  <div className="max-w-4xl mx-auto bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl transition-all duration-300 hover:border-primary/80 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2">

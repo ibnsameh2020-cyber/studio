@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 const sentences = [
     "Most transformations fail not because of bad strategy, but because of disconnected execution.",
-    "As a Strategic Advisor for Government & Healthcare sectors, I turn $120M+ portfolios from 'cost centers' into 'public value engines'.",
+    "As a strategic advisor for the government and healthcare sectors, I turn $120M+ portfolios from 'cost centers' into 'public value engines'.",
     "I use AI governance, Value Engineering, and Human-Centric Leadership to bridge the gap."
 ];
 const DURATION = 3000; // ms
@@ -140,7 +140,7 @@ const FloatingRoleCard = () => (
                 <p className="text-xs text-muted-foreground text-center leading-relaxed">
                     Strategic Planning & PMO Advisor
                     <span className="block my-1.5 text-primary/50">·</span>
-                    Driving Efficiency in Major Gov Portfolios
+                    Driving Efficiency in Major Government Portfolios
                     <span className="block my-1.5 text-primary/50">·</span>
                     Digital Transformation & Governance
                 </p>

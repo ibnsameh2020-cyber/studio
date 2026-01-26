@@ -77,7 +77,7 @@ export default function Footer() {
                 </Link>
             </div>
             <div className="text-sm text-muted-foreground mt-2 text-center md:text-right">
-                <p>Sameh Insights © 2026 | Orchestrating Strategic Outcomes</p>
+                <p>Sameh Insights © {new Date().getFullYear()} | Orchestrating Strategic Outcomes</p>
                 <p className="text-xs text-muted-foreground/80">Powered by Abdulrahman Moussa</p>
             </div>
           </div>

@@ -32,7 +32,7 @@ const services = [
     icon: <BrainCircuit className="w-10 h-10 text-primary" />,
     title: 'Future-Proof Your Portfolio with AI.',
     problem: 'Traditional reporting looks backward. You need to know what will happen, not what has happened.',
-    solution: 'Leveraging the power of Generative AI and Predictive Analytics, I help you build a "Cognitive PMO." We implement systems that predict risks, automate routine reporting, and provide data-driven decision support for C-Level executives.',
+    solution: 'Leveraging the power of Generative AI and Predictive Analytics, I help you build a "Cognitive PMO." We implement systems that predict risks, automate routine reporting, and provide data-driven decision support for C-level executives.',
     deliverables: ['AI Use-Case Identification', 'Predictive Dashboard Setup', 'Data-Driven Governance']
   }
 ];

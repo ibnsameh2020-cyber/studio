@@ -224,7 +224,7 @@ export default function ContactSection() {
                                 ></iframe>
                             </DialogContent>
                         </Dialog>
-                        <p className="text-xs text-muted-foreground mt-4 text-center">Priority given to Government & Enterprise inquiries.</p>
+                        <p className="text-xs text-muted-foreground mt-4 text-center">Priority is given to government and enterprise inquiries.</p>
                     </div>
                 </div>
                 
