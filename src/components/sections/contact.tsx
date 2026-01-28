@@ -122,7 +122,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i.ibb.co/xthtSmgM/saudi-io.png"
+                src="https://i.ibb.co/G4QFqrgB/68f19b51-6191-4d01-87e3-4d923385dfc4-removalai-preview.png"
                 alt="Saudi Irrigation Organization Logo"
                 fill
                 className="object-contain"
@@ -135,7 +135,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i.ibb.co/Cptfs8Df/d28f4af5-6a73-482d-9161-94a56db6b1bf-removalai-preview.png"
+                src="https://i.ibb.co/zWyXJ7pt/14ae5a04-d0f5-4741-84ef-27270e991485-removalai-preview.png"
                 alt="Salehiya Logo"
                 fill
                 className="object-contain"
@@ -148,7 +148,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://rosmiman.com/wp-content/uploads/2019/09/logo_new.png"
+                src="https://i.ibb.co/hFnCsMM2/1607597025-Rosmiman-logo.png"
                 alt="Rosmiman Logo"
                 fill
                 className="object-contain"
@@ -161,14 +161,41 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://i.ibb.co/XxLMZTyf/6fc6bfab-28d0-465a-830c-b5234bb1da2e-removalai-preview.png"
+                src="https://i.ibb.co/B202P1JK/R.png"
                 alt="Repotech Logo"
+                fill
+                className="object-contain"
+
+            />
+            </div>
+        ),
+        },
+        {
+        name: 'ESG',
+        logo: (
+            <div className="relative w-40 h-40">
+            <Image
+                src="https://i.ibb.co/G4MnBprK/ESG.webp"
+                alt="ESG Logo"
                 fill
                 className="object-contain"
             />
             </div>
         ),
         },
+        {
+         name: 'Method',
+            logo: (
+                <div className="relative w-40 h-40">
+                <Image
+                    src="https://i.ibb.co/GvghpwsX/Method.png"
+                    alt="Method Logo"
+                    fill
+                    className="object-contain"
+                />
+                </div>
+            ),
+            },   
     ];
 
   return (
