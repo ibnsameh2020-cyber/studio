@@ -364,22 +364,27 @@ export default function ContactSection() {
                 </div>
             </div>
 
-            <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
+            <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 overflow-hidden">
                 <h4 className="text-center text-xl font-headline font-semibold mb-8">You are in good company.</h4>
-                <div className="flex flex-wrap justify-center items-center gap-8">
-                    {clientLogos.map((client, index) => (
-                        <div
-                            key={`${client.name}-${index}`}
-                            className="flex-shrink-0"
-                        >
-                            <div
-                                title={client.name}
-                                className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6"
-                            >
-                                {client.logo}
+                <div className="w-full inline-flex flex-nowrap">
+                    <div className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-marquee-scroll hover:[animation-play-state:paused]">
+                        {clientLogos.map((client, index) => (
+                            <div key={`${client.name}-${index}-a`} className="flex-shrink-0 mx-4">
+                                <div title={client.name} className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                    {client.logo}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                    <div className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-marquee-scroll hover:[animation-play-state:paused]" aria-hidden="true">
+                        {clientLogos.map((client, index) => (
+                            <div key={`${client.name}-${index}-b`} className="flex-shrink-0 mx-4">
+                                <div title={client.name} className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                    {client.logo}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
