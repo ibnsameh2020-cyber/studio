@@ -15,15 +15,37 @@ import { CalendarPlus } from "lucide-react";
 
 export default function FloatingCallButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
 
   useEffect(() => {
-    // Show the button after a short delay to make it less intrusive on page load
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1500); // 1.5 second delay
+    }, 1500);
 
-    return () => clearTimeout(timer);
+    const handleScroll = () => {
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const footerRect = footer.getBoundingClientRect();
+        // Hide the button when the top of the footer is visible in the viewport
+        if (footerRect.top < window.innerHeight) {
+          setIsFooterVisible(true);
+        } else {
+          setIsFooterVisible(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const showButton = isVisible && !isFooterVisible;
+
 
   return (
     <Dialog>
@@ -31,11 +53,11 @@ export default function FloatingCallButton() {
             <Button
               className={cn(
                 "group fixed bottom-6 left-6 z-50 flex items-center justify-center overflow-hidden whitespace-nowrap shadow-lg rounded-full transition-all duration-300 ease-in-out",
-                "h-11 w-11 hover:w-32", // ~20% smaller
+                "h-11 w-11 hover:w-32",
                 "bg-primary/70 text-primary-foreground", // 30% transparent
-                "hover:bg-primary/90", // Becomes more opaque on hover
+                "hover:bg-primary/90",
                 "gap-0 group-hover:gap-2",
-                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
+                showButton ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
               )}
               aria-label="Book a Call"
             >
