@@ -116,7 +116,7 @@ export default function ContactSection() {
         }
     };
     
-      const clientLogos = [
+    const clientLogos = [
         {
         name: 'Saudi Irrigation Organization',
         logo: (
@@ -196,7 +196,19 @@ export default function ContactSection() {
             </div>
         ),
         },
-        
+        {
+            name: 'Olympus',
+            logo: (
+                <div className="relative w-40 h-16">
+                <Image
+                    src="https://i.ibb.co/XfYTRYCq/Olympus.png"
+                    alt="Olympus Logo"
+                    fill
+                    className="object-contain"
+                />
+                </div>
+            )
+        },
               
     ];
 
@@ -359,9 +371,22 @@ export default function ContactSection() {
                     className="group relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
                 >
                     <div className="flex animate-marquee-scroll group-hover:[animation-play-state:paused]">
-                        {clientLogos.concat(clientLogos).map((client, index) => (
+                        {clientLogos.map((client, index) => (
                            <div
-                                key={`${client.name}-${index}`}
+                                key={`${client.name}-${index}-part1`}
+                                className="flex-shrink-0 mx-8"
+                            >
+                                <div
+                                    title={client.name}
+                                    className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6"
+                                >
+                                    {client.logo}
+                                </div>
+                            </div>
+                        ))}
+                        {clientLogos.map((client, index) => (
+                           <div
+                                key={`${client.name}-${index}-part2`}
                                 className="flex-shrink-0 mx-8"
                             >
                                 <div
