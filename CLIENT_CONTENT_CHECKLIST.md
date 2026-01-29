@@ -2,12 +2,13 @@
 
 Please replace the bracketed `[placeholder text]` with your final content.
 
-## 1. General Site Information & SEO
+## 1. General Site Information, SEO & Social Sharing
 
-*   **Website Title:** Currently "[Sameh insights | A Modern Portfolio]". This appears in the browser tab.
-*   **Website Description:** Currently "[A modern, high-performance personal portfolio website built with Next.js and Firebase.]". This is used by search engines.
-*   **Your Name/Brand Name:** Currently "[Sameh insights]" in the header and "[Sameh insights by Eng. Sameh Moussa]" in the footer.
-*   **Your Full Name:** Currently "[Eng. Sameh Moussa]" in the hero section.
+This information is located in `src/app/layout.tsx` and controls how your site appears in browser tabs, search engine results, and social media link previews.
+
+*   **Site Title:** Currently "[Sameh Insights | Strategic Digital PMO & Portfolio Governance]".
+*   **Site Description:** Currently "[The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.]".
+*   **Preview Image URL:** Currently "[https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png]". This is the image shown when you share your link. The recommended size is 1200x630 pixels.
 
 ## 2. Contact Information & Social Media
 
