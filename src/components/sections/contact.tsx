@@ -196,17 +196,17 @@ export default function ContactSection() {
         ),
         },
         {
-            name: 'Olympus',
-            logo: (
-                <div className="relative w-40 h-16">
-                <Image
-                    src="https://i.ibb.co/XfYTRYCq/Olympus.png"
-                    alt="Olympus Logo"
-                    fill
-                    className="object-contain"
-                />
-                </div>
-            )
+        name: 'Olympus',
+        logo: (
+            <div className="relative w-40 h-16">
+            <Image
+                src="https://i.ibb.co/XfYTRYCq/Olympus.png"
+                alt="Olympus Logo"
+                fill
+                className="object-contain"
+            />
+            </div>
+        )
         },
               
     ];
