@@ -171,6 +171,19 @@ export default function ContactSection() {
         ),
         },
         {
+        name: 'Method',
+        logo: (
+            <div className="relative w-40 h-40">
+            <Image
+                src="https://i.ibb.co/GvghpwsX/Method.png"
+                alt="Method Logo"
+                fill
+                className="object-contain"
+            />
+            </div>
+        ),
+        },
+        {
         name: 'ESG',
         logo: (
             <div className="relative w-40 h-40">
@@ -183,19 +196,8 @@ export default function ContactSection() {
             </div>
         ),
         },
-        {
-         name: 'Method',
-            logo: (
-                <div className="relative w-40 h-40">
-                <Image
-                    src="https://i.ibb.co/GvghpwsX/Method.png"
-                    alt="Method Logo"
-                    fill
-                    className="object-contain"
-                />
-                </div>
-            ),
-            },   
+        
+              
     ];
 
   return (
