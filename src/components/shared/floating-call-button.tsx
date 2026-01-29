@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -31,15 +32,15 @@ export default function FloatingCallButton() {
             <Button
               className={cn(
                 "group fixed bottom-6 left-6 z-50 flex items-center justify-center overflow-hidden whitespace-nowrap shadow-lg rounded-full transition-all duration-300 ease-in-out",
-                "h-14 w-14 hover:w-40", // Starts as a circle, expands on hover
-                "bg-primary text-primary-foreground",
-                "hover:bg-primary/90",
-                "gap-0 group-hover:gap-2", // Manages spacing for centering
+                "h-11 w-11 hover:w-32", // ~20% smaller
+                "bg-primary/20 text-primary-foreground", // 80% transparent
+                "hover:bg-primary/40", // Becomes more opaque on hover
+                "gap-0 group-hover:gap-2",
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
               )}
               aria-label="Book a Call"
             >
-              <CalendarPlus className="h-8 w-8 flex-shrink-0" />
+              <CalendarPlus className="h-6 w-6 flex-shrink-0" />
               <span className="max-w-0 opacity-0 transition-all duration-300 group-hover:max-w-xs group-hover:opacity-100">
                 Book a Call
               </span>
