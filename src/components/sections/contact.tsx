@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -367,37 +366,20 @@ export default function ContactSection() {
 
             <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                 <h4 className="text-center text-xl font-headline font-semibold mb-8">You are in good company.</h4>
-                <div
-                    className="group relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]"
-                >
-                    <div className="flex animate-marquee-scroll group-hover:[animation-play-state:paused]">
-                        {clientLogos.map((client, index) => (
-                           <div
-                                key={`${client.name}-${index}-part1`}
-                                className="flex-shrink-0 mx-8"
+                <div className="flex flex-wrap justify-center items-center gap-8">
+                    {clientLogos.map((client, index) => (
+                        <div
+                            key={`${client.name}-${index}`}
+                            className="flex-shrink-0"
+                        >
+                            <div
+                                title={client.name}
+                                className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6"
                             >
-                                <div
-                                    title={client.name}
-                                    className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6"
-                                >
-                                    {client.logo}
-                                </div>
+                                {client.logo}
                             </div>
-                        ))}
-                        {clientLogos.map((client, index) => (
-                           <div
-                                key={`${client.name}-${index}-part2`}
-                                className="flex-shrink-0 mx-8"
-                            >
-                                <div
-                                    title={client.name}
-                                    className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6"
-                                >
-                                    {client.logo}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
