@@ -11,9 +11,34 @@ import Script from 'next/script';
 import BackToTopButton from '@/components/shared/back-to-top-button';
 import FloatingCallButton from '@/components/shared/floating-call-button';
 
+const siteTitle = 'Sameh Insights | Strategic Digital PMO & Portfolio Governance';
+const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.';
+const siteImage = 'https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png';
+
 export const metadata: Metadata = {
-  title: 'Sameh Insights | Strategic Digital PMO & Portfolio Governance',
-  description: 'Professional portfolio of Eng. Sameh Moussa, showcasing over 20 years of expertise in digital transformation across the private and government sectors, leading $120M+ programs, and establishing AI-driven PMOs.',
+  title: siteTitle,
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    siteName: 'Sameh Insights',
+    images: [
+      {
+        url: siteImage,
+        width: 1200,
+        height: 630,
+        alt: 'A professional portrait of Eng. Sameh Moussa',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    images: [siteImage],
+  },
 };
 
 export default function RootLayout({

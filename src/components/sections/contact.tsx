@@ -149,7 +149,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://i.ibb.co/8MYv2Xf/logo-rosmiman-R-dark.png"
+                src="https://i.ibb.co/Rps1TB7f/rosmiman-Logo.png"
                 alt="Rosmiman Logo"
                 fill
                 className="object-contain"
