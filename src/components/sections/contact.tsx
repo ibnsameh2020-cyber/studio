@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -121,7 +122,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i.ibb.co/G4QFqrgB/68f19b51-6191-4d01-87e3-4d923385dfc4-removalai-preview.png"
+                src="https://i.ibb.co/YBHSZf7k/saudi-irrigation-organization-logo-png-seeklogo-379759.png"
                 alt="Saudi Irrigation Organization Logo"
                 fill
                 className="object-contain"
@@ -134,7 +135,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i.ibb.co/zWyXJ7pt/14ae5a04-d0f5-4741-84ef-27270e991485-removalai-preview.png"
+                src="https://i.ibb.co/YT0phJDw/be1e65e7-2bf0-4023-a7f3-358c0525950e-removalai-preview.png"
                 alt="Salehiya Logo"
                 fill
                 className="object-contain"
@@ -147,7 +148,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://i.ibb.co/hFnCsMM2/1607597025-Rosmiman-logo.png"
+                src="https://i.ibb.co/Rps1TB7f/rosmiman-Logo.png"
                 alt="Rosmiman Logo"
                 fill
                 className="object-contain"
@@ -370,7 +371,7 @@ export default function ContactSection() {
                     <div className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-marquee-scroll hover:[animation-play-state:paused]">
                         {clientLogos.map((client, index) => (
                             <div key={`${client.name}-${index}-a`} className="flex-shrink-0 mx-4">
-                                <div title={client.name} className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
                                     {client.logo}
                                 </div>
                             </div>
@@ -379,7 +380,7 @@ export default function ContactSection() {
                     <div className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-marquee-scroll hover:[animation-play-state:paused]" aria-hidden="true">
                         {clientLogos.map((client, index) => (
                             <div key={`${client.name}-${index}-b`} className="flex-shrink-0 mx-4">
-                                <div title={client.name} className="bg-card/20 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
                                     {client.logo}
                                 </div>
                             </div>
