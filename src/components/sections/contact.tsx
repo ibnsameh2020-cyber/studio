@@ -148,7 +148,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://rosmiman.com/wp-content/uploads/2020/12/logo-rosmiman-R-light.png"
+                src="https://rosmiman.com/wp-content/uploads/2020/12/logo-rosmiman-R.png"
                 alt="Rosmiman Logo"
                 fill
                 className="object-contain"
@@ -365,7 +365,7 @@ export default function ContactSection() {
                 </div>
             </div>
 
-            <div className="mt-12 bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl p-8 shadow-2xl shadow-primary/10">
+            <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl">
                 <h4 className="text-center text-xl font-headline font-semibold mb-8">You are in good company.</h4>
                 
                 {/* Desktop: Animated Marquee */}
@@ -402,5 +402,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-    
