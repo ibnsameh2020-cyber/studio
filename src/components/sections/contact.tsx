@@ -122,7 +122,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i.ibb.co/YBHSZf7k/saudi-irrigation-organization-logo-png-seeklogo-379759.png"
+                src="https://i.ibb.co/kzQmy89/70bee6de-6292-4040-bd78-4b8ed275e938-removalai-preview.png"
                 alt="Saudi Irrigation Organization Logo"
                 fill
                 className="object-contain"
@@ -135,7 +135,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-40">
             <Image
-                src="https://i.ibb.co/YT0phJDw/be1e65e7-2bf0-4023-a7f3-358c0525950e-removalai-preview.png"
+                src="https://i.ibb.co/pBk2bKKy/536ae902-2fc5-4679-91e6-7af31fcbfea9-removalai-preview.png"
                 alt="Salehiya Logo"
                 fill
                 className="object-contain"
@@ -148,7 +148,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://i.ibb.co/Rps1TB7f/rosmiman-Logo.png"
+                src="https://rosmiman.com/wp-content/uploads/2020/12/logo-rosmiman-R-light.png"
                 alt="Rosmiman Logo"
                 fill
                 className="object-contain"
@@ -201,7 +201,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://i.ibb.co/XfYTRYCq/Olympus.png"
+                src="https://i.ibb.co/j9fm4yYz/Olympus-Corporation-logo-svg.png"
                 alt="Olympus Logo"
                 fill
                 className="object-contain"
@@ -365,33 +365,35 @@ export default function ContactSection() {
                 </div>
             </div>
 
-            <div className="mt-12 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 overflow-hidden">
+            <div className="mt-12 bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl p-8 shadow-2xl shadow-primary/10">
                 <h4 className="text-center text-xl font-headline font-semibold mb-8">You are in good company.</h4>
-                 <div 
-                    className="w-full overflow-hidden"
+                
+                {/* Desktop: Animated Marquee */}
+                <div 
+                    className="hidden md:block w-full overflow-hidden"
                     style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
                 >
                     <div className="flex w-fit animate-marquee-scroll hover:[animation-play-state:paused]">
-                        {/* First render of logos */}
-                        <div className="flex-shrink-0 flex items-center justify-around">
-                            {clientLogos.map((client, index) => (
-                                <div key={`${client.name}-${index}-a`} className="flex-shrink-0 mx-4">
-                                    <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
-                                        {client.logo}
-                                    </div>
+                        {[...clientLogos, ...clientLogos].map((client, index) => (
+                            <div key={`${client.name}-d-${index}`} className="flex-shrink-0 mx-4">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                    {client.logo}
                                 </div>
-                            ))}
-                        </div>
-                        {/* Second render for seamless loop */}
-                        <div className="flex-shrink-0 flex items-center justify-around" aria-hidden="true">
-                            {clientLogos.map((client, index) => (
-                                <div key={`${client.name}-${index}-b`} className="flex-shrink-0 mx-4">
-                                    <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
-                                        {client.logo}
-                                    </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                {/* Mobile: Horizontal Scroll */}
+                <div className="md:hidden w-full overflow-x-auto">
+                    <div className="flex space-x-4">
+                        {clientLogos.map((client, index) => (
+                            <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                    {client.logo}
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -400,3 +402,5 @@ export default function ContactSection() {
     </section>
   );
 }
+
+    
