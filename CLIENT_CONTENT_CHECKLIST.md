@@ -8,7 +8,7 @@ This information is located in `src/app/layout.tsx` and controls how your site a
 
 *   **Site Title:** Currently "[Sameh Insights | Strategic Digital PMO & Portfolio Governance]".
 *   **Site Description:** Currently "[The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.]".
-*   **Preview Image URL:** Currently "[https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png]". This is the image shown when you share your link. The recommended size is 1200x630 pixels.
+*   **Preview Image URL:** Currently a placeholder WEBP image. You can replace this by editing the `siteImage` URL in `src/app/layout.tsx`. Upload your `.webp` image to a hosting service (like [imgbb](https://imgbb.com/)) and paste the new URL there. The recommended size is 1200x630 pixels.
 
 ## 2. Contact Information & Social Media
 

@@ -13,7 +13,7 @@ import FloatingCallButton from '@/components/shared/floating-call-button';
 
 const siteTitle = 'Sameh Insights | Strategic Digital PMO & Portfolio Governance';
 const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.';
-const siteImage = 'https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png';
+const siteImage = 'https://picsum.photos/seed/sameh-portfolio/1200/630.webp';
 
 export const metadata: Metadata = {
   title: siteTitle,
