@@ -50,13 +50,13 @@ export default function BackToTopButton() {
     <button
       onClick={scrollToTop}
       className={cn(
-        "group fixed bottom-6 right-6 flex items-center justify-center h-14 w-14 bg-primary text-primary-foreground shadow-lg z-50 rounded-full transition-all duration-300 ease-in-out",
+        "group fixed bottom-6 right-6 flex items-center justify-center h-11 w-11 bg-primary text-primary-foreground shadow-lg z-50 rounded-full transition-all duration-300 ease-in-out",
         "hover:bg-primary/90",
         showButton ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
       )}
       aria-label="Back to top"
     >
-      <ArrowUp className="w-6 h-6" />
+      <ArrowUp className="w-5 h-5" />
     </button>
   );
 }
