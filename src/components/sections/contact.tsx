@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -46,6 +46,7 @@ const challengeOptions = {
 export default function ContactSection() {
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const mobileLogosRef = useRef<HTMLDivElement>(null);
 
     const form = useForm<ContactFormValues>({
         resolver: zodResolver(contactSchema),
@@ -148,7 +149,7 @@ export default function ContactSection() {
         logo: (
             <div className="relative w-40 h-16">
             <Image
-                src="https://rosmiman.com/wp-content/uploads/2020/12/logo-rosmiman-R.png"
+                src="https://i.ibb.co/8MYv2Xf/logo-rosmiman-R-dark.png"
                 alt="Rosmiman Logo"
                 fill
                 className="object-contain"
@@ -211,6 +212,53 @@ export default function ContactSection() {
         },
               
     ];
+
+    // This effect handles the mobile auto-scrolling
+    useEffect(() => {
+        const logosElement = mobileLogosRef.current;
+        if (!logosElement) return;
+
+        let scrollInterval: NodeJS.Timeout;
+        const startScrolling = () => {
+            clearInterval(scrollInterval);
+            scrollInterval = setInterval(() => {
+                if (logosElement.scrollWidth > logosElement.clientWidth) {
+                    const isAtLoopPoint = logosElement.scrollLeft >= logosElement.scrollWidth / 2;
+                    if (isAtLoopPoint) {
+                        logosElement.scrollLeft = 0;
+                    } else {
+                        logosElement.scrollLeft += 1;
+                    }
+                }
+            }, 30);
+        };
+
+        let resumeTimeout: NodeJS.Timeout;
+        const handleTouchStart = () => {
+            clearInterval(scrollInterval);
+            clearTimeout(resumeTimeout);
+        };
+
+        const handleTouchEnd = () => {
+            clearTimeout(resumeTimeout);
+            resumeTimeout = setTimeout(startScrolling, 2000); // Resume after 2s of no touching
+        };
+
+        startScrolling();
+        logosElement.addEventListener('touchstart', handleTouchStart, { passive: true });
+        logosElement.addEventListener('touchend', handleTouchEnd, { passive: true });
+        logosElement.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
+        return () => {
+            clearInterval(scrollInterval);
+            clearTimeout(resumeTimeout);
+            if (logosElement) {
+                logosElement.removeEventListener('touchstart', handleTouchStart);
+                logosElement.removeEventListener('touchend', handleTouchEnd);
+                logosElement.removeEventListener('touchcancel', handleTouchEnd);
+            }
+        };
+    }, []);
 
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
@@ -384,17 +432,15 @@ export default function ContactSection() {
                     </div>
                 </div>
                 
-                {/* Mobile: Horizontal Scroll */}
-                <div className="md:hidden w-full overflow-x-auto">
-                    <div className="flex space-x-4">
-                        {clientLogos.map((client, index) => (
-                            <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
-                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
-                                    {client.logo}
-                                </div>
+                {/* Mobile: JS-powered auto-scroll */}
+                <div ref={mobileLogosRef} className="md:hidden w-full overflow-x-auto flex space-x-4">
+                    {[...clientLogos, ...clientLogos].map((client, index) => (
+                        <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
+                            <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                {client.logo}
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
