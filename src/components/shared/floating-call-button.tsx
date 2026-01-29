@@ -33,8 +33,8 @@ export default function FloatingCallButton() {
               className={cn(
                 "group fixed bottom-6 left-6 z-50 flex items-center justify-center overflow-hidden whitespace-nowrap shadow-lg rounded-full transition-all duration-300 ease-in-out",
                 "h-11 w-11 hover:w-32", // ~20% smaller
-                "bg-primary/20 text-primary-foreground", // 80% transparent
-                "hover:bg-primary/40", // Becomes more opaque on hover
+                "bg-primary/40 text-primary-foreground", // 60% transparent
+                "hover:bg-primary/60", // Becomes more opaque on hover
                 "gap-0 group-hover:gap-2",
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
               )}
