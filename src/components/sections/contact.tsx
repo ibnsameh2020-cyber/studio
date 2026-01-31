@@ -502,7 +502,7 @@ export default function ContactSection() {
                     <div className="flex w-fit animate-marquee-scroll hover:[animation-play-state:paused]">
                         {[...clientLogos, ...clientLogos].map((client, index) => (
                             <div key={`${client.name}-d-${index}`} className="flex-shrink-0 mx-4">
-                                <div title={client.name} className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-2xl shadow-primary/10 flex items-center justify-center h-40 w-64 p-6">
                                     {client.logo}
                                 </div>
                             </div>
@@ -514,7 +514,7 @@ export default function ContactSection() {
                 <div ref={mobileLogosRef} className="md:hidden w-full overflow-x-auto flex space-x-4">
                     {[...clientLogos, ...clientLogos].map((client, index) => (
                         <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
-                            <div title={client.name} className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-lg flex items-center justify-center h-40 w-64 p-6">
+                            <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-2xl shadow-primary/10 flex items-center justify-center h-40 w-64 p-6">
                                 {client.logo}
                             </div>
                         </div>
