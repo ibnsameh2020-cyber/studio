@@ -326,7 +326,7 @@ const clientLogos = [
 
 const VerticalHeroClientLogos = () => {
     return (
-        <div className="absolute top-[55%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
+        <div className="absolute top-[65%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-xl h-full flex flex-col p-4">
                  <h4 className="text-center text-lg font-headline font-semibold mb-4 shrink-0">You are in good company.</h4>
                 <div 
