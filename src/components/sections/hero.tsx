@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
@@ -326,7 +326,7 @@ const clientLogos = [
 
 const VerticalHeroClientLogos = () => {
     return (
-        <div className="absolute top-[65%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
+        <div className="absolute top-[60%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-xl h-full flex flex-col p-4">
                  <h4 className="text-center text-lg font-headline font-semibold mb-4 shrink-0">You are in good company.</h4>
                 <div 
@@ -350,55 +350,6 @@ const VerticalHeroClientLogos = () => {
 
 
 const HeroClientLogos = () => {
-    const mobileLogosRef = useRef<HTMLDivElement>(null);
-
-    // This effect handles the mobile auto-scrolling
-    useEffect(() => {
-        const logosElement = mobileLogosRef.current;
-        if (!logosElement) return;
-
-        let scrollInterval: NodeJS.Timeout;
-        const startScrolling = () => {
-            clearInterval(scrollInterval);
-            scrollInterval = setInterval(() => {
-                if (logosElement.scrollWidth > logosElement.clientWidth) {
-                    const isAtLoopPoint = logosElement.scrollLeft >= logosElement.scrollWidth / 2;
-                    if (isAtLoopPoint) {
-                        logosElement.scrollLeft = 0;
-                    } else {
-                        logosElement.scrollLeft += 1;
-                    }
-                }
-            }, 30);
-        };
-
-        let resumeTimeout: NodeJS.Timeout;
-        const handleTouchStart = () => {
-            clearInterval(scrollInterval);
-            clearTimeout(resumeTimeout);
-        };
-
-        const handleTouchEnd = () => {
-            clearTimeout(resumeTimeout);
-            resumeTimeout = setTimeout(startScrolling, 2000); 
-        };
-
-        startScrolling();
-        logosElement.addEventListener('touchstart', handleTouchStart, { passive: true });
-        logosElement.addEventListener('touchend', handleTouchEnd, { passive: true });
-        logosElement.addEventListener('touchcancel', handleTouchEnd, { passive: true });
-
-        return () => {
-            clearInterval(scrollInterval);
-            clearTimeout(resumeTimeout);
-            if (logosElement) {
-                logosElement.removeEventListener('touchstart', handleTouchStart);
-                logosElement.removeEventListener('touchend', handleTouchEnd);
-                logosElement.removeEventListener('touchcancel', handleTouchEnd);
-            }
-        };
-    }, []);
-
     return (
         <div className="mt-12 w-full animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-6 shadow-xl">
@@ -420,15 +371,20 @@ const HeroClientLogos = () => {
                     </div>
                 </div>
                 
-                {/* Mobile: JS-powered auto-scroll */}
-                <div ref={mobileLogosRef} className="md:hidden w-full overflow-x-auto flex space-x-4">
-                    {[...clientLogos, ...clientLogos].map((client, index) => (
-                        <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
-                             <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 w-44 p-6">
-                                {client.logo}
+                {/* Mobile: Use CSS animation */}
+                <div 
+                    className="md:hidden w-full overflow-hidden"
+                    style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+                >
+                    <div className="flex w-fit animate-marquee-scroll">
+                        {[...clientLogos, ...clientLogos].map((client, index) => (
+                            <div key={`${client.name}-m-${index}`} className="flex-shrink-0 mx-2">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 w-44 p-6">
+                                    {client.logo}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
