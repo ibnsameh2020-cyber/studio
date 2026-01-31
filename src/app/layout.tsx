@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         url: siteImage,
         width: 1200,
         height: 630,
-        alt: 'A professional portrait of Eng. Sameh Moussa',
+        alt: 'Sameh insights',
       },
     ],
     locale: 'en_US',
