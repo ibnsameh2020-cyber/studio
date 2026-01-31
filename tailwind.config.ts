@@ -175,6 +175,10 @@ export default {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'marquee-scroll-y': {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(-50%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -192,6 +196,7 @@ export default {
         'slide-out-up-fade': 'slide-out-up-fade 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards',
         'progress-bar': 'progress-bar 5s linear forwards',
         'marquee-scroll': 'marquee-scroll 60s linear infinite',
+        'marquee-scroll-y': 'marquee-scroll-y 60s linear infinite',
       },
     },
   },

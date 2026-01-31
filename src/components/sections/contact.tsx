@@ -221,7 +221,7 @@ export default function ContactSection() {
             name: 'King Faisal Specialist Hospital & Research Centre',
             logo: (
               <div className="relative w-40 h-24">
-                <Image src="https://i.ibb.co/ns1mnvgH/King-Faisal-Specialist-Hospital-Research-Centre-1.webp" alt="King Faisal Specialist Hospital & Research Centre Logo" fill className="object-contain" />
+                <Image src="https://i.ibb.co/35HyVWm5/e53142f9-cc31-493d-bb5a-2bce7a936246-removalai-preview.png" alt="King Faisal Specialist Hospital & Research Centre Logo" fill className="object-contain" />
               </div>
             ),
         },
