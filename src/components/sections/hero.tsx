@@ -326,14 +326,14 @@ const clientLogos = [
 
 const VerticalHeroClientLogos = () => {
     return (
-        <div className="absolute top-1/2 -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10">
+        <div className="absolute top-[55%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-xl h-full flex flex-col p-4">
                  <h4 className="text-center text-lg font-headline font-semibold mb-4 shrink-0">You are in good company.</h4>
                 <div 
                     className="w-full overflow-hidden flex-grow"
                     style={{ maskImage: 'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)' }}
                 >
-                    <div className="flex flex-col w-full animate-marquee-scroll-y hover:[animation-play-state:paused]">
+                    <div className="flex flex-col w-full animate-marquee-scroll-y group-hover:[animation-play-state:paused]">
                         {[...clientLogos, ...clientLogos].map((client, index) => (
                             <div key={`${client.name}-v-${index}`} className="flex-shrink-0 my-2">
                                 <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 p-6 w-full">
