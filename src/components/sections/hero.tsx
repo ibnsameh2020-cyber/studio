@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -153,7 +154,7 @@ const clientLogos = [
     {
       name: 'Saudi Irrigation Organization',
       logo: (
-        <div className="relative w-40 h-40">
+        <div className="relative w-24 h-24">
           <Image
             src="https://i.ibb.co/kzQmy89/70bee6de-6292-4040-bd78-4b8ed275e938-removalai-preview.png"
             alt="Saudi Irrigation Organization Logo"
@@ -325,7 +326,7 @@ const clientLogos = [
 
 const VerticalHeroClientLogos = () => {
     return (
-        <div className="absolute top-2/3 -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10">
+        <div className="absolute top-1/2 -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10">
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-xl h-full flex flex-col p-4">
                  <h4 className="text-center text-lg font-headline font-semibold mb-4 shrink-0">You are in good company.</h4>
                 <div 
