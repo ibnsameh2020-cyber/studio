@@ -266,18 +266,18 @@ export default function ContactSection() {
             ),
         },
         {
-            name: 'King Fahd Armed Forces Hospital',
+            name: 'Unión Fenosa',
             logo: (
               <div className="relative w-40 h-24">
-                <Image src="https://i.ibb.co/6JmXmbQZ/3d2f8725-2402-4bf4-841b-7aa21d304504-removalai-preview.png" alt="King Fahd Armed Forces Hospital Logo" fill className="object-contain" />
+                <Image src="https://i.ibb.co/6JmXmbQZ/3d2f8725-2402-4bf4-841b-7aa21d304504-removalai-preview.png" alt="Unión Fenosa Gas Logo" fill className="object-contain" />
               </div>
             ),
         },
         {
-            name: 'Unión Fenosa Gas',
+            name: 'New Giza',
             logo: (
               <div className="relative w-40 h-24">
-                <Image src="https://i.ibb.co/gZTwVs5z/b87e9262-3c1c-4bc7-b282-ae06918f4581-removalai-preview.png" alt="Unión Fenosa Gas Logo" fill className="object-contain" />
+                <Image src="https://i.ibb.co/gZTwVs5z/b87e9262-3c1c-4bc7-b282-ae06918f4581-removalai-preview.png" alt="New Giza Logo" fill className="object-contain" />
               </div>
             ),
         },
