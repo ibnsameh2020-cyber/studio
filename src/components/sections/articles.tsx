@@ -1,6 +1,7 @@
 
 "use client";
 
+import React from 'react';
 import AnimatedSection from '../animated-section';
 import { Button } from '../ui/button';
 import Link from 'next/link';
@@ -9,7 +10,6 @@ import { Card } from '../ui/card';
 import { useCollection } from '@/firebase';
 import type { Article } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 const formatDate = (date: any) => {
@@ -18,6 +18,44 @@ const formatDate = (date: any) => {
         return date.toDate().toLocaleDateString('en-US');
     }
     return new Date(date).toLocaleDateString('en-US');
+};
+
+const renderWithLinks = (text: string) => {
+  if (!text) return text;
+  const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  const parts: (string | JSX.Element)[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    const [fullMatch, linkText, url] = match;
+    parts.push(
+      <a
+        key={url + match.index}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary hover:underline"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {linkText}
+      </a>
+    );
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+  
+  if (parts.length === 0) {
+    return text;
+  }
+
+  return <>{parts.map((part, i) => <React.Fragment key={i}>{part}</React.Fragment>)}</>;
 };
 
 export default function InsightsSection() {
@@ -64,7 +102,7 @@ export default function InsightsSection() {
                       const cardContent = (
                         <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
                             <div className={cn("flex-grow", 'text-left')}>
-                                <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{article.headline}</h3>
+                                <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{renderWithLinks(article.headline)}</h3>
                                 <div className={cn("flex items-center gap-2 text-xs text-muted-foreground mt-1", 'justify-start')}>
                                     <Calendar className="w-3 h-3" />
                                     <span>{formatDate(article.date)}</span>
@@ -73,14 +111,6 @@ export default function InsightsSection() {
                         </Card>
                       );
                       
-                      if (article.link) {
-                        return (
-                            <a href={article.link} key={article.id} target="_blank" rel="noopener noreferrer">
-                                {cardContent}
-                            </a>
-                        )
-                      }
-
                       return (
                         <div key={article.id}>
                             {cardContent}

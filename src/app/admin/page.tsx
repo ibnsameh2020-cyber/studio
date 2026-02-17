@@ -46,7 +46,6 @@ const insightSchema = z.object({
   hook: z.string().min(10, "The Hook must be at least 10 characters."),
   keyInsight: z.string().min(10, "Key Insight must be at least 10 characters."),
   language: z.enum(['ltr', 'rtl']).default('ltr'),
-  link: z.string().url().optional().or(z.literal('')),
 });
 type InsightFormValues = z.infer<typeof insightSchema>;
 
@@ -113,7 +112,6 @@ export default function AdminPage() {
       hook: "",
       keyInsight: "",
       language: "ltr",
-      link: "",
     },
   });
   
@@ -262,7 +260,6 @@ export default function AdminPage() {
       headline: "",
       hook: "",
       keyInsight: "",
-      link: "",
       language: 'ltr' as 'ltr' | 'rtl',
   };
 
@@ -302,7 +299,6 @@ export default function AdminPage() {
     setEditingInsightId(insight.id);
     insightForm.reset({
       ...insight,
-      link: insight.link || '',
       language: insight.language || 'ltr',
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -512,14 +508,7 @@ export default function AdminPage() {
                                     <FormMessage />
                                 </FormItem>
                             )} />
-                            <FormField control={insightForm.control} name="link" render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>External Link (Optional)</FormLabel>
-                                    <FormControl><Input placeholder="https://example.com/article" {...field} /></FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )} />
-
+                            
                             <div className="flex gap-4" dir="ltr">
                                 {editingInsightId && (
                                     <Button type="button" variant="outline" onClick={cancelEditInsight} className="w-full">Cancel</Button>
