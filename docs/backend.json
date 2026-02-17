@@ -49,7 +49,12 @@
         "hook": { "type": "string" },
         "keyInsight": { "type": "string" },
         "authorId": { "type": "string" },
-        "date": { "type": "string", "format": "date-time" }
+        "date": { "type": "string", "format": "date-time" },
+        "link": {
+          "type": "string",
+          "format": "uri",
+          "description": "An optional external link for the insight."
+        }
       },
       "required": ["id", "title", "category", "headline", "hook", "keyInsight", "authorId", "date"]
     },

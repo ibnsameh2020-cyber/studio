@@ -35,6 +35,7 @@ export type Article = {
   authorId: string;
   date: Timestamp | Date | string;
   language?: 'ltr' | 'rtl';
+  link?: string;
 };
 
 export type Resource = {

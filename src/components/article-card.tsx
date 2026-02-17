@@ -8,7 +8,7 @@ type ArticleCardProps = {
 };
 
 export default function ArticleCard({ article }: ArticleCardProps) {
-  return (
+  const cardContent = (
     <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
       <CardHeader className="p-0">
         {article.category && <Badge variant="secondary" className="mb-4 w-fit">{article.category}</Badge>}
@@ -26,4 +26,14 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       </CardContent>
     </Card>
   );
+
+  if (article.link) {
+    return (
+      <a href={article.link} target="_blank" rel="noopener noreferrer" className="block h-full">
+        {cardContent}
+      </a>
+    );
+  }
+
+  return cardContent;
 }
