@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -9,7 +8,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Search } from 'lucide-react';
+import { Search, ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
@@ -51,6 +50,11 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
                             certificate.url ? 'object-contain' : 'object-cover'
                         )}
                     />
+                    {certificate.url && (
+                        <div className="absolute top-2 right-2 z-10 p-1.5 bg-background/50 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <ArrowUpRight className="w-4 h-4 text-foreground" />
+                        </div>
+                    )}
                 </div>
             )}
             <CardHeader className="p-0">
