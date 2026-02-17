@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { certificates } from '@/data/certificates';
 import type { Certificate } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { cn } from '@/lib/utils';
 
 const topCertBadges = [
     'KPI Professional (KPIP)',
@@ -27,13 +28,16 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     return (
         <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer">
             {certImage && (
-                <div className="relative aspect-video overflow-hidden rounded-md mb-4">
+                <div className="relative aspect-video overflow-hidden rounded-md mb-4 bg-black/20">
                      <Image
                         src={certImage.imageUrl}
                         alt={certificate.title}
                         fill
                         data-ai-hint={certImage.imageHint}
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        className={cn(
+                            "transition-transform duration-300 group-hover:scale-105",
+                            certificate.url ? 'object-contain' : 'object-cover'
+                        )}
                     />
                 </div>
             )}
@@ -55,7 +59,7 @@ export default function CertificatesSection() {
                 <div className="text-center mb-12">
                     <h2 className="text-4xl md:text-6xl font-headline font-bold">Strategic Excellence & Technical Mastery</h2>
                     <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                        A comprehensive collection of my global certifications, manufacturer licenses, and professional endorsements in Digital Transformation and Healthcare IT.
+                        My expertise is backed by global certifications, publications, and professional endorsements in Digital Transformation and Healthcare IT.
                     </p>
                 </div>
             </AnimatedSection>
@@ -74,9 +78,15 @@ export default function CertificatesSection() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {featuredCertificates.map((cert, index) => (
                     <AnimatedSection key={cert.title} style={{ animationDelay: `${index * 150}ms` }}>
-                        <Link href="/certificates">
-                            <CertificateCard certificate={cert} />
-                        </Link>
+                        {cert.url ? (
+                            <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                                <CertificateCard certificate={cert} />
+                            </a>
+                        ) : (
+                            <Link href="/certificates">
+                                <CertificateCard certificate={cert} />
+                            </Link>
+                        )}
                     </AnimatedSection>
                 ))}
             </div>

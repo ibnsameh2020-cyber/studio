@@ -185,6 +185,12 @@
       "description": "A placeholder image for a sample resource about AI.",
       "imageUrl": "https://images.unsplash.com/photo-1677756119517-756a188d2d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxBSSUyMGRhc2hib2FyZHxlbnwwfHx8fDE3MTk0MjU4MjF8MA&ixlib=rb-4.0.3&q=80&w=1080",
       "imageHint": "AI dashboard"
+    },
+    {
+      "id": "cert-algorithmic-pmo",
+      "description": "Featured article publication: The Algorithmic PMO",
+      "imageUrl": "https://i.ibb.co/HTGY5Kwr/the-article.png",
+      "imageHint": "article publication"
     }
   ]
 }

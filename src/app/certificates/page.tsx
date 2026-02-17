@@ -12,6 +12,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/ca
 import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 const certificateCategories: Certificate['category'][] = [
     'Strategic Leadership & Governance',
@@ -35,26 +36,42 @@ const topCertBadges = [
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
+    
+    const CardInner = (
+        <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer">
+            {certImage && (
+                <div className="relative aspect-video overflow-hidden rounded-md mb-4 bg-black/20">
+                    <Image
+                        src={certImage.imageUrl}
+                        alt={certificate.title}
+                        fill
+                        data-ai-hint={certImage.imageHint}
+                        className={cn(
+                            "transition-transform duration-300 group-hover:scale-105",
+                            certificate.url ? 'object-contain' : 'object-cover'
+                        )}
+                    />
+                </div>
+            )}
+            <CardHeader className="p-0">
+                <CardTitle className="font-headline text-lg">{certificate.title}</CardTitle>
+                <CardDescription>{certificate.issuer}</CardDescription>
+            </CardHeader>
+        </Card>
+    );
+
+    if (certificate.url) {
+        return (
+            <a href={certificate.url} target="_blank" rel="noopener noreferrer">
+                {CardInner}
+            </a>
+        );
+    }
+    
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer">
-                    {certImage && (
-                        <div className="relative aspect-video overflow-hidden rounded-md mb-4">
-                            <Image
-                                src={certImage.imageUrl}
-                                alt={certificate.title}
-                                fill
-                                data-ai-hint={certImage.imageHint}
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
-                        </div>
-                    )}
-                    <CardHeader className="p-0">
-                        <CardTitle className="font-headline text-lg">{certificate.title}</CardTitle>
-                        <CardDescription>{certificate.issuer}</CardDescription>
-                    </CardHeader>
-                </Card>
+                {CardInner}
             </DialogTrigger>
             {certImage && (
                 <DialogContent className="sm:max-w-4xl p-4 bg-background/80 backdrop-blur-lg">

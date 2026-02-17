@@ -3,6 +3,13 @@ import type { Certificate } from '@/lib/types';
 export const certificates: Certificate[] = [
   // Prioritized Certificates
   {
+    title: 'The Algorithmic PMO | Featured Author',
+    issuer: 'Institute of Project Management',
+    category: 'Professional Endorsements',
+    imagePlaceholderId: 'cert-algorithmic-pmo',
+    url: 'https://instituteprojectmanagement.com/blog/the-algorithmic-pmo/',
+  },
+  {
     title: 'KPI Professional (KPIP)',
     issuer: 'Balanced Scorecard Institute',
     category: 'Strategic Leadership & Governance',
@@ -14,14 +21,14 @@ export const certificates: Certificate[] = [
     category: 'Strategic Leadership & Governance',
     imagePlaceholderId: 'cert-itil',
   },
+  // Other Certificates
+  // Strategic Leadership & Governance
   {
     title: 'Certified PMO Professional',
     issuer: 'IABFM',
     category: 'Strategic Leadership & Governance',
     imagePlaceholderId: 'cert-pmo',
   },
-  // Other Certificates
-  // Strategic Leadership & Governance
   {
     title: 'COBIT 5 Foundation',
     issuer: 'IT Governance',

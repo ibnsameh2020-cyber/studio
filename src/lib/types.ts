@@ -62,4 +62,5 @@ export type Certificate = {
   issuer: string;
   category: 'Strategic Leadership & Governance' | 'Technical Licenses & Authorizations' | 'Digital Innovation & Analytics' | 'Professional Endorsements';
   imagePlaceholderId: string;
+  url?: string;
 };
