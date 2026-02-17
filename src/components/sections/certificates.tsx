@@ -1,3 +1,4 @@
+
 'use client';
 
 import AnimatedSection from '../animated-section';
@@ -40,8 +41,8 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
                         )}
                     />
                     {certificate.url && (
-                        <div className="absolute top-2 right-2 z-10 p-1.5 bg-background/50 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <ArrowUpRight className="w-4 h-4 text-foreground" />
+                        <div className="absolute bottom-2 right-2 z-10 p-1.5 bg-background/50 backdrop-blur-sm rounded-full opacity-100 transition-opacity duration-300">
+                            <ArrowUpRight className="w-4 h-4 text-primary" />
                         </div>
                     )}
                 </div>
