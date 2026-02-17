@@ -16,7 +16,7 @@ import { formatContent } from '@/ai/flows/format-article-flow';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import {
   AlertDialog,
@@ -505,6 +505,9 @@ export default function AdminPage() {
                                 <FormItem>
                                     <FormLabel>Key Insight</FormLabel>
                                     <FormControl><Textarea placeholder="The core takeaway or conclusion" {...field} /></FormControl>
+                                    <FormDescription>
+                                        Tip: To embed a link, use markdown format: `[display text](https://example.com)`
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )} />
@@ -774,3 +777,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
