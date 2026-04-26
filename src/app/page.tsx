@@ -14,6 +14,8 @@ import CertificatesHighlights from '@/components/sections/certificates-highlight
 import ExpertiseHeader from '@/components/sections/expertise-header';
 import EngagementSection from '@/components/sections/engagement';
 import EngagementHeader from '@/components/sections/engagement-header';
+import GlobalExpertiseHeader from '@/components/sections/global-expertise-header';
+import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-competencies';
 import { cn } from '@/lib/utils';
 
 export default function Home() {
@@ -22,11 +24,13 @@ export default function Home() {
     { id: 'services', component: <ServicesSection /> },
     { id: 'engagement-header', component: <EngagementHeader /> },
     { id: 'engagement', component: <EngagementSection /> },
-    { id: 'certificates-section', component: <CertificatesHeader /> }, // id points here for nav anchors
+    { id: 'certificates-section', component: <CertificatesHeader /> },
     { id: 'certificates-highlights', component: <CertificatesHighlights /> },
     { id: 'certificates-grid', component: <CertificatesSection /> },
     { id: 'case-studies', component: <ProjectsHeader /> },
     { id: 'case-studies-grid', component: <ProjectsSection /> },
+    { id: 'global-expertise-header', component: <GlobalExpertiseHeader /> },
+    { id: 'global-expertise-competencies', component: <GlobalExpertiseCompetencies /> },
     { id: 'experience', component: <ExperienceSection /> },
     { id: 'insights', component: <InsightsSection /> },
     { id: 'exclusive-resources-cta', component: <ExclusiveResourcesCtaSection /> },
@@ -58,7 +62,7 @@ export default function Home() {
               key={section.id} 
               id={section.id}
               className={cn(
-                "relative w-full -mt-20 pt-20", // Negative margin creates the overlap
+                "relative w-full -mt-20 pt-20", 
                 "bg-background border-t border-white/10 rounded-t-[40px] md:rounded-t-[60px]",
                 "shadow-[0_-30px_60px_rgba(0,0,0,0.3)] transition-all duration-500"
               )}

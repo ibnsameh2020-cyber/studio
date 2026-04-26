@@ -2,41 +2,6 @@
 import ProjectCard from '@/components/project-card';
 import { projects } from '@/data/projects';
 import AnimatedSection from '../animated-section';
-import { Globe, Hospital, Building, Bot } from 'lucide-react';
-
-const GlobalFootprint = () => {
-    const competencies = [
-        { icon: <Bot className="w-5 h-5 mr-3 text-primary" />, text: "Smart Ecosystems: IoT & Smart Cities" },
-        { icon: <Hospital className="w-5 h-5 mr-3 text-primary" />, text: "Digital Health: Medical Archiving, HMS, & Integration" },
-        { icon: <Building className="w-5 h-5 mr-3 text-primary" />, text: "Enterprise Technology: ERP, CRM, & Low-Current Systems" },
-        { icon: <Globe className="w-5 h-5 mr-3 text-primary" />, text: "Facility Intelligence: CAFM & Infrastructure Management" }
-    ];
-
-    return (
-        <AnimatedSection>
-            <div className="mt-24 md:mt-32">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-5xl font-headline font-bold">Global Expertise. Local Impact.</h2>
-                    <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                        My experience extends beyond borders. I have led strategic consultations, IT infrastructure deployments, and complex medical integrations across Egypt, North and Central Africa, the UK, and the Gulf countries.
-                    </p>
-                </div>
-                 <div className="max-w-4xl mx-auto bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl transition-all duration-300 hover:border-primary/80 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2">
-                    <h3 className="text-xl font-headline font-semibold text-center mb-6">Core Competencies Across Regions</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                        {competencies.map(item => (
-                            <div key={item.text} className="flex items-center">
-                                {item.icon}
-                                <span className="text-muted-foreground">{item.text}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </AnimatedSection>
-    );
-};
-
 
 export default function ProjectsSection() {
   return (
@@ -49,7 +14,6 @@ export default function ProjectsSection() {
             </AnimatedSection>
           ))}
         </div>
-        <GlobalFootprint />
       </div>
     </section>
   );
