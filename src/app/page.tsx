@@ -10,12 +10,14 @@ import ServicesSection from '@/components/sections/services';
 import CertificatesSection from '@/components/sections/certificates';
 import ExpertiseHeader from '@/components/sections/expertise-header';
 import EngagementSection from '@/components/sections/engagement';
+import EngagementHeader from '@/components/sections/engagement-header';
 import { cn } from '@/lib/utils';
 
 export default function Home() {
   const sections = [
     { id: 'expertise-header', component: <ExpertiseHeader /> },
     { id: 'services', component: <ServicesSection /> },
+    { id: 'engagement-header', component: <EngagementHeader /> },
     { id: 'engagement', component: <EngagementSection /> },
     { id: 'certificates', component: <CertificatesSection /> },
     { id: 'case-studies', component: <ProjectsSection /> },

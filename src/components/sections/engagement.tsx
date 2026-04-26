@@ -23,12 +23,6 @@ export default function EngagementSection() {
   return (
     <div id="engagement" className="py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-headline font-bold">How We Can Work Together</h2>
-              <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-                  Flexible engagement models designed to suit your strategic needs.
-              </p>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {engagementModels.map((model, index) => (
                   <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
