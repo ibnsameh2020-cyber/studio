@@ -28,60 +28,59 @@ export default function SequentialStage({ children, id, index }: SequentialStage
           trigger: wrapperRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.5,
+          scrub: 1, // Increased scrub for smoother, slower catch-up
         }
       });
 
-      // Stage 1: Card Rise (Physical Overlay Entrance)
+      // Stage 1: Section Rise (Full Viewport Overlay Entrance)
       tl.fromTo(cardRef.current,
-        { y: '30vh', opacity: 0 },
+        { y: '50vh', opacity: 0 },
         { 
           y: 0, 
           opacity: 1, 
           ease: 'power2.out',
-          duration: 0.8 
+          duration: 1.2 
         }
       );
 
-      // Stage 2: Sequential Internal Reveal (One-by-one)
+      // Stage 2: Slower Sequential Internal Reveal (One-by-one)
       if (revealItems && revealItems.length > 0) {
         revealItems.forEach((item, i) => {
           tl.fromTo(item,
-            { y: '20vh', opacity: 0 },
+            { y: '30vh', opacity: 0 },
             { 
               y: 0, 
               opacity: 1, 
               ease: 'power1.out',
-              duration: 1,
+              duration: 2, // Increased duration for slower appearance
             },
-            '>-0.4' // Smoothly overlapped sequencing
+            '>-0.5' // Smoothly overlapped sequencing
           );
         });
       }
       
-      // Small pause after sequence complete
-      tl.to({}, { duration: 0.2 });
+      // Small pause after sequence complete to allow full view
+      tl.to({}, { duration: 0.5 });
     });
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative w-full" style={{ height: '150vh' }}>
+    <div ref={wrapperRef} className="relative w-full" style={{ height: '300vh' }}>
       <section 
         id={id}
         className={cn(
           "sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20",
-          "bg-transparent"
+          "bg-background/95 backdrop-blur-sm shadow-[0_-40px_80px_rgba(0,0,0,0.5)]"
         )}
         style={{ zIndex: (index + 1) * 10 }}
       >
         <div 
           ref={cardRef} 
           className={cn(
-            "w-fit mx-auto bg-background/95 backdrop-blur-md shadow-[0_-30px_60px_rgba(0,0,0,0.5)]",
-            "border-x border-border/10 p-6 md:p-12 lg:p-16 flex flex-col items-center justify-center",
-            "min-h-[40vh] max-w-[95vw]"
+            "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+            "flex flex-col items-center justify-center min-h-[40vh]"
           )}
         >
           <div ref={contentRef} className="w-full flex flex-col items-center">
