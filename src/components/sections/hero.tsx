@@ -54,21 +54,21 @@ const SwitchingHeroText = () => {
                     width: '95%',
                 };
 
-                if (isCurrent) {
+                if (isCurrent) { // Current card, comes from bottom
                     styles = {
                         ...styles,
                         transform: 'translateY(0) scale(1)',
                         opacity: 1,
                         zIndex: 30,
                     };
-                } else if (position === sentences.length - 1) {
+                } else if (position === sentences.length - 1) { // Previous card, goes to back
                     styles = {
                         ...styles,
                         transform: 'translateY(-1.5rem) scale(0.95) rotate(-3deg)',
                         opacity: 1,
                         zIndex: 25,
                     };
-                } else {
+                } else { // All other cards are hidden below, waiting their turn
                     styles = {
                         ...styles,
                         transform: 'translateY(2rem) scale(0.8)',
@@ -110,6 +110,7 @@ const SwitchingHeroText = () => {
                 );
             })}
             
+            {/* Navigation controls */}
             <div className="absolute inset-0 z-40 flex justify-between items-center">
                 <div 
                     onClick={prevCard} 
@@ -134,7 +135,7 @@ const FloatingRoleCard = () => (
     <div className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
         <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
             <div className="bg-primary px-4 py-2">
-                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">Current Focus</h3>
+                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
             </div>
             <div className="p-4">
                 <p className="text-xs text-muted-foreground text-center leading-relaxed">
@@ -323,14 +324,40 @@ const clientLogos = [
     },      
 ];
 
+const VerticalHeroClientLogos = () => {
+    return (
+        <div className="absolute top-[60%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
+            <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-xl h-full flex flex-col p-4">
+                 <h4 className="text-center text-lg font-headline font-semibold mb-4 shrink-0">You are in good company.</h4>
+                <div 
+                    className="w-full overflow-hidden flex-grow"
+                    style={{ maskImage: 'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)' }}
+                >
+                    <div className="flex flex-col w-full animate-marquee-scroll-y group-hover:[animation-play-state:paused]">
+                        {[...clientLogos, ...clientLogos].map((client, index) => (
+                            <div key={`${client.name}-v-${index}`} className="flex-shrink-0 my-2">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 p-6 w-full">
+                                    {client.logo}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
 const HeroClientLogos = () => {
     return (
-        <div className="mt-16 w-full max-w-5xl mx-auto animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+        <div className="mt-12 w-full animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-6 shadow-xl">
-                <h4 className="text-center text-lg font-headline font-semibold mb-6">Trusted by High-Stakes Organizations</h4>
+                <h4 className="text-center text-lg font-headline font-semibold mb-6">You are in good company.</h4>
                 
+                {/* Desktop: Animated Marquee */}
                 <div 
-                    className="w-full overflow-hidden"
+                    className="hidden md:block w-full overflow-hidden"
                     style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
                 >
                     <div className="flex w-fit animate-marquee-scroll hover:[animation-play-state:paused]">
@@ -343,14 +370,33 @@ const HeroClientLogos = () => {
                         ))}
                     </div>
                 </div>
+                
+                {/* Mobile: Use CSS animation */}
+                <div 
+                    className="md:hidden w-full overflow-hidden"
+                    style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+                >
+                    <div className="flex w-fit animate-marquee-scroll">
+                        {[...clientLogos, ...clientLogos].map((client, index) => (
+                            <div key={`${client.name}-m-${index}`} className="flex-shrink-0 mx-2">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 w-44 p-6">
+                                    {client.logo}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
 };
 
+
 export default function HeroSection() {
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-28 pb-16">
+      <VerticalHeroClientLogos />
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
@@ -361,7 +407,7 @@ export default function HeroSection() {
         
         <SwitchingHeroText />
         
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="/#services">
               <Button size="lg" className="group">
                 Audit My Portfolio Strategy
@@ -375,8 +421,9 @@ export default function HeroSection() {
                 </Button>
             </Link>
         </div>
-
-        <HeroClientLogos />
+        <div className="lg:hidden">
+            <HeroClientLogos />
+        </div>
       </div>
       <FloatingRoleCard />
     </section>

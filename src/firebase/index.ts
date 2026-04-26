@@ -89,7 +89,6 @@ function useAuthActions() {
             await storeUser(result.user);
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (signInWithGoogle):", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -99,7 +98,6 @@ function useAuthActions() {
             await signInWithEmailAndPassword(auth, email, password);
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (signInWithEmailPassword):", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -111,7 +109,6 @@ function useAuthActions() {
             await storeUser(result.user);
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (signUpWithEmailPassword):", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -140,7 +137,6 @@ function useAuthActions() {
 
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (updateUserProfile):", error);
             return getFirebaseErrorMessage(error.code) || "An unexpected error occurred.";
         }
     };
@@ -162,7 +158,6 @@ function useAuthActions() {
 
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (updateUserEmail):", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -179,7 +174,6 @@ function useAuthActions() {
             await firebaseUpdatePassword(user, newPassword);
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (updateUserPassword):", error);
             return getFirebaseErrorMessage(error.code);
         }
     };
@@ -189,7 +183,6 @@ function useAuthActions() {
             await firebaseSendPasswordResetEmail(auth, email);
             return null;
         } catch (error: any) {
-            console.error("Firebase auth error (sendPasswordResetEmail):", error);
             return getFirebaseErrorMessage(error.code);
         }
     };

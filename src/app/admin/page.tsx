@@ -285,7 +285,6 @@ export default function AdminPage() {
         insightForm.reset(emptyInsightFormValues);
         setEditingInsightId(null);
     } catch (error: any) {
-        console.error("Error publishing insight:", error);
          toast({
             title: "Error",
             description: `Could not publish insight. ${error.message}`,
@@ -314,7 +313,6 @@ export default function AdminPage() {
         description: "The insight has been successfully removed.",
       });
     } catch (error: any) {
-       console.error("Error deleting insight:", error);
        toast({
         title: "Error",
         description: `Could not delete insight. ${error.message}`,
@@ -402,7 +400,6 @@ export default function AdminPage() {
         description: "The resource has been successfully removed.",
       });
     } catch (error: any) {
-       console.error("Error deleting resource:", error);
        toast({
         title: "Error",
         description: `Could not delete resource. ${error.message}`,

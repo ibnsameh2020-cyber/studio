@@ -31,13 +31,11 @@ export function useCollection<T>(path: string, q?: Query) {
         setData(result);
         setError(null);
       } catch (e: any) {
-        console.error("Firestore onSnapshot error:", e);
         setError(e);
       } finally {
         setLoading(false);
       }
     }, (err) => {
-        console.error("Firestore onSnapshot error:", err);
         setError(err);
         setLoading(false);
     });
