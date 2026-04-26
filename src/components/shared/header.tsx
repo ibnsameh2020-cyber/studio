@@ -4,24 +4,21 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut, GraduationCap } from 'lucide-react';
+import { Lightbulb, Menu, X, Sun, Moon, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, GraduationCap } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useAuth, useUser, useCollection } from '@/firebase';
-import type { Article, Resource } from '@/lib/types';
-import { Timestamp } from 'firebase/firestore';
+import { useAuth, useUser } from '@/firebase';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Skeleton } from '../ui/skeleton';
+import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Skeleton } from '../ui/skeleton';
-import { useTheme } from 'next-themes';
-import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-5 h-5" /> },
@@ -42,15 +39,6 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState('hero');
-
-  const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
-  const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
-  const [newItems, setNewItems] = useState<any[]>([]);
-
-  const navItems = useMemo(() => {
-    let items = [...baseNavItems];
-    return items;
-  }, []);
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
@@ -90,12 +78,12 @@ export default function Header() {
         </Link>
         
         <nav className="hidden md:flex items-center space-x-1">
-          {navItems.map((item) => (
+          {baseNavItems.map((item) => (
             <Link
               key={item.id}
               href={item.href}
               className={cn(
-                'text-sm font-medium transition-all duration-300 rounded-full px-4 py-2 hover:bg-accent/50',
+                'text-xs font-medium transition-all duration-300 rounded-full px-4 py-2 hover:bg-accent/50',
                 activeSection === item.id ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
               )}
             >
@@ -144,7 +132,7 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden absolute top-20 left-4 right-4 bg-background/95 backdrop-blur-xl border border-border shadow-2xl rounded-3xl p-6 pointer-events-auto animate-in fade-in slide-in-from-top-4">
           <nav className="flex flex-col gap-2">
-            {navItems.map((item) => (
+            {baseNavItems.map((item) => (
               <Link
                 key={item.id}
                 href={item.href}
