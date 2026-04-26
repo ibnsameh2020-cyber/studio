@@ -4,21 +4,24 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, Menu, X, Sun, Moon, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, GraduationCap } from 'lucide-react';
+import { Lightbulb, Menu, X, LogIn, ShieldCheck, Sun, Moon, Sparkles, LayoutGrid, Trophy, Briefcase, Newspaper, User, Mail, Bell, Loader2, Settings, LogOut, GraduationCap } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useAuth, useUser } from '@/firebase';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Skeleton } from '../ui/skeleton';
-import { useTheme } from 'next-themes';
-import { usePathname } from 'next/navigation';
+import { useAuth, useUser, useCollection } from '@/firebase';
+import type { Article, Resource } from '@/lib/types';
+import { Timestamp } from 'firebase/firestore';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Skeleton } from '../ui/skeleton';
+import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 
 const baseNavItems = [
   { id: 'services', href: '/#services', label: 'Services', icon: <LayoutGrid className="w-5 h-5" /> },
@@ -32,15 +35,42 @@ const baseNavItems = [
 
 const sectionIds = ['hero', 'services', 'certificates-section', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
 
+type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading, isAdmin, isAnonymous } = useUser();
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+
   const [activeSection, setActiveSection] = useState('hero');
 
-  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+  const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
+  const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
+
+  const [newItems, setNewItems] = useState<NotificationItem[]>([]);
+  const notificationsLoading = articlesLoading || resourcesLoading;
+  
+  const navItems = useMemo(() => {
+    let items = [...baseNavItems];
+
+    const insightsIndex = items.findIndex(item => item.id === 'insights');
+    if (insightsIndex !== -1) {
+    items.splice(insightsIndex + 1, 0, {
+        id: 'exclusive-resources-cta',
+        href: '/#exclusive-resources-cta',
+        label: 'Resources',
+        icon: <Sparkles className="w-5 h-5" />,
+    });
+    }
+    
+    return items;
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -50,7 +80,9 @@ export default function Header() {
 
     const handleScroll = () => {
       let currentSection = 'hero';
+      
       const viewportMidpoint = window.innerHeight / 2;
+
       for (const id of sectionIds) {
         const element = document.getElementById(id);
         if (element) {
@@ -61,91 +93,336 @@ export default function Header() {
           }
         }
       }
-      if (window.scrollY < 200) currentSection = 'hero';
+      
+      if (window.scrollY < 200) {
+        currentSection = 'hero';
+      }
+
       setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [pathname]);
 
+  useEffect(() => {
+    if (notificationsLoading) return;
+
+    const lastViewedTimestamp = localStorage.getItem('last-viewed-notifications-timestamp');
+    const lastViewedDate = lastViewedTimestamp ? new Date(parseInt(lastViewedTimestamp)) : new Date(0);
+      
+    const allItems: NotificationItem[] = [];
+
+    if (articles) {
+      allItems.push(...articles.map(a => ({ ...a, itemType: 'article' as const })));
+    }
+    
+    if (resources) {
+      allItems.push(...resources.map(r => ({ ...r, itemType: 'resource' as const })));
+    }
+
+    const filteredNewItems = allItems.filter(item => {
+      if (!item.date) return false;
+      const itemDate = item.date instanceof Timestamp ? item.date.toDate() : new Date(item.date);
+      return itemDate > lastViewedDate;
+    });
+
+    filteredNewItems.sort((a, b) => {
+      const dateA = a.date instanceof Timestamp ? a.date.toDate() : new Date(a.date);
+      const dateB = b.date instanceof Timestamp ? b.date.toDate() : new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    setNewItems(filteredNewItems);
+  }, [articles, resources, notificationsLoading]);
+
+
+  const handleMenuLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleNotificationsOpenChange = (open: boolean) => {
+    if (!open && newItems.length > 0) {
+        localStorage.setItem('last-viewed-notifications-timestamp', Date.now().toString());
+        setNewItems([]);
+    }
+  };
+  
+  const getInitials = (name?: string | null) => {
+    if (!name) return 'U';
+    const names = name.split(' ');
+    if (names.length > 1 && names[1]) {
+      return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+    }
+    return name.charAt(0).toUpperCase();
+  };
+
   return (
-    <header className="fixed top-8 left-0 right-0 z-[9999] px-4 pointer-events-none">
-      <div className="container mx-auto max-w-5xl flex items-center justify-between bg-background/60 backdrop-blur-xl border border-border/50 shadow-2xl rounded-full px-6 py-2 pointer-events-auto">
-        <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
-          <Lightbulb className="w-6 h-6 text-primary" />
-          <span className="hidden sm:inline">Sameh insights</span>
-        </Link>
-        
-        <nav className="hidden md:flex items-center space-x-1">
-          {baseNavItems.map((item) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className={cn(
-                'text-xs font-medium transition-all duration-300 rounded-full px-4 py-2 hover:bg-accent/50',
-                activeSection === item.id ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+    <>
+      <header
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-4'
+        )}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-start justify-center">
+            <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6">
+                <Link href="/" onClick={handleMenuLinkClick} className="flex items-center gap-2 text-lg font-headline font-bold">
+                    <Lightbulb className="w-6 h-6 text-primary" />
+                    <span>Sameh insights</span>
+                </Link>
+                
+                {/* Desktop Nav */}
+                <nav className="hidden md:flex items-center space-x-2">
+                  {navItems.map((item) => {
+                    const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
+                    const isLinkActive = isPageLink
+                      ? pathname === item.href
+                      : activeSection === item.id;
 
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full">
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
-          
-          <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant="ghost" size="icon" className="md:hidden rounded-full">
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </Button>
-          
-          {loading ? <Skeleton className="h-8 w-8 rounded-full" /> : user && !isAnonymous ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.photoURL || ''} />
-                    <AvatarFallback>{user.displayName?.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-background/80 backdrop-blur-lg">
-                <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild><Link href="/settings">Settings</Link></DropdownMenuItem>
-                {isAdmin && <DropdownMenuItem asChild><Link href="/admin">Admin Panel</Link></DropdownMenuItem>}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signOut}>Log Out</DropdownMenuItem>
-              </DropdownMenuContent>
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.href}
+                        onClick={handleMenuLinkClick}
+                        className={cn(
+                          'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
+                          'h-12',
+                           isLinkActive
+                           ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
+                           : 'w-12 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
+                        )}
+                      >
+                        {item.icon}
+                        <span className={cn(
+                          'transition-opacity duration-200',
+                          isLinkActive
+                          ? 'opacity-100 w-auto'
+                          : 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
+                        )}>
+                          {item.label}
+                        </span>
+                      </Link>
+                    )
+                  })}
+                </nav>
+                
+                <div className="hidden md:flex items-center gap-1">
+                    {loading ? (
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    ) : (user && !isAnonymous) ? (
+                        <div className="flex items-center gap-1">
+                            {isAdmin && (
+                                <Link
+                                    href="/admin"
+                                    className={cn(
+                                        'group/admin-btn text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
+                                        'h-10',
+                                        pathname.startsWith('/admin')
+                                        ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
+                                        : 'w-10 border border-primary/30 text-primary hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-primary/10 hover:border-primary/80'
+                                    )}
+                                >
+                                    <ShieldCheck className="h-5 w-5" />
+                                    <span className={cn(
+                                        'transition-opacity duration-200',
+                                        pathname.startsWith('/admin')
+                                        ? 'opacity-100 w-auto'
+                                        : 'opacity-0 w-0 group-hover/admin-btn:opacity-100 group-hover/admin-btn:w-auto'
+                                    )}>
+                                        Admin Panel
+                                    </span>
+                                </Link>
+                            )}
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                                    <Avatar className="h-10 w-10">
+                                    <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                                    <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
+                                    <DropdownMenuLabel className="font-normal">
+                                        <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                                        <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                                        </div>
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/settings">
+                                                <Settings className="w-4 h-4" />
+                                                <span>Settings</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={signOut}>
+                                        <LogOut className="w-4 h-4" />
+                                        <span>Log out</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
+                    ) : (
+                        null
+                    )}
+                </div>
+                
+                {/* Mobile Nav */}
+                <div className="md:hidden flex items-center">
+                    {loading ? (
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    ) : (user && !isAnonymous) ? (
+                    <>
+                        {isAdmin && (
+                            <Link href="/admin" passHref>
+                                <Button variant={pathname.startsWith('/admin') ? 'default' : 'ghost'} size="icon" title="Admin Panel" className="h-10 w-10 rounded-full">
+                                    <ShieldCheck className="h-5 w-5" />
+                                </Button>
+                            </Link>
+                        )}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                                <Avatar className="h-8 w-8">
+                                <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
+                                <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                                </Avatar>
+                            </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 bg-background/80 backdrop-blur-lg border-border/50" align="end" forceMount>
+                                <DropdownMenuLabel className="font-normal">
+                                    <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-medium leading-none">{user.displayName}</p>
+                                    <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                                    </div>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/settings">
+                                            <Settings className="w-4 h-4" />
+                                            <span>Settings</span>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={signOut}>
+                                    <LogOut className="w-4 h-4" />
+                                    <span>Log out</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </>
+                    ) : (
+                        null
+                    )}
+                    <Button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Open menu"
+                    className="hover:bg-transparent hover:text-inherit focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+                    >
+                    {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </Button>
+                </div>
+            </div>
+            <DropdownMenu onOpenChange={handleNotificationsOpenChange}>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className={cn(
+                            "group h-16 w-16 rounded-full transition-all duration-300 ease-in-out ml-4 flex-shrink-0 relative",
+                            "bg-background/30 backdrop-blur-lg border-border/50 shadow-lg"
+                        )}
+                        aria-label="Notifications"
+                    >
+                        <Bell className="h-6 h-6" />
+                        {newItems.length > 0 && (
+                             <span className="absolute top-4 right-4 flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                            </span>
+                        )}
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-80 bg-background/80 backdrop-blur-lg border-border/50" align="end">
+                    <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {notificationsLoading ? (
+                        <DropdownMenuItem disabled>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Loading...
+                        </DropdownMenuItem>
+                    ) : newItems.length > 0 ? (
+                        newItems.map(item => (
+                            <DropdownMenuItem key={item.id} asChild>
+                                <Link href={item.itemType === 'article' ? `/articles` : `/resources/${item.id}`}>
+                                    <div className="flex flex-col w-full overflow-hidden">
+                                        <p className="font-semibold truncate">{item.itemType === 'article' ? item.headline : item.title}</p>
+                                        <p className="text-xs text-muted-foreground">{item.itemType === 'article' ? 'New Insight' : 'New Resource'}</p>
+                                    </div>
+                                </Link>
+                            </DropdownMenuItem>
+                        ))
+                    ) : (
+                        <DropdownMenuItem disabled>No new notifications.</DropdownMenuItem>
+                    )}
+                </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <Button asChild size="sm" className="rounded-full hidden sm:flex">
-              <Link href="/login">Login</Link>
+            <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleTheme}
+                className={cn(
+                    "group h-16 w-16 rounded-full transition-all duration-300 ease-in-out ml-4 flex-shrink-0",
+                    "bg-background/30 backdrop-blur-lg border-border/50 shadow-lg"
+                )}
+                aria-label="Toggle theme"
+                >
+                <Sun className="h-[1.8rem] w-[1.8rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.8rem] w-[1.8rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
             </Button>
-          )}
         </div>
-      </div>
+      </header>
 
+      {/* Mobile Menu Panel */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-20 left-4 right-4 bg-background/95 backdrop-blur-xl border border-border shadow-2xl rounded-3xl p-6 pointer-events-auto animate-in fade-in slide-in-from-top-4">
-          <nav className="flex flex-col gap-2">
-            {baseNavItems.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-xl hover:bg-accent text-lg"
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            ))}
+        <div className="md:hidden fixed top-24 left-4 right-4 z-40 bg-background/90 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl p-6 animate-in fade-in-20 slide-in-from-top-4">
+          <nav className="flex flex-col items-center justify-center flex-grow gap-y-4">
+            {navItems.map((item) => {
+                 const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
+                 const isLinkActive = isPageLink
+                   ? pathname.startsWith(item.href)
+                   : activeSection === item.id;
+                return (
+                    <Link
+                        key={item.id}
+                        href={item.href}
+                        onClick={handleMenuLinkClick}
+                        className={cn(
+                        'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
+                        isLinkActive ? 'bg-primary text-primary-foreground' : 'text-foreground'
+                        )}
+                    >
+                        {item.icon}
+                        {item.label}
+                    </Link>
+                )
+            })}
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }
