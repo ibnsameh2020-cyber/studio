@@ -27,7 +27,7 @@ export default function SequentialStage({ children, id, index }: SequentialStage
           trigger: wrapperRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: true,
+          scrub: 1, // Add a bit of smoothing to the scrub
         }
       });
 
@@ -39,8 +39,6 @@ export default function SequentialStage({ children, id, index }: SequentialStage
         );
       } else {
         // Complex case: Reveal items one by one
-        // 1. First, bring in the background/container if needed (already handled by stage position mostly)
-        // 2. Sequence the children
         revealItems.forEach((item, i) => {
           tl.fromTo(item,
             { y: '100vh', opacity: 0 },
@@ -50,11 +48,11 @@ export default function SequentialStage({ children, id, index }: SequentialStage
               ease: 'power1.out',
               duration: 1,
             },
-            i === 0 ? 0 : '>-0.2' // Slight overlap for fluidity
+            i === 0 ? 0 : '>-0.4' // More overlap for faster feeling
           );
           
-          // Add a small pause at the end of each reveal so they "wait" for the user to see them
-          tl.to({}, { duration: 0.5 });
+          // Add a smaller pause at the end of each reveal
+          tl.to({}, { duration: 0.3 });
         });
       }
     });
@@ -62,10 +60,9 @@ export default function SequentialStage({ children, id, index }: SequentialStage
     return () => ctx.revert();
   }, []);
 
-  // Determine height based on potential content complexity
-  // We need enough scroll space to reveal items one by one.
+  // Reduced height for faster progression (was 400vh)
   return (
-    <div ref={wrapperRef} className="relative w-full" style={{ height: '400vh' }}>
+    <div ref={wrapperRef} className="relative w-full" style={{ height: '300vh' }}>
       <section 
         id={id}
         className={cn(
