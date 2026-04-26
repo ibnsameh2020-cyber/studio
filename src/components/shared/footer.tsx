@@ -37,7 +37,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-background border-t border-border/30">
+    <footer className="bg-background border-t border-border/30 relative z-[100]">
       <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
