@@ -13,8 +13,11 @@ import {
 
 export default function ExperienceSection() {
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch">
+    <div className="w-full px-4 sm:px-6 lg:px-8 relative">
+      {/* Timeline Line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent hidden lg:block -translate-x-1/2"></div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch relative z-10">
           {experience.map((item) => (
               <div key={item.id} data-reveal className="h-full">
                 <Dialog>

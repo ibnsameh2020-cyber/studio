@@ -1,4 +1,3 @@
-
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ClientLogosSection from '@/components/sections/client-logos';
@@ -89,12 +88,15 @@ export default function Home() {
     },
     { 
       id: 'chapter-contact', 
-      component: <ContactSection /> 
-    },
-    { 
-      id: 'chapter-clients', 
-      component: <ClientLogosSection /> 
-    },
+      component: (
+        <>
+          <ContactSection />
+          <div data-reveal className="w-full mt-12">
+            <ClientLogosSection />
+          </div>
+        </>
+      ) 
+    }
   ];
 
   return (
