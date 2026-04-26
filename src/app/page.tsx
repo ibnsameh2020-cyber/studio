@@ -65,7 +65,7 @@ export default function Home() {
               id={section.id}
               className={cn(
                 "relative w-full -mt-20 pt-20", 
-                "bg-background border-t border-white/10 rounded-t-[40px] md:rounded-t-[60px]",
+                "bg-background border-t border-white/10 rounded-none", // Sharp corners for the section cards
                 "shadow-[0_-30px_60px_rgba(0,0,0,0.3)] transition-all duration-500"
               )}
               style={{ zIndex: (index + 1) * 10 }}
