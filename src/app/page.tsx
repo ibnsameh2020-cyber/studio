@@ -24,11 +24,12 @@ export default function Home() {
         </div>
 
         {/* Hero Section acts as the base layer */}
-        <div className="relative z-10">
+        <div className="relative z-10 h-screen">
           <HeroSection />
         </div>
 
         {/* Stacking Card Sequence */}
+        {/* We use incremental z-indices in PinnedSection to ensure cards stack on top of Hero and each other */}
         <PinnedSection index={1}><ServicesSection /></PinnedSection>
         <PinnedSection index={2}><CertificatesSection /></PinnedSection>
         <PinnedSection index={3}><ProjectsSection /></PinnedSection>
