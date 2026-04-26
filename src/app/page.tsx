@@ -10,7 +10,6 @@ import ProjectsHeader from '@/components/sections/projects-header';
 import ServicesSection from '@/components/sections/services';
 import CertificatesSection from '@/components/sections/certificates';
 import CertificatesHeader from '@/components/sections/certificates-header';
-import CertificatesHighlights from '@/components/sections/certificates-highlights';
 import ExpertiseHeader from '@/components/sections/expertise-header';
 import EngagementSection from '@/components/sections/engagement';
 import EngagementHeader from '@/components/sections/engagement-header';
@@ -19,7 +18,6 @@ import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-
 import SequentialStage from '@/components/sequential-stage';
 
 export default function Home() {
-  // Consolidated Strategic Chapters to remove "empty" stages
   const chapters = [
     { 
       id: 'chapter-expertise', 
@@ -43,8 +41,7 @@ export default function Home() {
       id: 'chapter-certificates', 
       component: (
         <>
-          <div data-reveal className="mb-8"><CertificatesHeader /></div>
-          <div data-reveal className="mb-8 w-full"><CertificatesHighlights /></div>
+          <div data-reveal className="mb-12"><CertificatesHeader /></div>
           <CertificatesSection />
         </>
       )

@@ -15,12 +15,11 @@ interface SequentialStageProps {
 
 export default function SequentialStage({ children, id, index }: SequentialStageProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Find all elements marked for sequential one-by-one reveal
+      // Find all elements marked for sequential reveal
       const revealItems = cardRef.current?.querySelectorAll('[data-reveal]');
       
       const tl = gsap.timeline({
@@ -28,38 +27,37 @@ export default function SequentialStage({ children, id, index }: SequentialStage
           trigger: wrapperRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 1, // Increased scrub for smoother, slower catch-up
+          scrub: 1, // Smooth interaction
         }
       });
 
-      // Stage 1: Section Rise (Full Viewport Overlay Entrance)
+      // Stage 1: The Section Rise (Background layer entrance)
       tl.fromTo(cardRef.current,
-        { y: '50vh', opacity: 0 },
+        { y: '100vh', opacity: 1 },
         { 
           y: 0, 
-          opacity: 1, 
-          ease: 'power2.out',
-          duration: 1.2 
+          ease: 'none',
+          duration: 1
         }
       );
 
-      // Stage 2: Slower Sequential Internal Reveal (One-by-one)
+      // Stage 2: Cinematic Sequential Reveal (One-by-one surfacing)
       if (revealItems && revealItems.length > 0) {
-        revealItems.forEach((item, i) => {
+        revealItems.forEach((item) => {
           tl.fromTo(item,
-            { y: '30vh', opacity: 0 },
+            { y: '50vh', opacity: 0 },
             { 
               y: 0, 
               opacity: 1, 
               ease: 'power1.out',
-              duration: 2, // Increased duration for slower appearance
+              duration: 2, // Slower reveal for each item
             },
-            '>-0.5' // Smoothly overlapped sequencing
+            '>-0.5' // Smoothly overlapped sequence
           );
         });
       }
       
-      // Small pause after sequence complete to allow full view
+      // Stage 3: Hold the full view briefly before the next card stacks
       tl.to({}, { duration: 0.5 });
     });
 
@@ -72,18 +70,15 @@ export default function SequentialStage({ children, id, index }: SequentialStage
         id={id}
         className={cn(
           "sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20",
-          "bg-background/95 backdrop-blur-sm shadow-[0_-40px_80px_rgba(0,0,0,0.5)]"
+          "bg-background/95 backdrop-blur-sm shadow-[0_-40px_80px_rgba(0,0,0,0.6)]"
         )}
         style={{ zIndex: (index + 1) * 10 }}
       >
         <div 
           ref={cardRef} 
-          className={cn(
-            "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
-            "flex flex-col items-center justify-center min-h-[40vh]"
-          )}
+          className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center"
         >
-          <div ref={contentRef} className="w-full flex flex-col items-center">
+          <div className="w-full flex flex-col items-center">
             {children}
           </div>
         </div>

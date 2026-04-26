@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from '../ui/button';
@@ -47,22 +46,22 @@ export default function CertificatesSection() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
-            {featuredCertificates.map((cert, index) => (
-                <div key={cert.title}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch">
+            {featuredCertificates.map((cert) => (
+                <div key={cert.title} data-reveal className="h-full">
                     {cert.url ? (
-                        <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                        <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                             <CertificateCard certificate={cert} />
                         </a>
                     ) : (
-                        <Link href="/certificates">
+                        <Link href="/certificates" className="block h-full">
                             <CertificateCard certificate={cert} />
                         </Link>
                     )}
                 </div>
             ))}
         </div>
-        <div className="text-center mt-12">
+        <div data-reveal className="text-center mt-12">
             <Link href="/certificates">
                 <Button size="lg" className="group">
                     View All Credentials
