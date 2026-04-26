@@ -1,3 +1,4 @@
+
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
@@ -23,7 +24,7 @@ export default function Home() {
         </div>
 
         {/* Hero Section acts as the base layer */}
-        <div className="relative z-0">
+        <div className="relative z-10">
           <HeroSection />
         </div>
 
