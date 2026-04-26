@@ -1,5 +1,7 @@
+
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
+import ClientLogosSection from '@/components/sections/client-logos';
 import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
 import ExperienceSection from '@/components/sections/experience';
 import ExperienceHeader from '@/components/sections/experience-header';
@@ -88,6 +90,10 @@ export default function Home() {
     { 
       id: 'chapter-contact', 
       component: <ContactSection /> 
+    },
+    { 
+      id: 'chapter-clients', 
+      component: <ClientLogosSection /> 
     },
   ];
 

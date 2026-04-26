@@ -2,7 +2,6 @@
 "use client";
 
 import React from 'react';
-import AnimatedSection from '../animated-section';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { ArrowRight, Calendar, Loader2 } from 'lucide-react';
@@ -63,21 +62,10 @@ export default function InsightsSection() {
   const recentArticles = articles ? articles.slice(0, 3) : [];
 
   return (
-    <section id="insights" className="relative z-10 py-20 md:py-32">
-       <div 
-          className="absolute inset-0 z-[-1] h-full w-full bg-transparent"
-          style={{
-            backgroundSize: '30px 30px',
-            backgroundImage:
-              'linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px)',
-          }}
-        ></div>
-        <div className="absolute inset-0 z-[-2] bg-[radial-gradient(circle_500px_at_50%_700px,hsl(var(--primary)/0.1),transparent)]"></div>
-      
-      <AnimatedSection>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="space-y-6">
+                <div className="space-y-6" data-reveal>
                     <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground inline-block">
                         Insights
                     </h2>
@@ -99,28 +87,23 @@ export default function InsightsSection() {
                         </div>
                     )}
                     {!loading && recentArticles.map((article) => {
-                      const cardContent = (
-                        <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
-                            <div className={cn("flex-grow", 'text-left')}>
-                                <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{renderWithLinks(article.headline)}</h3>
-                                <div className={cn("flex items-center gap-2 text-xs text-muted-foreground mt-1", 'justify-start')}>
-                                    <Calendar className="w-3 h-3" />
-                                    <span>{formatDate(article.date)}</span>
-                                </div>
-                            </div>
-                        </Card>
-                      );
-                      
                       return (
-                        <div key={article.id}>
-                            {cardContent}
+                        <div key={article.id} data-reveal>
+                            <Card className="p-4 flex items-center gap-4 bg-card/30 backdrop-blur-md border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group">
+                                <div className={cn("flex-grow", 'text-left')}>
+                                    <h3 className="font-headline text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">{renderWithLinks(article.headline)}</h3>
+                                    <div className={cn("flex items-center gap-2 text-xs text-muted-foreground mt-1", 'justify-start')}>
+                                        <Calendar className="w-3 h-3" />
+                                        <span>{formatDate(article.date)}</span>
+                                    </div>
+                                </div>
+                            </Card>
                         </div>
                       );
                     })}
                 </div>
             </div>
         </div>
-      </AnimatedSection>
-    </section>
+    </div>
   );
 }
