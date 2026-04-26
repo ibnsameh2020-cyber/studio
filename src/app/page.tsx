@@ -8,46 +8,35 @@ import InsightsSection from '@/components/sections/articles';
 import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
-import PinnedSection from '@/components/shared/pinned-section';
 
 export default function Home() {
   return (
     <div className="relative">
-      {/* Hero doesn't pin, it scrolls naturally */}
       <HeroSection />
-
-      {/* Layered Cards Stacking with increasing z-index */}
-      <PinnedSection id="services" zIndex={10}>
+      <div id="services">
         <ServicesSection />
-      </PinnedSection>
-
-      <PinnedSection id="certificates-section" zIndex={20}>
+      </div>
+      <div id="certificates-section">
         <CertificatesSection />
-      </PinnedSection>
-
-      <PinnedSection id="case-studies" zIndex={30}>
+      </div>
+      <div id="case-studies">
         <ProjectsSection />
-      </PinnedSection>
-
-      <PinnedSection id="experience" zIndex={40}>
+      </div>
+      <div id="experience">
         <ExperienceSection />
-      </PinnedSection>
-
-      <PinnedSection id="insights" zIndex={50}>
+      </div>
+      <div id="insights">
         <InsightsSection />
-      </PinnedSection>
-
-      <PinnedSection id="exclusive-resources-cta" zIndex={60}>
+      </div>
+      <div id="exclusive-resources-cta">
         <ExclusiveResourcesCtaSection />
-      </PinnedSection>
-
-      <PinnedSection id="about-cta" zIndex={70}>
+      </div>
+      <div id="about-cta">
         <AboutMeCtaSection />
-      </PinnedSection>
-
-      <PinnedSection id="contact" zIndex={80} className="rounded-b-none">
+      </div>
+      <div id="contact">
         <ContactSection />
-      </PinnedSection>
+      </div>
     </div>
   );
 }
