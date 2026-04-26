@@ -3,7 +3,6 @@ import ProjectCard from '@/components/project-card';
 import { projects } from '@/data/projects';
 import AnimatedSection from '../animated-section';
 import { Globe, Hospital, Building, Bot } from 'lucide-react';
-import { Separator } from '../ui/separator';
 
 const GlobalFootprint = () => {
     const competencies = [
@@ -41,16 +40,8 @@ const GlobalFootprint = () => {
 
 export default function ProjectsSection() {
   return (
-    <section id="case-studies" className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden">
       <div className="relative z-10">
-        <AnimatedSection>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-headline font-bold">Featured Success Stories</h2>
-            <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-              A deep dive into how I have delivered value and driven results across key projects.
-            </p>
-          </div>
-        </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {projects.map((project, index) => (
             <AnimatedSection key={project.id} style={{ animationDelay: `${index * 150}ms` }}>
@@ -63,5 +54,3 @@ export default function ProjectsSection() {
     </section>
   );
 }
-
-    

@@ -6,6 +6,7 @@ import ExperienceSection from '@/components/sections/experience';
 import HeroSection from '@/components/sections/hero';
 import InsightsSection from '@/components/sections/articles';
 import ProjectsSection from '@/components/sections/projects';
+import ProjectsHeader from '@/components/sections/projects-header';
 import ServicesSection from '@/components/sections/services';
 import CertificatesSection from '@/components/sections/certificates';
 import CertificatesHeader from '@/components/sections/certificates-header';
@@ -24,7 +25,8 @@ export default function Home() {
     { id: 'certificates-section', component: <CertificatesHeader /> }, // id points here for nav anchors
     { id: 'certificates-highlights', component: <CertificatesHighlights /> },
     { id: 'certificates-grid', component: <CertificatesSection /> },
-    { id: 'case-studies', component: <ProjectsSection /> },
+    { id: 'case-studies', component: <ProjectsHeader /> },
+    { id: 'case-studies-grid', component: <ProjectsSection /> },
     { id: 'experience', component: <ExperienceSection /> },
     { id: 'insights', component: <InsightsSection /> },
     { id: 'exclusive-resources-cta', component: <ExclusiveResourcesCtaSection /> },
