@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
@@ -49,7 +48,7 @@ export default function ServicesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-4 items-stretch justify-center max-w-7xl mx-auto overflow-x-auto pb-4">
           {services.map((service, index) => (
-            <div key={index} className="flex-1 min-w-[280px]">
+            <div key={index} className="flex-1 min-w-[280px]" data-reveal>
               <Dialog>
                 <DialogTrigger asChild>
                   <Card className="h-full bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[220px] justify-center">
