@@ -1,7 +1,6 @@
 
 "use client";
 
-import AnimatedSection from '@/components/animated-section';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase, BrainCircuit, ShieldQuestion, GanttChartSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -15,28 +14,28 @@ import {
 
 const services = [
   {
-    icon: <Briefcase className="w-10 h-10 text-primary" />,
+    icon: <Briefcase className="w-8 h-8 text-primary" />,
     title: 'Transform Your PMO into a Value Engine',
     problem: 'Is your PMO a reporting bureaucracy? Many organizations suffer from "Zombie PMOs" that generate paperwork but fail to deliver strategic outcomes.',
     solution: 'I do not just build PMOs; I engineer Strategy Realization Offices. Using frameworks like the Balanced Scorecard and McKinsey 7S, I transform your PMO from a cost center into a strategic partner that drives execution velocity and aligns every project with Vision 2030.',
     deliverables: ['Governance Frameworks', 'PMO Setup/Re-engineering', 'Portfolio Optimization']
   },
   {
-    icon: <ShieldQuestion className="w-10 h-10 text-primary" />,
+    icon: <ShieldQuestion className="w-8 h-8 text-primary" />,
     title: 'Rescuing High-Stakes Initiatives',
     problem: 'Your critical projects are over budget, behind schedule, or failing to meet quality standards. The financial drain must stop.',
     solution: 'I deploy a rapid "Triage & Stabilize" methodology. By auditing the root causes—technical, cultural, or procedural—I provide an immediate roadmap to bring the program back on track or strategically restructure it to minimize loss.',
     deliverables: ['Root Cause Analysis', 'Recovery Roadmap', 'Crisis Leadership']
   },
   {
-    icon: <GanttChartSquare className="w-10 h-10 text-primary" />,
+    icon: <GanttChartSquare className="w-8 h-8 text-primary" />,
     title: 'Bridging the Gap Between Strategy & Technology',
     problem: 'Technology investments often fail not due to the software, but because of poor user adoption and a lack of strategic alignment.',
     solution: 'I ensure your digital transformation (ERP, IoT, Cloud) solves real business problems. I govern the transformation journey, ensuring that technology, people, and processes move in sync to achieve true operational maturity.',
     deliverables: ['Digital Maturity Assessment', 'Transformation Roadmap', 'Change Management (ACMP)']
   },
   {
-    icon: <BrainCircuit className="w-10 h-10 text-primary" />,
+    icon: <BrainCircuit className="w-8 h-8 text-primary" />,
     title: 'Future-Proof Your Portfolio with AI',
     problem: 'Traditional reporting is retrospective. You need to know what will happen, not just what has already happened.',
     solution: 'Leveraging Generative AI and Predictive Analytics, I help you build a "Cognitive PMO." We will implement systems that predict risks, automate routine reporting, and provide data-driven decision support for C-level executives.',
@@ -46,19 +45,19 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <div className="py-24">
+    <div className="w-full">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-4 items-stretch justify-center max-w-7xl mx-auto overflow-x-auto pb-4">
           {services.map((service, index) => (
-            <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
+            <div key={index} className="flex-1 min-w-[280px]">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Card className="h-full bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 cursor-pointer group min-h-[240px] justify-center">
-                    <div className="mb-6 text-primary transition-transform duration-300 group-hover:scale-110">
+                  <Card className="h-full bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[220px] justify-center">
+                    <div className="mb-4 text-primary transition-transform duration-300 group-hover:scale-110">
                       {service.icon}
                     </div>
                     <CardHeader className="p-0">
-                      <CardTitle className="text-lg font-headline leading-tight group-hover:text-primary transition-colors">
+                      <CardTitle className="text-base font-headline leading-tight group-hover:text-primary transition-colors">
                         {service.title}
                       </CardTitle>
                     </CardHeader>
@@ -91,7 +90,7 @@ export default function ServicesSection() {
                   </div>
                 </DialogContent>
               </Dialog>
-            </AnimatedSection>
+            </div>
           ))}
         </div>
       </div>

@@ -1,7 +1,6 @@
 
 'use client';
 
-import AnimatedSection from '../animated-section';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -15,7 +14,7 @@ import { cn } from '@/lib/utils';
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
     return (
-        <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer">
+        <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl group cursor-pointer">
             {certImage && (
                 <div className="relative aspect-video overflow-hidden rounded-md mb-4 bg-black/20">
                      <Image
@@ -44,39 +43,33 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
 };
 
 export default function CertificatesSection() {
-  // Only show the top 3 featured certificates on the home page grid card
-  const featuredCertificates = certificates.slice(0, 3);
+  const featuredCertificates = certificates.slice(0, 4);
 
   return (
-    <div className="py-24">
-       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {featuredCertificates.map((cert, index) => (
-                    <AnimatedSection key={cert.title} style={{ animationDelay: `${index * 150}ms` }}>
-                        {cert.url ? (
-                            <a href={cert.url} target="_blank" rel="noopener noreferrer">
-                                <CertificateCard certificate={cert} />
-                            </a>
-                        ) : (
-                            <Link href="/certificates">
-                                <CertificateCard certificate={cert} />
-                            </Link>
-                        )}
-                    </AnimatedSection>
-                ))}
-            </div>
-
-            <AnimatedSection>
-                <div className="text-center mt-12">
-                    <Link href="/certificates">
-                        <Button size="lg" className="group">
-                            View All Credentials
-                            <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                    </Link>
+    <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
+            {featuredCertificates.map((cert, index) => (
+                <div key={cert.title}>
+                    {cert.url ? (
+                        <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                            <CertificateCard certificate={cert} />
+                        </a>
+                    ) : (
+                        <Link href="/certificates">
+                            <CertificateCard certificate={cert} />
+                        </Link>
+                    )}
                 </div>
-            </AnimatedSection>
-       </div>
+            ))}
+        </div>
+        <div className="text-center mt-12">
+            <Link href="/certificates">
+                <Button size="lg" className="group">
+                    View All Credentials
+                    <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+            </Link>
+        </div>
     </div>
   );
 }

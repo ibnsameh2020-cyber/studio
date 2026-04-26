@@ -17,7 +17,7 @@ import EngagementSection from '@/components/sections/engagement';
 import EngagementHeader from '@/components/sections/engagement-header';
 import GlobalExpertiseHeader from '@/components/sections/global-expertise-header';
 import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-competencies';
-import { cn } from '@/lib/utils';
+import SequentialStage from '@/components/sequential-stage';
 
 export default function Home() {
   const sections = [
@@ -25,10 +25,10 @@ export default function Home() {
     { id: 'services', component: <ServicesSection /> },
     { id: 'engagement-header', component: <EngagementHeader /> },
     { id: 'engagement', component: <EngagementSection /> },
-    { id: 'certificates-section', component: <CertificatesHeader /> },
+    { id: 'certificates-header', component: <CertificatesHeader /> },
     { id: 'certificates-highlights', component: <CertificatesHighlights /> },
     { id: 'certificates-grid', component: <CertificatesSection /> },
-    { id: 'case-studies', component: <ProjectsHeader /> },
+    { id: 'case-studies-header', component: <ProjectsHeader /> },
     { id: 'case-studies-grid', component: <ProjectsSection /> },
     { id: 'global-expertise-header', component: <GlobalExpertiseHeader /> },
     { id: 'global-expertise-competencies', component: <GlobalExpertiseCompetencies /> },
@@ -41,39 +41,20 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative overflow-clip">
-        {/* Fixed Animated Background - Signature Blobs */}
-        <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
-          <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
-          <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
-          <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
-          <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
-          <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
-        </div>
+    <div className="relative">
+        {/* Foundation Hero */}
+        <HeroSection />
 
-        {/* Hero Section - Foundation */}
-        <div className="relative z-10">
-          <HeroSection />
-        </div>
-
-        {/* Layered Stacking Sections */}
+        {/* Sequential Stages */}
         <div className="relative z-20">
           {sections.map((section, index) => (
-            <section 
+            <SequentialStage 
               key={section.id} 
-              id={section.id}
-              className={cn(
-                "relative w-full -mt-20 pt-20", 
-                "bg-background border-t border-white/10 rounded-none", // Sharp corners for the section cards
-                "shadow-[0_-30px_60px_rgba(0,0,0,0.3)] transition-all duration-500"
-              )}
-              style={{ zIndex: (index + 1) * 10 }}
+              id={section.id} 
+              index={index}
             >
-              <div className="w-full">
-                {section.component}
-              </div>
-            </section>
+              {section.component}
+            </SequentialStage>
           ))}
         </div>
     </div>
