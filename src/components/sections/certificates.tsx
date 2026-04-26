@@ -7,22 +7,10 @@ import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
 import { certificates } from '@/data/certificates';
 import type { Certificate } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
-
-const topCertBadges = [
-    'KPI Professional (KPIP)',
-    'ITIL 4 Leader: Digital & IT Strategy',
-    'Certified PMO Professional',
-    'CPHIMS',
-    'HL7® FHIR® Fundamentals',
-    'COBIT 5 Foundation',
-    'CNSS',
-    'Big Data Analytics',
-];
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
@@ -56,31 +44,12 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
 };
 
 export default function CertificatesSection() {
+  // Only show the top 3 featured certificates on the home page grid card
   const featuredCertificates = certificates.slice(0, 3);
 
   return (
-    <section id="certificates-section" className="py-20 md:py-32">
+    <div className="py-24">
        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <AnimatedSection>
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-6xl font-headline font-bold">Strategic Excellence & Technical Mastery</h2>
-                    <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                        My expertise is backed by global certifications, publications, and professional endorsements in Digital Transformation and Healthcare IT.
-                    </p>
-                </div>
-            </AnimatedSection>
-            
-            <AnimatedSection>
-                <div className="max-w-4xl mx-auto mb-8 text-center">
-                    <h3 className="text-xl font-headline font-semibold mb-4 text-primary">Highlights</h3>
-                    <div className="flex flex-wrap justify-center gap-2">
-                        {topCertBadges.map(badge => (
-                            <Badge key={badge} variant="secondary" className="text-sm py-1 px-3">{badge}</Badge>
-                        ))}
-                    </div>
-                </div>
-            </AnimatedSection>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {featuredCertificates.map((cert, index) => (
                     <AnimatedSection key={cert.title} style={{ animationDelay: `${index * 150}ms` }}>
@@ -108,6 +77,6 @@ export default function CertificatesSection() {
                 </div>
             </AnimatedSection>
        </div>
-    </section>
+    </div>
   );
 }

@@ -8,6 +8,8 @@ import InsightsSection from '@/components/sections/articles';
 import ProjectsSection from '@/components/sections/projects';
 import ServicesSection from '@/components/sections/services';
 import CertificatesSection from '@/components/sections/certificates';
+import CertificatesHeader from '@/components/sections/certificates-header';
+import CertificatesHighlights from '@/components/sections/certificates-highlights';
 import ExpertiseHeader from '@/components/sections/expertise-header';
 import EngagementSection from '@/components/sections/engagement';
 import EngagementHeader from '@/components/sections/engagement-header';
@@ -19,7 +21,9 @@ export default function Home() {
     { id: 'services', component: <ServicesSection /> },
     { id: 'engagement-header', component: <EngagementHeader /> },
     { id: 'engagement', component: <EngagementSection /> },
-    { id: 'certificates', component: <CertificatesSection /> },
+    { id: 'certificates-section', component: <CertificatesHeader /> }, // id points here for nav anchors
+    { id: 'certificates-highlights', component: <CertificatesHighlights /> },
+    { id: 'certificates-grid', component: <CertificatesSection /> },
     { id: 'case-studies', component: <ProjectsSection /> },
     { id: 'experience', component: <ExperienceSection /> },
     { id: 'insights', component: <InsightsSection /> },
