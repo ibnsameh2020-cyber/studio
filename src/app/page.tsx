@@ -1,4 +1,3 @@
-
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
@@ -20,40 +19,93 @@ import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-
 import SequentialStage from '@/components/sequential-stage';
 
 export default function Home() {
-  const sections = [
-    { id: 'expertise-header', component: <ExpertiseHeader /> },
-    { id: 'services', component: <ServicesSection /> },
-    { id: 'engagement-header', component: <EngagementHeader /> },
-    { id: 'engagement', component: <EngagementSection /> },
-    { id: 'certificates-header', component: <CertificatesHeader /> },
-    { id: 'certificates-highlights', component: <CertificatesHighlights /> },
-    { id: 'certificates-grid', component: <CertificatesSection /> },
-    { id: 'case-studies-header', component: <ProjectsHeader /> },
-    { id: 'case-studies-grid', component: <ProjectsSection /> },
-    { id: 'global-expertise-header', component: <GlobalExpertiseHeader /> },
-    { id: 'global-expertise-competencies', component: <GlobalExpertiseCompetencies /> },
-    { id: 'experience-header', component: <ExperienceHeader /> },
-    { id: 'experience-grid', component: <ExperienceSection /> },
-    { id: 'insights', component: <InsightsSection /> },
-    { id: 'exclusive-resources-cta', component: <ExclusiveResourcesCtaSection /> },
-    { id: 'about-cta', component: <AboutMeCtaSection /> },
-    { id: 'contact', component: <ContactSection /> },
+  // Consolidated Strategic Chapters to remove "empty" stages
+  const chapters = [
+    { 
+      id: 'chapter-expertise', 
+      component: (
+        <>
+          <div data-reveal className="mb-12"><ExpertiseHeader /></div>
+          <ServicesSection />
+        </>
+      )
+    },
+    { 
+      id: 'chapter-engagement', 
+      component: (
+        <>
+          <div data-reveal className="mb-12"><EngagementHeader /></div>
+          <EngagementSection />
+        </>
+      )
+    },
+    { 
+      id: 'chapter-certificates', 
+      component: (
+        <>
+          <div data-reveal className="mb-8"><CertificatesHeader /></div>
+          <div data-reveal className="mb-8 w-full"><CertificatesHighlights /></div>
+          <CertificatesSection />
+        </>
+      )
+    },
+    { 
+      id: 'chapter-success-stories', 
+      component: (
+        <>
+          <div data-reveal className="mb-12"><ProjectsHeader /></div>
+          <ProjectsSection />
+        </>
+      )
+    },
+    { 
+      id: 'chapter-global', 
+      component: (
+        <>
+          <div data-reveal className="mb-12"><GlobalExpertiseHeader /></div>
+          <GlobalExpertiseCompetencies />
+        </>
+      )
+    },
+    { 
+      id: 'chapter-experience', 
+      component: (
+        <>
+          <div data-reveal className="mb-12"><ExperienceHeader /></div>
+          <ExperienceSection />
+        </>
+      )
+    },
+    { 
+      id: 'chapter-insights', 
+      component: <InsightsSection /> 
+    },
+    { 
+      id: 'chapter-resources', 
+      component: <ExclusiveResourcesCtaSection /> 
+    },
+    { 
+      id: 'chapter-about', 
+      component: <AboutMeCtaSection /> 
+    },
+    { 
+      id: 'chapter-contact', 
+      component: <ContactSection /> 
+    },
   ];
 
   return (
     <div className="relative">
-        {/* Foundation Hero */}
         <HeroSection />
 
-        {/* Sequential Stages */}
         <div className="relative z-20">
-          {sections.map((section, index) => (
+          {chapters.map((chapter, index) => (
             <SequentialStage 
-              key={section.id} 
-              id={section.id} 
+              key={chapter.id} 
+              id={chapter.id} 
               index={index}
             >
-              {section.component}
+              {chapter.component}
             </SequentialStage>
           ))}
         </div>

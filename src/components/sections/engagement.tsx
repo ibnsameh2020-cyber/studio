@@ -20,16 +20,16 @@ const engagementModels = [
 export default function EngagementSection() {
   return (
     <div className="w-full">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-6 items-stretch justify-center max-w-6xl mx-auto">
-              {engagementModels.map((model, index) => (
-                  <Card key={index} data-reveal className="flex-1 h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:-translate-y-1 min-w-[280px]">
-                     <div className="mb-4 text-primary font-bold text-3xl">{index+1}</div>
-                     <h3 className="text-xl font-headline font-semibold mb-4">{model.title}</h3>
-                     <p className="text-base text-muted-foreground flex-grow">{model.description}</p>
-                  </Card>
-              ))}
-          </div>
+      <div className="flex flex-row gap-6 items-stretch justify-center max-w-6xl mx-auto px-4">
+          {engagementModels.map((model, index) => (
+              <div key={index} className="flex-1 min-w-[240px] max-w-[340px]" data-reveal>
+                <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:-translate-y-1">
+                   <div className="mb-4 text-primary font-bold text-3xl">{index+1}</div>
+                   <h3 className="text-lg font-headline font-semibold mb-4">{model.title}</h3>
+                   <p className="text-sm text-muted-foreground flex-grow">{model.description}</p>
+                </Card>
+              </div>
+          ))}
       </div>
     </div>
   );
