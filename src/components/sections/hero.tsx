@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -135,15 +134,15 @@ const FloatingRoleCard = () => (
     <div className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
         <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
             <div className="bg-primary px-4 py-2">
-                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
+                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Focus</h3>
             </div>
             <div className="p-4">
                 <p className="text-xs text-muted-foreground text-center leading-relaxed">
                     Strategic Planning & PMO Advisor
                     <span className="block my-1.5 text-primary/50">·</span>
-                    Driving Efficiency in Major Government Portfolios
+                    Orchestrating Outcomes in Government Portfolios
                     <span className="block my-1.5 text-primary/50">·</span>
-                    Digital Transformation & Governance
+                    AI Governance & Digital Transformation
                 </p>
             </div>
         </div>
@@ -251,14 +250,6 @@ const clientLogos = [
         ),
     },
     {
-        name: 'King Faisal Specialist Hospital & Research Centre',
-        logo: (
-          <div className="relative w-40 h-24">
-            <Image src="https://i.ibb.co/35HyVWm5/e53142f9-cc31-493d-bb5a-2bce7a936246-removalai-preview.png" alt="King Faisal Specialist Hospital & Research Centre Logo" fill className="object-contain" />
-          </div>
-        ),
-    },
-    {
         name: 'Ministry of Health Saudi Arabia',
         logo: (
           <div className="relative w-40 h-24">
@@ -298,88 +289,23 @@ const clientLogos = [
           </div>
         ),
     },
-    {
-        name: 'King Fahd Armed Forces Hospital',
-        logo: (
-          <div className="relative w-40 h-24">
-            <Image src="https://i.ibb.co/6JmXmbQZ/3d2f8725-2402-4bf4-841b-7aa21d304504-removalai-preview.png" alt="King Fahd Armed Forces Hospital Logo" fill className="object-contain" />
-          </div>
-        ),
-    },
-    {
-        name: 'Unión Fenosa Gas',
-        logo: (
-          <div className="relative w-40 h-24">
-            <Image src="https://i.ibb.co/gZTwVs5z/b87e9262-3c1c-4bc7-b282-ae06918f4581-removalai-preview.png" alt="Unión Fenosa Gas Logo" fill className="object-contain" />
-          </div>
-        ),
-    },
-    {
-        name: 'SEGAS',
-        logo: (
-          <div className="relative w-40 h-24">
-            <Image src="https://i.ibb.co/gZhkDrGv/a45997d6-35a4-43fc-971b-904816869ae8-removalai-preview.png" alt="SEGAS Logo" fill className="object-contain" />
-          </div>
-        ),
-    },      
 ];
-
-const VerticalHeroClientLogos = () => {
-    return (
-        <div className="absolute top-[60%] -translate-y-1/2 left-8 lg:left-16 w-64 h-[60vh] hidden lg:block z-10 group">
-            <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl shadow-xl h-full flex flex-col p-4">
-                 <h4 className="text-center text-lg font-headline font-semibold mb-4 shrink-0">You are in good company.</h4>
-                <div 
-                    className="w-full overflow-hidden flex-grow"
-                    style={{ maskImage: 'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)' }}
-                >
-                    <div className="flex flex-col w-full animate-marquee-scroll-y group-hover:[animation-play-state:paused]">
-                        {[...clientLogos, ...clientLogos].map((client, index) => (
-                            <div key={`${client.name}-v-${index}`} className="flex-shrink-0 my-2">
-                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 p-6 w-full">
-                                    {client.logo}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 
 const HeroClientLogos = () => {
     return (
         <div className="mt-12 w-full animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-6 shadow-xl">
-                <h4 className="text-center text-lg font-headline font-semibold mb-6">You are in good company.</h4>
+                <h4 className="text-center text-lg font-headline font-semibold mb-6">Trusted by World-Class Organizations</h4>
                 
-                {/* Desktop: Animated Marquee */}
+                {/* Desktop & Mobile: Animated Marquee */}
                 <div 
-                    className="hidden md:block w-full overflow-hidden"
+                    className="w-full overflow-hidden"
                     style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
                 >
                     <div className="flex w-fit animate-marquee-scroll hover:[animation-play-state:paused]">
-                        {[...clientLogos, ...clientLogos].map((client, index) => (
-                            <div key={`${client.name}-d-${index}`} className="flex-shrink-0 mx-4">
-                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 w-44 p-6">
-                                    {client.logo}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                
-                {/* Mobile: Use CSS animation */}
-                <div 
-                    className="md:hidden w-full overflow-hidden"
-                    style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
-                >
-                    <div className="flex w-fit animate-marquee-scroll">
-                        {[...clientLogos, ...clientLogos].map((client, index) => (
-                            <div key={`${client.name}-m-${index}`} className="flex-shrink-0 mx-2">
-                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-28 w-44 p-6">
+                        {[...clientLogos, ...clientLogos, ...clientLogos].map((client, index) => (
+                            <div key={`${client.name}-marquee-${index}`} className="flex-shrink-0 mx-4">
+                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-xl shadow-lg flex items-center justify-center h-24 w-40 p-4">
                                     {client.logo}
                                 </div>
                             </div>
@@ -396,7 +322,6 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-28 pb-16">
-      <VerticalHeroClientLogos />
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
@@ -407,7 +332,7 @@ export default function HeroSection() {
         
         <SwitchingHeroText />
         
-        <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
             <Link href="/#services">
               <Button size="lg" className="group">
                 Audit My Portfolio Strategy
@@ -421,9 +346,8 @@ export default function HeroSection() {
                 </Button>
             </Link>
         </div>
-        <div className="lg:hidden">
-            <HeroClientLogos />
-        </div>
+        
+        <HeroClientLogos />
       </div>
       <FloatingRoleCard />
     </section>

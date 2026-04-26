@@ -1,4 +1,3 @@
-
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
@@ -24,7 +23,7 @@ export default function Home() {
         </div>
 
         {/* Hero Section acts as the base layer */}
-        <div className="relative z-10">
+        <div className="relative z-0">
           <HeroSection />
         </div>
 
@@ -36,7 +35,11 @@ export default function Home() {
         <PinnedSection index={5}><InsightsSection /></PinnedSection>
         <PinnedSection index={6}><ExclusiveResourcesCtaSection /></PinnedSection>
         <PinnedSection index={7}><AboutMeCtaSection /></PinnedSection>
-        <PinnedSection index={8}><ContactSection /></PinnedSection>
+        
+        {/* Contact section forms the final card */}
+        <div className="relative z-[100] bg-background border-t border-white/10 rounded-t-[40px] shadow-[0_-40px_80px_-15px_rgba(0,0,0,0.5)] pt-20">
+            <ContactSection />
+        </div>
     </div>
   );
 }
