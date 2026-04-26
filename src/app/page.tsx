@@ -3,6 +3,7 @@ import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
 import ExperienceSection from '@/components/sections/experience';
+import ExperienceHeader from '@/components/sections/experience-header';
 import HeroSection from '@/components/sections/hero';
 import InsightsSection from '@/components/sections/articles';
 import ProjectsSection from '@/components/sections/projects';
@@ -31,7 +32,8 @@ export default function Home() {
     { id: 'case-studies-grid', component: <ProjectsSection /> },
     { id: 'global-expertise-header', component: <GlobalExpertiseHeader /> },
     { id: 'global-expertise-competencies', component: <GlobalExpertiseCompetencies /> },
-    { id: 'experience', component: <ExperienceSection /> },
+    { id: 'experience-header', component: <ExperienceHeader /> },
+    { id: 'experience-grid', component: <ExperienceSection /> },
     { id: 'insights', component: <InsightsSection /> },
     { id: 'exclusive-resources-cta', component: <ExclusiveResourcesCtaSection /> },
     { id: 'about-cta', component: <AboutMeCtaSection /> },
