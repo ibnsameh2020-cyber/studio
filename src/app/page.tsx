@@ -1,35 +1,53 @@
 
-import AboutMeCtaSection from '@/components/sections/about-me-cta';
-import ContactSection from '@/components/sections/contact';
-import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
-import ExperienceSection from '@/components/sections/experience';
 import HeroSection from '@/components/sections/hero';
-import InsightsSection from '@/components/sections/articles';
-import ProjectsSection from '@/components/sections/projects';
 import ServicesSection from '@/components/sections/services';
 import CertificatesSection from '@/components/sections/certificates';
-
+import ProjectsSection from '@/components/sections/projects';
+import ExperienceSection from '@/components/sections/experience';
+import InsightsSection from '@/components/sections/articles';
+import ExclusiveResourcesCtaSection from '@/components/sections/exclusive-resources-cta';
+import AboutMeCtaSection from '@/components/sections/about-me-cta';
+import ContactSection from '@/components/sections/contact';
+import PinnedSection from '@/components/shared/pinned-section';
 
 export default function Home() {
   return (
-    <div className="relative overflow-clip">
-        <div aria-hidden="true" className="absolute inset-0 z-0 -mx-28">
-        <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
-        <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
-        <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
-        <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
-        <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
-        <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
-        </div>
-        <HeroSection />
+    <div className="relative">
+      {/* Hero doesn't pin, it scrolls naturally */}
+      <HeroSection />
+
+      {/* Layered Cards Stacking with increasing z-index */}
+      <PinnedSection id="services" zIndex={10}>
         <ServicesSection />
+      </PinnedSection>
+
+      <PinnedSection id="certificates-section" zIndex={20}>
         <CertificatesSection />
+      </PinnedSection>
+
+      <PinnedSection id="case-studies" zIndex={30}>
         <ProjectsSection />
+      </PinnedSection>
+
+      <PinnedSection id="experience" zIndex={40}>
         <ExperienceSection />
+      </PinnedSection>
+
+      <PinnedSection id="insights" zIndex={50}>
         <InsightsSection />
+      </PinnedSection>
+
+      <PinnedSection id="exclusive-resources-cta" zIndex={60}>
         <ExclusiveResourcesCtaSection />
+      </PinnedSection>
+
+      <PinnedSection id="about-cta" zIndex={70}>
         <AboutMeCtaSection />
+      </PinnedSection>
+
+      <PinnedSection id="contact" zIndex={80} className="rounded-b-none">
         <ContactSection />
+      </PinnedSection>
     </div>
   );
 }
