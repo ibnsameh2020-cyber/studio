@@ -44,32 +44,10 @@ const services = [
   }
 ];
 
-const engagementModels = [
-    {
-        title: "Strategic Advisory",
-        description: "Retainer-based partnership for ongoing executive guidance."
-    },
-    {
-        title: "Project-Based Consulting",
-        description: "End-to-end management of a specific transformation program."
-    },
-    {
-        title: "The 'Portfolio Health Check'",
-        description: "A two-week rapid audit to diagnose your current PMO maturity and identify quick wins."
-    }
-]
-
 export default function ServicesSection() {
   return (
-    <section id="services" className="py-24">
+    <div className="py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-headline font-bold">My Expertise</h2>
-          <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-            I help visionary leaders bridge the gap between strategy and execution, transforming cost centers into value engines.
-          </p>
-        </div>
-        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {services.map((service, index) => (
             <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
@@ -117,28 +95,6 @@ export default function ServicesSection() {
           ))}
         </div>
       </div>
-
-      <div id="engagement" className="pt-24 pb-20 md:pb-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-5xl font-headline font-bold">How We Can Work Together</h2>
-                  <p className="text-md md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-                      Flexible engagement models designed to suit your strategic needs.
-                  </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                  {engagementModels.map((model, index) => (
-                      <AnimatedSection key={index} style={{ animationDelay: `${index * 150}ms` }}>
-                          <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-8 flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
-                             <div className="mb-4 text-primary font-bold text-2xl">{index+1}</div>
-                             <h3 className="text-xl font-headline font-semibold mb-2">{model.title}</h3>
-                             <p className="text-base text-muted-foreground flex-grow">{model.description}</p>
-                          </Card>
-                      </AnimatedSection>
-                  ))}
-              </div>
-          </div>
-      </div>
-    </section>
+    </div>
   );
 }

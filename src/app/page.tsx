@@ -8,11 +8,15 @@ import InsightsSection from '@/components/sections/articles';
 import ProjectsSection from '@/components/sections/projects';
 import ServicesSection from '@/components/sections/services';
 import CertificatesSection from '@/components/sections/certificates';
+import ExpertiseHeader from '@/components/sections/expertise-header';
+import EngagementSection from '@/components/sections/engagement';
 import { cn } from '@/lib/utils';
 
 export default function Home() {
   const sections = [
+    { id: 'expertise-header', component: <ExpertiseHeader /> },
     { id: 'services', component: <ServicesSection /> },
+    { id: 'engagement', component: <EngagementSection /> },
     { id: 'certificates', component: <CertificatesSection /> },
     { id: 'case-studies', component: <ProjectsSection /> },
     { id: 'experience', component: <ExperienceSection /> },
