@@ -29,17 +29,40 @@ import { useAuth as useAuthInstance, useFirestore as useFirestoreInstance } from
 // This is a hack to get around the fact that the config is not available at build time
 const firebaseConfig = importedConfig || JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG || '{}');
 
-export async function initializeFirebase() {
-  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-  const auth = getAuth(app);
-  const firestore = getFirestore(app);
-  let analytics: Analytics | null = null;
-  if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
-    if (await isSupported()) {
-        analytics = getAnalytics(app);
-    }
+interface FirebaseInstances {
+  app: FirebaseApp;
+  auth: Auth;
+  firestore: Firestore;
+  analytics: Analytics | null;
+}
+
+let initializationPromise: Promise<FirebaseInstances> | null = null;
+
+export async function initializeFirebase(): Promise<FirebaseInstances> {
+  if (initializationPromise) {
+    return initializationPromise;
   }
-  return { app, auth, firestore, analytics };
+
+  initializationPromise = (async () => {
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
+    
+    let analytics: Analytics | null = null;
+    if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
+      try {
+        if (await isSupported()) {
+          analytics = getAnalytics(app);
+        }
+      } catch (err) {
+        console.warn("Firebase Analytics initialization skipped:", err);
+      }
+    }
+    
+    return { app, auth, firestore, analytics };
+  })();
+
+  return initializationPromise;
 }
 
 
@@ -48,6 +71,7 @@ function useAuthActions() {
     const firestore = useFirestoreInstance();
 
     const storeUser = async (user: UserCredential["user"]) => {
+        if (!firestore) return;
         const userRef = doc(firestore, "users", user.uid);
         const userDoc = await getDoc(userRef);
         if (!userDoc.exists()) {
@@ -132,8 +156,10 @@ function useAuthActions() {
             await updateProfile(user, { displayName });
 
             // Update Firestore document
-            const userRef = doc(firestore, "users", user.uid);
-            await setDoc(userRef, { displayName }, { merge: true });
+            if (firestore) {
+                const userRef = doc(firestore, "users", user.uid);
+                await setDoc(userRef, { displayName }, { merge: true });
+            }
 
             return null;
         } catch (error: any) {
@@ -153,8 +179,10 @@ function useAuthActions() {
             
             await firebaseUpdateEmail(user, newEmail);
             
-            const userRef = doc(firestore, "users", user.uid);
-            await setDoc(userRef, { email: newEmail }, { merge: true });
+            if (firestore) {
+                const userRef = doc(firestore, "users", user.uid);
+                await setDoc(userRef, { email: newEmail }, { merge: true });
+            }
 
             return null;
         } catch (error: any) {
@@ -209,5 +237,3 @@ function useMemoFirebase<T>(factory: () => T, deps: any[]): T {
 export { useUser, useCollection, useDoc, useMemoFirebase, useAuthActions as useAuth };
 export { FirebaseProvider } from './provider';
 export { FirebaseClientProvider } from './client-provider';
-
-    
