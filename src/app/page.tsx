@@ -17,6 +17,7 @@ import EngagementHeader from '@/components/sections/engagement-header';
 import GlobalExpertiseHeader from '@/components/sections/global-expertise-header';
 import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-competencies';
 import SequentialStage from '@/components/sequential-stage';
+import AnimatedSection from '@/components/animated-section';
 
 export default function Home() {
   const chapters = [
@@ -81,21 +82,6 @@ export default function Home() {
     { 
       id: 'chapter-resources', 
       component: <ExclusiveResourcesCtaSection /> 
-    },
-    { 
-      id: 'chapter-about', 
-      component: <AboutMeCtaSection /> 
-    },
-    { 
-      id: 'chapter-contact', 
-      component: (
-        <>
-          <ContactSection />
-          <div data-reveal className="w-full mt-12">
-            <ClientLogosSection />
-          </div>
-        </>
-      ) 
     }
   ];
 
@@ -113,6 +99,21 @@ export default function Home() {
               {chapter.component}
             </SequentialStage>
           ))}
+        </div>
+
+        {/* Unified Ground Floor: Connected About + Contact + Logos */}
+        <div id="footer-area" className="relative z-30 bg-background pt-32 pb-16 space-y-32">
+            <AnimatedSection>
+                <AboutMeCtaSection />
+            </AnimatedSection>
+            <AnimatedSection>
+                <div id="contact">
+                    <ContactSection />
+                </div>
+            </AnimatedSection>
+            <AnimatedSection>
+                <ClientLogosSection />
+            </AnimatedSection>
         </div>
     </div>
   );

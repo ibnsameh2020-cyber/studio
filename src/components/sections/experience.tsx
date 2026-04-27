@@ -1,4 +1,3 @@
-
 "use client";
 
 import { experience } from '@/data/experience';
@@ -15,8 +14,8 @@ import {
 export default function ExperienceSection() {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 relative">
-      {/* High-Contrast Timeline Path */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-accent to-primary hidden lg:block -translate-x-1/2 opacity-30 shadow-[0_0_15px_rgba(255,191,0,0.3)]"></div>
+      {/* High-Contrast Horizontal Timeline Path */}
+      <div className="absolute left-0 right-0 top-1/2 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 hidden lg:block -translate-y-1/2 opacity-30 shadow-[0_0_15px_rgba(255,191,0,0.3)]"></div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch relative z-10">
           {experience.map((item) => (

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -117,7 +116,7 @@ export default function ContactSection() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12" data-reveal>
+        <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary inline-block">
                 Ready to Turn Strategy into Reality?
             </h2>
@@ -127,7 +126,7 @@ export default function ContactSection() {
         </div>
         <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-5 gap-12 items-start">
-                <div className="md:col-span-2 py-8 h-full" data-reveal>
+                <div className="md:col-span-2 py-8 h-full">
                     <div className="text-center">
                         <div className="flex justify-center mb-4">
                             <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
@@ -162,7 +161,7 @@ export default function ContactSection() {
                     </div>
                 </div>
                 
-                <div className="md:col-span-3 py-8" data-reveal>
+                <div className="md:col-span-3 py-8">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
