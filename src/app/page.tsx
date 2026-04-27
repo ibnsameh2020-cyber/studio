@@ -53,7 +53,7 @@ export default function Home() {
       id: 'chapter-success-stories', 
       component: (
         <>
-          <div data-reveal className="mb-12"><ProjectsHeader /></div>
+          <div data-reveal className="mb-6"><ProjectsHeader /></div>
           <ProjectsSection />
         </>
       )
@@ -71,7 +71,7 @@ export default function Home() {
       id: 'chapter-experience', 
       component: (
         <>
-          <div data-reveal className="mb-12"><ExperienceHeader /></div>
+          <div data-reveal className="mb-4"><ExperienceHeader /></div>
           <ExperienceSection />
         </>
       )

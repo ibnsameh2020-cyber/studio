@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 export default function ExperienceSection() {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 relative">
-      <div className="max-w-7xl mx-auto relative pt-24">
+      <div className="max-w-7xl mx-auto relative pt-8">
         {/* Horizontal Timeline Axis */}
         <div className="absolute top-[40px] left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent hidden lg:block rounded-full"></div>
         
