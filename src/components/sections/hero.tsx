@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -150,15 +149,15 @@ export default function HeroSection() {
     <section ref={heroRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-32 pb-16">
       
       {/* Left-Side Vertical Logo Frame (Translucent Black Box) */}
-      <div className="absolute top-1/2 -translate-y-[15%] left-8 lg:left-16 hidden lg:block z-30">
+      <div className="absolute top-1/2 -translate-y-[25%] left-8 lg:left-16 hidden lg:block z-30">
         <div className="h-[380px] w-64 bg-black/40 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden relative flex flex-col">
-            {/* Integrated Header Label - Opaque background and higher z-index to mask logos */}
-            <div className="pt-6 pb-4 px-4 text-center bg-black/60 backdrop-blur-md z-20 border-b border-white/5">
+            {/* Integrated Header Label - Softened background and higher z-index to mask logos */}
+            <div className="pt-6 pb-4 px-4 text-center bg-black/40 backdrop-blur-md z-20 border-b border-white/5">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">You are in good company</p>
             </div>
 
             {/* Masking blurs - positioned correctly to mask logo entry/exit points */}
-            <div className="absolute inset-x-0 top-[60px] h-12 bg-gradient-to-b from-black/60 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute inset-x-0 top-[60px] h-12 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none"></div>
             <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/40 to-transparent z-10 pointer-events-none"></div>
             
             <div className="flex-grow relative overflow-hidden z-0">
