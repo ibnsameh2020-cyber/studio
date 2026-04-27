@@ -13,10 +13,10 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
   return (
     <div className="flex flex-col h-full max-h-[85vh]">
       <DialogHeader className="px-4 pt-4 pb-2">
-        <Badge variant="secondary" className="mb-1 w-fit text-[10px] uppercase tracking-wider">{project.category}</Badge>
-        <DialogTitle className="font-headline text-xl md:text-2xl leading-tight">{project.title}</DialogTitle>
+        <Badge variant="secondary" className="mb-1 w-fit text-[9px] uppercase tracking-wider">{project.category}</Badge>
+        <DialogTitle className="font-headline text-lg md:text-2xl leading-tight">{project.title}</DialogTitle>
         <DialogDescription asChild>
-            <div className="pt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+            <div className="pt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground">
                 <p><strong>Client:</strong> {project.client}</p>
                 {project.partner && <p><strong>Partner:</strong> {project.partner}</p>}
             </div>
@@ -24,10 +24,10 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
       </DialogHeader>
       
       <ScrollArea className="flex-grow px-4 pb-4">
-        <div className="py-2 grid md:grid-cols-2 gap-6 items-start">
-          <div className="space-y-4">
+        <div className="py-2 grid md:grid-cols-2 gap-4 md:gap-6 items-start">
+          <div className="space-y-3">
               {projectImage && (
-              <div className="relative aspect-video rounded-lg overflow-hidden border border-border/30 shadow-sm">
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-border/30 shadow-sm max-w-[280px] md:max-w-none mx-auto">
                   <Image
                   src={projectImage.imageUrl}
                   alt={project.title}
@@ -37,30 +37,30 @@ export default function ProjectDetailsDialog({ project }: { project: Project }) 
                   />
               </div>
               )}
-               <div className="flex flex-wrap gap-1.5">
+               <div className="flex flex-wrap gap-1">
                   {project.techStack.map((skill) => (
-                      <Badge key={skill} variant="outline" className="text-[10px] py-0">{skill}</Badge>
+                      <Badge key={skill} variant="outline" className="text-[9px] py-0">{skill}</Badge>
                   ))}
               </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
              {project.scale && (
-                <div className="space-y-1">
-                    <h3 className="text-sm font-headline font-semibold text-primary uppercase tracking-tighter">The Scale / Challenge</h3>
-                    <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{project.scale}</p>
+                <div className="space-y-0.5">
+                    <h3 className="text-[10px] font-headline font-semibold text-primary uppercase tracking-tighter">The Scale / Challenge</h3>
+                    <p className="text-[11px] md:text-sm text-muted-foreground leading-tight">{project.scale}</p>
                 </div>
             )}
             {project.scope && (
-                <div className="space-y-1">
-                    <h3 className="text-sm font-headline font-semibold text-primary uppercase tracking-tighter">Scope</h3>
-                    <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{project.scope}</p>
+                <div className="space-y-0.5">
+                    <h3 className="text-[10px] font-headline font-semibold text-primary uppercase tracking-tighter">Scope</h3>
+                    <p className="text-[11px] md:text-sm text-muted-foreground leading-tight">{project.scope}</p>
                 </div>
             )}
             {project.role && (
-                <div className="space-y-1">
-                    <h3 className="text-sm font-headline font-semibold text-primary uppercase tracking-tighter">My Role</h3>
-                    <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{project.role}</p>
+                <div className="space-y-0.5">
+                    <h3 className="text-[10px] font-headline font-semibold text-primary uppercase tracking-tighter">My Role</h3>
+                    <p className="text-[11px] md:text-sm text-muted-foreground leading-tight">{project.role}</p>
                 </div>
             )}
           </div>

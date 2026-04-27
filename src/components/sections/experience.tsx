@@ -17,13 +17,11 @@ export default function ExperienceSection() {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto relative pt-8">
-        {/* Horizontal Timeline Axis */}
         <div className="absolute top-[40px] left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent hidden lg:block rounded-full"></div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch relative z-10">
           {experience.map((item) => (
             <div key={item.id} data-reveal className="relative flex flex-col pt-12">
-              {/* Timeline Marker and Tether */}
               <div className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 z-20 flex-col items-center">
                 <div className="h-6 w-6 rounded-full bg-primary border-4 border-background shadow-[0_0_15px_rgba(255,191,0,0.6)] animate-pulse"></div>
                 <div className="h-12 w-0.5 bg-gradient-to-b from-primary to-transparent mt-2"></div>
@@ -57,18 +55,18 @@ export default function ExperienceSection() {
                     </CardFooter>
                   </Card>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-2xl bg-background/95 backdrop-blur-xl border-primary/20">
+                <DialogContent className="sm:max-w-2xl bg-background/95 backdrop-blur-xl border-primary/20 w-[95vw] max-h-[90vh] overflow-y-auto p-4 md:p-6">
                   <DialogHeader>
-                    <div className="flex items-center gap-4 mb-2">
-                      <div className="p-3 bg-primary/10 rounded-xl"><Briefcase className="w-6 h-6 text-primary" /></div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-primary/10 rounded-xl shrink-0"><Briefcase className="w-5 h-5 text-primary" /></div>
                       <div>
-                        <DialogTitle className="text-2xl font-headline text-primary">{item.title}</DialogTitle>
-                        <p className="text-sm text-muted-foreground">{item.company} | {item.date}</p>
+                        <DialogTitle className="text-lg md:text-2xl font-headline text-primary leading-tight">{item.title}</DialogTitle>
+                        <p className="text-xs md:text-sm text-muted-foreground">{item.company} | {item.date}</p>
                       </div>
                     </div>
                   </DialogHeader>
-                  <div className="py-6 border-t border-border/50">
-                    <p className="text-lg text-muted-foreground leading-relaxed">{item.longDescription}</p>
+                  <div className="py-4 border-t border-border/50">
+                    <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">{item.longDescription}</p>
                   </div>
                 </DialogContent>
               </Dialog>
