@@ -24,7 +24,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}>
             {projectImage && (
               <div className="relative aspect-video overflow-hidden">
-                {/* This div creates the permanent highlight effect on the image */}
                 <div className="absolute inset-0 z-10 pointer-events-none rounded-t-lg ring-1 ring-inset ring-primary/60"></div>
                 <Image
                   src={projectImage.imageUrl}
@@ -35,19 +34,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 />
               </div>
             )}
-            <CardHeader className="pb-4">
-              <Badge variant="secondary" className="mb-2 w-fit">{project.category}</Badge>
-              <CardTitle className="font-headline text-base">{project.title}</CardTitle>
+            <CardHeader className="p-2 md:p-4 md:pb-4">
+              <Badge variant="secondary" className="mb-1 md:mb-2 w-fit text-[8px] md:text-xs">{project.category}</Badge>
+              <CardTitle className="font-headline text-[10px] md:text-base leading-tight">{project.title}</CardTitle>
             </CardHeader>
-            <CardFooter className="mt-auto pb-6">
-                <div className="flex items-center text-sm text-primary group-hover:underline">
+            <CardFooter className="mt-auto p-2 md:p-6 md:pt-0">
+                <div className="flex items-center text-[8px] md:text-sm text-primary group-hover:underline font-bold uppercase tracking-tighter">
                     View Case Study
-                    <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="w-2.5 h-2.5 md:w-4 md:h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </div>
             </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-4xl">
+      <DialogContent className="p-0 border-none sm:max-w-4xl bg-background/95 backdrop-blur-xl">
         <ProjectDetailsDialog project={project} />
       </DialogContent>
     </Dialog>
