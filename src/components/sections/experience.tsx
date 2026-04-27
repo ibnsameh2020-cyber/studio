@@ -14,10 +14,10 @@ import {
 export default function ExperienceSection() {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 relative">
-      {/* High-Contrast Horizontal Timeline Path */}
-      <div className="absolute left-0 right-0 top-1/2 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 hidden lg:block -translate-y-1/2 opacity-30 shadow-[0_0_15px_rgba(255,191,0,0.3)]"></div>
+      {/* High-Contrast Horizontal Timeline Path - Positioned at Top */}
+      <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 hidden lg:block opacity-30 shadow-[0_0_15px_rgba(255,191,0,0.3)]"></div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch relative z-10 pt-12">
           {experience.map((item) => (
               <div key={item.id} data-reveal className="h-full">
                 <Dialog>

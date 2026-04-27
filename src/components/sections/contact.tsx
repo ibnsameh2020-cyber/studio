@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, CalendarCheck } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import {
     Dialog,
     DialogTrigger,
@@ -125,43 +126,41 @@ export default function ContactSection() {
             </p>
         </div>
         <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-5 gap-12 items-start">
-                <div className="md:col-span-2 py-8 h-full">
-                    <div className="text-center">
-                        <div className="flex justify-center mb-4">
-                            <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
-                                <CalendarCheck className="w-12 h-12 text-primary -translate-x-px" />
-                            </div>
+            <div className="grid md:grid-cols-5 gap-8 items-stretch">
+                <Card className="md:col-span-2 bg-card/30 backdrop-blur-sm border border-border/20 p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                    <div className="flex justify-center mb-6">
+                        <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
+                            <CalendarCheck className="w-12 h-12 text-primary" />
                         </div>
-                        <h3 className="text-2xl font-headline font-bold text-primary mb-2">Book a Strategic Discovery Call</h3>
-                        <p className="text-muted-foreground mb-6">Skip the back-and-forth emails. Schedule a 15-minute introductory call to see if we are a good fit.</p>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button size="lg" className="w-full group">
-                                    Schedule Now
-                                    <CalendarCheck className="w-5 h-5 ml-2" />
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="p-0 border-0 w-[90vw] h-[90vh] max-w-5xl">
-                                <DialogHeader className="sr-only">
-                                  <DialogTitle>Schedule a Discovery Call</DialogTitle>
-                                  <DialogDescription>
-                                    Use the calendar below to book a 15-minute introductory call.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <iframe 
-                                    src="https://cal.com/eng.samehmoussa/15min?layout=column_view" 
-                                    className="w-full h-full rounded-lg"
-                                    frameBorder="0"
-                                    title="Schedule a Discovery Call"
-                                ></iframe>
-                            </DialogContent>
-                        </Dialog>
-                        <p className="text-xs text-muted-foreground mt-4 text-center">Priority is given to government and enterprise inquiries.</p>
                     </div>
-                </div>
+                    <h3 className="text-2xl font-headline font-bold text-primary mb-4">Book a Strategic Discovery Call</h3>
+                    <p className="text-muted-foreground mb-8">Skip the back-and-forth emails. Schedule a 15-minute introductory call to see if we are a good fit.</p>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button size="lg" className="w-full group">
+                                Schedule Now
+                                <CalendarCheck className="w-5 h-5 ml-2" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="p-0 border-0 w-[90vw] h-[90vh] max-w-5xl">
+                            <DialogHeader className="sr-only">
+                              <DialogTitle>Schedule a Discovery Call</DialogTitle>
+                              <DialogDescription>
+                                Use the calendar below to book a 15-minute introductory call.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <iframe 
+                                src="https://cal.com/eng.samehmoussa/15min?layout=column_view" 
+                                className="w-full h-full rounded-lg"
+                                frameBorder="0"
+                                title="Schedule a Discovery Call"
+                            ></iframe>
+                        </DialogContent>
+                    </Dialog>
+                    <p className="text-xs text-muted-foreground mt-6">Priority is given to government and enterprise inquiries.</p>
+                </Card>
                 
-                <div className="md:col-span-3 py-8">
+                <Card className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 p-8 shadow-xl">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -172,7 +171,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Your Name" {...field} className="bg-background/20 backdrop-blur-sm" />
+                                                <Input placeholder="Your Name" {...field} className="bg-background/20" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -185,7 +184,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Work Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="name@company.com" {...field} className="bg-background/20 backdrop-blur-sm" />
+                                                <Input placeholder="name@company.com" {...field} className="bg-background/20" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -199,7 +198,7 @@ export default function ContactSection() {
                                     <FormItem>
                                         <FormLabel>Organization / Company Website</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="https://your-company.com" {...field} className="bg-background/20 backdrop-blur-sm" />
+                                            <Input placeholder="https://your-company.com" {...field} className="bg-background/20" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -213,7 +212,7 @@ export default function ContactSection() {
                                         <FormLabel>What is your primary challenge?</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
-                                                <SelectTrigger className="bg-background/20 backdrop-blur-sm">
+                                                <SelectTrigger className="bg-background/20">
                                                     <SelectValue placeholder="Select a challenge..." />
                                                 </SelectTrigger>
                                             </FormControl>
@@ -236,7 +235,7 @@ export default function ContactSection() {
                                     <FormItem>
                                         <FormLabel>Project Details (Optional)</FormLabel>
                                         <FormControl>
-                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} className="bg-background/20 backdrop-blur-sm" />
+                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} className="bg-background/20" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -253,7 +252,7 @@ export default function ContactSection() {
                             </div>
                         </form>
                     </Form>
-                </div>
+                </Card>
             </div>
         </div>
     </div>
