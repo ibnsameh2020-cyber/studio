@@ -1,3 +1,4 @@
+
 "use client";
 
 import { experience } from '@/data/experience';
@@ -14,8 +15,8 @@ import {
 export default function ExperienceSection() {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 relative">
-      {/* Timeline Line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent hidden lg:block -translate-x-1/2"></div>
+      {/* High-Contrast Timeline Path */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-accent to-primary hidden lg:block -translate-x-1/2 opacity-30 shadow-[0_0_15px_rgba(255,191,0,0.3)]"></div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch relative z-10">
           {experience.map((item) => (
@@ -25,7 +26,7 @@ export default function ExperienceSection() {
                         <Card className="h-full bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[220px]">
                             <CardHeader className="p-0 flex-grow">
                                 <div className="flex justify-center mb-4">
-                                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,191,0,0.2)]">
                                         <Briefcase className="w-6 h-6" />
                                     </div>
                                 </div>

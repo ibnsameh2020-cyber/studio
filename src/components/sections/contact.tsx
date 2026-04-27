@@ -127,7 +127,7 @@ export default function ContactSection() {
         </div>
         <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-5 gap-12 items-start">
-                <div className="md:col-span-2 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10 h-full" data-reveal>
+                <div className="md:col-span-2 py-8 h-full" data-reveal>
                     <div className="text-center">
                         <div className="flex justify-center mb-4">
                             <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
@@ -162,7 +162,7 @@ export default function ContactSection() {
                     </div>
                 </div>
                 
-                <div className="md:col-span-3 bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-2xl shadow-primary/10" data-reveal>
+                <div className="md:col-span-3 py-8" data-reveal>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -173,7 +173,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Your Name" {...field} />
+                                                <Input placeholder="Your Name" {...field} className="bg-background/20 backdrop-blur-sm" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -186,7 +186,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Work Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="name@company.com" {...field} />
+                                                <Input placeholder="name@company.com" {...field} className="bg-background/20 backdrop-blur-sm" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -200,7 +200,7 @@ export default function ContactSection() {
                                     <FormItem>
                                         <FormLabel>Organization / Company Website</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="https://your-company.com" {...field} />
+                                            <Input placeholder="https://your-company.com" {...field} className="bg-background/20 backdrop-blur-sm" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -214,7 +214,7 @@ export default function ContactSection() {
                                         <FormLabel>What is your primary challenge?</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
-                                                <SelectTrigger>
+                                                <SelectTrigger className="bg-background/20 backdrop-blur-sm">
                                                     <SelectValue placeholder="Select a challenge..." />
                                                 </SelectTrigger>
                                             </FormControl>
@@ -237,7 +237,7 @@ export default function ContactSection() {
                                     <FormItem>
                                         <FormLabel>Project Details (Optional)</FormLabel>
                                         <FormControl>
-                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} />
+                                            <Textarea placeholder="Tell me a bit more about your project or needs." {...field} className="bg-background/20 backdrop-blur-sm" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
