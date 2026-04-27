@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import ClientLogosSection from './client-logos';
 
 const sentences = [
     "Most transformations fail not because of poor strategy, but because of disconnected execution.",
@@ -134,8 +135,8 @@ export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section ref={heroRef} id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-28 pb-16">
-      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
+    <section ref={heroRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-32 pb-16">
+      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up flex-grow justify-center">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
         </h1>
@@ -178,6 +179,10 @@ export default function HeroSection() {
                 </p>
             </div>
         </div>
+      </div>
+
+      <div className="relative z-20 w-full mt-24">
+          <ClientLogosSection />
       </div>
     </section>
   );

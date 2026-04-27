@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -127,7 +128,7 @@ export default function ContactSection() {
         </div>
         <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-5 gap-8 items-stretch">
-                <Card className="md:col-span-2 bg-card/40 backdrop-blur-md border border-border/20 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
+                <Card className="md:col-span-2 bg-card/40 backdrop-blur-md border-none p-8 flex flex-col justify-center items-center text-center shadow-2xl">
                     <div className="flex justify-center mb-6">
                         <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
                             <CalendarCheck className="w-12 h-12 text-primary" />
@@ -160,7 +161,7 @@ export default function ContactSection() {
                     <p className="text-xs text-muted-foreground mt-6">Priority is given to government and enterprise inquiries.</p>
                 </Card>
                 
-                <Card className="md:col-span-3 bg-card/40 backdrop-blur-md border border-border/20 p-8 shadow-2xl">
+                <Card className="md:col-span-3 bg-card/40 backdrop-blur-md border-none p-8 shadow-2xl">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
