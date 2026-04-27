@@ -210,8 +210,8 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Right-Side Current Role Card */}
-      <div className="absolute bottom-12 right-8 lg:right-16 w-64 hidden lg:block z-30">
+      {/* Right-Side Current Role Card - Vertically Centered */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-8 lg:right-16 w-64 hidden lg:block z-30">
         <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
             <div className="bg-primary px-4 py-2">
                 <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
