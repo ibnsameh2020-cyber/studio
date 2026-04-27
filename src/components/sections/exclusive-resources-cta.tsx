@@ -24,7 +24,15 @@ export default function ExclusiveResourcesCtaSection() {
   const recentResources = resources ? resources.slice(0, 3) : [];
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8 relative py-20 overflow-hidden">
+        {/* Restored Grid Background */}
+        <div className="absolute inset-0 z-[-1] opacity-30" 
+             style={{ 
+               backgroundImage: `linear-gradient(to right, hsl(var(--primary)/0.1) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary)/0.1) 1px, transparent 1px)`,
+               backgroundSize: '40px 40px' 
+             }}>
+        </div>
+
         <div className="container mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6" data-reveal>
