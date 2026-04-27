@@ -123,6 +123,8 @@ export default function Home() {
                     <ContactSection />
                 </div>
             </AnimatedSection>
+            
+            <ClientLogosSection />
         </div>
     </div>
   );
