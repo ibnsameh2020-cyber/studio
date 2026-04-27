@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '../ui/button';
@@ -13,9 +14,9 @@ import { cn } from '@/lib/utils';
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
     return (
-        <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl group cursor-pointer">
+        <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-2 md:p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl group cursor-pointer">
             {certImage && (
-                <div className="relative aspect-video overflow-hidden rounded-md mb-4 bg-black/20">
+                <div className="relative aspect-video overflow-hidden rounded-md mb-2 bg-black/20">
                      <Image
                         src={certImage.imageUrl}
                         alt={certificate.title}
@@ -27,15 +28,15 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
                         )}
                     />
                     {certificate.url && (
-                        <div className="absolute bottom-2 right-2 z-10 p-1.5 bg-background/50 backdrop-blur-sm rounded-full opacity-100 transition-opacity duration-300">
-                            <ArrowUpRight className="w-4 h-4 text-primary" />
+                        <div className="absolute bottom-1 right-1 z-10 p-1 bg-background/50 backdrop-blur-sm rounded-full opacity-100 transition-opacity duration-300">
+                            <ArrowUpRight className="w-3 h-3 text-primary" />
                         </div>
                     )}
                 </div>
             )}
             <CardHeader className="p-0">
-                <CardTitle className="font-headline text-lg">{certificate.title}</CardTitle>
-                <CardDescription>{certificate.issuer}</CardDescription>
+                <CardTitle className="font-headline text-[10px] md:text-lg leading-tight">{certificate.title}</CardTitle>
+                <CardDescription className="text-[8px] md:text-sm">{certificate.issuer}</CardDescription>
             </CardHeader>
         </Card>
     );
@@ -46,7 +47,7 @@ export default function CertificatesSection() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto items-stretch">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 max-w-7xl mx-auto items-stretch">
             {featuredCertificates.map((cert) => (
                 <div key={cert.title} data-reveal className="h-full">
                     {cert.url ? (
@@ -61,11 +62,11 @@ export default function CertificatesSection() {
                 </div>
             ))}
         </div>
-        <div data-reveal className="text-center mt-12">
+        <div data-reveal className="text-center mt-6 md:mt-12">
             <Link href="/certificates">
-                <Button size="lg" className="group">
+                <Button size="sm" className="group text-[10px] md:text-base py-1 px-3 md:py-2 md:px-8 h-auto md:h-11">
                     View All Credentials
-                    <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="w-3 h-3 md:w-5 md:h-5 ml-1 md:ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
             </Link>
         </div>

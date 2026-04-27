@@ -21,13 +21,13 @@ const engagementModels = [
 export default function EngagementSection() {
   return (
     <div className="w-full">
-      <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center max-w-6xl mx-auto px-4">
+      <div className="flex flex-row flex-wrap gap-3 items-stretch justify-center max-w-6xl mx-auto px-4">
           {engagementModels.map((model, index) => (
-              <div key={index} className="flex-1 w-full sm:min-w-[240px] sm:max-w-[340px]" data-reveal>
-                <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-6 md:p-8 flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:-translate-y-1">
-                   <div className="mb-2 md:mb-4 text-primary font-bold text-2xl md:text-3xl">{index+1}</div>
-                   <h3 className="text-base md:text-lg font-headline font-semibold mb-2 md:mb-4">{model.title}</h3>
-                   <p className="text-xs md:text-sm text-muted-foreground flex-grow">{model.description}</p>
+              <div key={index} className="flex-1 min-w-[140px] md:min-w-[240px] sm:max-w-[340px]" data-reveal>
+                <Card className="h-full text-center bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-3 md:p-8 flex flex-col items-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:-translate-y-1">
+                   <div className="mb-1 md:mb-4 text-primary font-bold text-lg md:text-3xl">{index+1}</div>
+                   <h3 className="text-[10px] md:text-lg font-headline font-semibold mb-1 md:mb-4 leading-tight">{model.title}</h3>
+                   <p className="text-[9px] md:text-sm text-muted-foreground flex-grow leading-tight">{model.description}</p>
                 </Card>
               </div>
           ))}
