@@ -1,3 +1,4 @@
+
 "use client";
 
 import { experience } from '@/data/experience';
@@ -15,24 +16,24 @@ import { cn } from '@/lib/utils';
 export default function ExperienceSection() {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 relative">
-      <div className="max-w-7xl mx-auto relative pt-20">
-        {/* High-Contrast Horizontal Timeline Axis */}
-        <div className="absolute top-[32px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary/0 via-primary to-primary/0 hidden lg:block opacity-40 shadow-[0_0_15px_rgba(255,191,0,0.3)]"></div>
+      <div className="max-w-7xl mx-auto relative pt-24">
+        {/* Horizontal Timeline Axis */}
+        <div className="absolute top-[40px] left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent hidden lg:block rounded-full"></div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch relative z-10">
           {experience.map((item) => (
-            <div key={item.id} data-reveal className="relative flex flex-col">
-              {/* Timeline Marker (Dot) - Visible on Desktop */}
-              <div className="hidden lg:flex absolute top-[-52px] left-1/2 -translate-x-1/2 z-20 flex-col items-center">
-                <div className="h-6 w-6 rounded-full bg-primary border-4 border-background shadow-[0_0_15px_rgba(255,191,0,0.6)]"></div>
-                <div className="h-10 w-px bg-primary/40 mt-2"></div>
+            <div key={item.id} data-reveal className="relative flex flex-col pt-12">
+              {/* Timeline Marker and Tether */}
+              <div className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 z-20 flex-col items-center">
+                <div className="h-6 w-6 rounded-full bg-primary border-4 border-background shadow-[0_0_15px_rgba(255,191,0,0.6)] animate-pulse"></div>
+                <div className="h-12 w-0.5 bg-gradient-to-b from-primary to-transparent mt-2"></div>
               </div>
               
               <Dialog>
                 <DialogTrigger asChild>
                   <Card className={cn(
                     "h-full bg-card/40 backdrop-blur-md border border-border/20 shadow-xl p-6 flex flex-col items-center text-center",
-                    "transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[250px] mt-4"
+                    "transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[250px]"
                   )}>
                     <CardHeader className="p-0 flex-grow">
                       <div className="flex justify-center mb-4">

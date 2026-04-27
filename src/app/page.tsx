@@ -1,3 +1,4 @@
+
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ClientLogosSection from '@/components/sections/client-logos';
@@ -82,11 +83,25 @@ export default function Home() {
     { 
       id: 'chapter-resources', 
       component: <ExclusiveResourcesCtaSection /> 
+    },
+    {
+      id: 'chapter-about',
+      component: <AboutMeCtaSection />
     }
   ];
 
   return (
     <div className="relative">
+        {/* Global Fixed Atmospheric Background */}
+        <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-0 left-1/4 h-[40rem] w-[40rem] bg-primary/20 rounded-full blur-[100px] animate-blob-2"></div>
+            <div className="absolute top-1/2 left-1/2 h-[30rem] w-[30rem] bg-accent/20 rounded-full blur-[100px] animate-blob-1"></div>
+            <div className="absolute -bottom-1/4 right-1/4 h-[35rem] w-[35rem] bg-primary/10 rounded-full blur-[100px] animate-blob-3"></div>
+            <div className="absolute bottom-0 left-1/3 h-[25rem] w-[25rem] bg-accent/10 rounded-full blur-[100px] animate-blob-4"></div>
+            <div className="absolute top-1/4 right-1/3 h-[28rem] w-[28rem] bg-primary/15 rounded-full blur-[100px] animate-blob-5"></div>
+            <div className="absolute bottom-1/3 left-1/4 h-[32rem] w-[32rem] bg-accent/15 rounded-full blur-[100px] animate-blob-6"></div>
+        </div>
+
         <HeroSection />
 
         <div className="relative z-20">
@@ -101,11 +116,8 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Unified Ground Floor: Connected About + Contact + Logos */}
-        <div id="footer-area" className="relative z-30 bg-background pt-32 pb-16 space-y-32">
-            <AnimatedSection>
-                <AboutMeCtaSection />
-            </AnimatedSection>
+        {/* Unified Ground Floor: Connected Contact + Logos */}
+        <div id="footer-area" className="relative z-30 bg-background/80 backdrop-blur-xl pt-32 pb-16 space-y-32 border-t border-border/30 shadow-[0_-50px_100px_rgba(0,0,0,0.8)]">
             <AnimatedSection>
                 <div id="contact">
                     <ContactSection />

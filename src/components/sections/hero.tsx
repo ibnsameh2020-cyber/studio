@@ -1,11 +1,15 @@
+
 "use client";
 
 import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const sentences = [
     "Most transformations fail not because of poor strategy, but because of disconnected execution.",
@@ -130,50 +134,70 @@ const SwitchingHeroText = () => {
     );
 };
 
-const FloatingRoleCard = () => (
-    <div className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
-        <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
-            <div className="bg-primary px-4 py-2">
-                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
-            </div>
-            <div className="p-4">
-                <p className="text-xs text-muted-foreground text-center leading-relaxed">
-                    Strategic Planning & PMO Advisor
-                    <span className="block my-1.5 text-primary/50">·</span>
-                    Driving Efficiency in Major Government Portfolios
-                    <span className="block my-1.5 text-primary/50">·</span>
-                    Digital Transformation & Governance
-                </p>
-            </div>
-        </div>
-    </div>
-);
-
 export default function HeroSection() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const manifestRef = useRef<HTMLDivElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const floatingCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
+
+      // Title and Subtitle exit to top
+      tl.to([titleRef.current, subtitleRef.current], {
+        y: '-100px',
+        opacity: 0,
+      }, 0);
+
+      // Manifesto card exits to top-left
+      tl.to(manifestRef.current, {
+        x: '-100px',
+        y: '-50px',
+        opacity: 0,
+      }, 0);
+
+      // Floating role card exits to top-right
+      tl.to(floatingCardRef.current, {
+        x: '100px',
+        y: '-50px',
+        opacity: 0,
+      }, 0);
+
+      // Actions exit to bottom (slower)
+      tl.to(actionsRef.current, {
+        y: '50px',
+        opacity: 0,
+      }, 0);
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-28 pb-16">
-      {/* Signature Atmospheric Background */}
-      <div aria-hidden="true" className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-1/4 h-[30rem] w-[30rem] bg-primary/20 rounded-full blur-3xl animate-blob-2"></div>
-          <div className="absolute top-1/2 left-1/2 h-[20rem] w-[20rem] bg-accent/20 rounded-full blur-3xl animate-blob-1"></div>
-          <div className="absolute -bottom-1/4 right-1/4 h-[25rem] w-[25rem] bg-primary/10 rounded-full blur-3xl animate-blob-3"></div>
-          <div className="absolute bottom-0 left-1/3 h-[20rem] w-[20rem] bg-accent/10 rounded-full blur-3xl animate-blob-4"></div>
-          <div className="absolute top-1/4 right-1/3 h-[22rem] w-[22rem] bg-primary/15 rounded-full blur-3xl animate-blob-5"></div>
-          <div className="absolute bottom-1/3 left-1/4 h-[28rem] w-[28rem] bg-accent/15 rounded-full blur-3xl animate-blob-6"></div>
-      </div>
-
+    <section ref={heroRef} id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-28 pb-16">
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
+        <h1 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
         </h1>
-        <p className="text-xl sm:text-2xl md:text-4xl text-foreground font-headline mb-8 h-10 md:h-12">
+        <p ref={subtitleRef} className="text-xl sm:text-2xl md:text-4xl text-foreground font-headline mb-8 h-10 md:h-12">
             I Bridge the Gap.
         </p>
         
-        <SwitchingHeroText />
+        <div ref={manifestRef} className="w-full">
+            <SwitchingHeroText />
+        </div>
         
-        <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div ref={actionsRef} className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="/#services">
               <Button size="lg" className="group">
                 Audit My Portfolio Strategy
@@ -188,7 +212,23 @@ export default function HeroSection() {
             </Link>
         </div>
       </div>
-      <FloatingRoleCard />
+      
+      <div ref={floatingCardRef} className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
+        <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
+            <div className="bg-primary px-4 py-2">
+                <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
+            </div>
+            <div className="p-4">
+                <p className="text-xs text-muted-foreground text-center leading-relaxed">
+                    Strategic Planning & PMO Advisor
+                    <span className="block my-1.5 text-primary/50">·</span>
+                    Driving Efficiency in Major Government Portfolios
+                    <span className="block my-1.5 text-primary/50">·</span>
+                    Digital Transformation & Governance
+                </p>
+            </div>
+        </div>
+      </div>
     </section>
   );
 }
