@@ -149,19 +149,21 @@ export default function HeroSection() {
   return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-32 pb-16">
       
-      {/* Left-Side Vertical Logo Frame (Wider and Shorter) */}
+      {/* Left-Side Vertical Logo Frame (Translucent Black Box) */}
       <div className="absolute top-1/2 -translate-y-1/2 left-8 lg:left-16 hidden lg:block z-30">
         <div className="flex flex-col items-center gap-4 mb-4">
             <p className="text-[12px] uppercase tracking-[0.2em] text-primary/80 font-bold">Trusted By</p>
         </div>
-        <div className="h-[240px] w-64 bg-card/10 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden relative">
+        {/* Wider, Shorter Frame with Translucent Black Background */}
+        <div className="h-[320px] w-64 bg-black/40 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden relative">
             {/* Masking blurs */}
-            <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-background/40 to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background/40 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/40 to-transparent z-10 pointer-events-none"></div>
             
             <div className="flex flex-col animate-marquee-scroll-down">
                 {[...sideLogos, ...sideLogos].map((logo, idx) => (
                     <div key={idx} className="h-[120px] w-full flex items-center justify-center p-3">
+                        {/* 2x Wider Yellow Translucent Squares */}
                         <div className="relative w-48 h-20 bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-xl flex items-center justify-center transition-transform hover:scale-105 duration-300 p-4">
                             <div className="relative w-full h-full">
                                 <Image

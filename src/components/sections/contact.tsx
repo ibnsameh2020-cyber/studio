@@ -128,6 +128,7 @@ export default function ContactSection() {
         </div>
         <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-5 gap-8 items-stretch">
+                {/* Borderless Discovery Card */}
                 <Card className="md:col-span-2 bg-card/20 backdrop-blur-lg border-none shadow-none p-8 flex flex-col justify-center items-center text-center">
                     <div className="flex justify-center mb-6">
                         <div className="h-24 w-24 flex items-center justify-center bg-primary/10 rounded-full shadow-[0_0_60px_0px_hsl(var(--primary)/0.5)]">
@@ -161,6 +162,7 @@ export default function ContactSection() {
                     <p className="text-xs text-muted-foreground mt-6">Priority is given to government and enterprise inquiries.</p>
                 </Card>
                 
+                {/* Borderless Consultation Form Card */}
                 <Card className="md:col-span-3 bg-card/20 backdrop-blur-lg border-none shadow-none p-8">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
