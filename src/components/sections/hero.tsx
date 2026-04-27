@@ -6,13 +6,25 @@ import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import ClientLogosSection from './client-logos';
+import Image from 'next/image';
 
 const sentences = [
     "Most transformations fail not because of poor strategy, but because of disconnected execution.",
     "As a strategic advisor for the government and healthcare sectors, I transform $120M+ portfolios from 'cost centers' into 'public value engines'.",
     "I use AI Governance, Value Engineering, and Human-Centric Leadership to bridge the gap."
 ];
+
+const sideLogos = [
+    "https://i.ibb.co/kzQmy89/70bee6de-6292-4040-bd78-4b8ed275e938-removalai-preview.png",
+    "https://i.ibb.co/pBk2bKKy/536ae902-2fc5-4679-91e6-7af31fcbfea9-removalai-preview.png",
+    "https://i.ibb.co/Rps1TB7f/rosmiman-Logo.png",
+    "https://i.ibb.co/B202P1JK/R.png",
+    "https://i.ibb.co/GvghpwsX/Method.png",
+    "https://i.ibb.co/G4MnBprK/ESG.webp",
+    "https://i.ibb.co/j9fm4yYz/Olympus-Corporation-logo-svg.png",
+    "https://i.ibb.co/DgTk9pVf/KFMC.png"
+];
+
 const DURATION = 3000; // ms
 
 const SwitchingHeroText = () => {
@@ -136,6 +148,34 @@ export default function HeroSection() {
 
   return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-32 pb-16">
+      
+      {/* Left-Side Vertical Logo Frame (2 per time) */}
+      <div className="absolute top-1/3 left-8 lg:left-16 hidden lg:block z-30">
+        <div className="flex flex-col items-center gap-2 mb-2">
+            <p className="text-[10px] uppercase tracking-widest text-primary/60 font-bold">Trusted By</p>
+        </div>
+        <div className="h-[240px] w-24 bg-card/40 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden relative">
+            {/* Masking blurs */}
+            <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-card/80 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-card/80 to-transparent z-10 pointer-events-none"></div>
+            
+            <div className="flex flex-col animate-marquee-scroll-down">
+                {[...sideLogos, ...sideLogos].map((logo, idx) => (
+                    <div key={idx} className="h-[120px] w-full flex items-center justify-center p-4">
+                        <div className="relative w-full h-full">
+                            <Image
+                                src={logo}
+                                alt="Partner Logo"
+                                fill
+                                className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                            />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </div>
+
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up flex-grow justify-center">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
@@ -164,6 +204,7 @@ export default function HeroSection() {
         </div>
       </div>
       
+      {/* Right-Side Current Role Card */}
       <div className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
         <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
             <div className="bg-primary px-4 py-2">
@@ -181,9 +222,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="relative z-20 w-full mt-24">
-          <ClientLogosSection />
-      </div>
     </section>
   );
 }

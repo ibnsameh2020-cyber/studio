@@ -179,6 +179,10 @@ export default {
           '0%': { transform: 'translateY(0)' },
           '100%': { transform: 'translateY(-50%)' },
         },
+        'marquee-scroll-down': {
+          '0%': { transform: 'translateY(-50%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -197,6 +201,7 @@ export default {
         'progress-bar': 'progress-bar 5s linear forwards',
         'marquee-scroll': 'marquee-scroll 60s linear infinite',
         'marquee-scroll-y': 'marquee-scroll-y 60s linear infinite',
+        'marquee-scroll-down': 'marquee-scroll-down 20s linear infinite',
       },
     },
   },
