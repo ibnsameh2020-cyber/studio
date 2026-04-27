@@ -92,7 +92,7 @@ export default function Home() {
 
   return (
     <div className="relative">
-        {/* Global Fixed Atmospheric Background */}
+        {/* Global Fixed Atmospheric Background - Visible everywhere including Contact */}
         <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
             <div className="absolute top-0 left-1/4 h-[40rem] w-[40rem] bg-primary/20 rounded-full blur-[100px] animate-blob-2"></div>
             <div className="absolute top-1/2 left-1/2 h-[30rem] w-[30rem] bg-accent/20 rounded-full blur-[100px] animate-blob-1"></div>
@@ -116,8 +116,8 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Unified Ground Floor: Connected Contact + Logos */}
-        <div id="footer-area" className="relative z-30 bg-background/80 backdrop-blur-xl pt-32 pb-16 space-y-32 border-t border-border/30 shadow-[0_-50px_100px_rgba(0,0,0,0.8)]">
+        {/* Unified Ground Floor: No border, Transparent to show fixed bubble bg */}
+        <div id="footer-area" className="relative z-30 bg-transparent pt-32 pb-16 space-y-32">
             <AnimatedSection>
                 <div id="contact">
                     <ContactSection />

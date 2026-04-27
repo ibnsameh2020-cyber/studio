@@ -6,10 +6,6 @@ import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const sentences = [
     "Most transformations fail not because of poor strategy, but because of disconnected execution.",
@@ -136,68 +132,22 @@ const SwitchingHeroText = () => {
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const manifestRef = useRef<HTMLDivElement>(null);
-  const actionsRef = useRef<HTMLDivElement>(null);
-  const floatingCardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
-      });
-
-      // Title and Subtitle exit to top
-      tl.to([titleRef.current, subtitleRef.current], {
-        y: '-100px',
-        opacity: 0,
-      }, 0);
-
-      // Manifesto card exits to top-left
-      tl.to(manifestRef.current, {
-        x: '-100px',
-        y: '-50px',
-        opacity: 0,
-      }, 0);
-
-      // Floating role card exits to top-right
-      tl.to(floatingCardRef.current, {
-        x: '100px',
-        y: '-50px',
-        opacity: 0,
-      }, 0);
-
-      // Actions exit to bottom (slower)
-      tl.to(actionsRef.current, {
-        y: '50px',
-        opacity: 0,
-      }, 0);
-    });
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section ref={heroRef} id="hero" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-28 pb-16">
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center animate-fade-in-up">
-        <h1 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-headline font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground">
           Strategy is Vision. Execution is Reality.
         </h1>
-        <p ref={subtitleRef} className="text-xl sm:text-2xl md:text-4xl text-foreground font-headline mb-8 h-10 md:h-12">
+        <p className="text-xl sm:text-2xl md:text-4xl text-foreground font-headline mb-8 h-10 md:h-12">
             I Bridge the Gap.
         </p>
         
-        <div ref={manifestRef} className="w-full">
+        <div className="w-full">
             <SwitchingHeroText />
         </div>
         
-        <div ref={actionsRef} className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="/#services">
               <Button size="lg" className="group">
                 Audit My Portfolio Strategy
@@ -213,7 +163,7 @@ export default function HeroSection() {
         </div>
       </div>
       
-      <div ref={floatingCardRef} className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
+      <div className="absolute top-1/3 right-8 lg:right-16 w-64 hidden lg:block z-30">
         <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
             <div className="bg-primary px-4 py-2">
                 <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>

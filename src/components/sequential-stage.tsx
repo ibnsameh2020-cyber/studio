@@ -59,16 +59,8 @@ export default function SequentialStage({ children, id, index }: SequentialStage
         });
       }
       
-      // Part 3: Hold the full view briefly
-      tl.to({}, { duration: 1.5 });
-
-      // Part 4: Content Exit (to top)
-      tl.to(contentRef.current, {
-        y: '-30vh',
-        opacity: 0,
-        ease: 'power2.in',
-        duration: 1.5
-      });
+      // Part 3: Hold the full view briefly (No Exit Animations)
+      tl.to({}, { duration: 3 });
     });
 
     return () => ctx.revert();
