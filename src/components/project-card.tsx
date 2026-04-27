@@ -1,6 +1,5 @@
-
 import type { Project } from '@/lib/types';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
@@ -36,14 +35,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 />
               </div>
             )}
-            <CardHeader>
+            <CardHeader className="pb-4">
               <Badge variant="secondary" className="mb-2 w-fit">{project.category}</Badge>
               <CardTitle className="font-headline text-base">{project.title}</CardTitle>
             </CardHeader>
-            <CardContent className="flex-grow">
-              <p className="text-xs text-muted-foreground mb-4">{project.shortDescription}</p>
-            </CardContent>
-            <CardFooter className="mt-auto">
+            <CardFooter className="mt-auto pb-6">
                 <div className="flex items-center text-sm text-primary group-hover:underline">
                     View Case Study
                     <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
