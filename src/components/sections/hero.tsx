@@ -150,22 +150,22 @@ export default function HeroSection() {
     <section ref={heroRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-32 pb-16">
       
       {/* Left-Side Vertical Logo Frame (Translucent Black Box) */}
-      <div className="absolute top-1/2 -translate-y-[40%] left-8 lg:left-16 hidden lg:block z-30">
-        <div className="h-[360px] w-64 bg-black/40 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden relative flex flex-col">
-            {/* Integrated Header Label */}
-            <div className="pt-6 pb-2 px-4 text-center">
+      <div className="absolute top-1/2 -translate-y-[15%] left-8 lg:left-16 hidden lg:block z-30">
+        <div className="h-[380px] w-64 bg-black/40 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl overflow-hidden relative flex flex-col">
+            {/* Integrated Header Label - Opaque background and higher z-index to mask logos */}
+            <div className="pt-6 pb-4 px-4 text-center bg-black/60 backdrop-blur-md z-20 border-b border-white/5">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">You are in good company</p>
             </div>
 
-            {/* Masking blurs */}
-            <div className="absolute inset-x-0 top-14 h-12 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none"></div>
+            {/* Masking blurs - positioned correctly to mask logo entry/exit points */}
+            <div className="absolute inset-x-0 top-[60px] h-12 bg-gradient-to-b from-black/60 to-transparent z-10 pointer-events-none"></div>
             <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/40 to-transparent z-10 pointer-events-none"></div>
             
-            <div className="flex-grow relative overflow-hidden">
+            <div className="flex-grow relative overflow-hidden z-0">
                 <div className="flex flex-col animate-marquee-scroll-down">
                     {[...sideLogos, ...sideLogos].map((logo, idx) => (
-                        <div key={idx} className="h-[120px] w-full flex items-center justify-center p-3">
-                            <div className="relative w-48 h-20 bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-xl flex items-center justify-center transition-transform hover:scale-105 duration-300 p-4">
+                        <div key={idx} className="h-[130px] w-full flex items-center justify-center p-3">
+                            <div className="relative w-48 h-24 bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-xl flex items-center justify-center transition-transform hover:scale-105 duration-300 p-4">
                                 <div className="relative w-full h-full">
                                     <Image
                                         src={logo}
