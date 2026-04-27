@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useRef, useEffect } from 'react';
@@ -67,9 +66,8 @@ export default function SequentialStage({ children, id, index }: SequentialStage
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative w-full" style={{ height: '300vh' }}>
+    <div ref={wrapperRef} id={id} className="relative w-full" style={{ height: '300vh' }}>
       <section 
-        id={id}
         className={cn(
           "sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-10 bg-transparent"
         )}

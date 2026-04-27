@@ -1,4 +1,3 @@
-
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ClientLogosSection from '@/components/sections/client-logos';
@@ -23,7 +22,7 @@ import AnimatedSection from '@/components/animated-section';
 export default function Home() {
   const chapters = [
     { 
-      id: 'chapter-expertise', 
+      id: 'services', 
       component: (
         <>
           <div data-reveal className="mb-12"><ExpertiseHeader /></div>
@@ -32,7 +31,7 @@ export default function Home() {
       )
     },
     { 
-      id: 'chapter-engagement', 
+      id: 'engagement', 
       component: (
         <>
           <div data-reveal className="mb-12"><EngagementHeader /></div>
@@ -41,7 +40,7 @@ export default function Home() {
       )
     },
     { 
-      id: 'chapter-certificates', 
+      id: 'certificates-section', 
       component: (
         <>
           <div data-reveal className="mb-6"><CertificatesHeader /></div>
@@ -50,7 +49,7 @@ export default function Home() {
       )
     },
     { 
-      id: 'chapter-success-stories', 
+      id: 'case-studies', 
       component: (
         <>
           <div data-reveal className="mb-6"><ProjectsHeader /></div>
@@ -59,7 +58,7 @@ export default function Home() {
       )
     },
     { 
-      id: 'chapter-global', 
+      id: 'global', 
       component: (
         <>
           <div data-reveal className="mb-12"><GlobalExpertiseHeader /></div>
@@ -68,7 +67,7 @@ export default function Home() {
       )
     },
     { 
-      id: 'chapter-experience', 
+      id: 'experience', 
       component: (
         <>
           <div data-reveal className="mb-4"><ExperienceHeader /></div>
@@ -77,15 +76,15 @@ export default function Home() {
       )
     },
     { 
-      id: 'chapter-insights', 
+      id: 'insights', 
       component: <InsightsSection /> 
     },
     { 
-      id: 'chapter-resources', 
+      id: 'exclusive-resources-cta', 
       component: <ExclusiveResourcesCtaSection /> 
     },
     {
-      id: 'chapter-about',
+      id: 'about-cta',
       component: <AboutMeCtaSection />
     }
   ];
