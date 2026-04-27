@@ -1,7 +1,8 @@
+
 "use client";
 
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, BrainCircuit, ShieldQuestion, GanttChartSquare } from 'lucide-react';
+import { Briefcase, BrainCircuit, ShieldQuestion, GanttChartSquare, Maximize2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
@@ -50,7 +51,7 @@ export default function ServicesSection() {
           <div key={index} className="flex-1 min-w-[240px] max-w-[320px]" data-reveal>
             <Dialog>
               <DialogTrigger asChild>
-                <Card className="h-full bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[200px] justify-center">
+                <Card className="h-full bg-card/30 backdrop-blur-sm border border-border/20 shadow-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:border-primary/50 hover:shadow-2xl cursor-pointer group min-h-[220px] justify-center relative overflow-hidden">
                   <div className="mb-4 text-primary transition-transform duration-300 group-hover:scale-110">
                     {service.icon}
                   </div>
@@ -59,6 +60,12 @@ export default function ServicesSection() {
                       {service.title}
                     </CardTitle>
                   </CardHeader>
+                  
+                  {/* Revealable Interaction Hint */}
+                  <div className="mt-4 flex items-center text-[10px] font-bold text-primary uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    Learn More
+                    <Maximize2 className="w-3 h-3 ml-2" />
+                  </div>
                 </Card>
               </DialogTrigger>
               <DialogContent className="sm:max-w-2xl bg-background/95 backdrop-blur-xl border-primary/20">
