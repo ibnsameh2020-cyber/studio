@@ -228,36 +228,34 @@ export default function ClientLogosSection() {
     }, []);
 
     return (
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-12">
-            <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 shadow-xl max-w-7xl mx-auto" data-reveal>
-                <h4 className="text-center text-xl md:text-3xl font-headline font-semibold mb-12">You are in good company.</h4>
-                
-                {/* Desktop: Animated Marquee */}
-                <div 
-                    className="hidden md:block w-full overflow-hidden"
-                    style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
-                >
-                    <div className="flex w-fit animate-marquee-scroll hover:[animation-play-state:paused]">
-                        {[...clientLogos, ...clientLogos].map((client, index) => (
-                            <div key={`${client.name}-d-${index}`} className="flex-shrink-0 mx-4">
-                                <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-2xl shadow-primary/10 flex items-center justify-center h-40 w-64 p-6">
-                                    {client.logo}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                
-                {/* Mobile: JS-powered auto-scroll */}
-                <div ref={mobileLogosRef} className="md:hidden w-full overflow-x-auto flex space-x-4">
+        <div className="w-full" data-reveal>
+            <h4 className="text-center text-xl md:text-3xl font-headline font-semibold mb-12">You are in good company.</h4>
+            
+            {/* Desktop: Animated Marquee */}
+            <div 
+                className="hidden md:block w-full overflow-hidden"
+                style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
+            >
+                <div className="flex w-fit animate-marquee-scroll hover:[animation-play-state:paused]">
                     {[...clientLogos, ...clientLogos].map((client, index) => (
-                        <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
+                        <div key={`${client.name}-d-${index}`} className="flex-shrink-0 mx-4">
                             <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-2xl shadow-primary/10 flex items-center justify-center h-40 w-64 p-6">
                                 {client.logo}
                             </div>
                         </div>
                     ))}
                 </div>
+            </div>
+            
+            {/* Mobile: JS-powered auto-scroll */}
+            <div ref={mobileLogosRef} className="md:hidden w-full overflow-x-auto flex space-x-4">
+                {[...clientLogos, ...clientLogos].map((client, index) => (
+                    <div key={`${client.name}-m-${index}`} className="flex-shrink-0">
+                        <div title={client.name} className="bg-primary/30 backdrop-blur-sm border border-primary/50 rounded-2xl shadow-2xl shadow-primary/10 flex items-center justify-center h-40 w-64 p-6">
+                            {client.logo}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

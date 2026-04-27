@@ -62,7 +62,7 @@ export default function InsightsSection() {
   const recentArticles = articles ? articles.slice(0, 3) : [];
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 relative py-20 overflow-hidden">
+    <div className="w-full px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Restored Grid Background */}
         <div className="absolute inset-0 z-[-1] opacity-30" 
              style={{ 

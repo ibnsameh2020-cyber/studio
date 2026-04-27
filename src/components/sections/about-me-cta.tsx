@@ -6,14 +6,13 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import AnimatedSection from '@/components/animated-section';
 
 export default function AboutMeCtaSection() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'about-portrait');
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-card/30 backdrop-blur-sm border border-border/20 rounded-2xl p-8 md:p-12 shadow-xl grid md:grid-cols-2 gap-12 items-center" data-reveal>
+      <div className="grid md:grid-cols-2 gap-12 items-center" data-reveal>
         <div className="space-y-6">
           <h2 className="text-3xl md:text-5xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary-foreground inline-block">
             Beyond the Portfolio
