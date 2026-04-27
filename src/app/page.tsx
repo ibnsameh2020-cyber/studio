@@ -44,7 +44,7 @@ export default function Home() {
       id: 'chapter-certificates', 
       component: (
         <>
-          <div data-reveal className="mb-12"><CertificatesHeader /></div>
+          <div data-reveal className="mb-6"><CertificatesHeader /></div>
           <CertificatesSection />
         </>
       )
