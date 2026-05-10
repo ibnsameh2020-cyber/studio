@@ -13,7 +13,7 @@ import NavScrollHint from '@/components/shared/nav-scroll-hint';
 
 const siteTitle = 'Sameh Insights | Strategic Digital PMO & Portfolio Governance';
 const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.';
-const siteImage = 'https://i.ibb.co/PsNXTw7y/Untitled-design-1.webp';
+const siteImage = 'https://i.ibb.co/BK4DtBc5/Untitled-design-4.png';
 
 export const metadata: Metadata = {
   title: siteTitle,
