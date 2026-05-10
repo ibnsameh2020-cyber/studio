@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
@@ -7,6 +8,7 @@ import { ChevronDown } from 'lucide-react';
 /**
  * A minimal overlay that prompts the user to scroll down.
  * Only appears when a navigation item is clicked and the automatic scroll finishes.
+ * It remains visible until the user begins a manual scroll.
  */
 export default function NavScrollHint() {
   const [show, setShow] = useState(false);
@@ -24,23 +26,20 @@ export default function NavScrollHint() {
 
     const handleScroll = () => {
       if (!isNavigatingRef.current) {
-        // If user scrolls manually while hint is showing, hide it instantly
+        // If user scrolls manually while hint is showing, hide it
         if (show) setShow(false);
         return;
       }
 
-      // If we are currently navigating, we use a debounce to detect when the scroll stops
+      // If we are currently in an auto-scroll navigation, use debounce to detect stop
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
       
       scrollTimeoutRef.current = setTimeout(() => {
-        // Auto-scroll has likely stopped
+        // Auto-scroll has stopped
         isNavigatingRef.current = false;
         setShow(true);
-        
-        // Auto-hide after 4 seconds of visibility
-        const hideTimer = setTimeout(() => setShow(false), 4000);
-        return () => clearTimeout(hideTimer);
-      }, 150); // 150ms of no scroll events indicates the movement finished
+        // Persistent hint: We do not set an auto-hide timer here.
+      }, 150); 
     };
 
     window.addEventListener('nav-item-clicked', handleNavClick);

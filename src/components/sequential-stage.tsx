@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useRef, useEffect } from 'react';
@@ -31,14 +32,14 @@ export default function SequentialStage({ children, id, index }: SequentialStage
         }
       });
 
-      // Part 1: Content Entrance (Faster & snappier for navigation landing)
+      // Part 1: Content Entrance (Instant visibility for navigation landing)
       tl.fromTo(contentRef.current,
-        { y: '10vh', opacity: 0 },
+        { y: '5vh', opacity: 0 },
         { 
           y: 0, 
           opacity: 1,
           ease: 'power2.out',
-          duration: 0.8 // Significantly shorter to reveal title instantly on landing
+          duration: 0.2 // Near-instant to ensure title is seen immediately upon anchor land
         }
       );
 
