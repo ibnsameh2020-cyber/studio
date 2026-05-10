@@ -1,4 +1,3 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import { cn } from "@/lib/utils";
@@ -10,6 +9,7 @@ import { ThemeProvider } from '@/components/shared/theme-provider';
 import BackToTopButton from '@/components/shared/back-to-top-button';
 import FloatingCallButton from '@/components/shared/floating-call-button';
 import SmoothScroll from '@/components/shared/smooth-scroll';
+import NavScrollHint from '@/components/shared/nav-scroll-hint';
 
 const siteTitle = 'Sameh Insights | Strategic Digital PMO & Portfolio Governance';
 const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.';
@@ -63,6 +63,7 @@ export default function RootLayout({
           <FirebaseClientProvider>
             <SmoothScroll>
               <Header />
+              <NavScrollHint />
               <main className="relative">
                 <div className="fixed inset-0 bg-background/90 z-[-1]"></div>
                 {children}

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -161,6 +160,13 @@ export default function Header() {
     return name.charAt(0).toUpperCase();
   };
 
+  const handleNavItemClick = (href: string) => {
+    handleMenuLinkClick();
+    if (href.startsWith('/#')) {
+        window.dispatchEvent(new CustomEvent('nav-item-clicked'));
+    }
+  };
+
   return (
     <>
       <header
@@ -170,7 +176,7 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-start justify-center">
             <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6">
-                <Link href="/" onClick={handleMenuLinkClick} className="flex items-center gap-2 text-lg font-headline font-bold">
+                <Link href="/" onClick={() => handleNavItemClick('/')} className="flex items-center gap-2 text-lg font-headline font-bold">
                     <Lightbulb className="w-6 h-6 text-primary" />
                     <span>Sameh insights</span>
                 </Link>
@@ -187,7 +193,7 @@ export default function Header() {
                       <Link
                         key={item.id}
                         href={item.href}
-                        onClick={handleMenuLinkClick}
+                        onClick={() => handleNavItemClick(item.href)}
                         className={cn(
                           'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
                           'h-12',
@@ -409,7 +415,7 @@ export default function Header() {
                     <Link
                         key={item.id}
                         href={item.href}
-                        onClick={handleMenuLinkClick}
+                        onClick={() => handleNavItemClick(item.href)}
                         className={cn(
                         'text-xl font-medium transition-colors hover:text-primary w-full text-center py-2 rounded-md flex items-center justify-center gap-2',
                         isLinkActive ? 'bg-primary text-primary-foreground' : 'text-foreground'
