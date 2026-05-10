@@ -37,6 +37,13 @@ export default function NavScrollHint() {
       scrollTimeoutRef.current = setTimeout(() => {
         // Auto-scroll has stopped
         isNavigatingRef.current = false;
+        
+        // Exclude the Contact section specifically
+        if (window.location.hash === '#contact') {
+            setShow(false);
+            return;
+        }
+
         setShow(true);
         // Persistent hint: We do not set an auto-hide timer here.
       }, 150); 
