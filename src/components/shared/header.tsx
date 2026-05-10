@@ -162,7 +162,7 @@ export default function Header() {
 
   const handleNavItemClick = (href: string) => {
     handleMenuLinkClick();
-    if (href.startsWith('/#')) {
+    if (href.includes('#')) {
         window.dispatchEvent(new CustomEvent('nav-item-clicked'));
     }
   };

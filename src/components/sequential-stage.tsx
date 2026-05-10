@@ -31,14 +31,14 @@ export default function SequentialStage({ children, id, index }: SequentialStage
         }
       });
 
-      // Part 1: Content Entrance (from bottom)
+      // Part 1: Content Entrance (Faster & snappier for navigation landing)
       tl.fromTo(contentRef.current,
-        { y: '50vh', opacity: 0 },
+        { y: '10vh', opacity: 0 },
         { 
           y: 0, 
           opacity: 1,
           ease: 'power2.out',
-          duration: 1.5
+          duration: 0.8 // Significantly shorter to reveal title instantly on landing
         }
       );
 
@@ -46,19 +46,19 @@ export default function SequentialStage({ children, id, index }: SequentialStage
       if (revealItems && revealItems.length > 0) {
         revealItems.forEach((item) => {
           tl.fromTo(item,
-            { y: '20vh', opacity: 0 },
+            { y: '15vh', opacity: 0 },
             { 
               y: 0, 
               opacity: 1, 
               ease: 'power2.out',
               duration: 2.5,
             },
-            '>-1' // Significant overlap for a smooth continuous flow
+            '>-0.5' // Overlap for continuous flow
           );
         });
       }
       
-      // Part 3: Hold the full view briefly (No Exit Animations)
+      // Part 3: Hold the full view briefly
       tl.to({}, { duration: 3 });
     });
 
