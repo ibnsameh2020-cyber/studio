@@ -143,7 +143,10 @@ export default function Header() {
                 <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold shrink-0">
                     <Lightbulb className="w-6 h-6 text-primary" />
                     <span className="hidden sm:inline-block">Sameh insights</span>
-                    <span className="sm:hidden">Sameh</span>
+                    <div className="sm:hidden flex flex-col leading-[0.9] items-start">
+                        <span className="text-base">Sameh</span>
+                        <span className="text-[10px] opacity-80 -mt-1">Insights</span>
+                    </div>
                 </Link>
                 
                 {/* Center Section Display - Hidden on Mobile, Flex on Desktop */}
