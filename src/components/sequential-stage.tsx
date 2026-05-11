@@ -20,7 +20,6 @@ export default function SequentialStage({ children, id, index }: SequentialStage
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Find all elements marked for sequential reveal
       const revealItems = contentRef.current?.querySelectorAll('[data-reveal]');
       
       const tl = gsap.timeline({
@@ -37,18 +36,16 @@ export default function SequentialStage({ children, id, index }: SequentialStage
         }
       });
 
-      // Part 1: Content Entrance (Instant visibility for navigation landing)
       tl.fromTo(contentRef.current,
         { y: '5vh', opacity: 0 },
         { 
           y: 0, 
           opacity: 1,
           ease: 'power2.out',
-          duration: 0.2 // Near-instant to ensure title is seen immediately upon anchor land
+          duration: 0.2
         }
       );
 
-      // Part 2: Cinematic One-by-One Reveal (Stalking)
       if (revealItems && revealItems.length > 0) {
         revealItems.forEach((item) => {
           tl.fromTo(item,
@@ -59,12 +56,11 @@ export default function SequentialStage({ children, id, index }: SequentialStage
               ease: 'power2.out',
               duration: 2.5,
             },
-            '>-0.5' // Overlap for continuous flow
+            '>-0.5'
           );
         });
       }
       
-      // Part 3: Hold the full view briefly
       tl.to({}, { duration: 3 });
     });
 

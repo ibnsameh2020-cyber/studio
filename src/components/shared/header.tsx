@@ -143,13 +143,13 @@ export default function Header() {
                 <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold shrink-0">
                     <Lightbulb className="w-6 h-6 text-primary" />
                     <span className="hidden sm:inline-block">Sameh insights</span>
-                    <div className="sm:hidden flex flex-col leading-[0.9] items-start">
-                        <span className="text-base">Sameh</span>
-                        <span className="text-[10px] opacity-80 -mt-1">Insights</span>
+                    <div className="sm:hidden flex flex-col leading-[0.85] items-start">
+                        <span>Sameh</span>
+                        <span>insights</span>
                     </div>
                 </Link>
                 
-                {/* Center Section Display - Hidden on Mobile, Flex on Desktop */}
+                {/* Center Section Display - Desktop Only */}
                 <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 pointer-events-none transition-all duration-500 overflow-hidden max-w-[50%]">
                   {currentSection ? (
                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-500">
@@ -171,7 +171,7 @@ export default function Header() {
                                     href="/admin"
                                     className={cn(
                                         'group/admin-btn text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
-                                        'h-10 w-10', // Fixed size for mobile
+                                        'h-10 w-10',
                                         pathname.startsWith('/admin')
                                         ? 'bg-primary text-primary-foreground md:w-auto md:px-4 md:gap-1.5'
                                         : 'border border-primary/30 text-primary md:hover:w-auto md:hover:px-4 md:hover:gap-1.5 md:hover:bg-primary/10 md:hover:border-primary/80'
@@ -237,7 +237,7 @@ export default function Header() {
                         )}
                         aria-label="Notifications"
                     >
-                        <Bell className="h-6 h-6" />
+                        <Bell className="h-6 w-6" />
                         {newItems.length > 0 && (
                              <span className="absolute top-4 right-4 flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>

@@ -31,7 +31,6 @@ export default function Home() {
   const contactRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Observer for contact section to activate the 'Contact' label in header
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -45,7 +44,6 @@ export default function Home() {
       observer.observe(contactRef.current);
     }
 
-    // ScrollTrigger to clear active section when returning to Hero (top of page)
     const heroTrigger = ScrollTrigger.create({
       trigger: "#hero",
       start: "top top",
@@ -53,7 +51,6 @@ export default function Home() {
       onEnterBack: () => {
         window.dispatchEvent(new CustomEvent('section-active', { detail: { sectionId: null } }));
       },
-      // Ensure it clears if the page loads or refreshes at the very top
       onRefresh: (self) => {
         if (self.progress === 0 && self.direction === -1) {
           window.dispatchEvent(new CustomEvent('section-active', { detail: { sectionId: null } }));
@@ -138,7 +135,6 @@ export default function Home() {
 
   return (
     <div className="relative">
-        {/* Global Fixed Atmospheric Background - Visible everywhere including Contact */}
         <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
             <div className="absolute top-0 left-1/4 h-[40rem] w-[40rem] bg-primary/20 rounded-full blur-[100px] animate-blob-2"></div>
             <div className="absolute top-1/2 left-1/2 h-[30rem] w-[30rem] bg-accent/20 rounded-full blur-[100px] animate-blob-1"></div>
@@ -162,7 +158,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Unified Ground Floor: No border, Transparent to show fixed bubble bg */}
         <div id="footer-area" className="relative z-30 bg-transparent pt-32 pb-16 space-y-32">
             <AnimatedSection>
                 <div id="contact" ref={contactRef}>
