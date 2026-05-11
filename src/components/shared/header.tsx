@@ -23,8 +23,6 @@ import { Skeleton } from '../ui/skeleton';
 import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
-const sectionIds = ['hero', 'services', 'certificates-section', 'case-studies', 'experience', 'insights', 'exclusive-resources-cta', 'about-cta', 'contact'];
-
 type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
 
 export default function Header() {
@@ -32,8 +30,6 @@ export default function Header() {
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-
-  const [activeSection, setActiveSection] = useState('hero');
 
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
@@ -44,43 +40,6 @@ export default function Header() {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
-
-  useEffect(() => {
-    if (pathname !== '/') {
-      setActiveSection('');
-      return;
-    }
-
-    const handleScroll = () => {
-      let currentSection = 'hero';
-      
-      const viewportMidpoint = window.innerHeight / 2;
-
-      for (const id of sectionIds) {
-        const element = document.getElementById(id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= viewportMidpoint && rect.bottom >= viewportMidpoint) {
-            currentSection = id;
-            break; 
-          }
-        }
-      }
-      
-      if (window.scrollY < 200) {
-        currentSection = 'hero';
-      }
-
-      setActiveSection(currentSection);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [pathname]);
 
   useEffect(() => {
     if (notificationsLoading) return;
@@ -130,12 +89,6 @@ export default function Header() {
     return name.charAt(0).toUpperCase();
   };
 
-  const handleNavItemClick = (href: string) => {
-    if (href.includes('#')) {
-        window.dispatchEvent(new CustomEvent('nav-item-clicked'));
-    }
-  };
-
   return (
     <>
       <header
@@ -145,9 +98,9 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-start justify-center">
             <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6">
-                <Link href="/" onClick={() => handleNavItemClick('/')} className="flex items-center gap-2 text-lg font-headline font-bold">
+                <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
                     <Lightbulb className="w-6 h-6 text-primary" />
-                    <span>Sameh insights</span>
+                    <span className="hidden sm:inline">Sameh insights</span>
                 </Link>
                 
                 <div className="flex-grow" />
@@ -162,15 +115,15 @@ export default function Header() {
                                     href="/admin"
                                     className={cn(
                                         'group/admin-btn text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
-                                        'h-10',
+                                        'h-10 w-10', // Fixed size for mobile
                                         pathname.startsWith('/admin')
-                                        ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
-                                        : 'w-10 border border-primary/30 text-primary hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-primary/10 hover:border-primary/80'
+                                        ? 'bg-primary text-primary-foreground md:w-auto md:px-4 md:gap-1.5'
+                                        : 'border border-primary/30 text-primary md:hover:w-auto md:hover:px-4 md:hover:gap-1.5 md:hover:bg-primary/10 md:hover:border-primary/80'
                                     )}
                                 >
                                     <ShieldCheck className="h-5 w-5" />
                                     <span className={cn(
-                                        'transition-opacity duration-200',
+                                        'transition-opacity duration-200 hidden md:inline-block',
                                         pathname.startsWith('/admin')
                                         ? 'opacity-100 w-auto'
                                         : 'opacity-0 w-0 group-hover/admin-btn:opacity-100 group-hover/admin-btn:w-auto'
@@ -280,3 +233,4 @@ export default function Header() {
     </>
   );
 }
+
