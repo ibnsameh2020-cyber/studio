@@ -1,3 +1,6 @@
+
+'use client';
+
 import AboutMeCtaSection from '@/components/sections/about-me-cta';
 import ContactSection from '@/components/sections/contact';
 import ClientLogosSection from '@/components/sections/client-logos';
@@ -18,8 +21,28 @@ import GlobalExpertiseHeader from '@/components/sections/global-expertise-header
 import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-competencies';
 import SequentialStage from '@/components/sequential-stage';
 import AnimatedSection from '@/components/animated-section';
+import { useEffect, useRef } from 'react';
 
 export default function Home() {
+  const contactRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.dispatchEvent(new CustomEvent('section-active', { detail: { sectionId: 'contact' } }));
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (contactRef.current) {
+      observer.observe(contactRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const chapters = [
     { 
       id: 'services', 
@@ -118,7 +141,7 @@ export default function Home() {
         {/* Unified Ground Floor: No border, Transparent to show fixed bubble bg */}
         <div id="footer-area" className="relative z-30 bg-transparent pt-32 pb-16 space-y-32">
             <AnimatedSection>
-                <div id="contact">
+                <div id="contact" ref={contactRef}>
                     <ContactSection />
                 </div>
             </AnimatedSection>

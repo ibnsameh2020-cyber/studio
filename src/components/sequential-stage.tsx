@@ -29,6 +29,11 @@ export default function SequentialStage({ children, id, index }: SequentialStage
           start: 'top top',
           end: 'bottom bottom',
           scrub: 1,
+          onToggle: (self) => {
+            if (self.isActive) {
+              window.dispatchEvent(new CustomEvent('section-active', { detail: { sectionId: id } }));
+            }
+          }
         }
       });
 
@@ -64,7 +69,7 @@ export default function SequentialStage({ children, id, index }: SequentialStage
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [id]);
 
   return (
     <div ref={wrapperRef} id={id} className="relative w-full" style={{ height: '300vh' }}>

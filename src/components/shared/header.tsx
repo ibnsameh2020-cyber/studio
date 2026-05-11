@@ -4,7 +4,25 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Lightbulb, ShieldCheck, Sun, Moon, Bell, Loader2, Settings, LogOut } from 'lucide-react';
+import { 
+  Lightbulb, 
+  ShieldCheck, 
+  Sun, 
+  Moon, 
+  Bell, 
+  Loader2, 
+  Settings, 
+  LogOut,
+  Briefcase,
+  Users,
+  Trophy,
+  Globe,
+  Milestone,
+  BookOpen,
+  User,
+  Mail,
+  Handshake
+} from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser, useCollection } from '@/firebase';
 import type { Article, Resource } from '@/lib/types';
@@ -25,6 +43,19 @@ import { usePathname } from 'next/navigation';
 
 type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
 
+const sectionMetadata: Record<string, { title: string; icon: React.ReactNode }> = {
+  'services': { title: 'Expertise', icon: <Briefcase className="w-4 h-4" /> },
+  'engagement': { title: 'Engagement', icon: <Handshake className="w-4 h-4" /> },
+  'certificates-section': { title: 'Governance', icon: <ShieldCheck className="w-4 h-4" /> },
+  'case-studies': { title: 'Impact', icon: <Trophy className="w-4 h-4" /> },
+  'global': { title: 'Reach', icon: <Globe className="w-4 h-4" /> },
+  'experience': { title: 'Journey', icon: <Milestone className="w-4 h-4" /> },
+  'insights': { title: 'Insights', icon: <Lightbulb className="w-4 h-4" /> },
+  'exclusive-resources-cta': { title: 'Resources', icon: <BookOpen className="w-4 h-4" /> },
+  'about-cta': { title: 'About', icon: <User className="w-4 h-4" /> },
+  'contact': { title: 'Contact', icon: <Mail className="w-4 h-4" /> },
+};
+
 export default function Header() {
   const { user, loading, isAdmin, isAnonymous } = useUser();
   const { signOut } = useAuth();
@@ -34,12 +65,22 @@ export default function Header() {
   const { data: articles, loading: articlesLoading } = useCollection<Article>('articles');
   const { data: resources, loading: resourcesLoading } = useCollection<Resource>('resources');
 
+  const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
   const [newItems, setNewItems] = useState<NotificationItem[]>([]);
   const notificationsLoading = articlesLoading || resourcesLoading;
   
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  useEffect(() => {
+    const handleSectionActive = (e: any) => {
+      setActiveSectionId(e.detail.sectionId);
+    };
+
+    window.addEventListener('section-active', handleSectionActive);
+    return () => window.removeEventListener('section-active', handleSectionActive);
+  }, []);
 
   useEffect(() => {
     if (notificationsLoading) return;
@@ -89,6 +130,8 @@ export default function Header() {
     return name.charAt(0).toUpperCase();
   };
 
+  const currentSection = activeSectionId ? sectionMetadata[activeSectionId] : null;
+
   return (
     <>
       <header
@@ -97,15 +140,26 @@ export default function Header() {
         )}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-start justify-center">
-            <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6">
-                <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
+            <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6 relative">
+                <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold shrink-0">
                     <Lightbulb className="w-6 h-6 text-primary" />
-                    <span>Sameh insights</span>
+                    <span className="hidden sm:inline-block">Sameh insights</span>
+                    <span className="sm:hidden">Sameh</span>
                 </Link>
                 
-                <div className="flex-grow" />
+                {/* Center Section Display */}
+                <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none transition-all duration-500 overflow-hidden max-w-[40%] md:max-w-[50%]">
+                  {currentSection ? (
+                    <div className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                      <div className="text-primary">{currentSection.icon}</div>
+                      <span className="font-headline font-bold text-xs md:text-sm uppercase tracking-widest truncate">
+                        {currentSection.title}
+                      </span>
+                    </div>
+                  ) : null}
+                </div>
                 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 shrink-0">
                     {loading ? (
                     <Skeleton className="h-10 w-10 rounded-full" />
                     ) : (user && !isAnonymous) ? (
