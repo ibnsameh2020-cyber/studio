@@ -100,7 +100,7 @@ export default function Header() {
             <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6">
                 <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold">
                     <Lightbulb className="w-6 h-6 text-primary" />
-                    <span className="hidden sm:inline">Sameh insights</span>
+                    <span>Sameh insights</span>
                 </Link>
                 
                 <div className="flex-grow" />
@@ -233,4 +233,3 @@ export default function Header() {
     </>
   );
 }
-
