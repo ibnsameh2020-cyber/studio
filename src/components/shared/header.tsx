@@ -14,14 +14,13 @@ import {
   Settings, 
   LogOut,
   Briefcase,
-  Users,
-  Trophy,
   Globe,
   Milestone,
   BookOpen,
   User,
   Mail,
-  Handshake
+  Handshake,
+  Trophy
 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth, useUser, useCollection } from '@/firebase';
@@ -40,8 +39,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
-
-type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
 
 const sectionMetadata: Record<string, { title: string; icon: React.ReactNode }> = {
   'services': { title: 'Expertise', icon: <Briefcase className="w-4 h-4" /> },
@@ -132,6 +129,8 @@ export default function Header() {
 
   const currentSection = activeSectionId ? sectionMetadata[activeSectionId] : null;
 
+  type NotificationItem = (Article & { itemType: 'article' }) | (Resource & { itemType: 'resource' });
+
   return (
     <>
       <header
@@ -147,8 +146,8 @@ export default function Header() {
                     <span className="sm:hidden">Sameh</span>
                 </Link>
                 
-                {/* Center Section Display */}
-                <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none transition-all duration-500 overflow-hidden max-w-[40%] md:max-w-[50%]">
+                {/* Center Section Display - Hidden on Mobile, Flex on Desktop */}
+                <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 pointer-events-none transition-all duration-500 overflow-hidden max-w-[50%]">
                   {currentSection ? (
                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-500">
                       <div className="text-primary">{currentSection.icon}</div>
