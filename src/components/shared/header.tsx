@@ -181,40 +181,8 @@ export default function Header() {
                     <span>Sameh insights</span>
                 </Link>
                 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center space-x-2">
-                  {navItems.map((item) => {
-                    const isPageLink = !item.href.startsWith('/#') && item.href !== '/';
-                    const isLinkActive = isPageLink
-                      ? pathname === item.href
-                      : activeSection === item.id;
-
-                    return (
-                      <Link
-                        key={item.id}
-                        href={item.href}
-                        onClick={() => handleNavItemClick(item.href)}
-                        className={cn(
-                          'group/nav-item text-sm font-medium transition-all duration-300 ease-in-out rounded-full whitespace-nowrap flex items-center justify-center',
-                          'h-12',
-                           isLinkActive
-                           ? 'w-auto px-4 gap-1.5 bg-primary text-primary-foreground'
-                           : 'w-12 text-muted-foreground hover:w-auto hover:px-4 hover:gap-1.5 hover:bg-accent/50 hover:text-foreground'
-                        )}
-                      >
-                        {item.icon}
-                        <span className={cn(
-                          'transition-opacity duration-200',
-                          isLinkActive
-                          ? 'opacity-100 w-auto'
-                          : 'opacity-0 w-0 group-hover/nav-item:opacity-100 group-hover/nav-item:w-auto'
-                        )}>
-                          {item.label}
-                        </span>
-                      </Link>
-                    )
-                  })}
-                </nav>
+                {/* Desktop Nav links removed as per request */}
+                <div className="hidden md:flex flex-grow" />
                 
                 <div className="hidden md:flex items-center gap-1">
                     {loading ? (
