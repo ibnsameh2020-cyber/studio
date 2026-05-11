@@ -22,11 +22,16 @@ import GlobalExpertiseCompetencies from '@/components/sections/global-expertise-
 import SequentialStage from '@/components/sequential-stage';
 import AnimatedSection from '@/components/animated-section';
 import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const contactRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Observer for contact section to activate the 'Contact' label in header
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -40,7 +45,26 @@ export default function Home() {
       observer.observe(contactRef.current);
     }
 
-    return () => observer.disconnect();
+    // ScrollTrigger to clear active section when returning to Hero (top of page)
+    const heroTrigger = ScrollTrigger.create({
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      onEnterBack: () => {
+        window.dispatchEvent(new CustomEvent('section-active', { detail: { sectionId: null } }));
+      },
+      // Ensure it clears if the page loads or refreshes at the very top
+      onRefresh: (self) => {
+        if (self.progress === 0 && self.direction === -1) {
+          window.dispatchEvent(new CustomEvent('section-active', { detail: { sectionId: null } }));
+        }
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+      heroTrigger.kill();
+    };
   }, []);
 
   const chapters = [
