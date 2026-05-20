@@ -12,7 +12,7 @@ import SmoothScroll from '@/components/shared/smooth-scroll';
 import NavScrollHint from '@/components/shared/nav-scroll-hint';
 
 const siteTitle = 'Sameh Insights | Strategic Digital PMO & Portfolio Governance';
-const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.';
+const siteDescription = 'Bridging the Gap Between Strategy and Execution with AI-Driven Insight. Professional portfolio of Eng. Sameh Moussa.';
 const siteImage = 'https://i.ibb.co/BK4DtBc5/Untitled-design-4.png';
 const siteUrl = 'https://samehinsights.com';
 
@@ -65,8 +65,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
-        {/* Force explicit OG Image for stubborn platforms */}
+        {/* Force explicit OG Image for platforms like LinkedIn/WhatsApp */}
         <meta property="og:image" content={siteImage} />
+        <meta property="og:image:secure_url" content={siteImage} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="twitter:image" content={siteImage} />
       </head>
       <body className={cn("font-body antialiased overflow-x-hidden")}>
