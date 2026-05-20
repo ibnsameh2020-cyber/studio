@@ -1,3 +1,4 @@
+
 import type { Certificate } from '@/lib/types';
 
 export const certificates: Certificate[] = [
@@ -10,10 +11,11 @@ export const certificates: Certificate[] = [
     url: 'https://instituteprojectmanagement.com/blog/the-algorithmic-pmo/',
   },
   {
-    title: 'KPI Professional (KPIP)',
-    issuer: 'Balanced Scorecard Institute',
+    title: 'Sameh Moussa LinkedIn',
+    issuer: 'LinkedIn',
     category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-kpip',
+    imagePlaceholderId: '',
+    isLinkedInBadge: true,
   },
   {
     title: 'ITIL 4 Leader: Digital & IT Strategy',

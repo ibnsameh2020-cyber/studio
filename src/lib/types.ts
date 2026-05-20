@@ -63,4 +63,5 @@ export type Certificate = {
   category: 'Strategic Leadership & Governance' | 'Technical Licenses & Authorizations' | 'Digital Innovation & Analytics' | 'Professional Endorsements';
   imagePlaceholderId: string;
   url?: string;
+  isLinkedInBadge?: boolean;
 };

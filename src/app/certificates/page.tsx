@@ -13,6 +13,7 @@ import { Search, ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
+import LinkedInBadge from '@/components/linkedin-badge';
 
 const certificateCategories: Certificate['category'][] = [
     'Strategic Leadership & Governance',
@@ -35,6 +36,10 @@ const topCertBadges = [
 ];
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
+    if (certificate.isLinkedInBadge) {
+        return <LinkedInBadge />;
+    }
+
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
     
     const CardInner = (
@@ -158,7 +163,9 @@ export default function CertificatesPage() {
                         <h2 className="text-2xl font-headline font-bold text-center mb-4">Search Results</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {filteredCertificates.map(cert => (
-                                <CertificateCard key={cert.title} certificate={cert} />
+                                <div key={cert.title}>
+                                    <CertificateCard certificate={cert} />
+                                </div>
                             ))}
                         </div>
                         {filteredCertificates.length === 0 && (
@@ -182,7 +189,9 @@ export default function CertificatesPage() {
                         <TabsContent value="View All">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {certificates.map(cert => (
-                                    <CertificateCard key={cert.title} certificate={cert} />
+                                    <div key={cert.title}>
+                                        <CertificateCard certificate={cert} />
+                                    </div>
                                 ))}
                             </div>
                         </TabsContent>
@@ -193,7 +202,9 @@ export default function CertificatesPage() {
                                     {certificates
                                         .filter(cert => cert.category === category)
                                         .map(cert => (
-                                            <CertificateCard key={cert.title} certificate={cert} />
+                                            <div key={cert.title}>
+                                                <CertificateCard certificate={cert} />
+                                            </div>
                                     ))}
                                 </div>
                             </TabsContent>
