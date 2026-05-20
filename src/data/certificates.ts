@@ -22,7 +22,6 @@ export const certificates: Certificate[] = [
     imagePlaceholderId: 'cert-itil',
   },
   // Other Certificates
-  // Strategic Leadership & Governance
   {
     title: 'Certified PMO Professional',
     issuer: 'IABFM',
@@ -53,7 +52,6 @@ export const certificates: Certificate[] = [
     category: 'Digital Innovation & Analytics',
     imagePlaceholderId: 'cert-hl7-fhir',
   },
-  // Technical Licenses & Authorizations
   {
     title: 'Olympus VMC-3 300',
     issuer: 'Authorized Service & Repair',
@@ -84,7 +82,6 @@ export const certificates: Certificate[] = [
     category: 'Technical Licenses & Authorizations',
     imagePlaceholderId: 'cert-cnss',
   },
-  // Digital Innovation & Analytics
   {
     title: 'Big Data Analytics',
     issuer: 'Griffith University',
@@ -109,7 +106,6 @@ export const certificates: Certificate[] = [
     category: 'Digital Innovation & Analytics',
     imagePlaceholderId: 'cert-pacs',
   },
-  // Professional Endorsements
   {
     title: 'Project Management Recommendation',
     issuer: 'Royal Commission at Yanbu (RCMC)',
