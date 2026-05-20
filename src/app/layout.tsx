@@ -14,25 +14,29 @@ import NavScrollHint from '@/components/shared/nav-scroll-hint';
 const siteTitle = 'Sameh Insights | Strategic Digital PMO & Portfolio Governance';
 const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showcasing 20+ years of expertise in digital transformation, leading $120M+ programs, and establishing AI-driven PMOs.';
 const siteImage = 'https://i.ibb.co/BK4DtBc5/Untitled-design-4.png';
+const siteUrl = 'https://samehinsights.com';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://samehinsights.com'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
     template: `%s | Sameh Insights`,
   },
   description: siteDescription,
+  keywords: ['Sameh Moussa', 'Strategic PMO', 'Digital Transformation', 'AI Governance', 'Governance', 'Healthcare IT', 'Saudi Arabia', 'Vision 2030'],
+  authors: [{ name: 'Eng. Sameh Moussa' }],
+  creator: 'Eng. Sameh Moussa',
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: 'https://samehinsights.com',
+    url: siteUrl,
     siteName: 'Sameh Insights',
     images: [
       {
         url: siteImage,
         width: 1200,
         height: 630,
-        alt: 'Sameh Insights Professional Portfolio',
+        alt: 'Sameh Insights Professional Portfolio Preview',
       },
     ],
     locale: 'en_US',
