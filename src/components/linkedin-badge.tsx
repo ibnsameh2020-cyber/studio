@@ -22,10 +22,10 @@ export default function LinkedInBadge() {
         {/* Profile Image - Circular, Branded Border, High Fidelity */}
         <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-[#0A66C2] overflow-hidden mb-4 shadow-lg shrink-0">
           <Image 
-            src="https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png" 
+            src="https://i.ibb.co/qM0Dcdg3/pfp1.jpg" 
             alt="Sameh Moussa" 
             fill
-            className="object-cover"
+            className="object-cover rounded-full"
             priority
             quality={100}
           />
