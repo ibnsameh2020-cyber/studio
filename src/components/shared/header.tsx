@@ -139,12 +139,13 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-start justify-center">
             <div className="flex-grow flex h-16 items-center justify-between bg-background/30 backdrop-blur-lg border border-border/50 shadow-lg rounded-full px-6 relative">
-                <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold shrink-0">
+                <Link href="/" className="flex items-center gap-2 text-lg font-headline shrink-0">
                     <Lightbulb className="w-6 h-6 text-primary" />
-                    <span className="hidden sm:inline-block">Sameh insights</span>
-                    <div className="sm:hidden flex flex-col leading-[0.85] items-start text-foreground">
-                        <span className="font-bold">Sameh</span>
-                        <span className="font-bold">insights</span>
+                    <span className="hidden sm:inline-block font-bold">Sameh insights</span>
+                    {/* Perfected Mobile Stack: Matching Weight and Font */}
+                    <div className="sm:hidden flex flex-col leading-[0.85] items-start font-headline font-bold text-foreground">
+                        <span>Sameh</span>
+                        <span>insights</span>
                     </div>
                 </Link>
                 
