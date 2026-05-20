@@ -16,18 +16,23 @@ const siteDescription = 'The professional portfolio of Eng. Sameh Moussa, showca
 const siteImage = 'https://i.ibb.co/BK4DtBc5/Untitled-design-4.png';
 
 export const metadata: Metadata = {
-  title: siteTitle,
+  metadataBase: new URL('https://samehinsights.com'),
+  title: {
+    default: siteTitle,
+    template: `%s | Sameh Insights`,
+  },
   description: siteDescription,
   openGraph: {
     title: siteTitle,
     description: siteDescription,
+    url: 'https://samehinsights.com',
     siteName: 'Sameh Insights',
     images: [
       {
         url: siteImage,
         width: 1200,
         height: 630,
-        alt: 'Sameh insights',
+        alt: 'Sameh Insights Professional Portfolio',
       },
     ],
     locale: 'en_US',
@@ -38,6 +43,10 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     images: [siteImage],
+    creator: '@SamehInsights',
+  },
+  icons: {
+    icon: '/favicon.ico',
   },
 };
 
