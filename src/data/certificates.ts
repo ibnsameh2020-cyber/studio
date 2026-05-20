@@ -3,17 +3,17 @@ import type { Certificate } from '@/lib/types';
 export const certificates: Certificate[] = [
   // Prioritized Credentials
   {
-    title: 'KPI Professional (KPIP)',
-    issuer: 'The KPI Institute',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-kpip',
-  },
-  {
     title: 'The Algorithmic PMO | Featured Author',
     issuer: 'Institute of Project Management',
     category: 'Professional Endorsements',
     imagePlaceholderId: 'cert-algorithmic-pmo',
     url: 'https://instituteprojectmanagement.com/blog/the-algorithmic-pmo/',
+  },
+  {
+    title: 'KPI Professional (KPIP)',
+    issuer: 'The KPI Institute',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-kpip',
   },
   {
     title: 'ITIL 4 Leader: Digital & IT Strategy',
