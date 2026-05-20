@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -143,9 +142,9 @@ export default function Header() {
                 <Link href="/" className="flex items-center gap-2 text-lg font-headline font-bold shrink-0">
                     <Lightbulb className="w-6 h-6 text-primary" />
                     <span className="hidden sm:inline-block">Sameh insights</span>
-                    <div className="sm:hidden flex flex-col leading-[0.85] items-start">
-                        <span>Sameh</span>
-                        <span>insights</span>
+                    <div className="sm:hidden flex flex-col leading-[0.85] items-start text-foreground">
+                        <span className="font-bold">Sameh</span>
+                        <span className="font-bold">insights</span>
                     </div>
                 </Link>
                 

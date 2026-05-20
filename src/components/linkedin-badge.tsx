@@ -1,10 +1,11 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 
 /**
  * Custom LinkedIn Profile Badge
- * Updated to match the site's theme (translucent background, standard card size).
+ * Optimized for high-fidelity rendering and theme consistency.
  */
 export default function LinkedInBadge() {
   return (
@@ -18,12 +19,15 @@ export default function LinkedInBadge() {
           </svg>
         </div>
 
-        {/* Profile Image - Circular, Branded Border */}
-        <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-[3px] border-[#0A66C2] overflow-hidden mb-4 shadow-sm shrink-0">
-          <img 
+        {/* Profile Image - Circular, Branded Border, High Fidelity */}
+        <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-[#0A66C2] overflow-hidden mb-4 shadow-lg shrink-0">
+          <Image 
             src="https://i.ibb.co/RGrcZgdV/Adobe-Express-file.png" 
             alt="Sameh Moussa" 
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
+            quality={100}
           />
         </div>
 
