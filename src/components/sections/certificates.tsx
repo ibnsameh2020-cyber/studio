@@ -9,13 +9,8 @@ import { certificates } from '@/data/certificates';
 import type { Certificate } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
-import LinkedInBadge from '@/components/linkedin-badge';
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
-    if (certificate.isLinkedInBadge) {
-        return <LinkedInBadge />;
-    }
-
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
     return (
         <Card className="h-full w-full flex flex-col bg-card/30 backdrop-blur-md border border-white/10 p-2 md:p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl group cursor-pointer">
@@ -54,9 +49,7 @@ export default function CertificatesSection() {
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 max-w-7xl mx-auto items-stretch">
             {featuredCertificates.map((cert) => (
                 <div key={cert.title} data-reveal className="h-full">
-                    {cert.isLinkedInBadge ? (
-                        <LinkedInBadge />
-                    ) : cert.url ? (
+                    {cert.url ? (
                         <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                             <CertificateCard certificate={cert} />
                         </a>

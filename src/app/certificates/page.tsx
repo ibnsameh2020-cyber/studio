@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -13,7 +12,6 @@ import { Search, ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import LinkedInBadge from '@/components/linkedin-badge';
 
 const certificateCategories: Certificate['category'][] = [
     'Strategic Leadership & Governance',
@@ -36,10 +34,6 @@ const topCertBadges = [
 ];
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
-    if (certificate.isLinkedInBadge) {
-        return <LinkedInBadge />;
-    }
-
     const certImage = PlaceHolderImages.find(img => img.id === certificate.imagePlaceholderId);
     
     const CardInner = (

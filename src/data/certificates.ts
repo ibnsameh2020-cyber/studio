@@ -3,13 +3,6 @@ import type { Certificate } from '@/lib/types';
 export const certificates: Certificate[] = [
   // Prioritized Credentials
   {
-    title: 'Sameh Moussa LinkedIn',
-    issuer: 'LinkedIn',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: '',
-    isLinkedInBadge: true,
-  },
-  {
     title: 'KPI Professional (KPIP)',
     issuer: 'The KPI Institute',
     category: 'Strategic Leadership & Governance',
