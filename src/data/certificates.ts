@@ -4,17 +4,17 @@ import type { Certificate } from '@/lib/types';
 export const certificates: Certificate[] = [
   // Prioritized Credentials
   {
+    title: 'KPI Professional (KPIP)',
+    issuer: 'The KPI Institute',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-kpip',
+  },
+  {
     title: 'The Algorithmic PMO | Featured Author',
     issuer: 'Institute of Project Management',
     category: 'Professional Endorsements',
     imagePlaceholderId: 'cert-algorithmic-pmo',
     url: 'https://instituteprojectmanagement.com/blog/the-algorithmic-pmo/',
-  },
-  {
-    title: 'KPI Professional (KPIP)',
-    issuer: 'The KPI Institute',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-kpip',
   },
   {
     title: 'ITIL 4 Leader: Digital & IT Strategy',
@@ -40,6 +40,18 @@ export const certificates: Certificate[] = [
     issuer: 'The KPI Institute',
     category: 'Strategic Leadership & Governance',
     imagePlaceholderId: 'cert-okr',
+  },
+  {
+    title: 'PRINCE2® Foundation Certificate in Project Management',
+    issuer: 'PeopleCert / AXELOS',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-prince2',
+  },
+  {
+    title: 'Project Management Professional (PMP)®',
+    issuer: 'Project Management Institute (PMI)',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-pmp',
   },
   {
     title: 'CPHIMS',
@@ -124,17 +136,5 @@ export const certificates: Certificate[] = [
     issuer: 'King Abdul Aziz Hospital, Taif',
     category: 'Professional Endorsements',
     imagePlaceholderId: 'cert-taif-competence',
-  },
-  {
-    title: 'PRINCE2® Foundation Certificate in Project Management',
-    issuer: 'PeopleCert / AXELOS',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-prince2',
-  },
-  {
-    title: 'Project Management Professional (PMP)®',
-    issuer: 'Project Management Institute (PMI)',
-    category: 'Strategic Leadership & Governance',
-    imagePlaceholderId: 'cert-pmp',
   },
 ];
