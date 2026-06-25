@@ -9,7 +9,7 @@
     {
       "id": "project-2",
       "description": "A placeholder image for the second project.",
-      "imageUrl": "https://images.unsplash.com/photo-1513224502586-d1e602410265?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOHx8aG9zcGl0YWx8ZW58MHx8fHwxNzY4NzQwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1513224502586-d1e602410255?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOHx8aG9zcGl0YWx8ZW58MHx8fHwxNzY4NzQwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hospital"
     },
     {
@@ -193,14 +193,14 @@
       "imageHint": "article publication"
     },
     {
-      "id": "cert-extra-1",
-      "description": "Additional Strategic Achievement Certification",
+      "id": "cert-prince2",
+      "description": "PRINCE2® Foundation Certificate in Project Management",
       "imageUrl": "https://i.ibb.co/tMJ6Zn54/82f1fb16-7610-467a-bd9e-cc333d52f6df.jpg",
       "imageHint": "certificate document"
     },
     {
-      "id": "cert-extra-2",
-      "description": "Additional Professional Excellence Credential",
+      "id": "cert-pmp",
+      "description": "Project Management Professional (PMP)®",
       "imageUrl": "https://i.ibb.co/MxZWGNmw/728be862-5777-485f-bc5e-461836774e4f.jpg",
       "imageHint": "certificate document"
     }
