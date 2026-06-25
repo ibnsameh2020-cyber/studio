@@ -45,7 +45,7 @@
     {
       "id": "article-2",
       "description": "A placeholder image for the second article.",
-      "imageUrl": "https://images.unsplash.com/photo-1560732488-6b0df240254a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzZXJ2ZXJzfGVufDB8fHx8MTc2ODU3MDMzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1560732488-6b0df240254a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzZXJ2ZXJzfGVufDB8fHx8MTc2ODV3MDMzNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "servers"
     },
     {
@@ -191,6 +191,18 @@
       "description": "Featured article publication: The Algorithmic PMO",
       "imageUrl": "https://i.ibb.co/4gZ3jKHP/the-article-2.png",
       "imageHint": "article publication"
+    },
+    {
+      "id": "cert-extra-1",
+      "description": "Additional Strategic Achievement Certification",
+      "imageUrl": "https://i.ibb.co/tMJ6Zn54/82f1fb16-7610-467a-bd9e-cc333d52f6df.jpg",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "cert-extra-2",
+      "description": "Additional Professional Excellence Credential",
+      "imageUrl": "https://i.ibb.co/MxZWGNmw/728be862-5777-485f-bc5e-461836774e4f.jpg",
+      "imageHint": "certificate document"
     }
   ]
 }

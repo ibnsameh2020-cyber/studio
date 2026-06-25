@@ -1,3 +1,4 @@
+
 import type { Certificate } from '@/lib/types';
 
 export const certificates: Certificate[] = [
@@ -123,5 +124,17 @@ export const certificates: Certificate[] = [
     issuer: 'King Abdul Aziz Hospital, Taif',
     category: 'Professional Endorsements',
     imagePlaceholderId: 'cert-taif-competence',
+  },
+  {
+    title: 'Strategic Leadership Mastery',
+    issuer: 'Professional Excellence Institute',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-extra-1',
+  },
+  {
+    title: 'Advanced Digital Governance',
+    issuer: 'Innovation & Strategy Board',
+    category: 'Strategic Leadership & Governance',
+    imagePlaceholderId: 'cert-extra-2',
   },
 ];
