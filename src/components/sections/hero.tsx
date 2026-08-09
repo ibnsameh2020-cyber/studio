@@ -1,11 +1,20 @@
+
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight, Trophy, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 const sentences = [
     "Most transformations fail not because of poor strategy, but because of disconnected execution.",
@@ -207,10 +216,65 @@ export default function HeroSection() {
                 </Button>
             </Link>
         </div>
+
+        {/* Mobile/Tablet recognition badge */}
+        <div className="mt-8 lg:hidden animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <button className="flex items-center gap-3 px-4 py-2 bg-primary/10 backdrop-blur-md border border-primary/30 rounded-full hover:bg-primary/20 transition-all group">
+                        <Trophy className="w-4 h-4 text-primary animate-pulse" />
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-widest">IPM Featured Author 2026</span>
+                        <ExternalLink className="w-3 h-3 text-primary/50 group-hover:text-primary" />
+                    </button>
+                </DialogTrigger>
+                <DialogContent className="p-0 border-0 w-[95vw] h-[85vh] max-w-5xl">
+                    <DialogHeader className="sr-only">
+                        <DialogTitle>IPM Author Profile</DialogTitle>
+                        <DialogDescription>Credential verification for Eng. Sameh Moussa.</DialogDescription>
+                    </DialogHeader>
+                    <iframe 
+                        src="https://hub.instituteprojectmanagement.com/ipm-author-2026/same7mousa/" 
+                        className="w-full h-full rounded-lg"
+                        title="IPM Author Profile"
+                    ></iframe>
+                </DialogContent>
+            </Dialog>
+        </div>
       </div>
       
-      {/* Right-Side Current Role Card - Vertically Centered */}
-      <div className="absolute top-1/2 -translate-y-1/2 right-8 lg:right-16 w-64 hidden lg:block z-30">
+      {/* Right-Side Stack - Vertically Centered */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-8 lg:right-16 w-64 hidden lg:block z-30 space-y-4">
+        {/* IPM Author Badge - The "Card" visibility requested */}
+        <Dialog>
+            <DialogTrigger asChild>
+                <div className="cursor-pointer group bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
+                    <div className="bg-primary/20 px-4 py-1.5 flex items-center justify-center gap-2">
+                        <Trophy className="w-3 h-3 text-primary animate-pulse" />
+                        <h3 className="font-headline text-[9px] font-bold text-primary text-center tracking-widest uppercase">Global Recognition</h3>
+                    </div>
+                    <div className="p-4 text-center">
+                        <p className="text-[11px] font-headline font-bold text-foreground leading-tight">IPM Featured Author 2026</p>
+                        <p className="text-[9px] text-muted-foreground mt-1">Institute of Project Management</p>
+                        <div className="mt-3 flex items-center justify-center gap-1.5 text-[9px] text-primary font-bold uppercase tracking-tighter group-hover:underline">
+                            Open Portal <ArrowRight className="w-2.5 h-2.5 transition-transform group-hover:translate-x-1" />
+                        </div>
+                    </div>
+                </div>
+            </DialogTrigger>
+            <DialogContent className="p-0 border-0 w-[90vw] h-[90vh] max-w-5xl bg-background/95 backdrop-blur-xl">
+                <DialogHeader className="sr-only">
+                    <DialogTitle>IPM Author Profile</DialogTitle>
+                    <DialogDescription>Verification of IPM Author status for Eng. Sameh Moussa.</DialogDescription>
+                </DialogHeader>
+                <iframe 
+                    src="https://hub.instituteprojectmanagement.com/ipm-author-2026/same7mousa/" 
+                    className="w-full h-full rounded-lg"
+                    title="IPM Author Profile"
+                ></iframe>
+            </DialogContent>
+        </Dialog>
+
+        {/* Current Role Card */}
         <div className="bg-card/50 backdrop-blur-xl border border-primary/30 rounded-xl shadow-2xl shadow-primary/10 overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:border-primary/60 hover:-translate-y-1">
             <div className="bg-primary px-4 py-2">
                 <h3 className="font-headline text-sm font-bold text-primary-foreground text-center tracking-wide">My Current Role</h3>
