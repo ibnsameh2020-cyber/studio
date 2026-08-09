@@ -224,13 +224,13 @@ export default function HeroSection() {
             <Dialog>
                 <DialogTrigger asChild>
                     <button className="flex items-center gap-4 px-5 py-3 bg-primary/10 backdrop-blur-xl border border-primary/30 rounded-2xl hover:bg-primary/20 transition-all group shadow-2xl shadow-primary/5">
-                        <div className="relative w-12 h-12 flex-shrink-0">
+                        <div className="relative w-16 h-16 flex-shrink-0">
                              <div className="absolute inset-0 bg-primary/20 blur-md rounded-full animate-pulse"></div>
                              {ipmImage ? (
                                 <Image src={ipmImage.imageUrl} alt="IPM" fill className="object-contain drop-shadow-md" />
                              ) : (
                                 <div className="h-full w-full rounded-full bg-primary/20 flex items-center justify-center">
-                                    <Trophy className="w-6 h-6 text-primary" />
+                                    <Trophy className="w-8 h-8 text-primary" />
                                 </div>
                              )}
                         </div>
@@ -263,7 +263,7 @@ export default function HeroSection() {
             <DialogTrigger asChild>
                 <div className="cursor-pointer group relative bg-card/60 backdrop-blur-2xl border border-primary/40 rounded-2xl shadow-[0_0_50px_rgba(255,191,0,0.1)] overflow-hidden transition-all duration-500 hover:shadow-primary/30 hover:border-primary/80 hover:-translate-y-2 p-6 flex flex-col items-center">
                     {/* The Badge Visual - Visible and Striking */}
-                    <div className="relative mb-4 w-28 h-28">
+                    <div className="relative mb-4 w-40 h-40">
                         <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full animate-pulse"></div>
                         <div className="relative w-full h-full flex items-center justify-center overflow-visible">
                             {ipmImage ? (
@@ -274,7 +274,7 @@ export default function HeroSection() {
                                     className="object-contain drop-shadow-[0_0_15px_rgba(255,191,0,0.4)] transition-transform duration-500 group-hover:scale-110"
                                 />
                             ) : (
-                                <Trophy className="w-12 h-12 text-primary drop-shadow-[0_0_10px_rgba(255,191,0,0.6)]" />
+                                <Trophy className="w-16 h-16 text-primary drop-shadow-[0_0_10px_rgba(255,191,0,0.6)]" />
                             )}
                         </div>
                         {/* Years Overlay */}
