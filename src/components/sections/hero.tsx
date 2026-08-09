@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -277,8 +276,8 @@ export default function HeroSection() {
                                 <Trophy className="w-16 h-16 text-primary drop-shadow-[0_0_10px_rgba(255,191,0,0.6)]" />
                             )}
                         </div>
-                        {/* Years Overlay */}
-                        <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-[9px] font-bold px-2.5 py-1 rounded-full shadow-xl border border-background z-10">
+                        {/* Years Overlay - Raised and moved closer */}
+                        <div className="absolute bottom-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold px-3 py-1.5 rounded-full shadow-xl border-2 border-background z-10 transition-all group-hover:scale-110">
                             2026
                         </div>
                     </div>
