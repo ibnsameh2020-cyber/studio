@@ -265,7 +265,7 @@ export default function HeroSection() {
                     {/* The Badge Visual - Visible and Striking */}
                     <div className="relative mb-4 w-28 h-28">
                         <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full animate-pulse"></div>
-                        <div className="relative w-full h-full rounded-full border-2 border-primary/30 flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/20 p-2 overflow-hidden">
+                        <div className="relative w-full h-full flex items-center justify-center overflow-visible">
                             {ipmImage ? (
                                 <Image
                                     src={ipmImage.imageUrl}
@@ -278,7 +278,7 @@ export default function HeroSection() {
                             )}
                         </div>
                         {/* Years Overlay */}
-                        <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-[9px] font-bold px-2.5 py-1 rounded-full shadow-xl border border-background">
+                        <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-[9px] font-bold px-2.5 py-1 rounded-full shadow-xl border border-background z-10">
                             2026
                         </div>
                     </div>
